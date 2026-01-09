@@ -6,121 +6,94 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ===== PADRÃO NETFLIX ===== */
 :root{
-  --netflix-red:#e50914;
-  --bg-dark:#141414;
-  --bg-card:#1f1f1f;
-  --bg-soft:#2a2a2a;
-  --text-light:#ffffff;
-  --text-muted:#b3b3b3;
+  --red:#e50914;
+  --bg:#141414;
+  --card:#1f1f1f;
+  --soft:#2a2a2a;
+  --text:#ffffff;
+  --muted:#b3b3b3;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
-  background:var(--bg-dark);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  color:var(--text-light);
+  background:var(--bg);
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
   display:flex;
   justify-content:center;
-  overflow-y:auto;
 }
 
-/* ===== SPLASH ===== */
+/* SPLASH */
 #splashScreen{
-  position:fixed;
-  inset:0;
-  background:var(--bg-dark);
+  position:fixed; inset:0;
+  background:var(--bg);
   display:flex;
   justify-content:center;
   align-items:center;
   z-index:9999;
 }
-
-.splash-content{
-  text-align:center;
-}
-
+.splash-content{text-align:center}
 .splash-content h1{
-  font-family:Arial Black,Impact,sans-serif;
+  color:var(--red);
   font-size:42px;
   letter-spacing:3px;
-  color:var(--netflix-red);
-  margin-bottom:35px;
-  text-shadow:0 0 18px rgba(229,9,20,.85);
+  margin-bottom:30px;
 }
-
-@keyframes zoomFlash{
-  0%{transform:scale(1);box-shadow:0 0 0 rgba(229,9,20,0)}
-  50%{transform:scale(1.12);box-shadow:0 0 35px rgba(229,9,20,.9)}
-  100%{transform:scale(1);box-shadow:0 0 0 rgba(229,9,20,0)}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+  100%{transform:scale(1)}
 }
-
 .splash-btn{
-  background:var(--netflix-red);
+  background:var(--red);
   color:#fff;
   border:none;
-  padding:18px 52px;
-  border-radius:6px;
+  padding:18px 50px;
   font-size:18px;
-  font-weight:bold;
+  border-radius:6px;
   cursor:pointer;
-  animation:zoomFlash 1.8s infinite;
+  animation:pulse 1.8s infinite;
 }
 
-/* ===== APP ===== */
+/* APP */
 #app{
   width:100%;
   max-width:420px;
-  padding-bottom:360px;
+  padding-bottom:120px;
   display:none;
 }
 
-/* ===== HEADER ===== */
-.brand-title{
-  padding:22px;
+.header{
+  padding:20px;
   font-size:22px;
-  font-family:Arial Black,Impact,sans-serif;
-  letter-spacing:2px;
+  font-weight:bold;
 }
 
-/* ===== BUSCA ===== */
-.search-box{
-  padding:0 16px 16px;
-}
-
+/* BUSCA */
+.search-box{padding:0 16px 16px}
 .search-input{
   width:100%;
   padding:14px;
   border-radius:6px;
   border:none;
-  background:var(--bg-soft);
+  background:var(--soft);
   color:#fff;
-  font-size:16px;
 }
-
-.search-input::placeholder{
-  color:var(--text-muted);
-}
-
+.search-input::placeholder{color:var(--muted)}
 .search-results{
-  background:var(--bg-card);
+  background:var(--card);
   margin-top:8px;
   border-radius:6px;
   display:none;
 }
-
 .search-item{
   padding:10px;
   border-bottom:1px solid #333;
 }
 
-/* ===== CATEGORIAS ===== */
+/* CATEGORIAS */
 .category-btn{
   margin:18px 16px 10px;
   font-size:22px;
@@ -128,15 +101,9 @@ body{
   cursor:pointer;
 }
 
-/* ===== CONTEÚDO ===== */
-.content-box{
-  display:none;
-  padding:10px 16px;
-}
-
-/* ===== ITEM ===== */
+/* ITEM */
 .item{
-  background:var(--bg-card);
+  background:var(--card);
   border-radius:6px;
   padding:14px;
   margin-bottom:10px;
@@ -145,54 +112,91 @@ body{
   gap:10px;
   align-items:center;
 }
-
-.item span{
-  font-size:14px;
-}
-
-.price{
-  font-weight:bold;
-}
-
-.price.oferta{
-  color:var(--netflix-red);
-}
-
+.price{font-weight:bold}
+.price.oferta{color:var(--red)}
 .badge{
-  background:var(--netflix-red);
+  background:var(--red);
   font-size:10px;
   padding:2px 6px;
   border-radius:4px;
   margin-left:6px;
 }
-
-/* ===== BOTÃO ADD ===== */
 .btn-add{
-  background:var(--netflix-red);
+  background:var(--red);
   color:#fff;
   border:none;
   width:36px;
   height:36px;
   border-radius:4px;
   font-size:20px;
-  cursor:pointer;
 }
 
-/* ===== SUB ===== */
+/* SUB */
 .sub-btn{
-  background:var(--bg-soft);
+  background:var(--soft);
   padding:12px;
   border-radius:6px;
   margin:14px 0;
   font-weight:bold;
   cursor:pointer;
 }
+
+/* CARRINHO */
+.cart-footer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  max-width:420px;
+  background:#181818;
+  padding:14px;
+  display:none;
+  border-top:1px solid #333;
+}
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:6px;
+}
+.total{font-weight:bold;margin-top:6px}
+.btn-finish{
+  background:var(--red);
+  padding:14px;
+  border-radius:6px;
+  text-align:center;
+  font-weight:bold;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+/* ADMIN */
+#adminScreen{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:none;
+  z-index:99999;
+  overflow:auto;
+  padding:20px;
+}
+.admin-tabs button{
+  background:var(--soft);
+  color:#fff;
+  border:none;
+  padding:10px;
+  margin:4px;
+  border-radius:6px;
+}
+.admin-item{
+  background:var(--card);
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:6px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
 <div id="splashScreen">
   <div class="splash-content">
     <h1>RABIKA’S BURGUER</h1>
@@ -200,12 +204,9 @@ body{
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
+<div class="header">RABIKA’S BURGUER</div>
 
-<div class="brand-title">RABIKA’S BURGUER</div>
-
-<!-- BARRA DE PESQUISA -->
 <div class="search-box">
   <input class="search-input" placeholder="Pesquisar produto..." oninput="searchProduct(this.value)">
   <div class="search-results" id="searchResults"></div>
@@ -228,7 +229,6 @@ body{
   <div class="item"><span>X-Da Casa</span><span class="price">R$ 45,00</span><button class="btn-add" onclick="addToCart('X-Da Casa',45)">+</button></div>
   <div class="item"><span>X-Dog</span><span class="price">R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Dog',20)">+</button></div>
 
-  <!-- ADICIONAIS -->
   <div class="sub-btn" onclick="toggle('extrasLanches')">➕ Adicionais para Lanches</div>
   <div id="extrasLanches" style="display:none">
 
@@ -327,63 +327,59 @@ body{
   </div>
 
 </div>
-<!-- ================= CARRINHO / PAGAMENTO ================= -->
+<!-- ================= CARRINHO ================= -->
 <div class="cart-footer" id="cartFooter">
   <div id="cartItems"></div>
 
-  <div class="delivery-box">
-    <label><input type="radio" name="entrega" checked onchange="setDelivery(false)"> Retirada</label>
-    <label><input type="radio" name="entrega" onchange="setDelivery(true)"> Entrega (+ R$8)</label>
+  <div id="deliveryOptions" style="display:none;margin-top:10px">
+    <label>
+      <input type="radio" name="entrega" checked onclick="setDelivery(false)">
+      Retirada
+    </label>
+    &nbsp;&nbsp;
+    <label>
+      <input type="radio" name="entrega" onclick="setDelivery(true)">
+      Entrega (+ R$ 8)
+    </label>
   </div>
 
-  <input class="input-field" id="clientName" placeholder="Seu nome">
+  <input id="clientName" class="search-input" placeholder="Seu nome" style="display:none;margin-top:10px">
 
-  <div id="addressBox" style="display:none">
-    <input class="input-field" id="clientAddress" placeholder="Endereço para entrega">
-  </div>
+  <input id="clientAddress" class="search-input" placeholder="Endereço" style="display:none;margin-top:10px">
 
-  <select class="select-field" id="paymentMethod" onchange="checkPayment()">
+  <select id="paymentMethod" class="search-input" style="display:none;margin-top:10px">
     <option value="">Forma de pagamento</option>
-    <option value="Dinheiro">Dinheiro</option>
-    <option value="Pix">Pix</option>
-    <option value="Cartão Débito">Cartão Débito</option>
-    <option value="Cartão Crédito">Cartão Crédito</option>
+    <option>Dinheiro</option>
+    <option>Pix</option>
+    <option>Cartão Débito</option>
+    <option>Cartão Crédito</option>
   </select>
-
-  <div id="trocoBox" style="display:none">
-    <input class="input-field" id="trocoValue" placeholder="Troco para quanto?">
-  </div>
 
   <div class="total" id="totalValue">Total: R$ 0,00</div>
   <div class="btn-finish" onclick="finishOrder()">Finalizar Pedido</div>
 </div>
 
-<!-- ================= PAINEL ADMIN OFERTAS ================= -->
-<div id="adminPanel">
+<!-- ================= ADMIN ================= -->
+<div id="adminScreen">
   <h2>Painel de Ofertas</h2>
-  <div id="adminList"></div>
-  <button onclick="closeAdmin()">Fechar</button>
+  <div class="admin-tabs">
+    <button onclick="loadAdmin('lanches')">Lanches</button>
+    <button onclick="loadAdmin('porcoes')">Porções</button>
+    <button onclick="loadAdmin('bebidas')">Bebidas</button>
+    <button onclick="loadAdmin('pasteis')">Pastéis</button>
+    <button onclick="loadAdmin('acai')">Açaí</button>
+  </div>
+  <div id="adminContent"></div>
+  <br>
+  <button class="btn-finish" onclick="closeAdmin()">Fechar</button>
 </div>
 
 <script>
 /* ================= VARIÁVEIS ================= */
 let cart=[];
 let isDelivery=false;
-let precisaTroco=false;
-
 let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
 let offers = JSON.parse(localStorage.getItem("offers")) || {};
-
-/* ================= HORÁRIO ================= */
-function isOpenNow(){
-  const d = new Date();
-  const day = d.getDay(); // 0 domingo, 1 segunda
-  const time = d.getHours() + d.getMinutes()/60;
-
-  if(day === 1) return false;               // segunda fechado
-  if(time < 18.5 || time > 22.5) return false; // 18:30 às 22:30
-  return true;
-}
 
 /* ================= ENTRAR APP ================= */
 function enterApp(){
@@ -397,406 +393,186 @@ function toggle(id){
   el.style.display = el.style.display==="block" ? "none" : "block";
 }
 
-/* ================= CARRINHO ================= */
+/* ================= ADD AO CARRINHO ================= */
 function addToCart(name, price){
-  if(!isOpenNow()){
-    alert("⏰ Estamos fechados.\nTerça a Domingo das 18:30 às 22:30");
-    return;
-  }
   cart.push({name, price});
   updateCart();
 }
 
+/* ================= CARRINHO ================= */
 function updateCart(){
   const box=document.getElementById("cartItems");
   box.innerHTML="";
   let total=0;
 
-  cart.forEach((item,index)=>{
+  cart.forEach((item,i)=>{
     total+=item.price;
     box.innerHTML+=`
       <div class="cart-item">
         <span>${item.name}</span>
         <span>R$ ${item.price.toFixed(2).replace('.',',')}</span>
-        <button class="remove-btn" onclick="removeItem(${index})">x</button>
       </div>`;
   });
 
+  if(cart.length){
+    cartFooter.style.display="block";
+    deliveryOptions.style.display="block";
+    clientName.style.display="block";
+  }else{
+    cartFooter.style.display="none";
+  }
+
   if(isDelivery) total+=8;
 
-  document.getElementById("totalValue").innerText =
-    "Total: R$ " + total.toFixed(2).replace('.',',');
-
-  document.getElementById("cartFooter").style.display =
-    cart.length ? "block" : "none";
-}
-
-function removeItem(i){
-  cart.splice(i,1);
-  updateCart();
+  totalValue.innerText="Total: R$ "+total.toFixed(2).replace('.',',');
 }
 
 /* ================= ENTREGA ================= */
 function setDelivery(v){
   isDelivery=v;
-  document.getElementById("addressBox").style.display = v ? "block" : "none";
+  clientAddress.style.display = v ? "block" : "none";
+  paymentMethod.style.display = v ? "block" : "none";
   updateCart();
 }
 
-/* ================= PAGAMENTO ================= */
-function checkPayment(){
-  const p=document.getElementById("paymentMethod").value;
-  document.getElementById("trocoBox").style.display =
-    p==="Dinheiro" ? "block" : "none";
-}
-
-/* ================= BUSCA / RELATÓRIO / OFERTA ================= */
-function searchProduct(q){
-  const box=document.getElementById("searchResults");
-  box.innerHTML="";
-  if(!q){ box.style.display="none"; return; }
-
-  if(q.toLowerCase()==="relatorio"){
-    gerarRelatorio();
-    return;
-  }
-
-  if(q.toLowerCase()==="oferta"){
-    const s=prompt("Senha admin:");
-    if(s==="adm") abrirAdmin();
-    return;
-  }
-
-  document.querySelectorAll(".item span:first-child").forEach(e=>{
-    if(e.innerText.toLowerCase().includes(q.toLowerCase())){
-      box.innerHTML+=`<div class="search-item">${e.innerText}</div>`;
-    }
-  });
-  box.style.display="block";
-}
-
-/* ================= RELATÓRIO ================= */
-function gerarRelatorio(){
-  const hoje=new Date().toISOString().slice(0,10);
-  let total=0;
-
-  orderHistory.forEach(o=>{
-    if(o.date.startsWith(hoje)) total+=o.total;
-  });
-
-  alert("📊 RELATÓRIO DO DIA\nTotal vendido: R$ "+total.toFixed(2));
-}
-
-/* ================= ADMIN OFERTAS ================= */
-function abrirAdmin(){
-  adminPanel.style.display="block";
-  adminList.innerHTML="";
-
-  document.querySelectorAll(".item span:first-child").forEach(e=>{
-    const nome=e.innerText;
-    adminList.innerHTML+=`
-      <div class="admin-card">
-        <b>${nome}</b><br>
-        Preço oferta: <input id="p_${nome}" type="number"><br>
-        Validade: <input id="d_${nome}" type="date"><br>
-        <button onclick="salvarOferta('${nome}')">Salvar</button>
-      </div>`;
-  });
-}
-
-function salvarOferta(nome){
-  const p=document.getElementById("p_"+nome).value;
-  const d=document.getElementById("d_"+nome).value;
-
-  offers[nome]={price:Number(p), valid:d};
-  localStorage.setItem("offers",JSON.stringify(offers));
-  location.reload();
-}
-
-function closeAdmin(){
-  adminPanel.style.display="none";
-}
-
-/* ================= FINALIZAR PEDIDO ================= */
+/* ================= FINALIZAR ================= */
 function finishOrder(){
-  const name=document.getElementById("clientName").value;
-  const address=document.getElementById("clientAddress").value;
-  const payment=document.getElementById("paymentMethod").value;
+  if(!cart.length){alert("Carrinho vazio");return;}
+  if(!clientName.value){alert("Informe seu nome");return;}
 
-  if(!name){alert("Informe seu nome");return;}
-  if(isDelivery && !address){alert("Informe o endereço");return;}
-  if(!payment){alert("Informe a forma de pagamento");return;}
+  if(isDelivery){
+    if(!clientAddress.value){alert("Informe o endereço");return;}
+    if(!paymentMethod.value){alert("Informe o pagamento");return;}
+  }
 
   let total=cart.reduce((s,i)=>s+i.price,0);
   if(isDelivery) total+=8;
 
   orderHistory.push({
     date:new Date().toISOString(),
-    total:total
+    total,
+    payment:isDelivery ? paymentMethod.value : "Retirada"
   });
+
   localStorage.setItem("orderHistory",JSON.stringify(orderHistory));
 
-  alert("Pedido finalizado!\nTotal: R$ "+total.toFixed(2));
-}
-</script>
-<!-- ================= CARRINHO / PAGAMENTO ================= -->
-<div class="cart-footer" id="cartFooter">
-  <div id="cartItems"></div>
-
-  <div class="delivery-box">
-    <label><input type="radio" name="entrega" checked onchange="setDelivery(false)"> Retirada</label>
-    <label><input type="radio" name="entrega" onchange="setDelivery(true)"> Entrega (+ R$8)</label>
-  </div>
-
-  <input class="input-field" id="clientName" placeholder="Seu nome">
-
-  <div id="addressBox" style="display:none">
-    <input class="input-field" id="clientAddress" placeholder="Endereço para entrega">
-  </div>
-
-  <select class="select-field" id="paymentMethod" onchange="checkPayment()">
-    <option value="">Forma de pagamento</option>
-    <option value="Dinheiro">Dinheiro</option>
-    <option value="Pix">Pix</option>
-    <option value="Cartão Débito">Cartão Débito</option>
-    <option value="Cartão Crédito">Cartão Crédito</option>
-  </select>
-
-  <div id="trocoBox" style="display:none">
-    <input class="input-field" id="trocoValue" placeholder="Troco para quanto?">
-  </div>
-
-  <div class="total" id="totalValue">Total: R$ 0,00</div>
-  <div class="btn-finish" onclick="finishOrder()">Finalizar Pedido</div>
-</div>
-
-<!-- ================= PAINEL ADMIN OFERTAS ================= -->
-<div id="adminPanel">
-  <h2>Painel de Ofertas</h2>
-  <div id="adminList"></div>
-  <button onclick="closeAdmin()">Fechar</button>
-</div>
-
-<script>
-/* ================= VARIÁVEIS ================= */
-let cart=[];
-let isDelivery=false;
-let precisaTroco=false;
-
-let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
-let offers = JSON.parse(localStorage.getItem("offers")) || {};
-
-/* ================= HORÁRIO ================= */
-function isOpenNow(){
-  const d = new Date();
-  const day = d.getDay(); // 0 domingo, 1 segunda
-  const time = d.getHours() + d.getMinutes()/60;
-
-  if(day === 1) return false;               // segunda fechado
-  if(time < 18.5 || time > 22.5) return false; // 18:30 às 22:30
-  return true;
+  alert("Pedido finalizado!");
+  location.reload();
 }
 
-/* ================= ENTRAR APP ================= */
-function enterApp(){
-  splashScreen.style.display="none";
-  app.style.display="block";
-}
-
-/* ================= TOGGLE ================= */
-function toggle(id){
-  const el=document.getElementById(id);
-  el.style.display = el.style.display==="block" ? "none" : "block";
-}
-
-/* ================= CARRINHO ================= */
-function addToCart(name, price){
-  if(!isOpenNow()){
-    alert("⏰ Estamos fechados.\nTerça a Domingo das 18:30 às 22:30");
-    return;
-  }
-  cart.push({name, price});
-  updateCart();
-}
-
-function updateCart(){
-  const box=document.getElementById("cartItems");
-  box.innerHTML="";
-  let total=0;
-
-  cart.forEach((item,index)=>{
-    total+=item.price;
-    box.innerHTML+=`
-      <div class="cart-item">
-        <span>${item.name}</span>
-        <span>R$ ${item.price.toFixed(2).replace('.',',')}</span>
-        <button class="remove-btn" onclick="removeItem(${index})">x</button>
-      </div>`;
-  });
-
-  if(isDelivery) total+=8;
-
-  document.getElementById("totalValue").innerText =
-    "Total: R$ " + total.toFixed(2).replace('.',',');
-
-  document.getElementById("cartFooter").style.display =
-    cart.length ? "block" : "none";
-}
-
-function removeItem(i){
-  cart.splice(i,1);
-  updateCart();
-}
-
-/* ================= ENTREGA ================= */
-function setDelivery(v){
-  isDelivery=v;
-  document.getElementById("addressBox").style.display = v ? "block" : "none";
-  updateCart();
-}
-
-/* ================= PAGAMENTO ================= */
-function checkPayment(){
-  const p=document.getElementById("paymentMethod").value;
-  document.getElementById("trocoBox").style.display =
-    p==="Dinheiro" ? "block" : "none";
-}
-
-/* ================= BUSCA / RELATÓRIO / OFERTA ================= */
+/* ================= BUSCA ================= */
 function searchProduct(q){
-  const box=document.getElementById("searchResults");
-  box.innerHTML="";
-  if(!q){ box.style.display="none"; return; }
-
-  if(q.toLowerCase()==="relatorio"){
-    gerarRelatorio();
-    return;
+  q=q.toLowerCase().trim();
+  if(q==="relatorio"){gerarRelatorio();return;}
+  if(q==="adm"){
+    adminScreen.style.display="block";
+    loadAdmin("lanches");
   }
-
-  if(q.toLowerCase()==="oferta"){
-    const s=prompt("Senha admin:");
-    if(s==="adm") abrirAdmin();
-    return;
-  }
-
-  document.querySelectorAll(".item span:first-child").forEach(e=>{
-    if(e.innerText.toLowerCase().includes(q.toLowerCase())){
-      box.innerHTML+=`<div class="search-item">${e.innerText}</div>`;
-    }
-  });
-  box.style.display="block";
 }
 
 /* ================= RELATÓRIO ================= */
 function gerarRelatorio(){
-  const hoje=new Date().toISOString().slice(0,10);
-  let total=0;
+  let t=0,d=0,p=0,cd=0,cc=0;
 
   orderHistory.forEach(o=>{
-    if(o.date.startsWith(hoje)) total+=o.total;
+    t+=o.total;
+    if(o.payment==="Dinheiro") d+=o.total;
+    if(o.payment==="Pix") p+=o.total;
+    if(o.payment==="Cartão Débito") cd+=o.total;
+    if(o.payment==="Cartão Crédito") cc+=o.total;
   });
 
-  alert("📊 RELATÓRIO DO DIA\nTotal vendido: R$ "+total.toFixed(2));
+  alert(
+    "RELATÓRIO DO DIA\n\n"+
+    "Total: R$ "+t.toFixed(2)+"\n"+
+    "Dinheiro: R$ "+d.toFixed(2)+"\n"+
+    "Pix: R$ "+p.toFixed(2)+"\n"+
+    "Débito: R$ "+cd.toFixed(2)+"\n"+
+    "Crédito: R$ "+cc.toFixed(2)
+  );
 }
 
-/* ================= ADMIN OFERTAS ================= */
-function abrirAdmin(){
-  adminPanel.style.display="block";
-  adminList.innerHTML="";
-
-  document.querySelectorAll(".item span:first-child").forEach(e=>{
-    const nome=e.innerText;
-    adminList.innerHTML+=`
-      <div class="admin-card">
+/* ================= ADMIN ================= */
+function loadAdmin(cat){
+  const box=document.getElementById("adminContent");
+  box.innerHTML="";
+  document.querySelectorAll("#"+cat+" .item").forEach(i=>{
+    const nome=i.querySelector("span").innerText;
+    box.innerHTML+=`
+      <div class="admin-item">
         <b>${nome}</b><br>
-        Preço oferta: <input id="p_${nome}" type="number"><br>
-        Validade: <input id="d_${nome}" type="date"><br>
-        <button onclick="salvarOferta('${nome}')">Salvar</button>
+        Preço oferta:
+        <input id="p_${nome}" type="number"><br>
+        Validade:
+        <input id="d_${nome}" type="date"><br>
+        <button onclick="saveOffer('${nome}')">Salvar</button>
       </div>`;
   });
 }
 
-function salvarOferta(nome){
-  const p=document.getElementById("p_"+nome).value;
-  const d=document.getElementById("d_"+nome).value;
-
-  offers[nome]={price:Number(p), valid:d};
+function saveOffer(nome){
+  offers[nome]={
+    price:Number(document.getElementById("p_"+nome).value),
+    valid:document.getElementById("d_"+nome).value
+  };
   localStorage.setItem("offers",JSON.stringify(offers));
-  location.reload();
+  alert("Oferta salva");
 }
 
 function closeAdmin(){
-  adminPanel.style.display="none";
-}
-
-/* ================= FINALIZAR PEDIDO ================= */
-function finishOrder(){
-  const name=document.getElementById("clientName").value;
-  const address=document.getElementById("clientAddress").value;
-  const payment=document.getElementById("paymentMethod").value;
-
-  if(!name){alert("Informe seu nome");return;}
-  if(isDelivery && !address){alert("Informe o endereço");return;}
-  if(!payment){alert("Informe a forma de pagamento");return;}
-
-  let total=cart.reduce((s,i)=>s+i.price,0);
-  if(isDelivery) total+=8;
-
-  orderHistory.push({
-    date:new Date().toISOString(),
-    total:total
-  });
-  localStorage.setItem("orderHistory",JSON.stringify(orderHistory));
-
-  alert("Pedido finalizado!\nTotal: R$ "+total.toFixed(2));
+  adminScreen.style.display="none";
 }
 </script>
 <script>
-/* ================= APLICAR OFERTAS NO CARDÁPIO ================= */
-(function aplicarOfertas(){
+/* ================= APLICAR OFERTAS ================= */
+function aplicarOfertas(){
   const hoje = new Date();
 
   document.querySelectorAll(".item").forEach(item=>{
-    const nomeEl = item.querySelector("span:first-child");
+    const nomeEl = item.querySelector("span");
     const priceEl = item.querySelector(".price");
-    if(!nomeEl || !priceEl) return;
+    const btn = item.querySelector(".btn-add");
 
-    const nome = nomeEl.innerText.replace("OFERTA","").trim();
+    if(!nomeEl || !priceEl || !btn) return;
 
-    if(offers[nome]){
-      const validade = new Date(offers[nome].valid);
+    const nomeOriginal = nomeEl.innerText.replace("OFERTA","").trim();
+
+    if(offers[nomeOriginal]){
+      const validade = new Date(offers[nomeOriginal].valid);
+
       if(validade >= hoje){
-        // aplica preço promocional
-        const novoPreco = offers[nome].price;
-        priceEl.innerText = "R$ " + novoPreco.toFixed(2).replace('.',',');
+        const precoOferta = offers[nomeOriginal].price;
+
+        // altera preço
+        priceEl.innerText =
+          "R$ " + precoOferta.toFixed(2).replace('.',',');
+
         priceEl.classList.add("oferta");
 
-        // adiciona selo oferta
+        // selo oferta
         if(!nomeEl.innerHTML.includes("OFERTA")){
-          nomeEl.innerHTML = nome + ' <span class="badge">OFERTA</span>';
+          nomeEl.innerHTML =
+            nomeOriginal + ' <span class="badge">OFERTA</span>';
         }
 
-        // ajusta botão para usar preço de oferta
-        const btn = item.querySelector(".btn-add");
-        if(btn){
-          btn.setAttribute(
-            "onclick",
-            "addToCart('"+nome+"',"+novoPreco+")"
-          );
-        }
+        // atualiza botão
+        btn.setAttribute(
+          "onclick",
+          "addToCart('"+nomeOriginal+"',"+precoOferta+")"
+        );
       }else{
-        // oferta vencida → remove
-        delete offers[nome];
+        // oferta vencida
+        delete offers[nomeOriginal];
         localStorage.setItem("offers", JSON.stringify(offers));
       }
     }
   });
-})();
+}
 
-/* ================= FECHAMENTO ================= */
+/* executa ao carregar */
+document.addEventListener("DOMContentLoaded", aplicarOfertas);
 </script>
-
-</div> <!-- fim #app -->
+</div> <!-- fim do #app -->
 
 </body>
 </html>
