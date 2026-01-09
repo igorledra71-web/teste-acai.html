@@ -9,23 +9,37 @@
 :root{
   --red:#e50914;
   --bg:#141414;
-  --card:#1f1f1f;
-  --soft:#2a2a2a;
-  --text:#fff;
-  --muted:#aaa;
+  --card:#ffffff;
+  --soft:#f2f2f2;
+  --text:#111;
+  --dark:#000;
 }
-*{margin:0;padding:0;box-sizing:border-box}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+}
+
 body{
   background:var(--bg);
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--text);
   display:flex;
   justify-content:center;
 }
 
+#app{
+  width:100%;
+  max-width:480px;
+  background:#f7f7f7;
+  min-height:100vh;
+  display:none;
+}
+
 /* SPLASH */
 #splash{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background:#000;
   display:flex;
   align-items:center;
@@ -34,113 +48,122 @@ body{
 }
 #splash h1{
   color:var(--red);
-  font-size:42px;
+  font-size:38px;
   letter-spacing:3px;
-  margin-bottom:30px;
-}
-@keyframes pulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.1)}
-  100%{transform:scale(1)}
+  text-align:center;
 }
 #splash button{
+  margin-top:30px;
   background:var(--red);
   color:#fff;
   border:none;
   padding:18px 50px;
+  border-radius:30px;
   font-size:18px;
-  border-radius:6px;
   cursor:pointer;
   animation:pulse 1.8s infinite;
 }
-
-/* APP */
-#app{
-  width:100%;
-  max-width:420px;
-  display:none;
-  padding-bottom:140px;
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+  100%{transform:scale(1)}
 }
+
+/* HEADER */
 .header{
-  padding:18px;
+  background:#fff;
+  padding:16px;
   font-size:22px;
-  font-weight:bold;
+  font-weight:700;
+  text-align:center;
+  border-bottom:1px solid #ddd;
 }
 
 /* BUSCA */
-.search-box{padding:0 16px 16px}
+.search-box{
+  padding:14px;
+  background:#fff;
+}
 .search-input{
   width:100%;
   padding:14px;
-  border-radius:6px;
-  border:none;
-  background:var(--soft);
-  color:#fff;
+  border-radius:12px;
+  border:1px solid #ddd;
+  font-size:16px;
 }
 .search-results{
-  background:var(--card);
-  border-radius:6px;
-  margin-top:8px;
+  background:#fff;
+  margin-top:6px;
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
   display:none;
 }
 .search-item{
   padding:10px;
-  border-bottom:1px solid #333;
-  cursor:pointer;
+  border-bottom:1px solid #eee;
 }
 
-/* CATEGORIAS */
+/* CATEGORIA */
 .category-btn{
-  margin:18px 16px 8px;
-  font-size:22px;
-  font-weight:bold;
+  padding:16px;
+  font-size:20px;
+  font-weight:700;
+  background:#fff;
+  margin-top:10px;
   cursor:pointer;
+  border-bottom:1px solid #eee;
 }
 
-/* CONTEÚDO */
+/* LISTA */
 .content-box{
   display:none;
-  padding:0 16px 10px;
+  padding:10px;
 }
 
 /* ITEM */
 .item{
-  background:var(--card);
-  border-radius:6px;
+  background:#fff;
+  border-radius:16px;
   padding:14px;
   margin-bottom:10px;
   display:grid;
   grid-template-columns:1fr auto auto;
-  gap:10px;
   align-items:center;
+  gap:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
-.price{font-weight:bold}
-.price.oferta{color:var(--red)}
+.price{
+  font-weight:700;
+}
+.price.oferta{
+  color:var(--red);
+}
 .badge{
   background:var(--red);
+  color:#fff;
   font-size:10px;
   padding:2px 6px;
-  border-radius:4px;
+  border-radius:6px;
   margin-left:6px;
 }
 .btn-add{
   background:var(--red);
   color:#fff;
   border:none;
-  width:36px;
-  height:36px;
-  border-radius:4px;
-  font-size:20px;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  font-size:22px;
   cursor:pointer;
 }
 
 /* SUB */
 .sub-btn{
-  background:var(--soft);
-  padding:12px;
-  border-radius:6px;
-  margin:14px 0;
-  font-weight:bold;
+  background:#eee;
+  padding:14px;
+  border-radius:12px;
+  font-weight:700;
+  margin:10px 0;
   cursor:pointer;
 }
 
@@ -149,11 +172,11 @@ body{
   position:fixed;
   bottom:0;
   width:100%;
-  max-width:420px;
-  background:#181818;
+  max-width:480px;
+  background:#fff;
+  border-top:1px solid #ddd;
   padding:14px;
   display:none;
-  border-top:1px solid #333;
 }
 .cart-item{
   display:flex;
@@ -164,45 +187,19 @@ body{
   color:var(--red);
   cursor:pointer;
 }
-.total{font-weight:bold;margin-top:6px}
+.total{
+  font-weight:700;
+  margin-top:8px;
+}
 .btn-finish{
   background:var(--red);
-  padding:14px;
-  border-radius:6px;
+  color:#fff;
+  padding:16px;
+  border-radius:14px;
   text-align:center;
-  font-weight:bold;
+  font-weight:700;
   margin-top:10px;
   cursor:pointer;
-}
-
-/* ADMIN */
-#admin{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:none;
-  z-index:99999;
-  overflow:auto;
-  padding:20px;
-  animation:fade .3s;
-}
-@keyframes fade{
-  from{opacity:0}
-  to{opacity:1}
-}
-.admin-tabs button{
-  background:var(--soft);
-  color:#fff;
-  border:none;
-  padding:10px;
-  margin:4px;
-  border-radius:6px;
-}
-.admin-item{
-  background:var(--card);
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:6px;
 }
 </style>
 </head>
@@ -211,71 +208,240 @@ body{
 
 <div id="splash">
   <div>
-    <h1>RABIKA’S BURGUER</h1>
+    <h1>RABIKA’S<br>BURGUER</h1>
     <button onclick="startApp()">FAZER PEDIDO</button>
   </div>
 </div>
 
 <div id="app">
-  <div class="header">RABIKA’S BURGUER</div>
+  <div class="header">Rabika’s Burguer</div>
 
   <div class="search-box">
     <input class="search-input" placeholder="Pesquisar produto ou digite oferta" oninput="search(this.value)">
     <div class="search-results" id="results"></div>
   </div>
-<!-- ================= LANCHES ================= -->
-<div class="category-btn" onclick="toggleBox('lanches')">🍔 Lanches</div>
-<div class="content-box" id="lanches">
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Rabika's Burguer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <div class="item"><span>X-Salada</span><span class="price">R$ 17,00</span><button class="btn-add" onclick="add('X-Salada',17)">+</button></div>
-  <div class="item"><span>X-Burguer</span><span class="price">R$ 14,00</span><button class="btn-add" onclick="add('X-Burguer',14)">+</button></div>
-  <div class="item"><span>X-Frango</span><span class="price">R$ 22,00</span><button class="btn-add" onclick="add('X-Frango',22)">+</button></div>
-  <div class="item"><span>X-Frango Cremoso</span><span class="price">R$ 20,00</span><button class="btn-add" onclick="add('X-Frango Cremoso',20)">+</button></div>
-  <div class="item"><span>X-Bacon</span><span class="price">R$ 25,00</span><button class="btn-add" onclick="add('X-Bacon',25)">+</button></div>
-  <div class="item"><span>X-Calabresa</span><span class="price">R$ 25,00</span><button class="btn-add" onclick="add('X-Calabresa',25)">+</button></div>
-  <div class="item"><span>X-Coração</span><span class="price">R$ 27,00</span><button class="btn-add" onclick="add('X-Coração',27)">+</button></div>
-  <div class="item"><span>X-Tudo</span><span class="price">R$ 32,00</span><button class="btn-add" onclick="add('X-Tudo',32)">+</button></div>
-  <div class="item"><span>X-Burguer Duplo</span><span class="price">R$ 22,00</span><button class="btn-add" onclick="add('X-Burguer Duplo',22)">+</button></div>
-  <div class="item"><span>X-Egg</span><span class="price">R$ 20,00</span><button class="btn-add" onclick="add('X-Egg',20)">+</button></div>
-  <div class="item"><span>X-Tribom</span><span class="price">R$ 32,00</span><button class="btn-add" onclick="add('X-Tribom',32)">+</button></div>
-  <div class="item"><span>X-Da Casa</span><span class="price">R$ 45,00</span><button class="btn-add" onclick="add('X-Da Casa',45)">+</button></div>
-  <div class="item"><span>X-Dog</span><span class="price">R$ 20,00</span><button class="btn-add" onclick="add('X-Dog',20)">+</button></div>
+<style>
+:root{
+  --red:#e50914;
+  --bg:#141414;
+  --card:#ffffff;
+  --soft:#f2f2f2;
+  --text:#111;
+  --dark:#000;
+}
 
-  <div class="sub-btn" onclick="toggleBox('extrasLanches')">➕ Adicionais</div>
-  <div class="content-box" id="extrasLanches">
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+}
 
-    <div class="item"><span>Calabresa</span><span class="price">R$ 7,00</span><button class="btn-add" onclick="add('Adicional Calabresa',7)">+</button></div>
-    <div class="item"><span>Bacon</span><span class="price">R$ 7,00</span><button class="btn-add" onclick="add('Adicional Bacon',7)">+</button></div>
-    <div class="item"><span>Coração</span><span class="price">R$ 8,00</span><button class="btn-add" onclick="add('Adicional Coração',8)">+</button></div>
-    <div class="item"><span>Ovo</span><span class="price">R$ 5,00</span><button class="btn-add" onclick="add('Adicional Ovo',5)">+</button></div>
-    <div class="item"><span>Salsicha</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="add('Adicional Salsicha',4)">+</button></div>
-    <div class="item"><span>Frango</span><span class="price">R$ 7,00</span><button class="btn-add" onclick="add('Adicional Frango',7)">+</button></div>
-    <div class="item"><span>Cheddar</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="add('Adicional Cheddar',4)">+</button></div>
-    <div class="item"><span>Hambúrguer artesanal</span><span class="price">R$ 10,00</span><button class="btn-add" onclick="add('Adicional Hambúrguer',10)">+</button></div>
-    <div class="item"><span>Maionese caseira</span><span class="price">R$ 2,00</span><button class="btn-add" onclick="add('Adicional Maionese',2)">+</button></div>
+body{
+  background:var(--bg);
+  display:flex;
+  justify-content:center;
+}
 
+#app{
+  width:100%;
+  max-width:480px;
+  background:#f7f7f7;
+  min-height:100vh;
+  display:none;
+}
+
+/* SPLASH */
+#splash{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+#splash h1{
+  color:var(--red);
+  font-size:38px;
+  letter-spacing:3px;
+  text-align:center;
+}
+#splash button{
+  margin-top:30px;
+  background:var(--red);
+  color:#fff;
+  border:none;
+  padding:18px 50px;
+  border-radius:30px;
+  font-size:18px;
+  cursor:pointer;
+  animation:pulse 1.8s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+  100%{transform:scale(1)}
+}
+
+/* HEADER */
+.header{
+  background:#fff;
+  padding:16px;
+  font-size:22px;
+  font-weight:700;
+  text-align:center;
+  border-bottom:1px solid #ddd;
+}
+
+/* BUSCA */
+.search-box{
+  padding:14px;
+  background:#fff;
+}
+.search-input{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  font-size:16px;
+}
+.search-results{
+  background:#fff;
+  margin-top:6px;
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+  display:none;
+}
+.search-item{
+  padding:10px;
+  border-bottom:1px solid #eee;
+}
+
+/* CATEGORIA */
+.category-btn{
+  padding:16px;
+  font-size:20px;
+  font-weight:700;
+  background:#fff;
+  margin-top:10px;
+  cursor:pointer;
+  border-bottom:1px solid #eee;
+}
+
+/* LISTA */
+.content-box{
+  display:none;
+  padding:10px;
+}
+
+/* ITEM */
+.item{
+  background:#fff;
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:10px;
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+.price{
+  font-weight:700;
+}
+.price.oferta{
+  color:var(--red);
+}
+.badge{
+  background:var(--red);
+  color:#fff;
+  font-size:10px;
+  padding:2px 6px;
+  border-radius:6px;
+  margin-left:6px;
+}
+.btn-add{
+  background:var(--red);
+  color:#fff;
+  border:none;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* SUB */
+.sub-btn{
+  background:#eee;
+  padding:14px;
+  border-radius:12px;
+  font-weight:700;
+  margin:10px 0;
+  cursor:pointer;
+}
+
+/* CARRINHO */
+#cart{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  max-width:480px;
+  background:#fff;
+  border-top:1px solid #ddd;
+  padding:14px;
+  display:none;
+}
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:6px;
+}
+.remove{
+  color:var(--red);
+  cursor:pointer;
+}
+.total{
+  font-weight:700;
+  margin-top:8px;
+}
+.btn-finish{
+  background:var(--red);
+  color:#fff;
+  padding:16px;
+  border-radius:14px;
+  text-align:center;
+  font-weight:700;
+  margin-top:10px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="splash">
+  <div>
+    <h1>RABIKA’S<br>BURGUER</h1>
+    <button onclick="startApp()">FAZER PEDIDO</button>
   </div>
 </div>
 
-<!-- ================= PASTÉIS ================= -->
-<div class="category-btn" onclick="toggleBox('pasteis')">🥟 Pastéis</div>
-<div class="content-box" id="pasteis">
+<div id="app">
+  <div class="header">Rabika’s Burguer</div>
 
-  <div class="item"><span>Pastel de Carne</span><span class="price">R$ 14,00</span><button class="btn-add" onclick="add('Pastel de Carne',14)">+</button></div>
-  <div class="item"><span>Pastel de Frango</span><span class="price">R$ 12,00</span><button class="btn-add" onclick="add('Pastel de Frango',12)">+</button></div>
-  <div class="item"><span>Frango Bacon Cheddar</span><span class="price">R$ 16,00</span><button class="btn-add" onclick="add('Pastel Frango Bacon Cheddar',16)">+</button></div>
-  <div class="item"><span>Bacon Cheddar</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="add('Pastel Bacon Cheddar',15)">+</button></div>
-  <div class="item"><span>Calabresa c/ Cebola</span><span class="price">R$ 14,00</span><button class="btn-add" onclick="add('Pastel Calabresa com Cebola',14)">+</button></div>
-  <div class="item"><span>Carne e Queijo</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="add('Pastel Carne e Queijo',15)">+</button></div>
-  <div class="item"><span>Queijo</span><span class="price">R$ 14,00</span><button class="btn-add" onclick="add('Pastel Queijo',14)">+</button></div>
-  <div class="item"><span>Chocolate ao Leite</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="add('Pastel Chocolate ao Leite',15)">+</button></div>
-  <div class="item"><span>Banana Queijo Canela</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="add('Pastel Banana Queijo Canela',15)">+</button></div>
-  <div class="item"><span>Romeu e Julieta</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="add('Pastel Romeu e Julieta',15)">+</button></div>
-  <div class="item"><span>Chocolate Branco</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="add('Pastel Chocolate Branco',15)">+</button></div>
-  <div class="item"><span>Creme e Ouro Branco</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="add('Pastel Creme e Ouro Branco',15)">+</button></div>
-  <div class="item"><span>Creme e Sonho de Valsa</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="add('Pastel Creme e Sonho de Valsa',15)">+</button></div>
-
-</div>
+  <div class="search-box">
+    <input class="search-input" placeholder="Pesquisar produto ou digite oferta" oninput="search(this.value)">
+    <div class="search-results" id="results"></div>
+  </div>
 <!-- ================= PORÇÕES ================= -->
 <div class="category-btn" onclick="toggleBox('porcoes')">🍟 Porções</div>
 <div class="content-box" id="porcoes">
@@ -342,29 +508,45 @@ body{
 <script>
 /* ================= VARIÁVEIS ================= */
 let cart = [];
+let entrega = false;
 let offers = JSON.parse(localStorage.getItem("offers")) || {};
-let adminProducts = {};
 
-/* ================= START ================= */
+/* ================= START APP ================= */
 function startApp(){
-  document.getElementById("splash").style.display="none";
-  document.getElementById("app").style.display="block";
+  document.getElementById("splash").style.display = "none";
+  document.getElementById("app").style.display = "block";
   aplicarOfertas();
 }
 
-/* ================= TOGGLE BOX ================= */
+/* ================= ABAS ================= */
 function toggleBox(id){
   const el = document.getElementById(id);
   el.style.display = el.style.display === "block" ? "none" : "block";
 }
 
+/* ================= HORÁRIO ================= */
+function estaAberto(){
+  const d = new Date();
+  const dia = d.getDay(); // 0 dom / 1 seg
+  const hora = d.getHours() + d.getMinutes()/60;
+
+  if(dia === 1) return false; // segunda fechado
+  if(hora < 18.5 || hora > 22.5) return false;
+
+  return true;
+}
+
 /* ================= ADD AO CARRINHO ================= */
 function add(name, price){
+  if(!estaAberto()){
+    alert("⏰ Estamos fechados.\nTerça a Domingo das 18:30 às 22:30");
+    return;
+  }
   cart.push({name, price});
   updateCart();
 }
 
-/* ================= REMOVE ================= */
+/* ================= REMOVER ================= */
 function removeItem(i){
   cart.splice(i,1);
   updateCart();
@@ -372,50 +554,111 @@ function removeItem(i){
 
 /* ================= CARRINHO ================= */
 function updateCart(){
-  const cartBox = document.getElementById("cart");
-  cartBox.innerHTML = "";
+  const box = document.getElementById("cart");
+  box.innerHTML = "";
   let total = 0;
 
   cart.forEach((item,i)=>{
     total += item.price;
-    cartBox.innerHTML += `
+    box.innerHTML += `
       <div class="cart-item">
         <span>${item.name}</span>
         <span>
           R$ ${item.price.toFixed(2).replace('.',',')}
-          <span class="remove" onclick="removeItem(${i})"> ❌</span>
+          <span class="remove" onclick="removeItem(${i})">❌</span>
         </span>
       </div>`;
   });
 
-  if(cart.length){
-    cartBox.innerHTML += `
-      <div class="total">Total: R$ ${total.toFixed(2).replace('.',',')}</div>
-      <div class="btn-finish" onclick="finalizar()">Finalizar Pedido</div>`;
-    cartBox.style.display="block";
-  }else{
-    cartBox.style.display="none";
+  if(!cart.length){
+    box.style.display = "none";
+    return;
   }
+
+  box.style.display = "block";
+
+  box.innerHTML += `
+    <hr style="margin:10px 0">
+
+    <div>
+      <label>
+        <input type="radio" name="tipo" checked onclick="setEntrega(false)">
+        Retirada
+      </label>
+      &nbsp;&nbsp;
+      <label>
+        <input type="radio" name="tipo" onclick="setEntrega(true)">
+        Entrega (+ R$ 8)
+      </label>
+    </div>
+
+    <div id="entregaBox" style="display:none;margin-top:10px">
+      <input id="nomeCliente" class="search-input" placeholder="Seu nome">
+      <input id="enderecoCliente" class="search-input" placeholder="Endereço" style="margin-top:6px">
+
+      <select id="pagamento" class="search-input" style="margin-top:6px">
+        <option value="">Forma de pagamento</option>
+        <option>Dinheiro</option>
+        <option>Pix</option>
+        <option>Cartão Débito</option>
+        <option>Cartão Crédito</option>
+      </select>
+    </div>
+
+    <div class="total" id="totalBox">
+      Total: R$ ${total.toFixed(2).replace('.',',')}
+    </div>
+
+    <div class="btn-finish" onclick="finalizar()">Finalizar Pedido</div>
+  `;
+}
+
+/* ================= ENTREGA ================= */
+function setEntrega(v){
+  entrega = v;
+  const box = document.getElementById("entregaBox");
+  box.style.display = v ? "block" : "none";
+
+  let total = cart.reduce((s,i)=>s+i.price,0);
+  if(v) total += 8;
+
+  document.getElementById("totalBox").innerText =
+    "Total: R$ " + total.toFixed(2).replace('.',',');
 }
 
 /* ================= FINALIZAR ================= */
 function finalizar(){
-  alert("Pedido registrado! (checkout pode ser integrado depois)");
-  cart=[];
+  if(entrega){
+    const nome = document.getElementById("nomeCliente").value;
+    const end = document.getElementById("enderecoCliente").value;
+    const pag = document.getElementById("pagamento").value;
+
+    if(!nome || !end || !pag){
+      alert("Preencha nome, endereço e forma de pagamento");
+      return;
+    }
+  }
+
+  alert("✅ Pedido registrado com sucesso!");
+  cart = [];
+  entrega = false;
   updateCart();
 }
 
 /* ================= BUSCA ================= */
 function search(q){
   const box = document.getElementById("results");
-  box.innerHTML="";
+  box.innerHTML = "";
   q = q.toLowerCase().trim();
 
-  if(!q){ box.style.display="none"; return; }
+  if(!q){
+    box.style.display = "none";
+    return;
+  }
 
-  if(q==="oferta"){
-    const senha = prompt("Senha admin:");
-    if(senha==="adm"){
+  if(q === "oferta"){
+    const senha = prompt("Senha administrativa:");
+    if(senha === "adm"){
       abrirAdmin();
     }
     return;
@@ -433,52 +676,55 @@ function search(q){
 /* ================= ADMIN ================= */
 function abrirAdmin(){
   const admin = document.getElementById("admin");
-  admin.style.display="block";
+  admin.style.display = "block";
   carregarAdmin("lanches");
 }
 
 function fecharAdmin(){
-  document.getElementById("admin").style.display="none";
+  document.getElementById("admin").style.display = "none";
 }
 
 function carregarAdmin(cat){
-  const box = document.getElementById("admin");
-  const content = document.createElement("div");
-  content.innerHTML = "<h3>"+cat.toUpperCase()+"</h3>";
-
-  document.querySelectorAll("#"+cat+" .item span:first-child").forEach(el=>{
-    const nome = el.innerText.replace("OFERTA","").trim();
-    content.innerHTML += `
-      <div class="admin-item">
-        <b>${nome}</b><br>
-        Preço oferta:
-        <input type="number" id="p_${nome}"><br>
-        Validade:
-        <input type="date" id="d_${nome}"><br>
-        <button onclick="salvarOferta('${nome}')">Salvar</button>
-      </div>`;
-  });
-
-  box.innerHTML = `
-    <div class="admin-tabs">
+  const admin = document.getElementById("admin");
+  admin.innerHTML = `
+    <div style="margin-bottom:10px">
       <button onclick="carregarAdmin('lanches')">Lanches</button>
       <button onclick="carregarAdmin('porcoes')">Porções</button>
       <button onclick="carregarAdmin('bebidas')">Bebidas</button>
       <button onclick="carregarAdmin('pasteis')">Pastéis</button>
       <button onclick="carregarAdmin('acai')">Açaí</button>
       <button onclick="fecharAdmin()">Fechar</button>
-    </div>`;
-  box.appendChild(content);
+    </div>
+  `;
+
+  document.querySelectorAll("#"+cat+" .item span:first-child").forEach(el=>{
+    const nome = el.innerText.replace("OFERTA","").trim();
+    admin.innerHTML += `
+      <div class="admin-item">
+        <b>${nome}</b><br>
+        Preço oferta:
+        <input type="number" id="p_${nome}" step="0.01"><br>
+        Validade:
+        <input type="date" id="d_${nome}"><br>
+        <button onclick="salvarOferta('${nome}')">Salvar</button>
+      </div>`;
+  });
 }
 
 /* ================= SALVAR OFERTA ================= */
 function salvarOferta(nome){
-  offers[nome] = {
-    price: Number(document.getElementById("p_"+nome).value),
-    valid: document.getElementById("d_"+nome).value
-  };
+  const preco = document.getElementById("p_"+nome).value;
+  const data = document.getElementById("d_"+nome).value;
+
+  if(!preco || !data){
+    alert("Informe preço e validade");
+    return;
+  }
+
+  offers[nome] = {price:Number(preco), valid:data};
   localStorage.setItem("offers", JSON.stringify(offers));
   alert("Oferta salva!");
+  aplicarOfertas();
 }
 
 /* ================= APLICAR OFERTAS ================= */
@@ -489,8 +735,6 @@ function aplicarOfertas(){
     const nomeEl = item.querySelector("span:first-child");
     const priceEl = item.querySelector(".price");
     const btn = item.querySelector(".btn-add");
-
-    if(!nomeEl || !priceEl || !btn) return;
 
     const nome = nomeEl.innerText.replace("OFERTA","").trim();
 
@@ -507,12 +751,20 @@ function aplicarOfertas(){
   });
 }
 </script>
-<!-- ================= CARRINHO (RODAPÉ) ================= -->
+<!-- ================= CARRINHO (FIXO NO RODAPÉ) ================= -->
 <div id="cart"></div>
 
 <!-- ================= TELA ADMIN (OFERTAS) ================= -->
-<div id="admin"></div>
-
+<div id="admin" style="
+  position:fixed;
+  inset:0;
+  background:#f7f7f7;
+  z-index:99999;
+  display:none;
+  overflow:auto;
+  padding:16px;
+">
+</div>
 </div> <!-- FIM DO #app -->
 
 </body>
