@@ -13,8 +13,9 @@ body{
     color:#fff;
     display:flex;
     justify-content:center;
-    overflow:hidden;
+    overflow-x:hidden;
 }
+
 
     background:linear-gradient(180deg,#06003a 0%,#0a045a 50%,#03001f 100%);
     font-family:Arial,Helvetica,sans-serif;
@@ -36,53 +37,34 @@ body{
     align-items:center;
     z-index:9999;
 }
-.splash-content{
-    width:100%;
-    max-width:420px;
+.splash-box{
     display:flex;
     flex-direction:column;
-    justify-content:center;
     align-items:center;
-    gap:34px;
+    gap:30px;
 }
-.splash-logo{width:80%; max-width:300px}
+.splash-logo{
+    width:260px;
+    max-width:80vw;
+}
 .splash-btn{
     background:linear-gradient(135deg,#FFD34D,#FFB000);
-    border:none; padding:20px 52px; border-radius:42px;
-    font-size:20px; font-weight:bold; color:#2b0033;
-    cursor:pointer;
-    box-shadow:0 10px 30px rgba(0,0,0,.35);
-    animation:pulse 1.6s infinite;
-}
-
-.splash-content{position:relative; z-index:10000;}
-.splash-btn{position:relative; z-index:10001; pointer-events:auto;}
-
-    pointer-events:auto;
-
-    position:fixed; inset:0;
-    background:linear-gradient(180deg,#05002e,#020018);
-    display:flex; justify-content:center; align-items:center;
-    z-index:9999;
-}
-.splash-content{
-    width:100%; height:100%;
-    display:flex; flex-direction:column;
-    justify-content:center; align-items:center;
-    gap:34px;
-}
-.splash-logo{width:88vw; max-width:420px}
-.splash-btn{
-    pointer-events:auto;
-
-    background:linear-gradient(135deg,#FFD34D,#FFB000);
-    border:none; padding:20px 52px; border-radius:42px;
-    font-size:20px; font-weight:bold; color:#2b0033;
+    border:none;
+    padding:18px 48px;
+    border-radius:40px;
+    font-size:20px;
+    font-weight:900;
+    color:#2b0033;
     cursor:pointer;
     box-shadow:0 10px 30px rgba(0,0,0,.35);
     animation:pulse 1.6s infinite;
 }
 @keyframes pulse{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.05)}
+    100%{transform:scale(1)}
+}
+{
     0%{transform:scale(1)}
     50%{transform:scale(1.06)}
     100%{transform:scale(1)}
@@ -299,36 +281,9 @@ body{
 <body>
 
 <div id="splashScreen">
-  <div class="splash-content">
-    <img src="logo.png" class="splash-logo">
-    <button class="splash-btn" id="startBtn">FAZER PEDIDO</button>
-  </div>
-</div>
-
-
-<div id="adminPanel">
-  <div class="admin-container">
-    <div class="admin-header">
-      <div class="admin-title">PAINEL ADM – OFERTAS</div>
-      <button class="admin-close" onclick="closeAdmin()">Fechar</button>
-    </div>
-
-    <div class="admin-card">
-      <b>Criar / Editar Oferta</b>
-      <div class="admin-row">
-        <select id="offerProduct"></select>
-        <input id="offerPrice" type="number" step="0.01" placeholder="Preço oferta">
-      </div>
-      <div class="admin-row">
-        <input id="offerExpire" type="date">
-      </div>
-      <button class="admin-btn" onclick="saveOffer()">Salvar Oferta</button>
-    </div>
-
-    <div class="admin-card">
-      <b>Ofertas Ativas</b>
-      <div id="offerList" class="admin-offer-list"></div>
-    </div>
+  <div class="splash-box">
+    <img src="logo.png" class="splash-logo" alt="Rabika's Burguer">
+    <button id="startBtn" class="splash-btn">FAZER PEDIDO</button>
   </div>
 </div>
 
@@ -351,20 +306,17 @@ body{
   }
 });
 
-// FIX DEFINITIVO SPLASH
-(function(){
-  const btn = document.getElementById('startBtn');
-  if(btn){
-    btn.onclick = function(){
-      document.getElementById('splashScreen').style.display = 'none';
-      const app = document.getElementById('app');
-      app.style.display = 'flex';
-      app.style.opacity = '0';
-      app.style.transition = 'opacity .3s ease';
-      requestAnimationFrame(()=>{ app.style.opacity = '1'; });
-    };
-  }
-})();
+
+
+// SPLASH FUNCIONAL SIMPLES
+const startBtn = document.getElementById('startBtn');
+if(startBtn){
+  startBtn.addEventListener('click', ()=>{
+    document.getElementById('splashScreen').style.display = 'none';
+    const app = document.getElementById('app');
+    app.style.display = 'flex';
+  });
+}
 </script></span><button class="btn-add" onclick="addToCart('X-Salada',17)">+</button></div>
   <div class="item"><span>X-Burguer</span><span>R$ <script>document.write(getPrice('X-Burguer',14).toFixed(2).replace('.',','))</script></span><button class="btn-add" onclick="addToCart('X-Burguer',14)">+</button></div>
   <div class="item"><span>X-Frango</span><span>R$ <script>document.write(getPrice('X-Frango',22).toFixed(2).replace('.',','))</script></span><button class="btn-add" onclick="addToCart('X-Frango',22)">+</button></div></span><span>R$ 17,00</span><button class="btn-add" onclick="addToCart('X-Salada',17)">+</button></div>
