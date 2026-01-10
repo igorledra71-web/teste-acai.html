@@ -19,7 +19,7 @@ body{
 /* SPLASH */
 #splashScreen{
     position:fixed; inset:0;
-    background:linear-gradient(180deg,#06003a,#03001f);
+    background:linear-gradient(180deg,#05002e,#020018);
     display:flex; justify-content:center; align-items:center;
     z-index:9999;
 }
@@ -27,14 +27,16 @@ body{
     width:100%; height:100%;
     display:flex; flex-direction:column;
     justify-content:center; align-items:center;
-    gap:30px;
+    gap:34px;
 }
-.splash-logo{width:90vw; max-width:420px}
+.splash-logo{width:88vw; max-width:420px}
 .splash-btn{
     background:linear-gradient(135deg,#FFD34D,#FFB000);
-    border:none; padding:18px 46px; border-radius:40px;
+    border:none; padding:20px 52px; border-radius:42px;
     font-size:20px; font-weight:bold; color:#2b0033;
-    cursor:pointer; animation:pulse 1.6s infinite;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+    animation:pulse 1.6s infinite;
 }
 @keyframes pulse{
     0%{transform:scale(1)}
@@ -45,45 +47,147 @@ body{
 /* APP */
 #app{
     width:100%; max-width:420px;
-    padding:20px 12px 360px;
+    padding:22px 14px 380px;
     display:none; flex-direction:column; align-items:center;
 }
-.brand-title{font-size:28px;font-weight:bold;color:#FFD34D;margin-bottom:10px}
+.brand-title{
+    font-size:30px;
+    font-weight:800;
+    color:#FFD34D;
+    margin-bottom:14px;
+}
 
 /* BUSCA */
-.search-box{width:100%; margin-bottom:15px}
+.search-box{width:100%; margin-bottom:18px}
 .search-input{
-    width:100%; padding:12px; border-radius:14px; border:none; font-size:16px;
+    width:100%;
+    padding:14px;
+    border-radius:20px;
+    border:none;
+    font-size:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
 }
 .search-results{
-    background:#fff; color:#2b0033; border-radius:14px; margin-top:8px; display:none;
+    background:#fff;
+    color:#2b0033;
+    border-radius:20px;
+    margin-top:10px;
+    display:none;
+    box-shadow:0 14px 30px rgba(0,0,0,.3);
 }
-.search-item{padding:10px; border-bottom:1px dashed #ccc}
+.search-item{
+    padding:14px;
+    border-bottom:1px dashed #ddd;
+    font-size:14px;
+}
 .search-item:last-child{border:none}
 
 /* CATEGORIAS */
 .category-btn{
-    width:100%; background:linear-gradient(135deg,#ffcc00,#ff9900);
-    color:#2b0033; padding:16px; border-radius:20px;
-    font-weight:bold; margin-bottom:14px; cursor:pointer; text-align:center;
+    width:100%;
+    background:linear-gradient(135deg,#ffcc00,#ff9900);
+    color:#2b0033;
+    padding:18px;
+    border-radius:28px;
+    font-weight:800;
+    margin-bottom:16px;
+    cursor:pointer;
+    text-align:center;
+    box-shadow:0 12px 28px rgba(0,0,0,.35);
 }
 .sub-btn{
-    width:100%; background:#FFD34D; color:#2b0033;
-    padding:12px; border-radius:16px; font-weight:bold; margin:10px 0;
-    cursor:pointer; text-align:center;
+    width:100%;
+    background:#FFD34D;
+    color:#2b0033;
+    padding:14px;
+    border-radius:24px;
+    font-weight:700;
+    margin:12px 0;
+    cursor:pointer;
+    text-align:center;
 }
+
+/* ITENS */
 .content-box{
-    width:100%; background:#fff; color:#2b0033; border-radius:20px;
-    padding:15px; margin-bottom:20px; display:none;
+    width:100%;
+    background:#fff;
+    color:#2b0033;
+    border-radius:32px;
+    padding:18px;
+    margin-bottom:22px;
+    display:none;
 }
 .item{
-    display:grid; grid-template-columns:1fr auto auto; gap:10px;
-    padding:10px 0; border-bottom:1px dashed #ddd;
+    display:grid;
+    grid-template-columns:1fr auto auto;
+    gap:12px;
+    padding:14px 0;
+    border-bottom:1px dashed #e3e3e3;
 }
 .item:last-child{border:none}
 .btn-add{
-    background:#5a0070; color:#fff; border:none; border-radius:10px;
-    padding:6px 12px; cursor:pointer;
+    background:#5a0070;
+    color:#fff;
+    border:none;
+    border-radius:14px;
+    padding:6px 14px;
+    cursor:pointer;
+}
+
+/* CARRINHO */
+.cart-footer{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:420px;
+    background:#fff;
+    color:#2b0033;
+    padding:18px;
+    border-radius:32px 32px 0 0;
+    display:none;
+}
+.cart-item{
+    display:grid;
+    grid-template-columns:1fr auto auto;
+    gap:10px;
+    padding:8px 0;
+}
+.remove-btn{
+    background:#e60000;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:2px 8px;
+    cursor:pointer;
+}
+.delivery-box{
+    display:flex;
+    justify-content:space-around;
+    margin:14px 0;
+}
+.input-field,.select-field{
+    width:100%;
+    padding:12px;
+    border-radius:18px;
+    border:1px solid #ccc;
+    margin-top:10px;
+}
+.total{
+    text-align:right;
+    font-weight:900;
+    font-size:18px;
+    margin-top:10px;
+}
+.btn-finish{
+    background:#25D366;
+    color:#fff;
+    padding:16px;
+    border-radius:22px;
+    font-weight:900;
+    margin-top:14px;
+    cursor:pointer;
 }
 </style>
 </head>
@@ -103,45 +207,8 @@ body{
   <div class="brand-title">Rabika's Burguer</div>
 
   <div class="search-box">
-    <input class="search-input" placeholder="Pesquisar produto...">
-  </div>
-<!-- LANCHES -->
-<div class="category-btn" onclick="toggle('lanches')">🍔 Lanches</div>
-<div class="content-box" id="lanches">
-  <div class="item"><span>X-Salada</span><span>R$ 17,00</span><button class="btn-add" onclick="addToCart('X-Salada',17)">+</button></div>
-  <div class="item"><span>X-Burguer</span><span>R$ 14,00</span><button class="btn-add" onclick="addToCart('X-Burguer',14)">+</button></div>
-  <div class="item"><span>X-Frango</span><span>R$ 22,00</span><button class="btn-add" onclick="addToCart('X-Frango',22)">+</button></div>
-  <div class="item"><span>X-Frango Cremoso</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Frango Cremoso',20)">+</button></div>
-  <div class="item"><span>X-Bacon</span><span>R$ 25,00</span><button class="btn-add" onclick="addToCart('X-Bacon',25)">+</button></div>
-  <div class="item"><span>X-Calabresa</span><span>R$ 25,00</span><button class="btn-add" onclick="addToCart('X-Calabresa',25)">+</button></div>
-  <div class="item"><span>X-Coração</span><span>R$ 27,00</span><button class="btn-add" onclick="addToCart('X-Coração',27)">+</button></div>
-  <div class="item"><span>X-Tudo</span><span>R$ 32,00</span><button class="btn-add" onclick="addToCart('X-Tudo',32)">+</button></div>
-  <div class="item"><span>X-Burguer Duplo</span><span>R$ 22,00</span><button class="btn-add" onclick="addToCart('X-Burguer Duplo',22)">+</button></div>
-  <div class="item"><span>X-Egg</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Egg',20)">+</button></div>
-  <div class="item"><span>X-Tribom</span><span>R$ 32,00</span><button class="btn-add" onclick="addToCart('X-Tribom',32)">+</button></div>
-  <div class="item"><span>X-Da Casa</span><span>R$ 45,00</span><button class="btn-add" onclick="addToCart('X-Da Casa',45)">+</button></div>
-  <div class="item"><span>X-Dog</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Dog',20)">+</button></div>
-
-  <div class="sub-btn" onclick="toggle('extrasLanches')">➕ Adicionais para Lanches</div>
-  <div id="extrasLanches" style="display:none;">
-    <div class="item"><span>Calabresa</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Calabresa',7)">+</button></div>
-    <div class="item"><span>Bacon</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Bacon',7)">+</button></div>
-    <div class="item"><span>Coração</span><span>R$ 8,00</span><button class="btn-add" onclick="addToCart('Adicional Coração',8)">+</button></div>
-    <div class="item"><span>Ovo</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Adicional Ovo',3)">+</button></div>
-    <div class="item"><span>Salsicha</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Adicional Salsicha',4)">+</button></div>
-    <div class="item"><span>Frango</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Frango',7)">+</button></div>
-    <div class="item"><span>Cheddar</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Adicional Cheddar',4)">+</button></div>
-    <div class="item"><span>Hambúrguer artesanal</span><span>R$ 10,00</span><button class="btn-add" onclick="addToCart('Adicional Hambúrguer',10)">+</button></div>
-    <div class="item"><span>Maionese caseira</span><span>R$ 2,00</span><button class="btn-add" onclick="addToCart('Adicional Maionese',2)">+</button></div>
+    <input class="search-input" placeholder="Pesquisar produto..." oninput="searchProduct(this.value)">
+    <div class="search-results" id="searchResults"></div>
   </div>
 
-<script>
-function enterApp(){
-  document.getElementById("splashScreen").style.display="none";
-  document.getElementById("app").style.display="flex";
-}
-</script>
-
-</body>
-</html>
-
+<!-- ⬇️ PARTE 2 COMEÇA AQUI -->
