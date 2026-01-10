@@ -1,3 +1,112 @@
+<!-- ===== TELA ADMIN DE OFERTAS ===== -->
+<div id="adminScreen" style="
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg,#05002e,#020018);
+  z-index:99999;
+  display:none;
+  color:#fff;
+  padding:20px;
+  overflow-y:auto;
+">
+
+  <h2 style="text-align:center;color:#FFD34D;margin-bottom:20px">
+    🔐 Painel de Ofertas
+  </h2>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:20px">
+    <button class="sub-btn" onclick="showAdminTab('lanches')">🍔 Lanches</button>
+    <button class="sub-btn" onclick="showAdminTab('pasteis')">🥟 Pastéis</button>
+    <button class="sub-btn" onclick="showAdminTab('porcoes')">🍟 Porções</button>
+    <button class="sub-btn" onclick="showAdminTab('bebidas')">🥤 Bebidas</button>
+    <button class="sub-btn" onclick="showAdminTab('acai')">🍨 Açaí</button>
+  </div>
+
+  <div id="adminContent"></div>
+
+  <div class="btn-finish" style="margin-top:30px" onclick="closeAdmin()">
+    Fechar Painel
+  </div>
+</div>
+
+<script>
+/* ===== SISTEMA DE OFERTAS ===== */
+let ofertas = JSON.parse(localStorage.getItem("ofertas")) || {};
+
+/* intercepta busca por "oferta" */
+const originalSearch = searchProduct;
+searchProduct = function(q){
+  if(q.toLowerCase() === "oferta"){
+    document.getElementById("searchResults").innerHTML =
+      '<div class="search-item" onclick="openAdmin()">🔥 Gerenciar Ofertas</div>';
+    document.getElementById("searchResults").style.display = "block";
+    return;
+  }
+  originalSearch(q);
+}
+
+function openAdmin(){
+  const senha = prompt("Senha de acesso:");
+  if(senha !== "adm"){
+    alert("Senha incorreta");
+    return;
+  }
+  document.getElementById("adminScreen").style.display = "block";
+  showAdminTab("lanches");
+}
+
+function closeAdmin(){
+  document.getElementById("adminScreen").style.display = "none";
+}
+
+function showAdminTab(cat){
+  const lista = searchProducts.filter(p=>{
+    if(cat==="lanches") return p.n.startsWith("X-") || p.n.startsWith("Adicional");
+    if(cat==="pasteis") return p.n.startsWith("Pastel");
+    if(cat==="porcoes") return p.n.startsWith("Fritas") || p.n.includes("Porção");
+    if(cat==="bebidas") return p.n.includes("ml") || p.n.includes("Refrigerante") || p.n.includes("Cerveja");
+    if(cat==="acai") return p.n.includes("Açaí") || ["Paçoca","Leite em pó","Granola","Morango","M&M","Ouro Branco","Banana","Sonho de Valsa","Leite Condensado","Nutella"].includes(p.n);
+  });
+
+  let html = "";
+  lista.forEach(p=>{
+    const of = ofertas[p.n] || {};
+    html += `
+      <div class="content-box" style="display:block">
+        <b>${p.n}</b><br>
+        Preço atual: R$ ${p.p}<br><br>
+
+        <input class="input-field" placeholder="Preço promocional" value="${of.preco||""}" id="preco_${p.n}">
+        <input class="input-field" type="date" value="${of.validade||""}" id="data_${p.n}">
+
+        <button class="btn-add" style="margin-top:10px"
+          onclick="salvarOferta('${p.n}',${p.p})">
+          Salvar Oferta
+        </button>
+      </div>
+    `;
+  });
+
+  document.getElementById("adminContent").innerHTML = html;
+}
+
+function salvarOferta(nome, precoOriginal){
+  const preco = document.getElementById("preco_"+nome).value;
+  const validade = document.getElementById("data_"+nome).value;
+
+  if(!preco || !validade){
+    alert("Preencha preço e data");
+    return;
+  }
+
+  ofertas[nome] = {
+    preco: parseFloat(preco),
+    validade
+  };
+  localStorage.setItem("ofertas", JSON.stringify(ofertas));
+  alert("Oferta salva!");
+}
+</script>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -387,4 +496,5 @@ function searchProduct(){}
 
   <div class="btn-finish" onclick="finishOrder()">Finalizar Pedido</div>
 </div>
+
 
