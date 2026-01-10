@@ -340,3 +340,51 @@ function searchProduct(){}
       <div class="item"><span>Nutella</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Nutella',4)">+</button></div>
     </div>
   </div>
+</div> <!-- FECHA #app -->
+
+<!-- CARRINHO / PAGAMENTO -->
+<div class="cart-footer" id="cartFooter">
+  <div id="cartItems"></div>
+
+  <div class="delivery-box">
+    <label>
+      <input type="radio" name="entrega" checked onchange="setDelivery(false)">
+      Retirada
+    </label>
+    <label>
+      <input type="radio" name="entrega" onchange="setDelivery(true)">
+      Entrega (+ R$8)
+    </label>
+  </div>
+
+  <input class="input-field" id="clientName" placeholder="Seu nome">
+
+  <div id="addressBox" style="display:none;">
+    <input class="input-field" id="clientAddress" placeholder="Endereço para entrega">
+  </div>
+
+  <select class="select-field" id="paymentMethod" onchange="checkPayment()">
+    <option value="">Forma de pagamento</option>
+    <option value="Dinheiro">Dinheiro</option>
+    <option value="Pix">Pix</option>
+    <option value="Cartão Débito">Cartão Débito</option>
+    <option value="Cartão Crédito">Cartão Crédito</option>
+  </select>
+
+  <div id="trocoBox" style="display:none;margin-top:10px;">
+    <div style="display:flex;gap:10px;">
+      <button type="button" class="btn-add" style="background:#FFD34D;color:#2b0033;flex:1" onclick="setTroco(true)">
+        Preciso de troco
+      </button>
+      <button type="button" class="btn-add" style="background:#ccc;color:#2b0033;flex:1" onclick="setTroco(false)">
+        Não preciso
+      </button>
+    </div>
+    <input class="input-field" id="trocoValue" placeholder="Troco para quanto? Ex: 50,00" style="display:none;">
+  </div>
+
+  <div class="total" id="totalValue">Total: R$ 0,00</div>
+
+  <div class="btn-finish" onclick="finishOrder()">Finalizar Pedido</div>
+</div>
+
