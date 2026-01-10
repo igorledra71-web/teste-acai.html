@@ -9,18 +9,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Poppins',sans-serif;background:linear-gradient(180deg,#06003a,#0a045a,#03001f);color:#fff;display:flex;justify-content:center}
-#app{width:100%;max-width:420px;padding:14px 14px 340px;display:none}
+body{font-family:'Poppins',sans-serif;background:linear-gradient(180deg,#06003a,#0a045a,#03001f);color:#fff;display:flex;justify-content:center;min-height:100vh}
+#app{width:100%;max-width:480px;padding:14px 14px 360px;display:none}@media(min-width:600px){#app{max-width:540px}}@media(min-width:768px){#app{max-width:600px}}
 .title{text-align:center;font-size:30px;font-weight:900;color:#FFD34D;margin-bottom:6px}
 .search{width:100%;padding:14px 16px;border-radius:22px;border:none;font-size:15px;margin-bottom:10px}
 #closedBanner{display:none;background:#b00020;color:#fff;text-align:center;padding:10px;border-radius:0 0 18px 18px;margin-bottom:10px}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}@media(min-width:480px){.tabs{grid-template-columns:repeat(5,1fr)}}
 .tab{background:#fff;color:#2b0033;padding:12px;border-radius:20px;font-weight:800;text-align:center;cursor:pointer;font-size:14px}
 .tab.active{background:#FFD34D}
 .box{background:#fff;color:#2b0033;border-radius:28px;padding:18px;margin-bottom:20px;display:none}
 .box.active{display:block}
 .section{font-weight:900;color:#5a0070;margin:18px 0 10px;font-size:14px}
-.item{display:grid;grid-template-columns:1fr auto auto;gap:10px;padding:12px 0;border-bottom:1px dashed #e3e3e3;align-items:center}
+.item{display:grid;grid-template-columns:1fr auto auto;gap:10px;padding:12px 0;border-bottom:1px dashed #e3e3e3;align-items:center}@media(max-width:360px){.item{grid-template-columns:1fr auto}}
 .item:last-child{border:none}
 .item-name{font-weight:600;font-size:14px}
 .item-price{font-weight:900;color:#5a0070;font-size:14px}
@@ -38,7 +38,7 @@ body{font-family:'Poppins',sans-serif;background:linear-gradient(180deg,#06003a,
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9999}
 .modal-box{background:#fff;color:#2b0033;width:92%;max-width:400px;border-radius:26px;padding:20px}
 .admin-box{background:#fff;color:#2b0033;width:92%;max-width:420px;border-radius:26px;padding:20px}
-.admin-row{display:grid;grid-template-columns:1fr auto auto;gap:6px;margin-bottom:8px}
+.admin-row{display:grid;grid-template-columns:1fr 90px 130px;gap:8px;margin-bottom:10px;align-items:center}.admin-row::after{content:'📅';font-size:18px;position:absolute;right:26px;pointer-events:none}
 .admin-row input{padding:8px;border-radius:10px;border:1px solid #ccc}
 </style>
 </head>
