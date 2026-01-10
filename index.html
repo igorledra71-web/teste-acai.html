@@ -520,17 +520,6 @@ function searchProduct(q){
   box.innerHTML="";
   if(!q){ box.style.display="none"; return; }
 
-  // ATIVAR PAINEL ADM OCULTO
-  if(q.toLowerCase()==="oferta"){
-    const pass = prompt("Senha do administrador:");
-    if(pass === "adm"){
-      openAdmin();
-    }else{
-      alert("Senha incorreta");
-    }
-    return;
-  }
-
   if(q.toLowerCase()==="relatorio"){
     generateInternalReport();
     return;
@@ -540,12 +529,11 @@ function searchProduct(q){
   if(res.length===0){ box.style.display="none"; return; }
 
   res.forEach(p=>{
-    const offer = getOffer(p.n);
-    const price = offer ? offer.price : p.p;
-    box.innerHTML+=`<div class="search-item">${p.n} — R$ ${price}</div>`;
+    box.innerHTML += `<div class="search-item">${p.n} — R$ ${p.p.toFixed ? p.p.toFixed(2).replace('.',',') : p.p}</div>`;
   });
   box.style.display="block";
 }
+
 
 function getOffer(name){
   const o = offers[name];
@@ -642,20 +630,23 @@ function generateInternalReport(){
       total+=o.total;
       if(o.payment==="Dinheiro") d+=o.total;
       if(o.payment==="Pix") p+=o.total;
-      if(o.payment.includes("Cartão")) c+=o.total;
-      det+=`R$ ${o.total.toFixed(2)} (${o.payment})\n`;
+      if(o.payment && o.payment.includes("Cartão")) c+=o.total;
+      det+=`R$ ${o.total.toFixed(2).replace('.',',')} (${o.payment})
+`;
     }
   });
 
   const box=document.getElementById("searchResults");
-  box.innerHTML=
-   `<div class="search-item"><b>RELATÓRIO DO DIA</b><br>
-    Total: R$ ${total.toFixed(2)}<br>
-    Dinheiro: R$ ${d.toFixed(2)}<br>
-    Pix: R$ ${p.toFixed(2)}<br>
-    Cartão: R$ ${c.toFixed(2)}<br><br>${det}</div>`;
+  box.innerHTML = `
+   <div class="search-item"><b>RELATÓRIO DO DIA</b><br>
+    Total: R$ ${total.toFixed(2).replace('.',',')}<br>
+    Dinheiro: R$ ${d.toFixed(2).replace('.',',')}<br>
+    Pix: R$ ${p.toFixed(2).replace('.',',')}<br>
+    Cartão: R$ ${c.toFixed(2).replace('.',',')}<br><br>${det.replace(/
+/g,'<br>')}</div>`;
   box.style.display="block";
 }
+
 
 function setDelivery(v){
   isDelivery=v;
@@ -670,7 +661,7 @@ function updateCart(){
 
   cart.forEach((item,index)=>{
     total+=item.price;
-    box.innerHTML+=`
+    box.innerHTML += `
       <div class="cart-item">
         <span>${item.name}</span>
         <span>R$ ${item.price.toFixed(2).replace('.',',')}</span>
@@ -683,6 +674,7 @@ function updateCart(){
   document.getElementById("totalValue").innerText = "Total: R$ " + total.toFixed(2).replace('.',',');
   document.getElementById("cartFooter").style.display = cart.length ? "block" : "none";
 }
+
 
 function removeItem(i){
   cart.splice(i,1);
