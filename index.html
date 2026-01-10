@@ -118,6 +118,16 @@ function startApp(){
 </html>
 <!-- CARDÁPIO ENTRA NAS PRÓXIMAS PARTES -->
 <style>
+/* LOGO MAIOR (PADRÃO APP) */
+.brand{
+    font-size:30px;
+    font-weight:900;
+    color:#FFD34D;
+    margin-bottom:18px;
+    text-align:center;
+}
+
+/* CATEGORIA */
 .category-btn{
     width:100%;
     background:linear-gradient(135deg,#ffcc00,#ff9900);
@@ -131,36 +141,41 @@ function startApp(){
     box-shadow:0 8px 22px rgba(0,0,0,.35);
 }
 
+/* CONTEÚDO */
 .content-box{
     width:100%;
     background:#fff;
     color:#2b0033;
-    border-radius:28px;
+    border-radius:26px;
     padding:14px;
     margin-bottom:18px;
     display:none;
     box-shadow:0 14px 35px rgba(0,0,0,.35);
 }
 
+/* ITEM — SEMPRE VERTICAL (MOBILE) */
 .item{
-    display:grid;
-    grid-template-columns:1fr auto auto;
-    gap:12px;
-    padding:10px 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:12px 0;
     border-bottom:1px dashed #e3e3e3;
 }
 
 .item:last-child{border:none}
 
-.item span:first-child{
+.item-name{
+    flex:1;
     font-size:14px;
     font-weight:600;
 }
 
-.item span:nth-child(2){
+.item-price{
     font-size:14px;
     font-weight:800;
     color:#5a0070;
+    white-space:nowrap;
 }
 
 .btn-add{
@@ -168,9 +183,9 @@ function startApp(){
     color:#fff;
     border:none;
     border-radius:12px;
-    padding:5px 12px;
-    cursor:pointer;
+    padding:6px 14px;
     font-weight:bold;
+    cursor:pointer;
 }
 </style>
 
@@ -179,29 +194,129 @@ function startApp(){
 
 <div class="content-box" id="lanches">
 
-<div class="item"><span>X-Salada</span><span>R$ 17,00</span><button class="btn-add" onclick="addItem('X-Salada',17)">+</button></div>
-<div class="item"><span>X-Burguer</span><span>R$ 14,00</span><button class="btn-add" onclick="addItem('X-Burguer',14)">+</button></div>
-<div class="item"><span>X-Frango</span><span>R$ 22,00</span><button class="btn-add" onclick="addItem('X-Frango',22)">+</button></div>
-<div class="item"><span>X-Frango Cremoso</span><span>R$ 20,00</span><button class="btn-add" onclick="addItem('X-Frango Cremoso',20)">+</button></div>
-<div class="item"><span>X-Bacon</span><span>R$ 25,00</span><button class="btn-add" onclick="addItem('X-Bacon',25)">+</button></div>
-<div class="item"><span>X-Calabresa</span><span>R$ 25,00</span><button class="btn-add" onclick="addItem('X-Calabresa',25)">+</button></div>
-<div class="item"><span>X-Coração</span><span>R$ 27,00</span><button class="btn-add" onclick="addItem('X-Coração',27)">+</button></div>
-<div class="item"><span>X-Tudo</span><span>R$ 32,00</span><button class="btn-add" onclick="addItem('X-Tudo',32)">+</button></div>
-<div class="item"><span>X-Burguer Duplo</span><span>R$ 22,00</span><button class="btn-add" onclick="addItem('X-Burguer Duplo',22)">+</button></div>
-<div class="item"><span>X-Egg</span><span>R$ 20,00</span><button class="btn-add" onclick="addItem('X-Egg',20)">+</button></div>
-<div class="item"><span>X-Tribom</span><span>R$ 32,00</span><button class="btn-add" onclick="addItem('X-Tribom',32)">+</button></div>
-<div class="item"><span>X-Da Casa</span><span>R$ 45,00</span><button class="btn-add" onclick="addItem('X-Da Casa',45)">+</button></div>
-<div class="item"><span>X-Dog</span><span>R$ 20,00</span><button class="btn-add" onclick="addItem('X-Dog',20)">+</button></div>
+<div class="item">
+  <span class="item-name">X-Salada</span>
+  <span class="item-price">R$ 17,00</span>
+  <button class="btn-add" onclick="addItem('X-Salada',17)">+</button>
+</div>
 
-<br><b>➕ Adicionais</b>
+<div class="item">
+  <span class="item-name">X-Burguer</span>
+  <span class="item-price">R$ 14,00</span>
+  <button class="btn-add" onclick="addItem('X-Burguer',14)">+</button>
+</div>
 
-<div class="item"><span>Bacon</span><span>R$ 7,00</span><button class="btn-add" onclick="addItem('Adicional Bacon',7)">+</button></div>
-<div class="item"><span>Calabresa</span><span>R$ 7,00</span><button class="btn-add" onclick="addItem('Adicional Calabresa',7)">+</button></div>
-<div class="item"><span>Frango</span><span>R$ 7,00</span><button class="btn-add" onclick="addItem('Adicional Frango',7)">+</button></div>
-<div class="item"><span>Coração</span><span>R$ 8,00</span><button class="btn-add" onclick="addItem('Adicional Coração',8)">+</button></div>
-<div class="item"><span>Ovo</span><span>R$ 3,00</span><button class="btn-add" onclick="addItem('Adicional Ovo',3)">+</button></div>
-<div class="item"><span>Cheddar</span><span>R$ 4,00</span><button class="btn-add" onclick="addItem('Adicional Cheddar',4)">+</button></div>
-<div class="item"><span>Maionese</span><span>R$ 2,00</span><button class="btn-add" onclick="addItem('Adicional Maionese',2)">+</button></div>
+<div class="item">
+  <span class="item-name">X-Frango</span>
+  <span class="item-price">R$ 22,00</span>
+  <button class="btn-add" onclick="addItem('X-Frango',22)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">X-Frango Cremoso</span>
+  <span class="item-price">R$ 20,00</span>
+  <button class="btn-add" onclick="addItem('X-Frango Cremoso',20)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">X-Bacon</span>
+  <span class="item-price">R$ 25,00</span>
+  <button class="btn-add" onclick="addItem('X-Bacon',25)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">X-Calabresa</span>
+  <span class="item-price">R$ 25,00</span>
+  <button class="btn-add" onclick="addItem('X-Calabresa',25)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">X-Coração</span>
+  <span class="item-price">R$ 27,00</span>
+  <button class="btn-add" onclick="addItem('X-Coração',27)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">X-Tudo</span>
+  <span class="item-price">R$ 32,00</span>
+  <button class="btn-add" onclick="addItem('X-Tudo',32)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">X-Burguer Duplo</span>
+  <span class="item-price">R$ 22,00</span>
+  <button class="btn-add" onclick="addItem('X-Burguer Duplo',22)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">X-Egg</span>
+  <span class="item-price">R$ 20,00</span>
+  <button class="btn-add" onclick="addItem('X-Egg',20)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">X-Tribom</span>
+  <span class="item-price">R$ 32,00</span>
+  <button class="btn-add" onclick="addItem('X-Tribom',32)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">X-Da Casa</span>
+  <span class="item-price">R$ 45,00</span>
+  <button class="btn-add" onclick="addItem('X-Da Casa',45)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">X-Dog</span>
+  <span class="item-price">R$ 20,00</span>
+  <button class="btn-add" onclick="addItem('X-Dog',20)">+</button>
+</div>
+
+<hr>
+
+<b>➕ Adicionais</b>
+
+<div class="item">
+  <span class="item-name">Bacon</span>
+  <span class="item-price">R$ 7,00</span>
+  <button class="btn-add" onclick="addItem('Adicional Bacon',7)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">Calabresa</span>
+  <span class="item-price">R$ 7,00</span>
+  <button class="btn-add" onclick="addItem('Adicional Calabresa',7)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">Frango</span>
+  <span class="item-price">R$ 7,00</span>
+  <button class="btn-add" onclick="addItem('Adicional Frango',7)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">Coração</span>
+  <span class="item-price">R$ 8,00</span>
+  <button class="btn-add" onclick="addItem('Adicional Coração',8)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">Ovo</span>
+  <span class="item-price">R$ 3,00</span>
+  <button class="btn-add" onclick="addItem('Adicional Ovo',3)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">Cheddar</span>
+  <span class="item-price">R$ 4,00</span>
+  <button class="btn-add" onclick="addItem('Adicional Cheddar',4)">+</button>
+</div>
+
+<div class="item">
+  <span class="item-name">Maionese</span>
+  <span class="item-price">R$ 2,00</span>
+  <button class="btn-add" onclick="addItem('Adicional Maionese',2)">+</button>
+</div>
 
 </div>
 
