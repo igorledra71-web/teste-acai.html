@@ -5,11 +5,14 @@
 <title>Rabika's Burguer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- FONTE PREMIUM -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
     background:linear-gradient(180deg,#06003a 0%,#0a045a 50%,#03001f 100%);
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:'Poppins', Arial, sans-serif;
     color:#fff;
     display:flex;
     justify-content:center;
@@ -33,13 +36,14 @@ body{
 .splash-btn{
     background:linear-gradient(135deg,#FFD34D,#FFB000);
     border:none; padding:18px 46px; border-radius:40px;
-    font-size:20px; font-weight:bold; color:#2b0033;
-    cursor:pointer; animation:pulse 1.6s infinite;
+    font-size:20px; font-weight:700; color:#2b0033;
+    cursor:pointer;
+    box-shadow:0 6px 0 #cc7a00;
+    transition:.15s;
 }
-@keyframes pulse{
-    0%{transform:scale(1)}
-    50%{transform:scale(1.06)}
-    100%{transform:scale(1)}
+.splash-btn:active{
+    transform:translateY(4px);
+    box-shadow:0 2px 0 #cc7a00;
 }
 
 /* APP */
@@ -50,29 +54,30 @@ body{
 }
 .brand-title{
     font-size:28px;
-    font-weight:bold;
+    font-weight:700;
     color:#FFD34D;
-    margin-bottom:10px
+    margin-bottom:10px;
+    letter-spacing:.5px;
 }
 
 /* BUSCA */
 .search-box{width:100%; margin-bottom:15px}
 .search-input{
     width:100%;
-    padding:12px;
-    border-radius:14px;
+    padding:14px;
+    border-radius:16px;
     border:none;
     font-size:16px;
 }
 .search-results{
     background:#fff;
     color:#2b0033;
-    border-radius:14px;
+    border-radius:16px;
     margin-top:8px;
     display:none;
 }
 .search-item{
-    padding:10px;
+    padding:12px;
     border-bottom:1px dashed #ccc
 }
 .search-item:last-child{border:none}
@@ -82,48 +87,84 @@ body{
     width:100%;
     background:linear-gradient(135deg,#ffcc00,#ff9900);
     color:#2b0033;
-    padding:16px;
-    border-radius:20px;
-    font-weight:bold;
+    padding:18px;
+    border-radius:22px;
+    font-weight:700;
     margin-bottom:14px;
     cursor:pointer;
     text-align:center;
+    box-shadow:0 6px 0 #cc7a00;
+    transition:.15s;
 }
+.category-btn:active{
+    transform:translateY(4px);
+    box-shadow:0 2px 0 #cc7a00;
+}
+
 .sub-btn{
     width:100%;
     background:#FFD34D;
     color:#2b0033;
-    padding:12px;
-    border-radius:16px;
-    font-weight:bold;
+    padding:14px;
+    border-radius:18px;
+    font-weight:700;
     margin:10px 0;
     cursor:pointer;
     text-align:center;
+    box-shadow:0 4px 0 #cc7a00;
 }
+.sub-btn:active{
+    transform:translateY(3px);
+    box-shadow:0 1px 0 #cc7a00;
+}
+
+/* CONTEÚDO */
 .content-box{
     width:100%;
     background:#fff;
     color:#2b0033;
-    border-radius:20px;
-    padding:15px;
+    border-radius:22px;
+    padding:16px;
     margin-bottom:20px;
     display:none;
+    box-shadow:0 12px 25px rgba(0,0,0,.15);
 }
+
 .item{
     display:grid;
     grid-template-columns:1fr auto auto;
     gap:10px;
-    padding:10px 0;
+    padding:12px 0;
     border-bottom:1px dashed #ddd;
 }
 .item:last-child{border:none}
+
+.item span:first-child{
+    font-weight:500;
+}
+
+/* PREÇO DESTACADO */
+.price{
+    font-weight:700;
+    color:#5a0070;
+    font-size:16px;
+}
+
+/* BOTÃO ADD */
 .btn-add{
-    background:#5a0070;
+    background:linear-gradient(135deg,#5a0070,#8e00b3);
     color:#fff;
     border:none;
-    border-radius:10px;
-    padding:6px 12px;
+    border-radius:12px;
+    padding:8px 14px;
     cursor:pointer;
+    font-weight:600;
+    transition:.15s;
+    box-shadow:0 4px 0 #3b004a;
+}
+.btn-add:active{
+    transform:translateY(3px);
+    box-shadow:0 1px 0 #3b004a;
 }
 
 /* OFERTA */
@@ -151,34 +192,44 @@ body{
     max-width:420px;
     background:#fff;
     color:#2b0033;
-    padding:15px;
-    border-radius:20px 20px 0 0;
+    padding:16px;
+    border-radius:22px 22px 0 0;
     display:none;
+    box-shadow:0 -10px 25px rgba(0,0,0,.2);
 }
 
 /* CAMPOS */
 .input-field,.select-field{
     width:100%;
-    padding:12px;
-    border-radius:12px;
+    padding:14px;
+    border-radius:14px;
     border:1px solid #ccc;
     margin:6px 0;
+    font-family:'Poppins',sans-serif;
 }
 .total{
-    font-weight:bold;
+    font-weight:700;
     font-size:18px;
     margin-top:10px;
     text-align:center;
 }
+
+/* FINALIZAR */
 .btn-finish{
-    background:#25D366;
+    background:linear-gradient(135deg,#25D366,#1ebe5d);
     color:#fff;
-    padding:14px;
-    border-radius:14px;
-    font-weight:bold;
-    margin-top:10px;
+    padding:16px;
+    border-radius:18px;
+    font-weight:700;
+    margin-top:12px;
     cursor:pointer;
     text-align:center;
+    box-shadow:0 6px 0 #128c4a;
+    transition:.15s;
+}
+.btn-finish:active{
+    transform:translateY(4px);
+    box-shadow:0 2px 0 #128c4a;
 }
 
 /* ADM */
@@ -196,7 +247,7 @@ body{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    font-weight:bold;
+    font-weight:700;
 }
 .admin-content{
     padding:16px;
@@ -206,30 +257,37 @@ body{
 .admin-card{
     background:#fff;
     color:#2b0033;
-    border-radius:18px;
-    padding:14px;
+    border-radius:20px;
+    padding:16px;
     margin-bottom:14px;
 }
 .admin-input,.admin-select{
     width:100%;
-    padding:12px;
-    border-radius:12px;
+    padding:14px;
+    border-radius:14px;
     border:1px solid #ccc;
     margin-bottom:10px;
+    font-family:'Poppins',sans-serif;
 }
 .admin-btn{
     width:100%;
-    padding:12px;
+    padding:14px;
     border:none;
-    border-radius:14px;
-    font-weight:bold;
+    border-radius:16px;
+    font-weight:700;
     cursor:pointer;
     background:linear-gradient(135deg,#5a0070,#8e00b3);
     color:#fff;
+    box-shadow:0 4px 0 #3b004a;
+}
+.admin-btn:active{
+    transform:translateY(3px);
+    box-shadow:0 1px 0 #3b004a;
 }
 </style>
 </head>
 <body>
+
 <!-- SPLASH -->
 <div id="splashScreen">
   <div class="splash-content">
@@ -334,68 +392,58 @@ body{
   <!-- ADICIONAIS -->
   <div class="sub-btn" onclick="toggle('extrasLanches')">➕ Adicionais para Lanches</div>
   <div id="extrasLanches" style="display:none;">
-
     <div class="item" data-prod="Adicional Calabresa">
       <span>Calabresa</span>
       <span class="price">R$ 7,00</span>
       <button class="btn-add" onclick="addToCart('Adicional Calabresa',7)">+</button>
     </div>
-
     <div class="item" data-prod="Adicional Bacon">
       <span>Bacon</span>
       <span class="price">R$ 7,00</span>
       <button class="btn-add" onclick="addToCart('Adicional Bacon',7)">+</button>
     </div>
-
     <div class="item" data-prod="Adicional Coração">
       <span>Coração</span>
       <span class="price">R$ 8,00</span>
       <button class="btn-add" onclick="addToCart('Adicional Coração',8)">+</button>
     </div>
-
     <div class="item" data-prod="Adicional Ovo">
       <span>Ovo</span>
       <span class="price">R$ 3,00</span>
       <button class="btn-add" onclick="addToCart('Adicional Ovo',3)">+</button>
     </div>
-
     <div class="item" data-prod="Adicional Salsicha">
       <span>Salsicha</span>
       <span class="price">R$ 4,00</span>
       <button class="btn-add" onclick="addToCart('Adicional Salsicha',4)">+</button>
     </div>
-
     <div class="item" data-prod="Adicional Frango">
       <span>Frango</span>
       <span class="price">R$ 7,00</span>
       <button class="btn-add" onclick="addToCart('Adicional Frango',7)">+</button>
     </div>
-
     <div class="item" data-prod="Adicional Cheddar">
       <span>Cheddar</span>
       <span class="price">R$ 4,00</span>
       <button class="btn-add" onclick="addToCart('Adicional Cheddar',4)">+</button>
     </div>
-
     <div class="item" data-prod="Adicional Hambúrguer">
       <span>Hambúrguer artesanal</span>
       <span class="price">R$ 10,00</span>
       <button class="btn-add" onclick="addToCart('Adicional Hambúrguer',10)">+</button>
     </div>
-
     <div class="item" data-prod="Adicional Maionese">
       <span>Maionese caseira</span>
       <span class="price">R$ 2,00</span>
       <button class="btn-add" onclick="addToCart('Adicional Maionese',2)">+</button>
     </div>
-
   </div>
 </div>
+
 <!-- PASTÉIS -->
 <div class="category-btn" onclick="toggle('pasteis')">🥟 Pastéis</div>
 <div class="content-box" id="pasteis">
-
-  <div class="item" data-prod="Pastel de Carne">
+      <div class="item" data-prod="Pastel de Carne">
     <span>Pastel de Carne</span>
     <span class="price">R$ 14,00</span>
     <button class="btn-add" onclick="addToCart('Pastel de Carne',14)">+</button>
@@ -472,7 +520,6 @@ body{
     <span class="price">R$ 15,00</span>
     <button class="btn-add" onclick="addToCart('Pastel Creme e Sonho de Valsa',15)">+</button>
   </div>
-
 </div>
 
 <!-- PORÇÕES -->
@@ -601,7 +648,6 @@ body{
 
   <div class="sub-btn" onclick="toggle('acaiTamanhos')">🥤 Tamanhos</div>
   <div id="acaiTamanhos" style="display:none;">
-
     <div class="item" data-prod="Açaí 300ml">
       <span>300ml</span>
       <span class="price">R$ 12,00</span>
@@ -619,7 +665,6 @@ body{
       <span class="price">R$ 18,00</span>
       <button class="btn-add" onclick="addToCart('Açaí 500ml',18)">+</button>
     </div>
-
   </div>
 
   <div class="sub-btn" onclick="toggle('acaiAdicionais')">🍫 Adicionais</div>
@@ -687,28 +732,21 @@ body{
 
   </div>
 </div>
-</div> <!-- FECHA #app -->
+</div>
 
-<!-- CARRINHO / PAGAMENTO -->
+<!-- CARRINHO -->
 <div class="cart-footer" id="cartFooter">
-
   <div id="cartItems"></div>
 
   <div class="delivery-box" style="display:flex;justify-content:space-around;margin:10px 0;">
-    <label>
-      <input type="radio" name="entrega" checked onchange="setDelivery(false)">
-      Retirada
-    </label>
-    <label>
-      <input type="radio" name="entrega" onchange="setDelivery(true)">
-      Entrega (+ R$8)
-    </label>
+    <label><input type="radio" name="entrega" checked onchange="setDelivery(false)"> Retirada</label>
+    <label><input type="radio" name="entrega" onchange="setDelivery(true)"> Entrega (+ R$8)</label>
   </div>
 
   <input class="input-field" id="clientName" placeholder="Seu nome">
 
   <div id="addressBox" style="display:none;">
-    <input class="input-field" id="clientAddress" placeholder="Endereço para entrega">
+    <input class="input-field" id="clientAddress" placeholder="Endereço">
   </div>
 
   <select class="select-field" id="paymentMethod" onchange="checkPayment()">
@@ -719,435 +757,78 @@ body{
     <option value="Cartão Crédito">Cartão Crédito</option>
   </select>
 
-  <div id="trocoBox" style="display:none;margin-top:8px;">
-    <div style="display:flex;gap:10px;">
-      <button type="button" class="btn-add"
-        style="background:#FFD34D;color:#2b0033;flex:1;"
-        onclick="setTroco(true)">
-        Preciso de troco
-      </button>
-      <button type="button" class="btn-add"
-        style="background:#ccc;color:#2b0033;flex:1;"
-        onclick="setTroco(false)">
-        Não preciso
-      </button>
-    </div>
-    <input class="input-field" id="trocoValue"
-      placeholder="Troco para quanto? Ex: 50,00"
-      style="display:none;">
+  <div id="trocoBox" style="display:none;">
+    <button class="btn-add" onclick="setTroco(true)">Preciso de troco</button>
+    <button class="btn-add" onclick="setTroco(false)">Não preciso</button>
+    <input class="input-field" id="trocoValue" placeholder="Troco para quanto?" style="display:none;">
   </div>
 
   <div class="total" id="totalValue">Total: R$ 0,00</div>
-
-  <div class="btn-finish"
-       style="background:#25D366;color:#fff;padding:14px;border-radius:14px;font-weight:bold;margin-top:10px;cursor:pointer;text-align:center;"
-       onclick="finishOrder()">
-    Finalizar Pedido
-  </div>
-
+  <div class="btn-finish" onclick="finishOrder()">Finalizar Pedido</div>
 </div>
-<script>
-let cart = [];
-let isDelivery = false;
-let precisaTroco = false;
-let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
 
-/* PRODUTOS PARA BUSCA */
-const searchProducts = [
-  {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
-  {n:"X-Frango Cremoso",p:20},{n:"X-Bacon",p:25},{n:"X-Calabresa",p:25},
-  {n:"X-Coração",p:27},{n:"X-Tudo",p:32},{n:"X-Burguer Duplo",p:22},
-  {n:"X-Egg",p:20},{n:"X-Tribom",p:32},{n:"X-Da Casa",p:45},{n:"X-Dog",p:20},
-
-  {n:"Adicional Calabresa",p:7},{n:"Adicional Bacon",p:7},{n:"Adicional Coração",p:8},
-  {n:"Adicional Ovo",p:3},{n:"Adicional Salsicha",p:4},{n:"Adicional Frango",p:7},
-  {n:"Adicional Cheddar",p:4},{n:"Adicional Hambúrguer",p:10},{n:"Adicional Maionese",p:2},
-
-  {n:"Pastel de Carne",p:14},{n:"Pastel de Frango",p:12},
-  {n:"Pastel Frango Bacon Cheddar",p:16},{n:"Pastel Bacon Cheddar",p:15},
-  {n:"Pastel Calabresa com Cebola",p:14},{n:"Pastel Carne e Queijo",p:15},
-  {n:"Pastel Queijo",p:14},{n:"Pastel Chocolate ao Leite",p:15},
-  {n:"Pastel Banana Queijo Canela",p:15},{n:"Pastel Romeu e Julieta",p:15},
-  {n:"Pastel Chocolate Branco",p:15},{n:"Pastel Creme e Ouro Branco",p:15},
-  {n:"Pastel Creme e Sonho de Valsa",p:15},
-
-  {n:"Fritas",p:24.99},{n:"Fritas com Frango",p:39.99},
-  {n:"Fritas com Calabresa",p:34.99},{n:"Fritas com Bacon",p:34.99},
-  {n:"Anéis de Cebola",p:24.99},{n:"Fritas Bacon Calabresa Queijo",p:39.99},
-  {n:"Fritas Bacon Cheddar",p:39.99},{n:"Fritas Polenta Frango",p:39.99},
-  {n:"Fritas Polenta",p:24.99},{n:"Fritas Calabresa Catupiry",p:35.99},
-  {n:"Porção Completa",p:49.99},
-
-  {n:"Cassulinha 200ml",p:3},{n:"Coca-Cola 600ml",p:8},
-  {n:"Coca-Cola 2L",p:16},{n:"Refri Lata",p:6},
-  {n:"Refrigerante 2L",p:12},{n:"Cerveja Lata 350ml",p:6},
-  {n:"Achocolatado 200ml",p:3},
-
-  {n:"Açaí 300ml",p:12},{n:"Açaí 400ml",p:15},{n:"Açaí 500ml",p:18},
-  {n:"Paçoca",p:2},{n:"Leite em pó",p:4},{n:"Granola",p:4},
-  {n:"Morango",p:4},{n:"M&M",p:3},{n:"Ouro Branco",p:3},
-  {n:"Banana",p:2},{n:"Sonho de Valsa",p:3},
-  {n:"Leite Condensado",p:3},{n:"Nutella",p:4}
-];
-
-function enterApp(){
-  document.getElementById("splashScreen").style.display="none";
-  document.getElementById("app").style.display="flex";
-}
-
-function toggle(id){
-  const el = document.getElementById(id);
-  el.style.display = el.style.display === "block" ? "none" : "block";
-}
-
-/* HORÁRIO DE FUNCIONAMENTO */
-function isOpenNow(){
-  const d = new Date();
-  const day = d.getDay();
-  const time = d.getHours() + d.getMinutes()/60;
-  if(day === 1) return false;
-  if(time < 18.5 || time > 22.5) return false;
-  return true;
-}
-
-/* CARRINHO */
-function addToCart(name, price){
-  if(!isOpenNow()){
-    alert("⏰ Estamos fechados.\nAtendimento: Terça a Domingo das 18:30 às 22:30");
-    return;
-  }
-  cart.push({name, price});
-  updateCart();
-}
-
-function removeItem(i){
-  cart.splice(i,1);
-  updateCart();
-}
-
-function updateCart(){
-  const box = document.getElementById("cartItems");
-  box.innerHTML = "";
-  let total = 0;
-
-  cart.forEach((item,index)=>{
-    total += item.price;
-    box.innerHTML += `
-      <div class="cart-item" style="display:grid;grid-template-columns:1fr auto auto;gap:10px;padding:6px 0;">
-        <span>${item.name}</span>
-        <span>R$ ${item.price.toFixed(2).replace('.',',')}</span>
-        <button class="remove-btn" style="background:#e60000;color:#fff;border:none;border-radius:6px;padding:2px 6px;cursor:pointer"
-          onclick="removeItem(${index})">x</button>
-      </div>`;
-  });
-
-  if(isDelivery) total += 8;
-
-  document.getElementById("totalValue").innerText =
-    "Total: R$ " + total.toFixed(2).replace('.',',');
-
-  document.getElementById("cartFooter").style.display =
-    cart.length ? "block" : "none";
-}
-
-/* ENTREGA */
-function setDelivery(v){
-  isDelivery = v;
-  document.getElementById("addressBox").style.display = v ? "block" : "none";
-  updateCart();
-}
-
-/* PAGAMENTO / TROCO */
-function checkPayment(){
-  const payment = document.getElementById("paymentMethod").value;
-  const trocoBox = document.getElementById("trocoBox");
-  if(payment === "Dinheiro"){
-    trocoBox.style.display="block";
-  }else{
-    trocoBox.style.display="none";
-    document.getElementById("trocoValue").style.display="none";
-    precisaTroco=false;
-  }
-}
-
-function setTroco(v){
-  precisaTroco = v;
-  document.getElementById("trocoValue").style.display = v ? "block" : "none";
-}
-
-/* BUSCA + RELATÓRIO */
-function searchProduct(q){
-  const box = document.getElementById("searchResults");
-  box.innerHTML = "";
-  if(!q){ box.style.display="none"; return; }
-
-  if(q.toLowerCase() === "relatorio"){
-    generateInternalReport();
-    return;
-  }
-
-  const res = searchProducts.filter(p =>
-    p.n.toLowerCase().includes(q.toLowerCase())
-  );
-
-  if(res.length === 0){ box.style.display="none"; return; }
-
-  res.forEach(p=>{
-    box.innerHTML += `<div class="search-item">${p.n} — R$ ${p.p}</div>`;
-  });
-  box.style.display="block";
-}
-
-/* RELATÓRIO INTERNO */
-function generateInternalReport(){
-  const today = new Date().toISOString().split("T")[0];
-  let total=0,d=0,p=0,c=0,det="";
-
-  orderHistory.forEach(o=>{
-    if(o.datetime.startsWith(today)){
-      total+=o.total;
-      if(o.payment==="Dinheiro") d+=o.total;
-      if(o.payment==="Pix") p+=o.total;
-      if(o.payment.includes("Cartão")) c+=o.total;
-      det+=`R$ ${o.total.toFixed(2)} (${o.payment})\n`;
-    }
-  });
-
-  const box=document.getElementById("searchResults");
-  box.innerHTML = `
-    <div class="search-item">
-      <b>RELATÓRIO DO DIA</b><br>
-      Total: R$ ${total.toFixed(2)}<br>
-      Dinheiro: R$ ${d.toFixed(2)}<br>
-      Pix: R$ ${p.toFixed(2)}<br>
-      Cartão: R$ ${c.toFixed(2)}<br><br>${det}
-    </div>`;
-  box.style.display="block";
-}
-
-/* FINALIZAR PEDIDO */
-function finishOrder(){
-  const name=document.getElementById("clientName").value;
-  const address=document.getElementById("clientAddress").value;
-  const payment=document.getElementById("paymentMethod").value;
-  const trocoValor=document.getElementById("trocoValue").value;
-
-  if(!name){alert("Informe seu nome");return;}
-  if(isDelivery && !address){alert("Informe o endereço");return;}
-  if(!payment){alert("Informe a forma de pagamento");return;}
-
-  let msg="🍔 Pedido Rabika's Burguer\n\n";
-  msg+="Cliente: "+name+"\n";
-  msg+="Pagamento: "+payment+"\n";
-
-  if(payment==="Dinheiro"){
-    msg += precisaTroco && trocoValor
-      ? "Precisa de troco para: R$ "+trocoValor+"\n"
-      : "Não precisa de troco\n";
-  }
-
-  msg+= isDelivery ? "Entrega\nEndereço: "+address+"\n\n" : "Retirada no local\n\n";
-  msg+="Itens:\n";
-
-  let total=0;
-  cart.forEach(item=>{
-    msg+="- "+item.name+" R$ "+item.price+"\n";
-    total+=item.price;
-  });
-
-  if(isDelivery){ msg+="Taxa de entrega: R$ 8\n"; total+=8; }
-
-  msg+="\nTotal: R$ "+total.toFixed(2).replace('.',',');
-
-  orderHistory.push({
-    datetime:new Date().toISOString(),
-    total:total,
-    payment:payment,
-    delivery:isDelivery
-  });
-  localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
-
-  window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg));
-}
-</script>
-<!-- PAINEL ADMINISTRATIVO -->
+<!-- PAINEL ADMIN -->
 <div id="adminScreen">
   <div class="admin-header">
-    <span>🔥 Painel de Ofertas</span>
-    <button onclick="closeAdmin()" style="background:none;border:none;font-weight:bold;cursor:pointer;">
-      ✕
-    </button>
+    🔥 Painel de Ofertas
+    <button onclick="closeAdmin()">✕</button>
   </div>
 
   <div class="admin-content">
-
     <div class="admin-card">
-      <h3>Criar / Atualizar Oferta</h3>
-
-      <select class="admin-select" id="offerProduct">
-        <option value="">Selecionar produto</option>
-      </select>
-
-      <input class="admin-input" id="offerPrice" type="number" step="0.01" placeholder="Preço promocional fixo">
-
-      <label>Início da oferta</label>
+      <select class="admin-select" id="offerProduct"></select>
+      <input class="admin-input" id="offerPrice" type="number" placeholder="Preço promocional">
       <input class="admin-input" id="offerStart" type="datetime-local">
-
-      <label>Fim da oferta</label>
       <input class="admin-input" id="offerEnd" type="datetime-local">
-
-      <button class="admin-btn" onclick="saveOffer()">Salvar / Ativar Oferta</button>
-
-      <button class="admin-btn"
-        style="background:#ccc;color:#2b0033;margin-top:8px"
-        onclick="disableOffer()">
-        Desativar Oferta
-      </button>
+      <button class="admin-btn" onclick="saveOffer()">Ativar Oferta</button>
+      <button class="admin-btn" style="background:#ccc;color:#000" onclick="disableOffer()">Desativar</button>
     </div>
-
-    <div class="admin-card">
-      <h3>Status das Ofertas</h3>
-      <div id="offerStatus">Nenhuma oferta ativa</div>
-    </div>
-
+    <div class="admin-card" id="offerStatus">Nenhuma oferta ativa</div>
   </div>
 </div>
 
 <script>
-/* ==========================
-   SISTEMA ADMINISTRATIVO
-========================== */
-
-const ADMIN_PASSWORD = "adm123";
-let offers = JSON.parse(localStorage.getItem("offers")) || {};
-
-/* INTERCEPTA BUSCA "oferta" */
-const originalSearchProduct = searchProduct;
-searchProduct = function(q){
-  if(q.toLowerCase() === "oferta"){
-    const senha = prompt("🔐 Acesso Administrativo");
-    if(senha === ADMIN_PASSWORD){
-      openAdmin();
-    }else{
-      alert("❌ Senha incorreta");
-    }
+const ADMIN_PASSWORD="adm123";
+let offers=JSON.parse(localStorage.getItem("offers"))||{};
+const originalSearch=searchProduct;
+searchProduct=function(q){
+  if(q.toLowerCase()==="oferta"){
+    if(prompt("Senha ADM")==ADMIN_PASSWORD) openAdmin();
+    else alert("Senha incorreta");
     return;
   }
-  originalSearchProduct(q);
+  originalSearch(q);
 };
-
-/* ABRIR / FECHAR PAINEL */
 function openAdmin(){
-  const scr = document.getElementById("adminScreen");
-  scr.style.display = "flex";
-  loadAdminProducts();
-  updateAdminStatus();
-}
-
-function closeAdmin(){
-  document.getElementById("adminScreen").style.display = "none";
-}
-
-/* LISTAR PRODUTOS NO SELECT */
-function loadAdminProducts(){
-  const select = document.getElementById("offerProduct");
-  select.innerHTML = '<option value="">Selecionar produto</option>';
-
-  document.querySelectorAll(".item[data-prod]").forEach(el=>{
-    const name = el.getAttribute("data-prod");
-    select.innerHTML += `<option value="${name}">${name}</option>`;
+  adminScreen.style.display="flex";
+  offerProduct.innerHTML="";
+  document.querySelectorAll(".item[data-prod]").forEach(i=>{
+    offerProduct.innerHTML+=`<option>${i.dataset.prod}</option>`;
   });
 }
-
-/* SALVAR / ATIVAR OFERTA */
+function closeAdmin(){adminScreen.style.display="none";}
 function saveOffer(){
-  const prod = document.getElementById("offerProduct").value;
-  const price = parseFloat(document.getElementById("offerPrice").value);
-  const start = document.getElementById("offerStart").value;
-  const end = document.getElementById("offerEnd").value;
-
-  if(!prod || !price || !start || !end){
-    alert("Preencha todos os campos");
-    return;
-  }
-
-  offers[prod] = {
-    price: price,
-    start: new Date(start).getTime(),
-    end: new Date(end).getTime(),
-    active: true
-  };
-
-  localStorage.setItem("offers", JSON.stringify(offers));
+  offers[offerProduct.value]={price:+offerPrice.value,start:+new Date(offerStart.value),end:+new Date(offerEnd.value)};
+  localStorage.setItem("offers",JSON.stringify(offers));
   applyOffers();
-  updateAdminStatus();
-  alert("✅ Oferta ativada com sucesso");
 }
-
-/* DESATIVAR OFERTA */
 function disableOffer(){
-  const prod = document.getElementById("offerProduct").value;
-  if(!prod || !offers[prod]){
-    alert("Selecione uma oferta ativa");
-    return;
-  }
-
-  delete offers[prod];
-  localStorage.setItem("offers", JSON.stringify(offers));
+  delete offers[offerProduct.value];
+  localStorage.setItem("offers",JSON.stringify(offers));
   applyOffers();
-  updateAdminStatus();
 }
-
-/* APLICAR OFERTAS AO CARDÁPIO */
 function applyOffers(){
-  const now = Date.now();
-
-  document.querySelectorAll(".item[data-prod]").forEach(el=>{
-    const prod = el.getAttribute("data-prod");
-    const priceEl = el.querySelector(".price");
-
-    if(offers[prod] && offers[prod].active &&
-       now >= offers[prod].start && now <= offers[prod].end){
-
-      if(!priceEl.dataset.original){
-        priceEl.dataset.original = priceEl.innerText;
-      }
-
-      priceEl.innerHTML = `
-        <span class="old-price">${priceEl.dataset.original}</span>
-        <strong>R$ ${offers[prod].price.toFixed(2).replace('.',',')}</strong>
-        <span class="offer-badge">OFERTA</span>
-      `;
-
-    }else{
-      if(priceEl.dataset.original){
-        priceEl.innerText = priceEl.dataset.original;
-        delete priceEl.dataset.original;
-      }
+  const now=Date.now();
+  document.querySelectorAll(".item").forEach(i=>{
+    const p=i.dataset.prod;
+    const el=i.querySelector(".price");
+    if(offers[p] && now>=offers[p].start && now<=offers[p].end){
+      el.innerHTML=`<span class="old-price">${el.innerText}</span> <strong style="color:#e60000">R$ ${offers[p].price.toFixed(2).replace('.',',')}</strong>`;
     }
   });
 }
-
-/* STATUS DO PAINEL */
-function updateAdminStatus(){
-  const box = document.getElementById("offerStatus");
-  const now = Date.now();
-  let html = "";
-
-  Object.keys(offers).forEach(p=>{
-    const o = offers[p];
-    if(now <= o.end){
-      html += `✔ ${p} → R$ ${o.price.toFixed(2).replace('.',',')}<br>`;
-    }
-  });
-
-  box.innerHTML = html || "Nenhuma oferta ativa";
-}
-
-/* AUTO APLICAÇÃO */
-applyOffers();
-setInterval(applyOffers, 60000);
+setInterval(applyOffers,60000);
 </script>
+
 </body>
 </html>
-
