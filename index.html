@@ -105,7 +105,35 @@ body{
   <div class="search-box">
     <input class="search-input" placeholder="Pesquisar produto...">
   </div>
-</div>
+<!-- LANCHES -->
+<div class="category-btn" onclick="toggle('lanches')">🍔 Lanches</div>
+<div class="content-box" id="lanches">
+  <div class="item"><span>X-Salada</span><span>R$ 17,00</span><button class="btn-add" onclick="addToCart('X-Salada',17)">+</button></div>
+  <div class="item"><span>X-Burguer</span><span>R$ 14,00</span><button class="btn-add" onclick="addToCart('X-Burguer',14)">+</button></div>
+  <div class="item"><span>X-Frango</span><span>R$ 22,00</span><button class="btn-add" onclick="addToCart('X-Frango',22)">+</button></div>
+  <div class="item"><span>X-Frango Cremoso</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Frango Cremoso',20)">+</button></div>
+  <div class="item"><span>X-Bacon</span><span>R$ 25,00</span><button class="btn-add" onclick="addToCart('X-Bacon',25)">+</button></div>
+  <div class="item"><span>X-Calabresa</span><span>R$ 25,00</span><button class="btn-add" onclick="addToCart('X-Calabresa',25)">+</button></div>
+  <div class="item"><span>X-Coração</span><span>R$ 27,00</span><button class="btn-add" onclick="addToCart('X-Coração',27)">+</button></div>
+  <div class="item"><span>X-Tudo</span><span>R$ 32,00</span><button class="btn-add" onclick="addToCart('X-Tudo',32)">+</button></div>
+  <div class="item"><span>X-Burguer Duplo</span><span>R$ 22,00</span><button class="btn-add" onclick="addToCart('X-Burguer Duplo',22)">+</button></div>
+  <div class="item"><span>X-Egg</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Egg',20)">+</button></div>
+  <div class="item"><span>X-Tribom</span><span>R$ 32,00</span><button class="btn-add" onclick="addToCart('X-Tribom',32)">+</button></div>
+  <div class="item"><span>X-Da Casa</span><span>R$ 45,00</span><button class="btn-add" onclick="addToCart('X-Da Casa',45)">+</button></div>
+  <div class="item"><span>X-Dog</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Dog',20)">+</button></div>
+
+  <div class="sub-btn" onclick="toggle('extrasLanches')">➕ Adicionais para Lanches</div>
+  <div id="extrasLanches" style="display:none;">
+    <div class="item"><span>Calabresa</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Calabresa',7)">+</button></div>
+    <div class="item"><span>Bacon</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Bacon',7)">+</button></div>
+    <div class="item"><span>Coração</span><span>R$ 8,00</span><button class="btn-add" onclick="addToCart('Adicional Coração',8)">+</button></div>
+    <div class="item"><span>Ovo</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Adicional Ovo',3)">+</button></div>
+    <div class="item"><span>Salsicha</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Adicional Salsicha',4)">+</button></div>
+    <div class="item"><span>Frango</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Frango',7)">+</button></div>
+    <div class="item"><span>Cheddar</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Adicional Cheddar',4)">+</button></div>
+    <div class="item"><span>Hambúrguer artesanal</span><span>R$ 10,00</span><button class="btn-add" onclick="addToCart('Adicional Hambúrguer',10)">+</button></div>
+    <div class="item"><span>Maionese caseira</span><span>R$ 2,00</span><button class="btn-add" onclick="addToCart('Adicional Maionese',2)">+</button></div>
+  </div>
 
 <script>
 function enterApp(){
@@ -116,3 +144,4 @@ function enterApp(){
 
 </body>
 </html>
+
