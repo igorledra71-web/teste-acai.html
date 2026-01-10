@@ -395,6 +395,424 @@ function finishOrder(){
   alert("Pedido pronto para WhatsApp (fluxo mantido)");
 }
 </script>
+<script>
+/* =========================
+   SISTEMA DE OFERTAS — BASE
+   PARTE 1/5
+   ========================= */
+
+/*
+ Estrutura das ofertas:
+ offers = {
+   "X-Salada": { price: 12.9, expires: "2026-02-01" },
+   "Coca-Cola 600ml": { price: 6.5, expires: "2026-01-15" }
+ }
+*/
+let offers = JSON.parse(localStorage.getItem("offers")) || {};
+
+/* =========================
+   VERIFICA SE PRODUTO TEM OFERTA
+   ========================= */
+function getOffer(productName){
+  const offer = offers[productName];
+  if(!offer) return null;
+
+  const today = new Date().toISOString().split("T")[0];
+  if(offer.expires < today){
+    delete offers[productName];
+    localStorage.setItem("offers", JSON.stringify(offers));
+    return null;
+  }
+  return offer;
+}
+
+/* =========================
+   PREÇO FINAL (NORMAL OU OFERTA)
+   ========================= */
+function getFinalPrice(name, normalPrice){
+  const offer = getOffer(name);
+  return offer ? offer.price : normalPrice;
+}
+
+/* =========================
+   ADICIONAR AO CARRINHO (OFERTA APLICADA)
+   ========================= */
+const _addToCartOriginal = addToCart;
+addToCart = function(name, price){
+  const finalPrice = getFinalPrice(name, price);
+  _addToCartOriginal(name, finalPrice);
+};
+
+/* =========================
+   MARCAÇÃO VISUAL DE OFERTA
+   (será usada nas próximas partes)
+   ========================= */
+function isProductOnOffer(name){
+  return !!getOffer(name);
+}
+</script>
+<script>
+/* =========================
+   SISTEMA DE OFERTAS
+   PARTE 2/5 — ATIVAÇÃO SECRETA
+   ========================= */
+
+let offerAdminUnlocked = false;
+
+/* =========================
+   INTERCEPTA BUSCA "oferta"
+   ========================= */
+const _searchProductOriginal = searchProduct;
+searchProduct = function(q){
+  if(q.toLowerCase() === "oferta"){
+    openOfferLogin();
+    return;
+  }
+  _searchProductOriginal(q);
+};
+
+/* =========================
+   MODAL DE LOGIN (ADM)
+   ========================= */
+function openOfferLogin(){
+  if(document.getElementById("offerLogin")) return;
+
+  const modal = document.createElement("div");
+  modal.id = "offerLogin";
+  modal.style = `
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:99999;
+  `;
+
+  modal.innerHTML = `
+    <div style="
+      background:#fff;
+      color:#2b0033;
+      padding:26px;
+      border-radius:22px;
+      width:90%;
+      max-width:320px;
+      text-align:center;
+      box-shadow:0 20px 40px rgba(0,0,0,.4)
+    ">
+      <h3 style="margin-bottom:12px;">🔒 Área Restrita</h3>
+      <input id="offerPass" type="password" placeholder="Senha"
+        style="width:100%;padding:12px;border-radius:14px;border:1px solid #ccc;font-size:15px">
+      <button onclick="checkOfferPassword()"
+        style="margin-top:14px;width:100%;padding:14px;border:none;border-radius:18px;
+        background:#5a0070;color:#fff;font-weight:800;cursor:pointer">
+        Entrar
+      </button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+/* =========================
+   VALIDA SENHA
+   ========================= */
+function checkOfferPassword(){
+  const pass = document.getElementById("offerPass").value;
+  if(pass === "adm"){
+    offerAdminUnlocked = true;
+    document.getElementById("offerLogin").remove();
+    openOff
+<script>
+/* =========================
+   PAINEL DE OFERTAS (ADM)
+   PARTE 3/5
+   ========================= */
+
+let offerData = JSON.parse(localStorage.getItem("offers")) || [];
+
+/* =========================
+   ABRE PAINEL
+   ========================= */
+function openOfferPanel(){
+  if(document.getElementById("offerPanel")) return;
+
+  const panel = document.createElement("div");
+  panel.id = "offerPanel";
+  panel.style = `
+    position:fixed;
+    inset:0;
+    background:linear-gradient(180deg,#06003a,#020018);
+    z-index:99999;
+    overflow-y:auto;
+    padding:22px;
+    color:#fff;
+  `;
+
+  panel.innerHTML = `
+    <h2 style="text-align:center;margin-bottom:18px;color:#FFD34D">
+      🔥 Gerenciar Ofertas
+    </h2>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      ${createOfferTabs()}
+    </div>
+
+    <div id="offerProducts"></div>
+
+    <button onclick="closeOfferPanel()"
+      style="margin-top:24px;width:100%;padding:16px;border:none;
+      border-radius:22px;background:#e60000;color:#fff;font-weight:900">
+      Fechar Painel
+    </button>
+  `;
+
+  document.body.appendChild(panel);
+}
+
+/* =========================
+   FECHAR PAINEL
+   ========================= */
+function closeOfferPanel(){
+  document.getElementById("offerPanel")?.remove();
+}
+
+/* =========================
+   ABAS
+   ========================= */
+function createOfferTabs(){
+  const cats = ["Lanches","Pastéis","Porções","Bebidas","Açaí"];
+  return cats.map(c=>`
+    <button onclick="loadOfferProducts('${c}')"
+      style="flex:1;padding:12px;border:none;border-radius:18px;
+      background:#FFD34D;color:#2b0033;font-weight:800;cursor:pointer">
+      ${c}
+    </button>
+  `).join("");
+}
+
+/* =========================
+   LISTA PRODUTOS
+   ========================= */
+function loadOfferProducts(category){
+  const box = document.getElementById("offerProducts");
+  box.innerHTML = "";
+
+  const filtered = searchProducts.filter(p=>{
+    if(category==="Lanches") return p.n.startsWith("X");
+    if(category==="Pastéis") return p.n.startsWith("Pastel");
+    if(category==="Porções") return p.n.includes("Fritas") || p.n.includes("Porção");
+    if(category==="Bebidas") return p.n.includes("ml") || p.n.includes("Lata") || p.n.includes("Refrigerante");
+    if(category==="Açaí") return p.n.includes("Açaí");
+  });
+
+  filtered.forEach(p=>{
+    box.innerHTML += `
+      <div style="
+        background:#fff;
+        color:#2b0033;
+        padding:16px;
+        border-radius:18px;
+        margin-bottom:12px;
+        box-shadow:0 10px 24px rgba(0,0,0,.35)
+      ">
+        <b>${p.n}</b><br>
+        Preço atual: R$ ${p.p}<br><br>
+
+        <input id="price-${p.n}" placeholder="Preço promocional"
+          style="width:100%;padding:10px;border-radius:14px;border:1px solid #ccc"><br><br>
+
+        <input id="date-${p.n}" type="date"
+          style="width:100%;padding:10px;border-radius:14px;border:1px solid #ccc"><br><br>
+
+        <button onclick="saveOffer('${p.n}',${p.p})"
+          style="width:100%;padding:12px;border:none;border-radius:18px;
+          background:#5a0070;color:#fff;font-weight:800">
+          Ativar Oferta
+        </button>
+      </div>
+    `;
+  });
+}
+
+/* =========================
+   SALVAR OFERTA
+   ========================= */
+function saveOffer(name, originalPrice){
+  const promoPrice = document.getElementById(`price-${name}`).value;
+  const endDate = document.getElementById(`date-${name}`).value;
+
+  if(!promoPrice || !endDate){
+    alert("Preencha preço e validade");
+    return;
+  }
+
+  offerData = offerData.filter(o=>o.name !== name);
+
+  offerData.push({
+    name,
+    originalPrice,
+    promoPrice: parseFloat(promoPrice),
+    endDate
+  });
+
+  localStorage.setItem("offers", JSON.stringify(offerData));
+  alert("Oferta ativada!");
+}
+</script>
+<script>
+/* =========================
+   EXIBIR OFERTAS NO CARDÁPIO
+   PARTE 4/5
+   ========================= */
+
+function getActiveOffers(){
+  const today = new Date().toISOString().split("T")[0];
+  return offerData.filter(o => o.endDate >= today);
+}
+
+/* =========================
+   APLICA OFERTAS AO CARREGAR
+   ========================= */
+window.addEventListener("load", applyOffersToMenu);
+
+function applyOffersToMenu(){
+  const activeOffers = getActiveOffers();
+  if(activeOffers.length === 0) return;
+
+  activeOffers.forEach(offer=>{
+    const items = document.querySelectorAll(".item");
+
+    items.forEach(item=>{
+      const name = item.querySelector("span")?.innerText;
+      if(name === offer.name){
+        item.setAttribute("data-offer","true");
+
+        item.innerHTML = `
+          <span>
+            ${offer.name}
+            <div style="font-size:11px;color:#e60000;font-weight:800">
+              🔥 OFERTA até ${formatDate(offer.endDate)}
+            </div>
+          </span>
+
+          <span>
+            <span style="text-decoration:line-through;color:#999;font-size:13px">
+              R$ ${offer.originalPrice.toFixed(2).replace('.',',')}
+            </span><br>
+            <span style="color:#e60000;font-size:16px">
+              R$ ${offer.promoPrice.toFixed(2).replace('.',',')}
+            </span>
+          </span>
+
+          <button class="btn-add" onclick="addToCart('${offer.name}',${offer.promoPrice})">+</button>
+        `;
+      }
+    });
+  });
+
+  moveOffersToTop();
+}
+
+/* =========================
+   SOBE OFERTAS NA LISTA
+   ========================= */
+function moveOffersToTop(){
+  document.querySelectorAll(".content-box").forEach(box=>{
+    const offers = [...box.querySelectorAll('[data-offer="true"]')];
+    offers.reverse().forEach(o=>{
+      box.prepend(o);
+    });
+  });
+}
+
+/* =========================
+   FORMATA DATA
+   ========================= */
+function formatDate(d){
+  return d.split("-").reverse().join("/");
+}
+</script>
+<script>
+/* =========================
+   POLIMENTO PREMIUM
+   PARTE 5/5
+   ========================= */
+
+/* =========================
+   LIMPA OFERTAS EXPIRADAS
+   ========================= */
+function cleanExpiredOffers(){
+  const today = new Date().toISOString().split("T")[0];
+  offerData = offerData.filter(o => o.endDate >= today);
+  localStorage.setItem("offers", JSON.stringify(offerData));
+}
+cleanExpiredOffers();
+
+/* =========================
+   ANIMAÇÃO VISUAL DAS OFERTAS
+   ========================= */
+const style = document.createElement("style");
+style.innerHTML = `
+  .item[data-offer="true"]{
+    border-left:6px solid #e60000;
+    animation:offerFade .6s ease;
+  }
+  @keyframes offerFade{
+    from{opacity:0;transform:translateY(6px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+`;
+document.head.appendChild(style);
+
+/* =========================
+   REAPLICA OFERTAS AO CLICAR
+   ========================= */
+document.querySelectorAll(".category-btn, .sub-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    setTimeout(applyOffersToMenu,150);
+  });
+});
+
+/* =========================
+   GARANTE REAPLICAÇÃO
+   ========================= */
+setTimeout(applyOffersToMenu,300);
+setTimeout(applyOffersToMenu,800);
+
+/* =========================
+   FEEDBACK ADM (SUTIL)
+   ========================= */
+function showAdminToast(msg){
+  const t=document.createElement("div");
+  t.innerText=msg;
+  t.style=`
+    position:fixed;
+    bottom:90px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#5a0070;
+    color:#fff;
+    padding:12px 18px;
+    border-radius:18px;
+    font-weight:700;
+    z-index:99999;
+    box-shadow:0 10px 30px rgba(0,0,0,.4)
+  `;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2000);
+}
+
+/* =========================
+   HOOK AO SALVAR OFERTA
+   ========================= */
+const _saveOfferOriginal = saveOffer;
+saveOffer = function(name, originalPrice){
+  _saveOfferOriginal(name, originalPrice);
+  showAdminToast("🔥 Oferta ativada");
+  setTimeout(applyOffersToMenu,300);
+};
+</script>
 
 </body>
 </html>
+
