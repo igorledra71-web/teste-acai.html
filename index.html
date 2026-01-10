@@ -118,27 +118,26 @@ function startApp(){
 </html>
 <!-- CARDÁPIO ENTRA NAS PRÓXIMAS PARTES -->
 <style>
-/* CATEGORIAS */
 .category-btn{
     width:100%;
     background:linear-gradient(135deg,#ffcc00,#ff9900);
     color:#2b0033;
-    padding:16px;
-    border-radius:26px;
+    padding:14px;
+    border-radius:24px;
     font-weight:800;
     margin-bottom:14px;
     cursor:pointer;
     text-align:center;
-    box-shadow:0 10px 25px rgba(0,0,0,.35);
+    box-shadow:0 8px 22px rgba(0,0,0,.35);
 }
 
 .content-box{
     width:100%;
     background:#fff;
     color:#2b0033;
-    border-radius:26px;
-    padding:16px;
-    margin-bottom:20px;
+    border-radius:28px;
+    padding:14px;
+    margin-bottom:18px;
     display:none;
     box-shadow:0 14px 35px rgba(0,0,0,.35);
 }
@@ -146,18 +145,20 @@ function startApp(){
 .item{
     display:grid;
     grid-template-columns:1fr auto auto;
-    gap:10px;
-    padding:12px 0;
-    border-bottom:1px dashed #ddd;
+    gap:12px;
+    padding:10px 0;
+    border-bottom:1px dashed #e3e3e3;
 }
 
 .item:last-child{border:none}
 
 .item span:first-child{
+    font-size:14px;
     font-weight:600;
 }
 
 .item span:nth-child(2){
+    font-size:14px;
     font-weight:800;
     color:#5a0070;
 }
@@ -167,14 +168,15 @@ function startApp(){
     color:#fff;
     border:none;
     border-radius:12px;
-    padding:6px 12px;
-    font-weight:bold;
+    padding:5px 12px;
     cursor:pointer;
+    font-weight:bold;
 }
 </style>
 
 <!-- LANCHES -->
 <div class="category-btn" onclick="toggleBox('lanches')">🍔 Lanches</div>
+
 <div class="content-box" id="lanches">
 
 <div class="item"><span>X-Salada</span><span>R$ 17,00</span><button class="btn-add" onclick="addItem('X-Salada',17)">+</button></div>
@@ -204,16 +206,14 @@ function startApp(){
 </div>
 
 <script>
-let cart = [];
-
 function toggleBox(id){
     const el = document.getElementById(id);
     el.style.display = el.style.display === "block" ? "none" : "block";
 }
 
+let cart = [];
 function addItem(name, price){
     cart.push({name, price});
     console.log(cart);
 }
 </script>
-
