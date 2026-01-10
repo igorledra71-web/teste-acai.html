@@ -247,6 +247,16 @@ function updateCart(){
 function chg(i,v){cart[i].q+=v;if(cart[i].q<=0)cart.splice(i,1);updateCart()}
 function setDelivery(v){isDelivery=v;document.getElementById('address').style.display=v?'block':'none';updateCart()}
 
+/* TABS */
+function openTab(id,el){
+ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+ el.classList.add('active');
+ document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.getElementById('search').value='';
+ document.querySelectorAll('.item').forEach(i=>i.style.display='grid');
+}
+
 /* SEARCH */
 function handleSearch(v){v=v.toLowerCase();document.querySelectorAll('.item').forEach(i=>{i.style.display=i.innerText.toLowerCase().includes(v)?'grid':'none'})}
 
