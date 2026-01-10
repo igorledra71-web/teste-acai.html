@@ -10,78 +10,43 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Poppins',sans-serif;background:linear-gradient(180deg,#06003a,#0a045a,#03001f);color:#fff;display:flex;justify-content:center}
-
-/* AVISO FECHADO */
-#closedBanner{display:none;background:#b00020;color:#fff;text-align:center;padding:10px 14px;font-size:13px;font-weight:600;border-radius:0 0 18px 18px;margin-bottom:10px}
-
-/* SPLASH */
-#splash{position:fixed;inset:0;background:linear-gradient(180deg,#05002e,#020018);display:flex;align-items:center;justify-content:center;z-index:9999}
-.splash-box{display:flex;flex-direction:column;gap:32px;align-items:center}
-.splash-logo{width:80vw;max-width:340px}
-.splash-btn{background:linear-gradient(135deg,#FFD34D,#FFB000);border:none;padding:18px 54px;border-radius:44px;font-size:22px;font-weight:900;color:#2b0033;cursor:pointer;box-shadow:0 14px 30px rgba(0,0,0,.45)}
-
-/* APP */
 #app{width:100%;max-width:420px;padding:14px 14px 340px;display:none}
 .title{text-align:center;font-size:30px;font-weight:900;color:#FFD34D;margin-bottom:6px}
 .search{width:100%;padding:14px 16px;border-radius:22px;border:none;font-size:15px;margin-bottom:10px}
-
-/* TABS */
+#closedBanner{display:none;background:#b00020;color:#fff;text-align:center;padding:10px;border-radius:0 0 18px 18px;margin-bottom:10px}
 .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
 .tab{background:#fff;color:#2b0033;padding:12px;border-radius:20px;font-weight:800;text-align:center;cursor:pointer;font-size:14px}
-.tab.active{background:#FFD34D;transform:scale(1.05)}
-
-/* CONTENT */
-.box{background:#fff;color:#2b0033;border-radius:28px;padding:18px;margin-bottom:20px;display:none;box-shadow:0 18px 40px rgba(0,0,0,.35)}
-.box.active{display:block;animation:fade .3s ease}
-@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.tab.active{background:#FFD34D}
+.box{background:#fff;color:#2b0033;border-radius:28px;padding:18px;margin-bottom:20px;display:none}
+.box.active{display:block}
 .section{font-weight:900;color:#5a0070;margin:18px 0 10px;font-size:14px}
 .item{display:grid;grid-template-columns:1fr auto auto;gap:10px;padding:12px 0;border-bottom:1px dashed #e3e3e3;align-items:center}
 .item:last-child{border:none}
 .item-name{font-weight:600;font-size:14px}
 .item-price{font-weight:900;color:#5a0070;font-size:14px}
+.offer{color:#b00020;font-weight:900;font-size:13px}
 .btn-add{background:#5a0070;color:#fff;border:none;border-radius:14px;padding:6px 14px;font-weight:900;cursor:pointer}
-.btn-add[disabled]{opacity:.5;cursor:not-allowed}
-
-/* CART */
-#cart{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:#fff;color:#2b0033;padding:18px;border-radius:28px 28px 0 0;display:none;box-shadow:0 -20px 45px rgba(0,0,0,.45)}
-.cart-item{display:grid;grid-template-columns:1fr auto auto;gap:8px;padding:6px 0;font-size:13px;align-items:center}
+.btn-add[disabled]{opacity:.5}
+#cart{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:#fff;color:#2b0033;padding:18px;border-radius:28px 28px 0 0;display:none}
+.cart-item{display:grid;grid-template-columns:1fr auto auto;gap:8px;padding:6px 0;font-size:13px}
 .qty{display:flex;gap:6px}
-.qty button{background:#FFD34D;border:none;border-radius:10px;padding:2px 10px;font-weight:900;cursor:pointer}
+.qty button{background:#FFD34D;border:none;border-radius:10px;padding:2px 10px;font-weight:900}
 .delivery{display:flex;justify-content:space-around;margin:12px 0;font-weight:700;font-size:14px}
 .input,.select{width:100%;padding:12px;border-radius:18px;border:1px solid #ccc;margin-top:8px;font-size:14px}
 .total{text-align:right;font-size:18px;font-weight:900;margin-top:8px}
 .finish{background:#25D366;color:#fff;padding:16px;border-radius:24px;font-weight:900;margin-top:12px;text-align:center;cursor:pointer}
-
-/* MODAIS */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:99999}
-.modal-box{background:#fff;color:#2b0033;width:92%;max-width:400px;border-radius:26px;padding:20px;animation:fade .3s ease}
-.modal-title{font-weight:900;margin-bottom:10px;color:#5a0070}
-.modal-actions{display:flex;gap:10px;margin-top:14px}
-.modal-actions button{flex:1}
-
-/* OFFLINE */
-#offline{position:fixed;inset:0;background:#020018;color:#fff;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;z-index:100000}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9999}
+.modal-box{background:#fff;color:#2b0033;width:92%;max-width:400px;border-radius:26px;padding:20px}
+.admin-box{background:#fff;color:#2b0033;width:92%;max-width:420px;border-radius:26px;padding:20px}
+.admin-row{display:grid;grid-template-columns:1fr auto auto;gap:6px;margin-bottom:8px}
+.admin-row input{padding:8px;border-radius:10px;border:1px solid #ccc}
 </style>
 </head>
 <body>
-
-<div id="offline">
-<h2>Sem conexão</h2>
-<p>Verifique sua internet e tente novamente.</p>
-</div>
-
-<div id="splash">
-<div class="splash-box">
-<img src="logo.png" class="splash-logo">
-<button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
-</div>
-</div>
-
 <div id="app">
 <div class="title">Rabika's Burguer</div>
 <div id="closedBanner">🔴 Estamos fechados. Atendimento: Terça a Domingo, das 18:30 às 22:30</div>
 <input class="search" id="search" placeholder="Pesquisar no cardápio..." oninput="handleSearch(this.value)">
-
 <div class="tabs">
 <div class="tab active" onclick="openTab('lanches',this)">🍔 Lanches</div>
 <div class="tab" onclick="openTab('porcoes',this)">🍟 Porções</div>
@@ -89,14 +54,12 @@ body{font-family:'Poppins',sans-serif;background:linear-gradient(180deg,#06003a,
 <div class="tab" onclick="openTab('acai',this)">🍨 Açaí</div>
 <div class="tab" onclick="openTab('bebidas',this)">🥤 Bebidas</div>
 </div>
-
 <div id="lanches" class="box active"></div>
 <div id="porcoes" class="box"></div>
 <div id="pasteis" class="box"></div>
 <div id="acai" class="box"></div>
 <div id="bebidas" class="box"></div>
 </div>
-
 <div id="cart">
 <div id="cartItems"></div>
 <div class="delivery">
@@ -105,189 +68,49 @@ body{font-family:'Poppins',sans-serif;background:linear-gradient(180deg,#06003a,
 </div>
 <input class="input" id="name" placeholder="Seu nome">
 <input class="input" id="address" placeholder="Endereço" style="display:none">
-<select class="select" id="payment">
-<option value="">Forma de pagamento</option>
-<option>Dinheiro</option>
-<option>Pix</option>
-<option>Cartão</option>
-</select>
+<select class="select" id="payment"><option value="">Forma de pagamento</option><option>Dinheiro</option><option>Pix</option><option>Cartão</option></select>
 <div class="total" id="total">Total: R$ 0,00</div>
-<div class="finish" onclick="openConfirm()">Finalizar Pedido</div>
+<div class="finish" onclick="sendOrder()">Finalizar Pedido</div>
 </div>
-
-<!-- MODAL OBS -->
-<div id="obsModal" class="modal">
-<div class="modal-box">
-<div class="modal-title">Observação do item</div>
-<input class="input" id="obsInput" placeholder="Ex: sem cebola">
-<div class="modal-actions">
-<button class="btn-add" onclick="confirmAdd()">Adicionar</button>
-<button class="btn-add" onclick="closeObs()" style="background:#ccc;color:#2b0033">Cancelar</button>
+<div id="adminModal" class="modal">
+<div class="admin-box">
+<h3>Painel de Ofertas</h3>
+<div id="adminList"></div>
+<div class="finish" onclick="closeAdmin()">Fechar</div>
 </div>
 </div>
-</div>
-
-<!-- MODAL CONFIRMA -->
-<div id="confirmModal" class="modal">
-<div class="modal-box">
-<div class="modal-title">Confirmar pedido</div>
-<div id="confirmText" style="font-size:13px"></div>
-<div class="modal-actions">
-<button class="btn-add" onclick="sendOrder()">Confirmar</button>
-<button class="btn-add" onclick="closeConfirm()" style="background:#ccc;color:#2b0033">Voltar</button>
-</div>
-</div>
-</div>
-
 <script>
-/* CONFIG */
 const FREIGHT=8;
+const ADMIN_PASS='adm';
 let isDelivery=false;
 let cart=[];
-let tempItem=null;
-
-/* HORARIO */
-function isOpen(){
- const d=new Date();
- const day=d.getDay();
- const h=d.getHours()+d.getMinutes()/60;
- if(day===1)return false;
- if(h<18.5||h>22.5)return false;
- return true;
-}
-
-/* PRODUTOS */
+let offers=JSON.parse(localStorage.getItem('offers'))||{};
 const products={
- lanches:[
-  {n:'X-Salada',p:17},{n:'X-Burguer',p:14},{n:'X-Frango',p:22},{n:'X-Frango Cremoso',p:20},{n:'X-Bacon',p:25},{n:'X-Calabresa',p:25},{n:'X-Coração',p:27},{n:'X-Tudo',p:32},{n:'X-Burguer Duplo',p:22},{n:'X-Egg',p:20},{n:'X-Tribom',p:32},{n:'X-Da Casa',p:45},{n:'X-Dog',p:20}
- ],
- adicionaisLanches:[
-  {n:'Calabresa',p:7},{n:'Bacon',p:7},{n:'Coração',p:8},{n:'Ovo',p:3},{n:'Salsicha',p:4},{n:'Frango',p:7},{n:'Cheddar',p:4},{n:'Hambúrguer artesanal',p:10},{n:'Maionese caseira',p:2}
- ],
- porcoes:[
-  {n:'Fritas c/ Frango',p:39.99},{n:'Fritas',p:24.99},{n:'Fritas c/ Calabresa',p:34.99},{n:'Fritas c/ Bacon',p:34.99},{n:'Anéis de Cebola',p:24.99},{n:'Fritas c/ Bacon, Calabresa e Queijo',p:39.99},{n:'Fritas c/ Bacon Cheddar',p:39.99},{n:'Fritas c/ Polenta e Frango',p:39.99},{n:'Fritas c/ Polenta',p:24.99},{n:'Fritas c/ Calabresa e Catupiry',p:35.99},{n:'Fritas, Polenta, Chuleta e Anel de Cebola',p:49.99}
- ],
- pasteis:[
-  {n:'Pastel de Carne',p:14},{n:'Pastel de Frango',p:12},{n:'Frango Bacon Cheddar',p:16},{n:'Bacon Cheddar',p:15},{n:'Calabresa c/ Cebola',p:14},{n:'Carne e Queijo',p:15},{n:'Queijo',p:14},{n:'Chocolate ao Leite',p:15},{n:'Banana Queijo Canela',p:15},{n:'Romeu e Julieta',p:15},{n:'Chocolate Branco',p:15},{n:'Creme e Ouro Branco',p:15},{n:'Creme e Sonho de Valsa',p:15}
- ],
- acaiTamanhos:[
-  {n:'Açaí 300ml',p:12},{n:'Açaí 400ml',p:15},{n:'Açaí 500ml',p:18}
- ],
- acaiAdicionais:[
-  {n:'Paçoca',p:2},{n:'Leite em pó',p:4},{n:'Granola',p:4},{n:'Morango',p:4},{n:'M&M',p:3},{n:'Ouro Branco',p:3},{n:'Banana',p:2},{n:'Sonho de Valsa',p:3},{n:'Leite Condensado',p:3},{n:'Nutella',p:4}
- ],
- bebidas:[
-  {n:'Cassulinha 200ml',p:3},{n:'Coca-Cola 600ml',p:8},{n:'Coca-Cola 2L',p:16},{n:'Refri Lata',p:6},{n:'Refrigerante 2L',p:12},{n:'Cerveja Lata 350ml',p:6},{n:'Achocolatado 200ml',p:3}
- ]
+ lanches:[{n:'X-Salada',p:17},{n:'X-Burguer',p:14},{n:'X-Frango',p:22},{n:'X-Frango Cremoso',p:20},{n:'X-Bacon',p:25},{n:'X-Calabresa',p:25},{n:'X-Coração',p:27},{n:'X-Tudo',p:32},{n:'X-Burguer Duplo',p:22},{n:'X-Egg',p:20},{n:'X-Tribom',p:32},{n:'X-Da Casa',p:45},{n:'X-Dog',p:20}],
+ adicionaisLanches:[{n:'Calabresa',p:7},{n:'Bacon',p:7},{n:'Coração',p:8},{n:'Ovo',p:3},{n:'Salsicha',p:4},{n:'Frango',p:7},{n:'Cheddar',p:4},{n:'Hambúrguer artesanal',p:10},{n:'Maionese caseira',p:2}],
+ porcoes:[{n:'Fritas c/ Frango',p:39.99},{n:'Fritas',p:24.99},{n:'Fritas c/ Calabresa',p:34.99},{n:'Fritas c/ Bacon',p:34.99},{n:'Anéis de Cebola',p:24.99},{n:'Fritas c/ Bacon, Calabresa e Queijo',p:39.99},{n:'Fritas c/ Bacon Cheddar',p:39.99},{n:'Fritas c/ Polenta e Frango',p:39.99},{n:'Fritas c/ Polenta',p:24.99},{n:'Fritas c/ Calabresa e Catupiry',p:35.99},{n:'Fritas, Polenta, Chuleta e Anel de Cebola',p:49.99}],
+ pasteis:[{n:'Pastel de Carne',p:14},{n:'Pastel de Frango',p:12},{n:'Frango Bacon Cheddar',p:16},{n:'Bacon Cheddar',p:15},{n:'Calabresa c/ Cebola',p:14},{n:'Carne e Queijo',p:15},{n:'Queijo',p:14},{n:'Chocolate ao Leite',p:15},{n:'Banana Queijo Canela',p:15},{n:'Romeu e Julieta',p:15},{n:'Chocolate Branco',p:15},{n:'Creme e Ouro Branco',p:15},{n:'Creme e Sonho de Valsa',p:15}],
+ acaiTamanhos:[{n:'Açaí 300ml',p:12},{n:'Açaí 400ml',p:15},{n:'Açaí 500ml',p:18}],
+ acaiAdicionais:[{n:'Paçoca',p:2},{n:'Leite em pó',p:4},{n:'Granola',p:4},{n:'Morango',p:4},{n:'M&M',p:3},{n:'Ouro Branco',p:3},{n:'Banana',p:2},{n:'Sonho de Valsa',p:3},{n:'Leite Condensado',p:3},{n:'Nutella',p:4}],
+ bebidas:[{n:'Cassulinha 200ml',p:3},{n:'Coca-Cola 600ml',p:8},{n:'Coca-Cola 2L',p:16},{n:'Refri Lata',p:6},{n:'Refrigerante 2L',p:12},{n:'Cerveja Lata 350ml',p:6},{n:'Achocolatado 200ml',p:3}]
 };
-
-/* START */
-function start(){
- document.getElementById('splash').style.display='none';
- document.getElementById('app').style.display='block';
- renderAll();
- updateOpenStatus();
-}
-
-function updateOpenStatus(){
- const open=isOpen();
- document.getElementById('closedBanner').style.display=open?'none':'block';
- document.querySelectorAll('.btn-add').forEach(b=>b.disabled=!open);
-}
-
-/* RENDER */
-function renderAll(){
- renderCategory('lanches',products.lanches,products.adicionaisLanches);
- renderCategory('porcoes',products.porcoes);
- renderCategory('pasteis',products.pasteis);
- renderAcai();
- renderCategory('bebidas',products.bebidas);
-}
-
-function renderCategory(id,list,extra){
- const box=document.getElementById(id);
- box.innerHTML='';
- list.forEach(p=>box.innerHTML+=itemHTML(p));
- if(extra){box.innerHTML+='<div class="section">➕ Adicionais</div>';extra.forEach(p=>box.innerHTML+=itemHTML(p))}
-}
-
-function renderAcai(){
- const box=document.getElementById('acai');
- box.innerHTML='<div class="section">🥤 Tamanhos</div>';
- products.acaiTamanhos.forEach(p=>box.innerHTML+=itemHTML(p));
- box.innerHTML+='<div class="section">🍫 Adicionais</div>';
- products.acaiAdicionais.forEach(p=>box.innerHTML+=itemHTML(p));
-}
-
-function itemHTML(p){
- return `<div class='item'><span class='item-name'>${p.n}</span><span class='item-price'>R$ ${p.p.toFixed(2).replace('.',',')}</span><button class='btn-add' onclick="openObs('${p.n}',${p.p})">+</button></div>`;
-}
-
-/* OBS */
-function openObs(n,p){tempItem={n,p};document.getElementById('obsInput').value='';document.getElementById('obsModal').style.display='flex'}
-function closeObs(){document.getElementById('obsModal').style.display='none'}
-function confirmAdd(){const obs=document.getElementById('obsInput').value;addItem(tempItem.n,tempItem.p,obs);closeObs()}
-
-function addItem(n,p,obs){cart.push({n,p,q:1,obs});updateCart()}
-
-/* CART */
-function updateCart(){
- const box=document.getElementById('cartItems');
- box.innerHTML='';
- let total=0;
- cart.forEach((i,idx)=>{
-  total+=i.p*i.q;
-  box.innerHTML+=`<div class='cart-item'><span>${i.n}${i.obs?'<br><small>Obs: '+i.obs+'</small>':''}</span><div class='qty'><button onclick='chg(${idx},-1)'>-</button><button onclick='chg(${idx},1)'>+</button></div></div>`;
- });
- if(isDelivery)total+=FREIGHT;
- document.getElementById('total').innerText='Total: R$ '+total.toFixed(2).replace('.',',');
- document.getElementById('cart').style.display=cart.length?'block':'none';
-}
-
+function openTab(id,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function handleSearch(v){v=v.toLowerCase().trim();if(v==='oferta'){const p=prompt('Senha ADM');if(p===ADMIN_PASS)openAdmin();document.getElementById('search').value='';return;}document.querySelectorAll('.item').forEach(i=>{const n=i.querySelector('.item-name').innerText.toLowerCase();i.style.display=n.includes(v)?'grid':'none'})}
+function renderAll(){renderCategory('lanches',products.lanches,products.adicionaisLanches);renderCategory('porcoes',products.porcoes);renderCategory('pasteis',products.pasteis);renderAcai();renderCategory('bebidas',products.bebidas)}
+function renderCategory(id,list,extra){const box=document.getElementById(id);box.innerHTML='';list.forEach(p=>box.innerHTML+=itemHTML(p));if(extra){box.innerHTML+='<div class="section">➕ Adicionais</div>';extra.forEach(p=>box.innerHTML+=itemHTML(p))}}
+function renderAcai(){const box=document.getElementById('acai');box.innerHTML='<div class="section">🥤 Tamanhos</div>';products.acaiTamanhos.forEach(p=>box.innerHTML+=itemHTML(p));box.innerHTML+='<div class="section">🍫 Adicionais</div>';products.acaiAdicionais.forEach(p=>box.innerHTML+=itemHTML(p))}
+function getPrice(p){const o=offers[p.n];if(o&&new Date(o.until)>=new Date())return o.price;return p.p}
+function itemHTML(p){const price=getPrice(p);const o=offers[p.n];return `<div class='item'><span class='item-name'>${p.n}${o&&new Date(o.until)>=new Date()?'<br><span class="offer">🔥 Oferta até '+o.until+'</span>':''}</span><span class='item-price'>R$ ${price.toFixed(2).replace('.',',')}</span><button class='btn-add' onclick="addItem('${p.n}',${price})">+</button></div>`}
+function addItem(n,p){cart.push({n,p,q:1});updateCart()}
+function updateCart(){const box=document.getElementById('cartItems');box.innerHTML='';let total=0;cart.forEach((i,idx)=>{total+=i.p*i.q;box.innerHTML+=`<div class='cart-item'><span>${i.n} x${i.q}</span><div class='qty'><button onclick='chg(${idx},-1)'>-</button><button onclick='chg(${idx},1)'>+</button></div></div>`});if(isDelivery)total+=FREIGHT;document.getElementById('total').innerText='Total: R$ '+total.toFixed(2).replace('.',',');document.getElementById('cart').style.display=cart.length?'block':'none'}
 function chg(i,v){cart[i].q+=v;if(cart[i].q<=0)cart.splice(i,1);updateCart()}
 function setDelivery(v){isDelivery=v;document.getElementById('address').style.display=v?'block':'none';updateCart()}
-
-/* TABS */
-function openTab(id,el){
- document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
- el.classList.add('active');
- document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- document.getElementById('search').value='';
- document.querySelectorAll('.item').forEach(i=>i.style.display='grid');
-}
-
-/* SEARCH */
-function handleSearch(v){v=v.toLowerCase();document.querySelectorAll('.item').forEach(i=>{i.style.display=i.innerText.toLowerCase().includes(v)?'grid':'none'})}
-
-/* CONFIRM */
-function openConfirm(){
- if(!cart.length)return;
- const name=document.getElementById('name').value;
- const pay=document.getElementById('payment').value;
- const addr=document.getElementById('address').value;
- if(!name||!pay||(isDelivery&&!addr))return alert('Preencha todos os dados');
- let txt='';let total=0;
- cart.forEach(i=>{txt+=`- ${i.n} x${i.q}${i.obs?' (Obs: '+i.obs+')':''}<br>`;total+=i.p*i.q});
- if(isDelivery){txt+='Entrega: R$ 8<br>';total+=FREIGHT}
- txt+='<br><b>Total: R$ '+total.toFixed(2).replace('.',',')+'</b>';
- document.getElementById('confirmText').innerHTML=txt;
- document.getElementById('confirmModal').style.display='flex';
-}
-function closeConfirm(){document.getElementById('confirmModal').style.display='none'}
-
-function sendOrder(){
- let msg='Pedido Rabika\n';
- cart.forEach(i=>{msg+=`- ${i.n} x${i.q}${i.obs?' (Obs: '+i.obs+')':''}\n`});
- if(isDelivery)msg+='Entrega +R$8\n';
- msg+=document.getElementById('total').innerText;
- window.open('https://wa.me/554991789706?text='+encodeURIComponent(msg));
- closeConfirm();
-}
-
-/* OFFLINE */
-window.addEventListener('offline',()=>document.getElementById('offline').style.display='flex');
-window.addEventListener('online',()=>document.getElementById('offline').style.display='none');
+function sendOrder(){window.open('https://wa.me/554991789706?text='+encodeURIComponent('Pedido Rabika'))}
+function openAdmin(){document.getElementById('adminModal').style.display='flex';renderAdmin()}
+function closeAdmin(){document.getElementById('adminModal').style.display='none'}
+function renderAdmin(){const box=document.getElementById('adminList');box.innerHTML='';Object.values(products).flat().forEach(p=>{box.innerHTML+=`<div class='admin-row'><input value='${p.n}' disabled><input type='number' placeholder='Preço oferta'><input type='date' onchange="setOffer('${p.n}',this.parentNode.children[1].value,this.value)"></div>`})}
+function setOffer(name,price,until){if(!price||!until)return;offers[name]={price:parseFloat(price),until};localStorage.setItem('offers',JSON.stringify(offers));renderAll()}
+renderAll();document.getElementById('app').style.display='block';
 </script>
 </body>
 </html>
