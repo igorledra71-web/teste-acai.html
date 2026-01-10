@@ -13,17 +13,48 @@ body{
     color:#fff;
     display:flex;
     justify-content:center;
+    overflow:hidden;
+}
+
+    background:linear-gradient(180deg,#06003a 0%,#0a045a 50%,#03001f 100%);
+    font-family:Arial,Helvetica,sans-serif;
+    color:#fff;
+    display:flex;
+    justify-content:center;
     overflow-y:auto;
 }
 
 /* SPLASH */
 #splashScreen{
-    position:fixed; inset:0;
+    position:fixed;
+    top:0; left:0; right:0; bottom:0;
+    width:100vw;
+    height:100vh;
     background:linear-gradient(180deg,#05002e,#020018);
-    display:flex; justify-content:center; align-items:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     z-index:9999;
-    pointer-events:auto;
 }
+.splash-content{
+    width:100%;
+    max-width:420px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:34px;
+}
+.splash-logo{width:80%; max-width:300px}
+.splash-btn{
+    background:linear-gradient(135deg,#FFD34D,#FFB000);
+    border:none; padding:20px 52px; border-radius:42px;
+    font-size:20px; font-weight:bold; color:#2b0033;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+    animation:pulse 1.6s infinite;
+}
+
 .splash-content{position:relative; z-index:10000;}
 .splash-btn{position:relative; z-index:10001; pointer-events:auto;}
 
@@ -270,7 +301,7 @@ body{
 <div id="splashScreen">
   <div class="splash-content">
     <img src="logo.png" class="splash-logo">
-    <button class="splash-btn" onclick="enterApp()">FAZER PEDIDO</button>
+    <button class="splash-btn" id="startBtn">FAZER PEDIDO</button>
   </div>
 </div>
 
@@ -314,12 +345,26 @@ body{
 <div class="content-box" id="lanches">
   <div class="item"><span>X-Salada</span><span>R$ <script>document.write(getPrice('X-Salada',17).toFixed(2).replace('.',','))
 // GARANTIA DE CLIQUE NO SPLASH
-window.addEventListener('DOMContentLoaded', ()=>{
-  const btn = document.querySelector('.splash-btn');
+
   if(btn){
     btn.addEventListener('click', enterApp);
   }
 });
+
+// FIX DEFINITIVO SPLASH
+(function(){
+  const btn = document.getElementById('startBtn');
+  if(btn){
+    btn.onclick = function(){
+      document.getElementById('splashScreen').style.display = 'none';
+      const app = document.getElementById('app');
+      app.style.display = 'flex';
+      app.style.opacity = '0';
+      app.style.transition = 'opacity .3s ease';
+      requestAnimationFrame(()=>{ app.style.opacity = '1'; });
+    };
+  }
+})();
 </script></span><button class="btn-add" onclick="addToCart('X-Salada',17)">+</button></div>
   <div class="item"><span>X-Burguer</span><span>R$ <script>document.write(getPrice('X-Burguer',14).toFixed(2).replace('.',','))</script></span><button class="btn-add" onclick="addToCart('X-Burguer',14)">+</button></div>
   <div class="item"><span>X-Frango</span><span>R$ <script>document.write(getPrice('X-Frango',22).toFixed(2).replace('.',','))</script></span><button class="btn-add" onclick="addToCart('X-Frango',22)">+</button></div></span><span>R$ 17,00</span><button class="btn-add" onclick="addToCart('X-Salada',17)">+</button></div>
