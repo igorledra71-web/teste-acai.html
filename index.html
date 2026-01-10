@@ -8,358 +8,307 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-    background:linear-gradient(180deg,#06003a 0%,#0a045a 50%,#03001f 100%);
-    font-family:Arial,Helvetica,sans-serif;
-    color:#fff;
-    display:flex;
-    justify-content:center;
-    overflow-y:auto;
+  background:linear-gradient(180deg,#06003a 0%,#0a045a 50%,#03001f 100%);
+  font-family:Arial,Helvetica,sans-serif;
+  color:#fff;
+  display:flex;
+  justify-content:center;
 }
 
 /* SPLASH */
 #splashScreen{
-    position:fixed; inset:0;
-    background:linear-gradient(180deg,#05002e,#020018);
-    display:flex; justify-content:center; align-items:center;
-    z-index:9999;
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg,#05002e,#020018);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
 }
 .splash-content{
-    width:100%; height:100%;
-    display:flex; flex-direction:column;
-    justify-content:center; align-items:center;
-    gap:34px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:34px;
 }
-.splash-logo{width:88vw; max-width:420px}
+.splash-logo{
+  width:88vw;
+  max-width:420px;
+}
 .splash-btn{
-    background:linear-gradient(135deg,#FFD34D,#FFB000);
-    border:none; padding:20px 52px; border-radius:42px;
-    font-size:20px; font-weight:bold; color:#2b0033;
-    cursor:pointer;
-    box-shadow:0 10px 30px rgba(0,0,0,.35);
-    animation:pulse 1.6s infinite;
-}
-@keyframes pulse{
-    0%{transform:scale(1)}
-    50%{transform:scale(1.06)}
-    100%{transform:scale(1)}
+  background:linear-gradient(135deg,#FFD34D,#FFB000);
+  border:none;
+  padding:20px 52px;
+  border-radius:42px;
+  font-size:20px;
+  font-weight:bold;
+  color:#2b0033;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
 }
 
 /* APP */
 #app{
-    width:100%; max-width:420px;
-    padding:22px 14px 380px;
-    display:none; flex-direction:column; align-items:center;
+  width:100%;
+  max-width:420px;
+  padding:22px 14px 380px;
+  display:none;
+  flex-direction:column;
+  align-items:center;
 }
 .brand-title{
-    font-size:30px;
-    font-weight:800;
-    color:#FFD34D;
-    margin-bottom:14px;
+  font-size:30px;
+  font-weight:800;
+  color:#FFD34D;
+  margin-bottom:14px;
 }
 
 /* BUSCA */
-.search-box{width:100%; margin-bottom:18px}
+.search-box{width:100%;margin-bottom:18px}
 .search-input{
-    width:100%;
-    padding:14px;
-    border-radius:20px;
-    border:none;
-    font-size:16px;
+  width:100%;
+  padding:14px;
+  border-radius:20px;
+  border:none;
+  font-size:16px;
 }
-.search-results{
-    background:#fff;
-    color:#2b0033;
-    border-radius:20px;
-    margin-top:10px;
-    display:none;
-}
-.search-item{
-    padding:14px;
-    border-bottom:1px dashed #ddd;
-}
-.search-item:last-child{border:none}
 
 /* CATEGORIAS */
 .category-btn{
-    width:100%;
-    background:linear-gradient(135deg,#ffcc00,#ff9900);
-    color:#2b0033;
-    padding:18px;
-    border-radius:28px;
-    font-weight:800;
-    margin-bottom:16px;
-    cursor:pointer;
-    text-align:center;
-}
-.sub-btn{
-    width:100%;
-    background:#FFD34D;
-    color:#2b0033;
-    padding:14px;
-    border-radius:24px;
-    font-weight:700;
-    margin:12px 0;
-    cursor:pointer;
-    text-align:center;
+  width:100%;
+  background:linear-gradient(135deg,#ffcc00,#ff9900);
+  color:#2b0033;
+  padding:18px;
+  border-radius:28px;
+  font-weight:800;
+  margin-bottom:16px;
+  cursor:pointer;
+  text-align:center;
 }
 .content-box{
-    width:100%;
-    background:#fff;
-    color:#2b0033;
-    border-radius:32px;
-    padding:18px;
-    margin-bottom:22px;
-    display:none;
+  width:100%;
+  background:#fff;
+  color:#2b0033;
+  border-radius:28px;
+  padding:18px;
+  margin-bottom:22px;
+  display:none;
 }
 .item{
-    display:grid;
-    grid-template-columns:1fr auto auto;
-    gap:12px;
-    padding:14px 0;
-    border-bottom:1px dashed #e3e3e3;
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px dashed #ddd;
 }
 .item:last-child{border:none}
 .btn-add{
-    background:#5a0070;
-    color:#fff;
-    border:none;
-    border-radius:14px;
-    padding:6px 14px;
-    cursor:pointer;
+  background:#5a0070;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:6px 12px;
+  cursor:pointer;
 }
 
 /* CARRINHO */
 .cart-footer{
-    position:fixed;
-    bottom:0;
-    left:50%;
-    transform:translateX(-50%);
-    width:100%;
-    max-width:420px;
-    background:#fff;
-    color:#2b0033;
-    padding:18px;
-    border-radius:32px 32px 0 0;
-    display:none;
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  color:#2b0033;
+  padding:18px;
+  border-radius:28px 28px 0 0;
+  display:none;
 }
 .cart-item{
-    display:grid;
-    grid-template-columns:1fr auto auto;
-    gap:10px;
-    padding:8px 0;
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:8px;
+  padding:6px 0;
 }
 .remove-btn{
-    background:#e60000;
-    color:#fff;
-    border:none;
-    border-radius:8px;
-    padding:2px 8px;
-    cursor:pointer;
-}
-.delivery-box{
-    display:flex;
-    justify-content:space-around;
-    margin:14px 0;
-}
-.input-field,.select-field{
-    width:100%;
-    padding:12px;
-    border-radius:18px;
-    border:1px solid #ccc;
-    margin-top:10px;
+  background:#e60000;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  padding:2px 6px;
+  cursor:pointer;
 }
 .total{
-    text-align:right;
-    font-weight:900;
-    font-size:18px;
-    margin-top:10px;
+  text-align:right;
+  font-weight:bold;
+  margin-top:10px;
 }
 .btn-finish{
-    background:#25D366;
-    color:#fff;
-    padding:16px;
-    border-radius:22px;
-    font-weight:900;
-    margin-top:14px;
-    cursor:pointer;
+  background:#25D366;
+  color:#fff;
+  padding:14px;
+  border-radius:18px;
+  margin-top:12px;
+  text-align:center;
+  cursor:pointer;
 }
 </style>
 </head>
-
 <body>
 
 <!-- SPLASH -->
 <div id="splashScreen">
   <div class="splash-content">
     <img src="logo.png" class="splash-logo">
-    <button class="splash-btn" onclick="enterApp()">FAZER PEDIDO</button>
+    <button class="splash-btn" id="startBtn">FAZER PEDIDO</button>
   </div>
+</div>
+
 <!-- APP -->
 <div id="app">
   <div class="brand-title">Rabika's Burguer</div>
 
   <div class="search-box">
-    <input class="search-input" placeholder="Pesquisar produto..." oninput="searchProduct(this.value)">
-    <div class="search-results" id="searchResults"></div>
+    <input class="search-input" placeholder="Pesquisar produto...">
   </div>
-<!-- LANCHES -->
-<div class="category-btn" onclick="toggle('lanches')">🍔 Lanches</div>
-<div class="content-box" id="lanches">
-  <div class="item"><span>X-Salada</span><span>R$ 17,00</span><button class="btn-add" onclick="addToCart('X-Salada',17)">+</button></div>
-  <div class="item"><span>X-Burguer</span><span>R$ 14,00</span><button class="btn-add" onclick="addToCart('X-Burguer',14)">+</button></div>
-  <div class="item"><span>X-Frango</span><span>R$ 22,00</span><button class="btn-add" onclick="addToCart('X-Frango',22)">+</button></div>
-  <div class="item"><span>X-Frango Cremoso</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Frango Cremoso',20)">+</button></div>
-  <div class="item"><span>X-Bacon</span><span>R$ 25,00</span><button class="btn-add" onclick="addToCart('X-Bacon',25)">+</button></div>
-  <div class="item"><span>X-Calabresa</span><span>R$ 25,00</span><button class="btn-add" onclick="addToCart('X-Calabresa',25)">+</button></div>
-  <div class="item"><span>X-Coração</span><span>R$ 27,00</span><button class="btn-add" onclick="addToCart('X-Coração',27)">+</button></div>
-  <div class="item"><span>X-Tudo</span><span>R$ 32,00</span><button class="btn-add" onclick="addToCart('X-Tudo',32)">+</button></div>
-  <div class="item"><span>X-Burguer Duplo</span><span>R$ 22,00</span><button class="btn-add" onclick="addToCart('X-Burguer Duplo',22)">+</button></div>
-  <div class="item"><span>X-Egg</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Egg',20)">+</button></div>
-  <div class="item"><span>X-Tribom</span><span>R$ 32,00</span><button class="btn-add" onclick="addToCart('X-Tribom',32)">+</button></div>
-  <div class="item"><span>X-Da Casa</span><span>R$ 45,00</span><button class="btn-add" onclick="addToCart('X-Da Casa',45)">+</button></div>
-  <div class="item"><span>X-Dog</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Dog',20)">+</button></div>
-
-  <div class="sub-btn" onclick="toggle('extrasLanches')">➕ Adicionais para Lanches</div>
-  <div id="extrasLanches" style="display:none;">
-    <div class="item"><span>Calabresa</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Calabresa',7)">+</button></div>
-    <div class="item"><span>Bacon</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Bacon',7)">+</button></div>
-    <div class="item"><span>Coração</span><span>R$ 8,00</span><button class="btn-add" onclick="addToCart('Adicional Coração',8)">+</button></div>
-    <div class="item"><span>Ovo</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Adicional Ovo',5)">+</button></div>
-    <div class="item"><span>Salsicha</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Adicional Salsicha',4)">+</button></div>
-    <div class="item"><span>Frango</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Frango',7)">+</button></div>
-    <div class="item"><span>Cheddar</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Adicional Cheddar',4)">+</button></div>
-    <div class="item"><span>Hambúrguer artesanal</span><span>R$ 10,00</span><button class="btn-add" onclick="addToCart('Adicional Hambúrguer',10)">+</button></div>
-    <div class="item"><span>Maionese caseira</span><span>R$ 2,00</span><button class="btn-add" onclick="addToCart('Adicional Maionese',2)">+</button></div>
-  </div>
-<!-- PASTÉIS -->
-<div class="category-btn" onclick="toggle('pasteis')">🥟 Pastéis</div>
-<div class="content-box" id="pasteis">
-  <div class="item"><span>Pastel de Carne</span><span>R$ 14,00</span><button class="btn-add" onclick="addToCart('Pastel de Carne',14)">+</button></div>
-  <div class="item"><span>Pastel de Frango</span><span>R$ 12,00</span><button class="btn-add" onclick="addToCart('Pastel de Frango',12)">+</button></div>
-  <div class="item"><span>Frango Bacon Cheddar</span><span>R$ 16,00</span><button class="btn-add" onclick="addToCart('Pastel Frango Bacon Cheddar',16)">+</button></div>
-  <div class="item"><span>Bacon Cheddar</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Bacon Cheddar',15)">+</button></div>
-  <div class="item"><span>Calabresa c/ Cebola</span><span>R$ 14,00</span><button class="btn-add" onclick="addToCart('Pastel Calabresa com Cebola',14)">+</button></div>
-  <div class="item"><span>Carne e Queijo</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Carne e Queijo',15)">+</button></div>
-  <div class="item"><span>Queijo</span><span>R$ 14,00</span><button class="btn-add" onclick="addToCart('Pastel Queijo',14)">+</button></div>
-  <div class="item"><span>Chocolate ao Leite</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Chocolate ao Leite',15)">+</button></div>
-  <div class="item"><span>Banana Queijo Canela</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Banana Queijo Canela',15)">+</button></div>
-  <div class="item"><span>Romeu e Julieta</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Romeu e Julieta',15)">+</button></div>
-  <div class="item"><span>Chocolate Branco</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Chocolate Branco',15)">+</button></div>
-  <div class="item"><span>Creme e Ouro Branco</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Creme e Ouro Branco',15)">+</button></div>
-  <div class="item"><span>Creme e Sonho de Valsa</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Creme e Sonho de Valsa',15)">+</button></div>
-</div>
-
-<!-- PORÇÕES -->
-<div class="category-btn" onclick="toggle('porcoes')">🍟 Porções</div>
-<div class="content-box" id="porcoes">
-  <div class="item"><span>Fritas c/ Frango</span><span>R$ 39,99</span><button class="btn-add" onclick="addToCart('Fritas com Frango',39.99)">+</button></div>
-  <div class="item"><span>Fritas</span><span>R$ 24,99</span><button class="btn-add" onclick="addToCart('Fritas',24.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Calabresa</span><span>R$ 34,99</span><button class="btn-add" onclick="addToCart('Fritas com Calabresa',34.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Bacon</span><span>R$ 34,99</span><button class="btn-add" onclick="addToCart('Fritas com Bacon',34.99)">+</button></div>
-  <div class="item"><span>Anéis de Cebola</span><span>R$ 24,99</span><button class="btn-add" onclick="addToCart('Anéis de Cebola',24.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Bacon, Calabresa e Queijo</span><span>R$ 39,99</span><button class="btn-add" onclick="addToCart('Fritas Bacon Calabresa Queijo',39.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Bacon Cheddar</span><span>R$ 39,99</span><button class="btn-add" onclick="addToCart('Fritas Bacon Cheddar',39.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Polenta e Frango</span><span>R$ 39,99</span><button class="btn-add" onclick="addToCart('Fritas Polenta Frango',39.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Polenta</span><span>R$ 24,99</span><button class="btn-add" onclick="addToCart('Fritas Polenta',24.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Calabresa e Catupiry</span><span>R$ 35,99</span><button class="btn-add" onclick="addToCart('Fritas Calabresa Catupiry',35.99)">+</button></div>
-  <div class="item"><span>Fritas, Polenta, Chuleta e Anel de Cebola</span><span>R$ 49,99</span><button class="btn-add" onclick="addToCart('Porção Completa',49.99)">+</button></div>
-</div>
-
-<!-- BEBIDAS -->
-<div class="category-btn" onclick="toggle('bebidas')">🥤 Bebidas</div>
-<div class="content-box" id="bebidas">
-  <div class="item"><span>Cassulinha 200ml</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Cassulinha 200ml',3)">+</button></div>
-  <div class="item"><span>Coca-Cola 600ml</span><span>R$ 8,00</span><button class="btn-add" onclick="addToCart('Coca-Cola 600ml',8)">+</button></div>
-  <div class="item"><span>Coca-Cola 2L</span><span>R$ 16,00</span><button class="btn-add" onclick="addToCart('Coca-Cola 2L',16)">+</button></div>
-  <div class="item"><span>Refri Lata</span><span>R$ 6,00</span><button class="btn-add" onclick="addToCart('Refri Lata',6)">+</button></div>
-  <div class="item"><span>Refrigerante 2L</span><span>R$ 12,00</span><button class="btn-add" onclick="addToCart('Refrigerante 2L',12)">+</button></div>
-  <div class="item"><span>Cerveja Lata 350ml</span><span>R$ 6,00</span><button class="btn-add" onclick="addToCart('Cerveja Lata 350ml',6)">+</button></div>
-  <div class="item"><span>Achocolatado 200ml</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Achocolatado 200ml',3)">+</button></div>
-</div>
-
-<!-- AÇAÍ -->
-<div class="category-btn" onclick="toggle('acai')">🍨 Açaí</div>
-<div class="content-box" id="acai">
-  <div class="sub-btn" onclick="toggle('acaiTamanhos')">🥤 Tamanhos</div>
-  <div id="acaiTamanhos" style="display:none;">
-    <div class="item"><span>300ml</span><span>R$ 12,00</span><button class="btn-add" onclick="addToCart('Açaí 300ml',12)">+</button></div>
-    <div class="item"><span>400ml</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Açaí 400ml',15)">+</button></div>
-    <div class="item"><span>500ml</span><span>R$ 18,00</span><button class="btn-add" onclick="addToCart('Açaí 500ml',18)">+</button></div>
+  <!-- LANCHES -->
+  <div class="category-btn" data-target="lanches">🍔 Lanches</div>
+  <div class="content-box" id="lanches">
+    <div class="item"><span>X-Salada</span><span>R$ 17,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>X-Burguer</span><span>R$ 14,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>X-Frango</span><span>R$ 22,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>X-Frango Cremoso</span><span>R$ 20,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>X-Bacon</span><span>R$ 25,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>X-Calabresa</span><span>R$ 25,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>X-Coração</span><span>R$ 27,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>X-Tudo</span><span>R$ 32,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>X-Burguer Duplo</span><span>R$ 22,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>X-Egg</span><span>R$ 20,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>X-Tribom</span><span>R$ 32,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>X-Da Casa</span><span>R$ 45,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>X-Dog</span><span>R$ 20,00</span><button class="btn-add">+</button></div>
   </div>
 
-  <div class="sub-btn" onclick="toggle('acaiAdicionais')">🍫 Adicionais</div>
-  <div id="acaiAdicionais" style="display:none;">
-    <div class="item"><span>Paçoca</span><span>R$ 2,00</span><button class="btn-add" onclick="addToCart('Paçoca',2)">+</button></div>
-    <div class="item"><span>Leite em pó</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Leite em pó',4)">+</button></div>
-    <div class="item"><span>Granola</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Granola',4)">+</button></div>
-    <div class="item"><span>Morango</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Morango',4)">+</button></div>
-    <div class="item"><span>M&M</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('M&M',3)">+</button></div>
-    <div class="item"><span>Ouro Branco</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Ouro Branco',3)">+</button></div>
-    <div class="item"><span>Banana</span><span>R$ 2,00</span><button class="btn-add" onclick="addToCart('Banana',2)">+</button></div>
-    <div class="item"><span>Sonho de Valsa</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Sonho de Valsa',3)">+</button></div>
-    <div class="item"><span>Leite Condensado</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Leite Condensado',3)">+</button></div>
-    <div class="item"><span>Nutella</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Nutella',4)">+</button></div>
+  <!-- PASTÉIS -->
+  <div class="category-btn" data-target="pasteis">🥟 Pastéis</div>
+  <div class="content-box" id="pasteis">
+    <div class="item"><span>Pastel de Carne</span><span>R$ 14,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Pastel de Frango</span><span>R$ 12,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Frango Bacon Cheddar</span><span>R$ 16,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Bacon Cheddar</span><span>R$ 15,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Calabresa c/ Cebola</span><span>R$ 14,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Carne e Queijo</span><span>R$ 15,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Queijo</span><span>R$ 14,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Chocolate ao Leite</span><span>R$ 15,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Banana Queijo Canela</span><span>R$ 15,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Romeu e Julieta</span><span>R$ 15,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Chocolate Branco</span><span>R$ 15,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Creme e Ouro Branco</span><span>R$ 15,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Creme e Sonho de Valsa</span><span>R$ 15,00</span><button class="btn-add">+</button></div>
   </div>
-<!-- CARRINHO -->
-<div class="cart-footer" id="cartFooter">
-  <div id="cartItems"></div>
-  <div class="delivery-box">
-    <label><input type="radio" name="entrega" checked onclick="setDelivery(false)"> Retirada</label>
-    <label><input type="radio" name="entrega" onclick="setDelivery(true)"> Entrega (+ R$8)</label>
-  </div>
-  <input class="input-field" id="clientName" placeholder="Seu nome">
-  <div id="addressBox" style="display:none;">
-    <input class="input-field" id="clientAddress" placeholder="Endereço">
-  </div>
-  <select class="select-field" id="paymentMethod" onchange="checkPayment()">
-    <option value="">Forma de pagamento</option>
-    <option>Dinheiro</option>
-    <option>Pix</option>
-    <option>Cartão Débito</option>
-    <option>Cartão Crédito</option>
-  </select>
-  <div id="trocoBox" style="display:none">
-    <input class="input-field" id="trocoValue" placeholder="Troco para quanto?">
-  </div>
-  <div class="total" id="totalValue">Total: R$ 0,00</div>
-  <div class="btn-finish" onclick="finishOrder()">Finalizar Pedido</div>
-</div>
 
+  <!-- PORÇÕES -->
+  <div class="category-btn" data-target="porcoes">🍟 Porções</div>
+  <div class="content-box" id="porcoes">
+    <div class="item"><span>Fritas</span><span>R$ 24,99</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Fritas c/ Frango</span><span>R$ 39,99</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Fritas c/ Calabresa</span><span>R$ 34,99</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Fritas c/ Bacon</span><span>R$ 34,99</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Anéis de Cebola</span><span>R$ 24,99</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Fritas Bacon Calabresa Queijo</span><span>R$ 39,99</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Fritas Bacon Cheddar</span><span>R$ 39,99</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Fritas Polenta Frango</span><span>R$ 39,99</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Fritas Polenta</span><span>R$ 24,99</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Fritas Calabresa Catupiry</span><span>R$ 35,99</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Porção Completa</span><span>R$ 49,99</span><button class="btn-add">+</button></div>
+  </div>
+
+  <!-- BEBIDAS -->
+  <div class="category-btn" data-target="bebidas">🥤 Bebidas</div>
+  <div class="content-box" id="bebidas">
+    <div class="item"><span>Cassulinha 200ml</span><span>R$ 3,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Coca-Cola 600ml</span><span>R$ 8,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Coca-Cola 2L</span><span>R$ 16,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Refri Lata</span><span>R$ 6,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Refrigerante 2L</span><span>R$ 12,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Cerveja Lata 350ml</span><span>R$ 6,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Achocolatado 200ml</span><span>R$ 3,00</span><button class="btn-add">+</button></div>
+  </div>
+
+  <!-- AÇAÍ -->
+  <div class="category-btn" data-target="acai">🍨 Açaí</div>
+  <div class="content-box" id="acai">
+    <div class="item"><span>Açaí 300ml</span><span>R$ 12,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Açaí 400ml</span><span>R$ 15,00</span><button class="btn-add">+</button></div>
+    <div class="item"><span>Açaí 500ml</span><span>R$ 18,00</span><button class="btn-add">+</button></div>
+  </div>
 <script>
-let cart=[];
-let isDelivery=false;
-let precisaTroco=false;
-
+/* =============================
+   SPLASH → APP
+============================= */
 function enterApp(){
-  splashScreen.style.display="none";
-  app.style.display="flex";
+  document.getElementById("splashScreen").style.display = "none";
+  document.getElementById("app").style.display = "flex";
 }
 
-function toggle(id){
-  const el=document.getElementById(id);
-  el.style.display = el.style.display==="block" ? "none" : "block";
-}
+/* =============================
+   ABRIR / FECHAR CATEGORIAS
+============================= */
+document.querySelectorAll(".category-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const id = btn.getAttribute("data-target");
+    const box = document.getElementById(id);
 
-function addToCart(name,price){
-  cart.push({name,price});
-  updateCart();
-}
+    document.querySelectorAll(".content-box").forEach(c=>{
+      if(c !== box) c.style.display = "none";
+    });
+
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+
+/* =============================
+   CARRINHO
+============================= */
+let cart = [];
+
+document.querySelectorAll(".btn-add").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const item = btn.parentElement;
+    const name = item.children[0].innerText;
+    const price = parseFloat(
+      item.children[1].innerText.replace("R$","").replace(",",".")
+    );
+
+    cart.push({name,price});
+    updateCart();
+  });
+});
 
 function updateCart(){
-  cartItems.innerHTML="";
-  let total=0;
-  cart.forEach((i,idx)=>{
-    total+=i.price;
-    cartItems.innerHTML+=`
+  const cartBox = document.getElementById("cartItems");
+  cartBox.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach((item,index)=>{
+    total += item.price;
+
+    cartBox.innerHTML += `
       <div class="cart-item">
-        <span>${i.name}</span>
-        <span>R$ ${i.price.toFixed(2)}</span>
-        <button class="remove-btn" onclick="removeItem(${idx})">x</button>
-      </div>`;
+        <span>${item.name}</span>
+        <span>R$ ${item.price.toFixed(2).replace(".",",")}</span>
+        <button class="remove-btn" onclick="removeItem(${index})">x</button>
+      </div>
+    `;
   });
-  if(isDelivery) total+=8;
-  totalValue.innerText="Total: R$ "+total.toFixed(2);
-  cartFooter.style.display=cart.length?"block":"none";
+
+  document.getElementById("totalValue").innerText =
+    "Total: R$ " + total.toFixed(2).replace(".",",");
+
+  document.getElementById("cartFooter").style.display =
+    cart.length ? "block" : "none";
 }
 
 function removeItem(i){
@@ -367,477 +316,234 @@ function removeItem(i){
   updateCart();
 }
 
+/* =============================
+   ENTREGA
+============================= */
+let isDelivery = false;
+
 function setDelivery(v){
-  isDelivery=v;
-  addressBox.style.display=v?"block":"none";
-  updateCart();
+  isDelivery = v;
+  document.getElementById("addressBox").style.display = v ? "block" : "none";
 }
+
+/* =============================
+   TROCO
+============================= */
+let precisaTroco = false;
 
 function checkPayment(){
-  trocoBox.style.display = paymentMethod.value==="Dinheiro"?"block":"none";
+  const payment = document.getElementById("paymentMethod").value;
+  const box = document.getElementById("trocoBox");
+
+  if(payment === "Dinheiro"){
+    box.style.display = "block";
+  }else{
+    box.style.display = "none";
+    document.getElementById("trocoValue").style.display = "none";
+    precisaTroco = false;
+  }
 }
 
-<script>
-function searchProduct(q){
-  const box = document.getElementById("searchResults");
-  box.innerHTML = "";
+function setTroco(v){
+  precisaTroco = v;
+  document.getElementById("trocoValue").style.display = v ? "block" : "none";
+}
 
-  if(!q){
-    box.style.display = "none";
+/* =============================
+   FINALIZAR PEDIDO (WHATSAPP)
+============================= */
+function finishOrder(){
+  if(!cart.length){
+    alert("Adicione itens ao carrinho");
     return;
   }
 
-  /* ===== ATALHO SECRETO OFERTA ===== */
-  if(q.trim().toLowerCase() === "oferta"){
-    openOfferLogin();
-    return;
+  const name = document.getElementById("clientName").value;
+  const address = document.getElementById("clientAddress").value;
+  const payment = document.getElementById("paymentMethod").value;
+  const trocoValue = document.getElementById("trocoValue").value;
+
+  if(!name){ alert("Informe seu nome"); return; }
+  if(isDelivery && !address){ alert("Informe o endereço"); return; }
+  if(!payment){ alert("Informe a forma de pagamento"); return; }
+
+  let msg = "🍔 *Pedido Rabika's Burguer*\n\n";
+  msg += "*Cliente:* " + name + "\n";
+  msg += "*Pagamento:* " + payment + "\n";
+
+  if(payment === "Dinheiro"){
+    msg += precisaTroco && trocoValue
+      ? "Troco para: R$ " + trocoValue + "\n"
+      : "Sem troco\n";
   }
 
-  if(q.toLowerCase() === "relatorio"){
-    generateInternalReport();
-    return;
-  }
+  msg += isDelivery
+    ? "*Entrega*\nEndereço: " + address + "\n\n"
+    : "*Retirada no local*\n\n";
 
-  const res = searchProducts.filter(p =>
-    p.n.toLowerCase().includes(q.toLowerCase())
-  );
+  msg += "*Itens:*\n";
 
-  if(res.length === 0){
-    box.style.display = "none";
-    return;
-  }
-
-  res.forEach(p=>{
-    box.innerHTML += `
-      <div class="search-item">
-        ${p.n} — R$ ${p.p}
-      </div>
-    `;
+  let total = 0;
+  cart.forEach(i=>{
+    total += i.price;
+    msg += "- " + i.name + " R$ " + i.price.toFixed(2).replace(".",",") + "\n";
   });
 
-  box.style.display = "block";
-}
-</script>
-/* =========================
-   SISTEMA DE OFERTAS — BASE
-   PARTE 1/5
-   ========================= */
+  msg += "\n*Total:* R$ " + total.toFixed(2).replace(".",",");
 
-/*
- Estrutura das ofertas:
- offers = {
-   "X-Salada": { price: 12.9, expires: "2026-02-01" },
-   "Coca-Cola 600ml": { price: 6.5, expires: "2026-01-15" }
- }
-*/
-let offers = JSON.parse(localStorage.getItem("offers")) || {};
-
-/* =========================
-   VERIFICA SE PRODUTO TEM OFERTA
-   ========================= */
-function getOffer(productName){
-  const offer = offers[productName];
-  if(!offer) return null;
-
-  const today = new Date().toISOString().split("T")[0];
-  if(offer.expires < today){
-    delete offers[productName];
-    localStorage.setItem("offers", JSON.stringify(offers));
-    return null;
-  }
-  return offer;
-}
-
-/* =========================
-   PREÇO FINAL (NORMAL OU OFERTA)
-   ========================= */
-function getFinalPrice(name, normalPrice){
-  const offer = getOffer(name);
-  return offer ? offer.price : normalPrice;
-}
-
-/* =========================
-   ADICIONAR AO CARRINHO (OFERTA APLICADA)
-   ========================= */
-const _addToCartOriginal = addToCart;
-addToCart = function(name, price){
-  const finalPrice = getFinalPrice(name, price);
-  _addToCartOriginal(name, finalPrice);
-};
-
-/* =========================
-   MARCAÇÃO VISUAL DE OFERTA
-   (será usada nas próximas partes)
-   ========================= */
-function isProductOnOffer(name){
-  return !!getOffer(name);
+  window.open(
+    "https://wa.me/554991789706?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
 }
 </script>
 <script>
-/* =========================
-   SISTEMA DE OFERTAS
-   PARTE 2/5 — ATIVAÇÃO SECRETA
-   ========================= */
+/* =============================
+   SISTEMA DE OFERTAS (ADMIN)
+============================= */
+let offers = JSON.parse(localStorage.getItem("offers")) || [];
 
-let offerAdminUnlocked = false;
+/* BUSCA COM COMANDO "oferta" */
+const searchInput = document.querySelector(".search-input");
+const searchBox = document.getElementById("searchResults");
 
-/* =========================
-   INTERCEPTA BUSCA "oferta"
-   ========================= */
-const _searchProductOriginal = searchProduct;
-searchProduct = function(q){
-  if(q.toLowerCase() === "oferta"){
-    openOfferLogin();
+searchInput.addEventListener("input", () => {
+  const q = searchInput.value.toLowerCase().trim();
+  if(q === "oferta"){
+    searchBox.innerHTML = `
+      <div class="search-item" style="cursor:pointer;font-weight:bold"
+        onclick="openAdminLogin()">
+        🔒 Acessar área de ofertas
+      </div>`;
+    searchBox.style.display = "block";
+  }else{
+    searchBox.style.display = "none";
+  }
+});
+
+/* LOGIN ADMIN */
+function openAdminLogin(){
+  const pass = prompt("Digite a senha de administrador:");
+  if(pass !== "adm"){
+    alert("Senha incorreta");
     return;
   }
-  _searchProductOriginal(q);
-};
+  openAdminPanel();
+}
 
-/* =========================
-   MODAL DE LOGIN (ADM)
-   ========================= */
-function openOfferLogin(){
-  if(document.getElementById("offerLogin")) return;
+/* PAINEL ADMIN */
+function openAdminPanel(){
+  const panel = document.createElement("div");
+  panel.style.position = "fixed";
+  panel.style.inset = "0";
+  panel.style.background = "#06003a";
+  panel.style.zIndex = "99999";
+  panel.style.overflowY = "auto";
+  panel.style.padding = "20px";
+  panel.style.color = "#fff";
 
-  const modal = document.createElement("div");
-  modal.id = "offerLogin";
-  modal.style = `
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.7);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:99999;
-  `;
+  panel.innerHTML = `
+    <h2 style="text-align:center;color:#FFD34D">Área de Ofertas</h2>
+    <p style="text-align:center;margin-bottom:20px">
+      Ative ofertas e defina preço e validade
+    </p>
 
-  modal.innerHTML = `
-    <div style="
-      background:#fff;
-      color:#2b0033;
-      padding:26px;
-      border-radius:22px;
-      width:90%;
-      max-width:320px;
-      text-align:center;
-      box-shadow:0 20px 40px rgba(0,0,0,.4)
-    ">
-      <h3 style="margin-bottom:12px;">🔒 Área Restrita</h3>
-      <input id="offerPass" type="password" placeholder="Senha"
-        style="width:100%;padding:12px;border-radius:14px;border:1px solid #ccc;font-size:15px">
-      <button onclick="checkOfferPassword()"
-        style="margin-top:14px;width:100%;padding:14px;border:none;border-radius:18px;
-        background:#5a0070;color:#fff;font-weight:800;cursor:pointer">
-        Entrar
+    <div id="adminList"></div>
+
+    <div style="text-align:center;margin-top:30px">
+      <button onclick="closeAdminPanel()"
+        style="padding:12px 30px;border:none;border-radius:20px;
+        background:#e60000;color:#fff;font-weight:bold">
+        Fechar
       </button>
     </div>
   `;
-  document.body.appendChild(modal);
-}
-
-/* =========================
-   VALIDA SENHA
-   ========================= */
-function checkOfferPassword(){
-  const pass = document.getElementById("offerPass").value;
-  if(pass === "adm"){
-    offerAdminUnlocked = true;
-    document.getElementById("offerLogin").remove();
-    openOff
-<script>
-/* =========================
-   PAINEL DE OFERTAS (ADM)
-   PARTE 3/5
-   ========================= */
-
-let offerData = JSON.parse(localStorage.getItem("offers")) || [];
-
-/* =========================
-   ABRE PAINEL
-   ========================= */
-function openOfferPanel(){
-  if(document.getElementById("offerPanel")) return;
-
-  const panel = document.createElement("div");
-  panel.id = "offerPanel";
-  panel.style = `
-    position:fixed;
-    inset:0;
-    background:linear-gradient(180deg,#06003a,#020018);
-    z-index:99999;
-    overflow-y:auto;
-    padding:22px;
-    color:#fff;
-  `;
-
-  panel.innerHTML = `
-    <h2 style="text-align:center;margin-bottom:18px;color:#FFD34D">
-      🔥 Gerenciar Ofertas
-    </h2>
-
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
-      ${createOfferTabs()}
-    </div>
-
-    <div id="offerProducts"></div>
-
-    <button onclick="closeOfferPanel()"
-      style="margin-top:24px;width:100%;padding:16px;border:none;
-      border-radius:22px;background:#e60000;color:#fff;font-weight:900">
-      Fechar Painel
-    </button>
-  `;
 
   document.body.appendChild(panel);
+  renderAdminList();
 }
 
-/* =========================
-   FECHAR PAINEL
-   ========================= */
-function closeOfferPanel(){
-  document.getElementById("offerPanel")?.remove();
-}
+/* LISTA DE PRODUTOS (USA O CARDÁPIO EXISTENTE) */
+function renderAdminList(){
+  const list = document.getElementById("adminList");
+  list.innerHTML = "";
 
-/* =========================
-   ABAS
-   ========================= */
-function createOfferTabs(){
-  const cats = ["Lanches","Pastéis","Porções","Bebidas","Açaí"];
-  return cats.map(c=>`
-    <button onclick="loadOfferProducts('${c}')"
-      style="flex:1;padding:12px;border:none;border-radius:18px;
-      background:#FFD34D;color:#2b0033;font-weight:800;cursor:pointer">
-      ${c}
-    </button>
-  `).join("");
-}
+  document.querySelectorAll(".item").forEach(item=>{
+    const name = item.children[0].innerText;
+    const basePrice = item.children[1].innerText;
 
-/* =========================
-   LISTA PRODUTOS
-   ========================= */
-function loadOfferProducts(category){
-  const box = document.getElementById("offerProducts");
-  box.innerHTML = "";
+    list.innerHTML += `
+      <div style="background:#fff;color:#2b0033;
+        padding:12px;border-radius:14px;margin-bottom:12px">
+        <b>${name}</b><br>
+        Preço atual: ${basePrice}<br><br>
 
-  const filtered = searchProducts.filter(p=>{
-    if(category==="Lanches") return p.n.startsWith("X");
-    if(category==="Pastéis") return p.n.startsWith("Pastel");
-    if(category==="Porções") return p.n.includes("Fritas") || p.n.includes("Porção");
-    if(category==="Bebidas") return p.n.includes("ml") || p.n.includes("Lata") || p.n.includes("Refrigerante");
-    if(category==="Açaí") return p.n.includes("Açaí");
-  });
+        <input type="number" placeholder="Preço promocional"
+          id="price-${name}" style="width:100%;padding:6px;margin-bottom:6px">
 
-  filtered.forEach(p=>{
-    box.innerHTML += `
-      <div style="
-        background:#fff;
-        color:#2b0033;
-        padding:16px;
-        border-radius:18px;
-        margin-bottom:12px;
-        box-shadow:0 10px 24px rgba(0,0,0,.35)
-      ">
-        <b>${p.n}</b><br>
-        Preço atual: R$ ${p.p}<br><br>
+        <input type="date"
+          id="date-${name}" style="width:100%;padding:6px">
 
-        <input id="price-${p.n}" placeholder="Preço promocional"
-          style="width:100%;padding:10px;border-radius:14px;border:1px solid #ccc"><br><br>
-
-        <input id="date-${p.n}" type="date"
-          style="width:100%;padding:10px;border-radius:14px;border:1px solid #ccc"><br><br>
-
-        <button onclick="saveOffer('${p.n}',${p.p})"
-          style="width:100%;padding:12px;border:none;border-radius:18px;
-          background:#5a0070;color:#fff;font-weight:800">
-          Ativar Oferta
+        <button style="margin-top:8px;width:100%;
+          background:#25D366;color:#fff;border:none;
+          padding:8px;border-radius:12px"
+          onclick="saveOffer('${name}')">
+          Ativar oferta
         </button>
       </div>
     `;
   });
 }
 
-/* =========================
-   SALVAR OFERTA
-   ========================= */
-function saveOffer(name, originalPrice){
-  const promoPrice = document.getElementById(`price-${name}`).value;
-  const endDate = document.getElementById(`date-${name}`).value;
+/* SALVAR OFERTA */
+function saveOffer(name){
+  const price = document.getElementById(`price-${name}`).value;
+  const date = document.getElementById(`date-${name}`).value;
 
-  if(!promoPrice || !endDate){
-    alert("Preencha preço e validade");
+  if(!price || !date){
+    alert("Informe preço e validade");
     return;
   }
 
-  offerData = offerData.filter(o=>o.name !== name);
+  offers = offers.filter(o=>o.name !== name);
+  offers.push({name,price:parseFloat(price),expires:date});
 
-  offerData.push({
-    name,
-    originalPrice,
-    promoPrice: parseFloat(promoPrice),
-    endDate
-  });
-
-  localStorage.setItem("offers", JSON.stringify(offerData));
-  alert("Oferta ativada!");
+  localStorage.setItem("offers",JSON.stringify(offers));
+  alert("Oferta salva");
+  applyOffers();
 }
-</script>
-<script>
-/* =========================
-   EXIBIR OFERTAS NO CARDÁPIO
-   PARTE 4/5
-   ========================= */
 
-function getActiveOffers(){
+/* FECHAR ADMIN */
+function closeAdminPanel(){
+  document.body.removeChild(document.body.lastChild);
+}
+
+/* APLICAR OFERTAS NO CARDÁPIO */
+function applyOffers(){
   const today = new Date().toISOString().split("T")[0];
-  return offerData.filter(o => o.endDate >= today);
-}
+  offers = offers.filter(o=>o.expires >= today);
+  localStorage.setItem("offers",JSON.stringify(offers));
 
-/* =========================
-   APLICA OFERTAS AO CARREGAR
-   ========================= */
-window.addEventListener("load", applyOffersToMenu);
+  document.querySelectorAll(".item").forEach(item=>{
+    const name = item.children[0].innerText;
+    const priceEl = item.children[1];
+    const btn = item.querySelector(".btn-add");
 
-function applyOffersToMenu(){
-  const activeOffers = getActiveOffers();
-  if(activeOffers.length === 0) return;
-
-  activeOffers.forEach(offer=>{
-    const items = document.querySelectorAll(".item");
-
-    items.forEach(item=>{
-      const name = item.querySelector("span")?.innerText;
-      if(name === offer.name){
-        item.setAttribute("data-offer","true");
-
-        item.innerHTML = `
-          <span>
-            ${offer.name}
-            <div style="font-size:11px;color:#e60000;font-weight:800">
-              🔥 OFERTA até ${formatDate(offer.endDate)}
-            </div>
-          </span>
-
-          <span>
-            <span style="text-decoration:line-through;color:#999;font-size:13px">
-              R$ ${offer.originalPrice.toFixed(2).replace('.',',')}
-            </span><br>
-            <span style="color:#e60000;font-size:16px">
-              R$ ${offer.promoPrice.toFixed(2).replace('.',',')}
-            </span>
-          </span>
-
-          <button class="btn-add" onclick="addToCart('${offer.name}',${offer.promoPrice})">+</button>
-        `;
-      }
-    });
-  });
-
-  moveOffersToTop();
-}
-
-/* =========================
-   SOBE OFERTAS NA LISTA
-   ========================= */
-function moveOffersToTop(){
-  document.querySelectorAll(".content-box").forEach(box=>{
-    const offers = [...box.querySelectorAll('[data-offer="true"]')];
-    offers.reverse().forEach(o=>{
-      box.prepend(o);
-    });
+    const offer = offers.find(o=>o.name === name);
+    if(offer){
+      priceEl.innerHTML = `
+        <span style="text-decoration:line-through;font-size:12px">
+          ${priceEl.innerText}
+        </span><br>
+        <span style="color:#e60000;font-weight:900">
+          R$ ${offer.price.toFixed(2).replace(".",",")} 🔥
+        </span>`;
+      btn.onclick = () => addToCart(name, offer.price);
+      item.style.border = "2px solid #e60000";
+    }
   });
 }
 
-/* =========================
-   FORMATA DATA
-   ========================= */
-function formatDate(d){
-  return d.split("-").reverse().join("/");
-}
+/* APLICA OFERTAS AO ABRIR */
+applyOffers();
 </script>
-<script>
-/* =========================
-   POLIMENTO PREMIUM
-   PARTE 5/5
-   ========================= */
-
-/* =========================
-   LIMPA OFERTAS EXPIRADAS
-   ========================= */
-function cleanExpiredOffers(){
-  const today = new Date().toISOString().split("T")[0];
-  offerData = offerData.filter(o => o.endDate >= today);
-  localStorage.setItem("offers", JSON.stringify(offerData));
-}
-cleanExpiredOffers();
-
-/* =========================
-   ANIMAÇÃO VISUAL DAS OFERTAS
-   ========================= */
-const style = document.createElement("style");
-style.innerHTML = `
-  .item[data-offer="true"]{
-    border-left:6px solid #e60000;
-    animation:offerFade .6s ease;
-  }
-  @keyframes offerFade{
-    from{opacity:0;transform:translateY(6px)}
-    to{opacity:1;transform:translateY(0)}
-  }
-`;
-document.head.appendChild(style);
-
-/* =========================
-   REAPLICA OFERTAS AO CLICAR
-   ========================= */
-document.querySelectorAll(".category-btn, .sub-btn").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    setTimeout(applyOffersToMenu,150);
-  });
-});
-
-/* =========================
-   GARANTE REAPLICAÇÃO
-   ========================= */
-setTimeout(applyOffersToMenu,300);
-setTimeout(applyOffersToMenu,800);
-
-/* =========================
-   FEEDBACK ADM (SUTIL)
-   ========================= */
-function showAdminToast(msg){
-  const t=document.createElement("div");
-  t.innerText=msg;
-  t.style=`
-    position:fixed;
-    bottom:90px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#5a0070;
-    color:#fff;
-    padding:12px 18px;
-    border-radius:18px;
-    font-weight:700;
-    z-index:99999;
-    box-shadow:0 10px 30px rgba(0,0,0,.4)
-  `;
-  document.body.appendChild(t);
-  setTimeout(()=>t.remove(),2000);
-}
-
-/* =========================
-   HOOK AO SALVAR OFERTA
-   ========================= */
-const _saveOfferOriginal = saveOffer;
-saveOffer = function(name, originalPrice){
-  _saveOfferOriginal(name, originalPrice);
-  showAdminToast("🔥 Oferta ativada");
-  setTimeout(applyOffersToMenu,300);
-};
-</script>
-
-</body>
-</html>
-
-
-
-
