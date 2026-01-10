@@ -8,180 +8,160 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-    background:linear-gradient(180deg,#06003a 0%,#0a045a 50%,#03001f 100%);
-    font-family:Arial,Helvetica,sans-serif;
-    color:#fff;
-    display:flex;
-    justify-content:center;
-    overflow-y:auto;
+  background:linear-gradient(180deg,#06003a 0%,#0a045a 50%,#03001f 100%);
+  font-family:Arial,Helvetica,sans-serif;
+  color:#fff;
+  display:flex;
+  justify-content:center;
 }
 
 /* SPLASH */
 #splashScreen{
-    position:fixed; inset:0;
-    background:linear-gradient(180deg,#05002e,#020018);
-    display:flex; justify-content:center; align-items:center;
-    z-index:9999;
+  position:fixed; inset:0;
+  background:linear-gradient(180deg,#05002e,#020018);
+  display:flex; justify-content:center; align-items:center;
+  z-index:9999;
 }
 .splash-content{
-    width:100%; height:100%;
-    display:flex; flex-direction:column;
-    justify-content:center; align-items:center;
-    gap:34px;
+  width:100%; height:100%;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  gap:34px;
 }
 .splash-logo{width:88vw; max-width:420px}
 .splash-btn{
-    background:linear-gradient(135deg,#FFD34D,#FFB000);
-    border:none; padding:20px 52px; border-radius:42px;
-    font-size:20px; font-weight:bold; color:#2b0033;
-    cursor:pointer;
-    box-shadow:0 10px 30px rgba(0,0,0,.35);
-    animation:pulse 1.6s infinite;
+  background:linear-gradient(135deg,#FFD34D,#FFB000);
+  border:none; padding:20px 52px;
+  border-radius:42px;
+  font-size:20px; font-weight:bold;
+  color:#2b0033; cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  animation:pulse 1.6s infinite;
 }
 @keyframes pulse{
-    0%{transform:scale(1)}
-    50%{transform:scale(1.06)}
-    100%{transform:scale(1)}
+  0%{transform:scale(1)}
+  50%{transform:scale(1.06)}
+  100%{transform:scale(1)}
 }
 
 /* APP */
 #app{
-    width:100%; max-width:420px;
-    padding:22px 14px 380px;
-    display:none; flex-direction:column; align-items:center;
+  width:100%; max-width:420px;
+  padding:22px 14px 360px;
+  display:none; flex-direction:column;
 }
 .brand-title{
-    font-size:30px;
-    font-weight:800;
-    color:#FFD34D;
-    margin-bottom:14px;
+  text-align:center;
+  font-size:30px;
+  font-weight:800;
+  color:#FFD34D;
+  margin-bottom:18px;
 }
 
 /* BUSCA */
 .search-box{width:100%; margin-bottom:18px}
 .search-input{
-    width:100%;
-    padding:14px;
-    border-radius:20px;
-    border:none;
-    font-size:16px;
+  width:100%;
+  padding:14px;
+  border-radius:20px;
+  border:none;
+  font-size:16px;
 }
 .search-results{
-    background:#fff;
-    color:#2b0033;
-    border-radius:20px;
-    margin-top:10px;
-    display:none;
+  background:#fff;
+  color:#2b0033;
+  border-radius:20px;
+  margin-top:10px;
+  display:none;
 }
 .search-item{
-    padding:14px;
-    border-bottom:1px dashed #ddd;
+  padding:14px;
+  border-bottom:1px dashed #ddd;
 }
 .search-item:last-child{border:none}
 
 /* CATEGORIAS */
 .category-btn{
-    width:100%;
-    background:linear-gradient(135deg,#ffcc00,#ff9900);
-    color:#2b0033;
-    padding:18px;
-    border-radius:28px;
-    font-weight:800;
-    margin-bottom:16px;
-    cursor:pointer;
-    text-align:center;
+  width:100%;
+  background:linear-gradient(135deg,#ffcc00,#ff9900);
+  color:#2b0033;
+  padding:18px;
+  border-radius:28px;
+  font-weight:800;
+  margin-bottom:16px;
+  cursor:pointer;
+  text-align:center;
 }
 .sub-btn{
-    width:100%;
-    background:#FFD34D;
-    color:#2b0033;
-    padding:14px;
-    border-radius:24px;
-    font-weight:700;
-    margin:12px 0;
-    cursor:pointer;
-    text-align:center;
+  width:100%;
+  background:#FFD34D;
+  color:#2b0033;
+  padding:14px;
+  border-radius:24px;
+  font-weight:700;
+  margin:12px 0;
+  cursor:pointer;
+  text-align:center;
 }
 .content-box{
-    width:100%;
-    background:#fff;
-    color:#2b0033;
-    border-radius:32px;
-    padding:18px;
-    margin-bottom:22px;
-    display:none;
+  width:100%;
+  background:#fff;
+  color:#2b0033;
+  border-radius:32px;
+  padding:18px;
+  margin-bottom:22px;
+  display:none;
 }
 .item{
-    display:grid;
-    grid-template-columns:1fr auto auto;
-    gap:12px;
-    padding:14px 0;
-    border-bottom:1px dashed #e3e3e3;
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:12px;
+  padding:14px 0;
+  border-bottom:1px dashed #e3e3e3;
 }
 .item:last-child{border:none}
 .btn-add{
-    background:#5a0070;
-    color:#fff;
-    border:none;
-    border-radius:14px;
-    padding:6px 14px;
-    cursor:pointer;
+  background:#5a0070;
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  padding:6px 14px;
+  cursor:pointer;
 }
 
 /* CARRINHO */
 .cart-footer{
-    position:fixed;
-    bottom:0;
-    left:50%;
-    transform:translateX(-50%);
-    width:100%;
-    max-width:420px;
-    background:#fff;
-    color:#2b0033;
-    padding:18px;
-    border-radius:32px 32px 0 0;
-    display:none;
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  color:#2b0033;
+  padding:18px;
+  border-radius:32px 32px 0 0;
+  display:none;
 }
 .cart-item{
-    display:grid;
-    grid-template-columns:1fr auto auto;
-    gap:10px;
-    padding:8px 0;
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:10px;
+  padding:8px 0;
 }
 .remove-btn{
-    background:#e60000;
-    color:#fff;
-    border:none;
-    border-radius:8px;
-    padding:2px 8px;
-    cursor:pointer;
-}
-.delivery-box{
-    display:flex;
-    justify-content:space-around;
-    margin:14px 0;
-}
-.input-field,.select-field{
-    width:100%;
-    padding:12px;
-    border-radius:18px;
-    border:1px solid #ccc;
-    margin-top:10px;
+  background:#e60000;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:2px 8px;
+  cursor:pointer;
 }
 .total{
-    text-align:right;
-    font-weight:900;
-    font-size:18px;
-    margin-top:10px;
-}
-.btn-finish{
-    background:#25D366;
-    color:#fff;
-    padding:16px;
-    border-radius:22px;
-    font-weight:900;
-    margin-top:14px;
-    cursor:pointer;
+  text-align:right;
+  font-weight:900;
+  font-size:18px;
+  margin-top:10px;
 }
 </style>
 </head>
@@ -205,179 +185,46 @@ body{
     <div class="search-results" id="searchResults"></div>
   </div>
 
-<!-- LANCHES -->
-<div class="category-btn" onclick="toggle('lanches')">🍔 Lanches</div>
-<div class="content-box" id="lanches">
-  <div class="item"><span>X-Salada</span><span>R$ 17,00</span><button class="btn-add" onclick="addToCart('X-Salada',17)">+</button></div>
-  <div class="item"><span>X-Burguer</span><span>R$ 14,00</span><button class="btn-add" onclick="addToCart('X-Burguer',14)">+</button></div>
-  <div class="item"><span>X-Frango</span><span>R$ 22,00</span><button class="btn-add" onclick="addToCart('X-Frango',22)">+</button></div>
-  <div class="item"><span>X-Frango Cremoso</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Frango Cremoso',20)">+</button></div>
-  <div class="item"><span>X-Bacon</span><span>R$ 25,00</span><button class="btn-add" onclick="addToCart('X-Bacon',25)">+</button></div>
-  <div class="item"><span>X-Calabresa</span><span>R$ 25,00</span><button class="btn-add" onclick="addToCart('X-Calabresa',25)">+</button></div>
-  <div class="item"><span>X-Coração</span><span>R$ 27,00</span><button class="btn-add" onclick="addToCart('X-Coração',27)">+</button></div>
-  <div class="item"><span>X-Tudo</span><span>R$ 32,00</span><button class="btn-add" onclick="addToCart('X-Tudo',32)">+</button></div>
-  <div class="item"><span>X-Burguer Duplo</span><span>R$ 22,00</span><button class="btn-add" onclick="addToCart('X-Burguer Duplo',22)">+</button></div>
-  <div class="item"><span>X-Egg</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Egg',20)">+</button></div>
-  <div class="item"><span>X-Tribom</span><span>R$ 32,00</span><button class="btn-add" onclick="addToCart('X-Tribom',32)">+</button></div>
-  <div class="item"><span>X-Da Casa</span><span>R$ 45,00</span><button class="btn-add" onclick="addToCart('X-Da Casa',45)">+</button></div>
-  <div class="item"><span>X-Dog</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Dog',20)">+</button></div>
+  <!-- LANCHES -->
+  <div class="category-btn" onclick="toggle('lanches')">🍔 Lanches</div>
+  <div class="content-box" id="lanches">
+    <div class="item"><span>X-Salada</span><span>R$ 17,00</span><button class="btn-add" onclick="addToCart('X-Salada',17)">+</button></div>
+    <div class="item"><span>X-Burguer</span><span>R$ 14,00</span><button class="btn-add" onclick="addToCart('X-Burguer',14)">+</button></div>
+    <div class="item"><span>X-Frango</span><span>R$ 22,00</span><button class="btn-add" onclick="addToCart('X-Frango',22)">+</button></div>
+    <div class="item"><span>X-Frango Cremoso</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Frango Cremoso',20)">+</button></div>
+    <div class="item"><span>X-Bacon</span><span>R$ 25,00</span><button class="btn-add" onclick="addToCart('X-Bacon',25)">+</button></div>
+    <div class="item"><span>X-Calabresa</span><span>R$ 25,00</span><button class="btn-add" onclick="addToCart('X-Calabresa',25)">+</button></div>
+    <div class="item"><span>X-Coração</span><span>R$ 27,00</span><button class="btn-add" onclick="addToCart('X-Coração',27)">+</button></div>
+    <div class="item"><span>X-Tudo</span><span>R$ 32,00</span><button class="btn-add" onclick="addToCart('X-Tudo',32)">+</button></div>
+    <div class="item"><span>X-Burguer Duplo</span><span>R$ 22,00</span><button class="btn-add" onclick="addToCart('X-Burguer Duplo',22)">+</button></div>
+    <div class="item"><span>X-Egg</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Egg',20)">+</button></div>
+    <div class="item"><span>X-Tribom</span><span>R$ 32,00</span><button class="btn-add" onclick="addToCart('X-Tribom',32)">+</button></div>
+    <div class="item"><span>X-Da Casa</span><span>R$ 45,00</span><button class="btn-add" onclick="addToCart('X-Da Casa',45)">+</button></div>
+    <div class="item"><span>X-Dog</span><span>R$ 20,00</span><button class="btn-add" onclick="addToCart('X-Dog',20)">+</button></div>
 
-  <div class="sub-btn" onclick="toggle('extrasLanches')">➕ Adicionais para Lanches</div>
-  <div id="extrasLanches" style="display:none;">
-    <div class="item"><span>Calabresa</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Calabresa',7)">+</button></div>
-    <div class="item"><span>Bacon</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Bacon',7)">+</button></div>
-    <div class="item"><span>Coração</span><span>R$ 8,00</span><button class="btn-add" onclick="addToCart('Adicional Coração',8)">+</button></div>
-    <div class="item"><span>Ovo</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Adicional Ovo',3)">+</button></div>
-    <div class="item"><span>Salsicha</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Adicional Salsicha',4)">+</button></div>
-    <div class="item"><span>Frango</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Frango',7)">+</button></div>
-    <div class="item"><span>Cheddar</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Adicional Cheddar',4)">+</button></div>
-    <div class="item"><span>Hambúrguer artesanal</span><span>R$ 10,00</span><button class="btn-add" onclick="addToCart('Adicional Hambúrguer',10)">+</button></div>
-    <div class="item"><span>Maionese caseira</span><span>R$ 2,00</span><button class="btn-add" onclick="addToCart('Adicional Maionese',2)">+</button></div>
+    <div class="sub-btn" onclick="toggle('extrasLanches')">➕ Adicionais para Lanches</div>
+    <div id="extrasLanches" style="display:none;">
+      <div class="item"><span>Calabresa</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Calabresa',7)">+</button></div>
+      <div class="item"><span>Bacon</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Bacon',7)">+</button></div>
+      <div class="item"><span>Coração</span><span>R$ 8,00</span><button class="btn-add" onclick="addToCart('Adicional Coração',8)">+</button></div>
+      <div class="item"><span>Ovo</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Adicional Ovo',3)">+</button></div>
+      <div class="item"><span>Salsicha</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Adicional Salsicha',4)">+</button></div>
+      <div class="item"><span>Frango</span><span>R$ 7,00</span><button class="btn-add" onclick="addToCart('Adicional Frango',7)">+</button></div>
+      <div class="item"><span>Cheddar</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Adicional Cheddar',4)">+</button></div>
+      <div class="item"><span>Hambúrguer artesanal</span><span>R$ 10,00</span><button class="btn-add" onclick="addToCart('Adicional Hambúrguer',10)">+</button></div>
+      <div class="item"><span>Maionese caseira</span><span>R$ 2,00</span><button class="btn-add" onclick="addToCart('Adicional Maionese',2)">+</button></div>
+    </div>
   </div>
 </div>
-<!-- PASTÉIS -->
-<div class="category-btn" onclick="toggle('pasteis')">🥟 Pastéis</div>
-<div class="content-box" id="pasteis">
-  <div class="item"><span>Pastel de Carne</span><span>R$ 14,00</span><button class="btn-add" onclick="addToCart('Pastel de Carne',14)">+</button></div>
-  <div class="item"><span>Pastel de Frango</span><span>R$ 12,00</span><button class="btn-add" onclick="addToCart('Pastel de Frango',12)">+</button></div>
-  <div class="item"><span>Frango Bacon Cheddar</span><span>R$ 16,00</span><button class="btn-add" onclick="addToCart('Pastel Frango Bacon Cheddar',16)">+</button></div>
-  <div class="item"><span>Bacon Cheddar</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Bacon Cheddar',15)">+</button></div>
-  <div class="item"><span>Calabresa c/ Cebola</span><span>R$ 14,00</span><button class="btn-add" onclick="addToCart('Pastel Calabresa com Cebola',14)">+</button></div>
-  <div class="item"><span>Carne e Queijo</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Carne e Queijo',15)">+</button></div>
-  <div class="item"><span>Queijo</span><span>R$ 14,00</span><button class="btn-add" onclick="addToCart('Pastel Queijo',14)">+</button></div>
-  <div class="item"><span>Chocolate ao Leite</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Chocolate ao Leite',15)">+</button></div>
-  <div class="item"><span>Banana Queijo Canela</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Banana Queijo Canela',15)">+</button></div>
-  <div class="item"><span>Romeu e Julieta</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Romeu e Julieta',15)">+</button></div>
-  <div class="item"><span>Chocolate Branco</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Chocolate Branco',15)">+</button></div>
-  <div class="item"><span>Creme e Ouro Branco</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Creme e Ouro Branco',15)">+</button></div>
-  <div class="item"><span>Creme e Sonho de Valsa</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Creme e Sonho de Valsa',15)">+</button></div>
-</div>
 
-<!-- PORÇÕES -->
-<div class="category-btn" onclick="toggle('porcoes')">🍟 Porções</div>
-<div class="content-box" id="porcoes">
-  <div class="item"><span>Fritas c/ Frango</span><span>R$ 39,99</span><button class="btn-add" onclick="addToCart('Fritas com Frango',39.99)">+</button></div>
-  <div class="item"><span>Fritas</span><span>R$ 24,99</span><button class="btn-add" onclick="addToCart('Fritas',24.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Calabresa</span><span>R$ 34,99</span><button class="btn-add" onclick="addToCart('Fritas com Calabresa',34.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Bacon</span><span>R$ 34,99</span><button class="btn-add" onclick="addToCart('Fritas com Bacon',34.99)">+</button></div>
-  <div class="item"><span>Anéis de Cebola</span><span>R$ 24,99</span><button class="btn-add" onclick="addToCart('Anéis de Cebola',24.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Bacon, Calabresa e Queijo</span><span>R$ 39,99</span><button class="btn-add" onclick="addToCart('Fritas Bacon Calabresa Queijo',39.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Bacon Cheddar</span><span>R$ 39,99</span><button class="btn-add" onclick="addToCart('Fritas Bacon Cheddar',39.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Polenta e Frango</span><span>R$ 39,99</span><button class="btn-add" onclick="addToCart('Fritas Polenta Frango',39.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Polenta</span><span>R$ 24,99</span><button class="btn-add" onclick="addToCart('Fritas Polenta',24.99)">+</button></div>
-  <div class="item"><span>Fritas c/ Calabresa e Catupiry</span><span>R$ 35,99</span><button class="btn-add" onclick="addToCart('Fritas Calabresa Catupiry',35.99)">+</button></div>
-  <div class="item"><span>Fritas, Polenta, Chuleta e Anel de Cebola</span><span>R$ 49,99</span><button class="btn-add" onclick="addToCart('Porção Completa',49.99)">+</button></div>
-</div>
-<!-- BEBIDAS -->
-<div class="category-btn" onclick="toggle('bebidas')">🥤 Bebidas</div>
-<div class="content-box" id="bebidas">
-  <div class="item"><span>Cassulinha 200ml</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Cassulinha 200ml',3)">+</button></div>
-  <div class="item"><span>Coca-Cola 600ml</span><span>R$ 8,00</span><button class="btn-add" onclick="addToCart('Coca-Cola 600ml',8)">+</button></div>
-  <div class="item"><span>Coca-Cola 2L</span><span>R$ 16,00</span><button class="btn-add" onclick="addToCart('Coca-Cola 2L',16)">+</button></div>
-  <div class="item"><span>Refri Lata</span><span>R$ 6,00</span><button class="btn-add" onclick="addToCart('Refri Lata',6)">+</button></div>
-  <div class="item"><span>Refrigerante 2L</span><span>R$ 12,00</span><button class="btn-add" onclick="addToCart('Refrigerante 2L',12)">+</button></div>
-  <div class="item"><span>Cerveja Lata 350ml</span><span>R$ 6,00</span><button class="btn-add" onclick="addToCart('Cerveja Lata 350ml',6)">+</button></div>
-  <div class="item"><span>Achocolatado 200ml</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Achocolatado 200ml',3)">+</button></div>
-</div>
-
-<!-- AÇAÍ -->
-<div class="category-btn" onclick="toggle('acai')">🍨 Açaí</div>
-<div class="content-box" id="acai">
-
-  <div class="sub-btn" onclick="toggle('acaiTamanhos')">🥤 Tamanhos</div>
-  <div id="acaiTamanhos" style="display:none;">
-    <div class="item"><span>300ml</span><span>R$ 12,00</span><button class="btn-add" onclick="addToCart('Açaí 300ml',12)">+</button></div>
-    <div class="item"><span>400ml</span><span>R$ 15,00</span><button class="btn-add" onclick="addToCart('Açaí 400ml',15)">+</button></div>
-    <div class="item"><span>500ml</span><span>R$ 18,00</span><button class="btn-add" onclick="addToCart('Açaí 500ml',18)">+</button></div>
-  </div>
-
-  <div class="sub-btn" onclick="toggle('acaiAdicionais')">🍫 Adicionais</div>
-  <div id="acaiAdicionais" style="display:none;">
-    <div class="item"><span>Paçoca</span><span>R$ 2,00</span><button class="btn-add" onclick="addToCart('Paçoca',2)">+</button></div>
-    <div class="item"><span>Leite em pó</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Leite em pó',4)">+</button></div>
-    <div class="item"><span>Granola</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Granola',4)">+</button></div>
-    <div class="item"><span>Morango</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Morango',4)">+</button></div>
-    <div class="item"><span>M&M</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('M&M',3)">+</button></div>
-    <div class="item"><span>Ouro Branco</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Ouro Branco',3)">+</button></div>
-    <div class="item"><span>Banana</span><span>R$ 2,00</span><button class="btn-add" onclick="addToCart('Banana',2)">+</button></div>
-    <div class="item"><span>Sonho de Valsa</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Sonho de Valsa',3)">+</button></div>
-    <div class="item"><span>Leite Condensado</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Leite Condensado',3)">+</button></div>
-    <div class="item"><span>Nutella</span><span>R$ 4,00</span><button class="btn-add" onclick="addToCart('Nutella',4)">+</button></div>
-  </div>
-
-
-<!-- CARRINHO / PAGAMENTO -->
+<!-- CARRINHO -->
 <div class="cart-footer" id="cartFooter">
   <div id="cartItems"></div>
-
-  <div class="delivery-box">
-    <label><input type="radio" name="entrega" checked onchange="setDelivery(false)"> Retirada</label>
-    <label><input type="radio" name="entrega" onchange="setDelivery(true)"> Entrega (+ R$8)</label>
-  </div>
-
-  <input class="input-field" id="clientName" placeholder="Seu nome">
-
-  <div id="addressBox" style="display:none;">
-    <input class="input-field" id="clientAddress" placeholder="Endereço para entrega">
-  </div>
-
-  <select class="select-field" id="paymentMethod" onchange="checkPayment()">
-    <option value="">Forma de pagamento</option>
-    <option value="Dinheiro">Dinheiro</option>
-    <option value="Pix">Pix</option>
-    <option value="Cartão Débito">Cartão Débito</option>
-    <option value="Cartão Crédito">Cartão Crédito</option>
-  </select>
-
-  <div id="trocoBox" style="display:none;margin-top:8px;">
-      <div style="display:flex;gap:10px;">
-          <button type="button" class="btn-add" style="background:#FFD34D;color:#2b0033;flex:1;" onclick="setTroco(true)">Preciso de troco</button>
-          <button type="button" class="btn-add" style="background:#ccc;color:#2b0033;flex:1;" onclick="setTroco(false)">Não preciso</button>
-      </div>
-      <input class="input-field" id="trocoValue" placeholder="Troco para quanto? Ex: 50,00" style="display:none;">
-  </div>
-
   <div class="total" id="totalValue">Total: R$ 0,00</div>
-  <div class="btn-finish" onclick="finishOrder()">Finalizar Pedido</div>
 </div>
 
 <script>
 let cart=[];
-let isDelivery=false;
-let precisaTroco=false;
-let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
-
-/* PRODUTOS PARA BUSCA */
-const searchProducts = [
-  {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
-  {n:"X-Frango Cremoso",p:20},{n:"X-Bacon",p:25},{n:"X-Calabresa",p:25},
-  {n:"X-Coração",p:27},{n:"X-Tudo",p:32},{n:"X-Burguer Duplo",p:22},
-  {n:"X-Egg",p:20},{n:"X-Tribom",p:32},{n:"X-Da Casa",p:45},{n:"X-Dog",p:20},
-  {n:"Adicional Calabresa",p:7},{n:"Adicional Bacon",p:7},{n:"Adicional Coração",p:8},
-  {n:"Adicional Ovo",p:3},{n:"Adicional Salsicha",p:4},{n:"Adicional Frango",p:7},
-  {n:"Adicional Cheddar",p:4},{n:"Adicional Hambúrguer",p:10},{n:"Adicional Maionese",p:2},
-  {n:"Pastel de Carne",p:14},{n:"Pastel de Frango",p:12},{n:"Pastel Frango Bacon Cheddar",p:16},
-  {n:"Pastel Bacon Cheddar",p:15},{n:"Pastel Calabresa com Cebola",p:14},
-  {n:"Pastel Carne e Queijo",p:15},{n:"Pastel Queijo",p:14},
-  {n:"Pastel Chocolate ao Leite",p:15},{n:"Pastel Banana Queijo Canela",p:15},
-  {n:"Pastel Romeu e Julieta",p:15},{n:"Pastel Chocolate Branco",p:15},
-  {n:"Pastel Creme e Ouro Branco",p:15},{n:"Pastel Creme e Sonho de Valsa",p:15},
-  {n:"Fritas",p:24.99},{n:"Fritas com Frango",p:39.99},
-  {n:"Fritas com Calabresa",p:34.99},{n:"Fritas com Bacon",p:34.99},
-  {n:"Anéis de Cebola",p:24.99},{n:"Fritas Bacon Calabresa Queijo",p:39.99},
-  {n:"Fritas Bacon Cheddar",p:39.99},{n:"Fritas Polenta Frango",p:39.99},
-  {n:"Fritas Polenta",p:24.99},{n:"Fritas Calabresa Catupiry",p:35.99},
-  {n:"Porção Completa",p:49.99},
-  {n:"Cassulinha 200ml",p:3},{n:"Coca-Cola 600ml",p:8},
-  {n:"Coca-Cola 2L",p:16},{n:"Refri Lata",p:6},
-  {n:"Refrigerante 2L",p:12},{n:"Cerveja Lata 350ml",p:6},
-  {n:"Achocolatado 200ml",p:3},
-  {n:"Açaí 300ml",p:12},{n:"Açaí 400ml",p:15},{n:"Açaí 500ml",p:18},
-  {n:"Paçoca",p:2},{n:"Leite em pó",p:4},{n:"Granola",p:4},
-  {n:"Morango",p:4},{n:"M&M",p:3},{n:"Ouro Branco",p:3},
-  {n:"Banana",p:2},{n:"Sonho de Valsa",p:3},
-  {n:"Leite Condensado",p:3},{n:"Nutella",p:4}
-];
 
 function enterApp(){
   document.getElementById("splashScreen").style.display="none";
@@ -389,95 +236,28 @@ function toggle(id){
   el.style.display = el.style.display==="block" ? "none" : "block";
 }
 
-/* HORÁRIO */
-function isOpenNow(){
-  const d = new Date();
-  const day = d.getDay();
-  const time = d.getHours() + d.getMinutes()/60;
-  if(day === 1) return false;
-  if(time < 18.5 || time > 22.5) return false;
-  return true;
-}
-
-/* ADICIONAR AO CARRINHO */
-function addToCart(name, price){
-  if(!isOpenNow()){
-    alert("⏰ Estamos fechados.\nAtendimento: Terça a Domingo das 18:30 às 22:30");
-    return;
-  }
-  cart.push({name, price});
+function addToCart(name,price){
+  cart.push({name,price});
   updateCart();
 }
 
-/* BUSCA */
-function searchProduct(q){
-  const box=document.getElementById("searchResults");
-  box.innerHTML="";
-  if(!q){ box.style.display="none"; return; }
-
-  if(q.toLowerCase()==="relatorio"){
-    generateInternalReport();
-    return;
-  }
-
-  const res=searchProducts.filter(p=>p.n.toLowerCase().includes(q.toLowerCase()));
-  if(res.length===0){ box.style.display="none"; return; }
-
-  res.forEach(p=>{
-    box.innerHTML+=`<div class="search-item">${p.n} — R$ ${p.p}</div>`;
-  });
-  box.style.display="block";
-}
-
-/* RELATÓRIO */
-function generateInternalReport(){
-  const today=new Date().toISOString().split("T")[0];
-  let total=0,d=0,p=0,c=0,det="";
-  orderHistory.forEach(o=>{
-    if(o.datetime.startsWith(today)){
-      total+=o.total;
-      if(o.payment==="Dinheiro") d+=o.total;
-      if(o.payment==="Pix") p+=o.total;
-      if(o.payment.includes("Cartão")) c+=o.total;
-      det+=`R$ ${o.total.toFixed(2)} (${o.payment})\n`;
-    }
-  });
-  const box=document.getElementById("searchResults");
-  box.innerHTML=
-   `<div class="search-item"><b>RELATÓRIO DO DIA</b><br>
-    Total: R$ ${total.toFixed(2)}<br>
-    Dinheiro: R$ ${d.toFixed(2)}<br>
-    Pix: R$ ${p.toFixed(2)}<br>
-    Cartão: R$ ${c.toFixed(2)}<br><br>${det}</div>`;
-  box.style.display="block";
-}
-
-/* ENTREGA */
-function setDelivery(v){
-  isDelivery=v;
-  document.getElementById("addressBox").style.display = v ? "block" : "none";
-  updateCart();
-}
-
-/* CARRINHO */
 function updateCart(){
   const box=document.getElementById("cartItems");
   box.innerHTML="";
   let total=0;
-  cart.forEach((item,index)=>{
+  cart.forEach((item,i)=>{
     total+=item.price;
     box.innerHTML+=`
       <div class="cart-item">
         <span>${item.name}</span>
-        <span>R$ ${item.price.toFixed(2).replace('.',',')}</span>
-        <button class="remove-btn" onclick="removeItem(${index})">x</button>
+        <span>R$ ${item.price.toFixed(2)}</span>
+        <button class="remove-btn" onclick="removeItem(${i})">x</button>
       </div>`;
   });
-  if(isDelivery) total+=8;
   document.getElementById("totalValue").innerText =
-    "Total: R$ " + total.toFixed(2).replace('.',',');
+    "Total: R$ "+total.toFixed(2);
   document.getElementById("cartFooter").style.display =
-    cart.length ? "block" : "none";
+    cart.length?"block":"none";
 }
 
 function removeItem(i){
@@ -485,383 +265,8 @@ function removeItem(i){
   updateCart();
 }
 
-/* PAGAMENTO */
-function checkPayment(){
-  const payment=document.getElementById("paymentMethod").value;
-  const trocoBox=document.getElementById("trocoBox");
-  if(payment==="Dinheiro"){
-    trocoBox.style.display="block";
-  }else{
-    trocoBox.style.display="none";
-    document.getElementById("trocoValue").style.display="none";
-    precisaTroco=false;
-  }
-}
-function setTroco(v){
-  precisaTroco=v;
-  document.getElementById("trocoValue").style.display = v ? "block" : "none";
-}
-
-/* FINALIZAR */
-function finishOrder(){
-  const name=document.getElementById("clientName").value;
-  const address=document.getElementById("clientAddress").value;
-  const payment=document.getElementById("paymentMethod").value;
-  const trocoValor=document.getElementById("trocoValue").value;
-
-  if(!name){alert("Informe seu nome");return;}
-  if(isDelivery && !address){alert("Informe o endereço");return;}
-  if(!payment){alert("Informe a forma de pagamento");return;}
-
-  let msg="🍔 Pedido Rabika's Burguer\n\n";
-  msg+="Cliente: "+name+"\n";
-  msg+="Pagamento: "+payment+"\n";
-
-  if(payment==="Dinheiro"){
-    if(precisaTroco && trocoValor){
-      msg+="Precisa de troco para: R$ "+trocoValor+"\n";
-    }else{
-      msg+="Não precisa de troco\n";
-    }
-  }
-
-  msg+= isDelivery ? "Entrega\nEndereço: "+address+"\n\n" : "Retirada no local\n\n";
-  msg+="Itens:\n";
-
-  let total=0;
-  cart.forEach(item=>{
-    msg+="- "+item.name+" R$ "+item.price+"\n";
-    total+=item.price;
-  });
-
-  if(isDelivery){ msg+="Taxa de entrega: R$ 8\n"; total+=8; }
-
-  msg+="\nTotal: R$ "+total.toFixed(2).replace('.',',');
-
-  orderHistory.push({
-    datetime:new Date().toISOString(),
-    total:total,
-    payment:payment,
-    delivery:isDelivery
-  });
-  localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
-
-  window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg));
-}
-    /* =========================
-   ADMIN OFERTAS - GATILHO
-========================= */
-let adminUnlocked = false;
-
-function openAdmin(){
-  document.getElementById("adminOverlay").style.display="flex";
-}
-
-function closeAdmin(){
-  document.getElementById("adminOverlay").style.display="none";
-}
-
-/* intercepta busca por "oferta" */
-const originalSearchProduct = searchProduct;
-searchProduct = function(q){
-  if(q.toLowerCase()==="oferta"){
-    const box=document.getElementById("searchResults");
-    box.innerHTML=
-      `<div class="search-item" onclick="requestAdminPassword()">
-        🔐 Acessar painel de ofertas
-      </div>`;
-    box.style.display="block";
-    return;
-  }
-  originalSearchProduct(q);
-};
-
-function requestAdminPassword(){
-  const pass = prompt("Digite a senha administrativa:");
-  if(pass === "adm"){
-    openAdmin();
-    document.getElementById("searchResults").style.display="none";
-    document.querySelector(".search-input").value="";
-  }else{
-    alert("Senha incorreta");
-  }
-/* =========================
-   ADMIN OFERTAS - PRODUTOS
-========================= */
-
-const adminProducts = {
-  lanches: [
-    "X-Salada","X-Burguer","X-Frango","X-Frango Cremoso","X-Bacon",
-    "X-Calabresa","X-Coração","X-Tudo","X-Burguer Duplo","X-Egg",
-    "X-Tribom","X-Da Casa","X-Dog"
-  ],
-  adicionais: [
-    "Adicional Calabresa","Adicional Bacon","Adicional Coração",
-    "Adicional Ovo","Adicional Salsicha","Adicional Frango",
-    "Adicional Cheddar","Adicional Hambúrguer","Adicional Maionese"
-  ],
-  pasteis: [
-    "Pastel de Carne","Pastel de Frango","Pastel Frango Bacon Cheddar",
-    "Pastel Bacon Cheddar","Pastel Calabresa com Cebola","Pastel Carne e Queijo",
-    "Pastel Queijo","Pastel Chocolate ao Leite","Pastel Banana Queijo Canela",
-    "Pastel Romeu e Julieta","Pastel Chocolate Branco",
-    "Pastel Creme e Ouro Branco","Pastel Creme e Sonho de Valsa"
-  ],
-  porcoes: [
-    "Fritas","Fritas com Frango","Fritas com Calabresa","Fritas com Bacon",
-    "Anéis de Cebola","Fritas Bacon Calabresa Queijo","Fritas Bacon Cheddar",
-    "Fritas Polenta Frango","Fritas Polenta",
-    "Fritas Calabresa Catupiry","Porção Completa"
-  ],
-  bebidas: [
-    "Cassulinha 200ml","Coca-Cola 600ml","Coca-Cola 2L",
-    "Refri Lata","Refrigerante 2L",
-    "Cerveja Lata 350ml","Achocolatado 200ml"
-  ],
-  acai: [
-    "Açaí 300ml","Açaí 400ml","Açaí 500ml",
-    "Paçoca","Leite em pó","Granola","Morango",
-    "M&M","Ouro Branco","Banana",
-    "Sonho de Valsa","Leite Condensado","Nutella"
-  ]
-};
-
-function loadAdminCategory(cat){
-  const box = document.getElementById("adminContent");
-  box.innerHTML = "";
-
-  adminProducts[cat].forEach(name=>{
-    box.innerHTML += `
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        padding:14px;
-        border-bottom:1px dashed #ccc;
-        font-weight:700;">
-        <span>${name}</span>
-        <button class="btn-add" onclick="editOffer('${name}')">
-          Criar oferta
-        </button>
-      </div>
-    `;
-  });
-}
-
-/* clique nas abas */
-document.querySelectorAll(".admin-tab")[0].onclick = ()=>loadAdminCategory("lanches");
-document.querySelectorAll(".admin-tab")[1].onclick = ()=>loadAdminCategory("adicionais");
-document.querySelectorAll(".admin-tab")[2].onclick = ()=>loadAdminCategory("pasteis");
-document.querySelectorAll(".admin-tab")[3].onclick = ()=>loadAdminCategory("porcoes");
-document.querySelectorAll(".admin-tab")[4].onclick = ()=>loadAdminCategory("bebidas");
-document.querySelectorAll(".admin-tab")[5].onclick = ()=>loadAdminCategory("acai");
-
-/* placeholder da próxima parte */
-function editOffer(product){
-  alert("Configuração da oferta de:\n\n" + product + "\n\n(continua na PARTE 3)");
-}
-/* =========================
-   ADMIN OFERTAS - LÓGICA
-========================= */
-
-let offers = JSON.parse(localStorage.getItem("offers")) || {};
-
-function editOffer(product){
-  const box = document.getElementById("adminContent");
-  const existing = offers[product] || {};
-
-  box.innerHTML = `
-    <div class="offer-box">
-      <h3>Oferta: ${product}</h3>
-
-      <label>Preço promocional</label>
-      <input id="offerPrice" type="number" step="0.01"
-        value="${existing.price || ""}"
-        placeholder="Ex: 19.90">
-
-      <label>Validade da oferta</label>
-      <input id="offerDate" type="date"
-        value="${existing.date || ""}">
-
-      <div class="offer-actions">
-        <button class="btn-save-offer"
-          onclick="saveOffer('${product}')">
-          Salvar
-        </button>
-        <button class="btn-remove-offer"
-          onclick="removeOffer('${product}')">
-          Remover
-        </button>
-      </div>
-    </div>
-  `;
-}
-
-function saveOffer(product){
-  const price = document.getElementById("offerPrice").value;
-  const date = document.getElementById("offerDate").value;
-
-  if(!price || !date){
-    alert("Informe preço e validade");
-    return;
-  }
-
-  offers[product] = {
-    price: parseFloat(price),
-    date: date
-  };
-
-  localStorage.setItem("offers", JSON.stringify(offers));
-  alert("Oferta salva!");
-}
-
-function removeOffer(product){
-  if(offers[product]){
-    delete offers[product];
-    localStorage.setItem("offers", JSON.stringify(offers));
-  }
-  alert("Oferta removida");
-}
-/* =========================
-   APLICA OFERTAS NO APP
-========================= */
-
-function applyOffers(){
-  const today = new Date().toISOString().split("T")[0];
-  offers = JSON.parse(localStorage.getItem("offers")) || {};
-
-  // percorre todas as categorias visíveis
-  document.querySelectorAll(".content-box").forEach(box=>{
-    let hasOffer = false;
-    let dateText = "";
-
-    box.querySelectorAll(".item").forEach(item=>{
-      const name = item.querySelector("span").innerText;
-
-      if(offers[name]){
-        const offer = offers[name];
-
-        // oferta vencida
-        if(offer.date < today){
-          delete offers[name];
-          localStorage.setItem("offers", JSON.stringify(offers));
-          return;
-        }
-
-        hasOffer = true;
-        dateText = offer.date.split("-").reverse().join("/");
-
-        const priceSpan = item.querySelectorAll("span")[1];
-        const originalPrice = priceSpan.innerText;
-
-        item.classList.add("offer-highlight");
-
-        priceSpan.innerHTML = `
-          <span class="old-price">${originalPrice}</span><br>
-          <span class="offer-price">R$ ${offer.price.toFixed(2).replace('.',',')}</span>
-          <span class="offer-tag">OFERTA</span>
-        `;
-      }
-    });
-
-    // data da oferta no topo da categoria
-    if(hasOffer && !box.querySelector(".offer-date")){
-      const dateDiv = document.createElement("div");
-      dateDiv.className = "offer-date";
-      dateDiv.innerText = "🔥 Ofertas válidas até " + dateText;
-      box.prepend(dateDiv);
-    }
-  });
-}
-
-/* reaplica ofertas sempre que abrir categoria */
-const originalToggle = toggle;
-toggle = function(id){
-  originalToggle(id);
-  setTimeout(applyOffers, 50);
-};
-
-/* aplica ao entrar no app */
-const originalEnterApp = enterApp;
-enterApp = function(){
-  originalEnterApp();
-  setTimeout(applyOffers, 100);
-};
-/* =========================
-   PREÇO PROMOCIONAL NO CARRINHO
-========================= */
-
-function getProductPrice(name, originalPrice){
-  const offers = JSON.parse(localStorage.getItem("offers")) || {};
-  const today = new Date().toISOString().split("T")[0];
-
-  if(offers[name] && offers[name].date >= today){
-    return offers[name].price;
-  }
-  return originalPrice;
-}
-
-/* sobrescreve addToCart mantendo tudo */
-const originalAddToCart = addToCart;
-addToCart = function(name, price){
-  const finalPrice = getProductPrice(name, price);
-  originalAddToCart(name, finalPrice);
-};
-
-/* ajusta texto do WhatsApp */
-const originalFinishOrder = finishOrder;
-finishOrder = function(){
-  const name=document.getElementById("clientName").value;
-  const address=document.getElementById("clientAddress").value;
-  const payment=document.getElementById("paymentMethod").value;
-  const trocoValor=document.getElementById("trocoValue").value;
-
-  if(!name){alert("Informe seu nome");return;}
-  if(isDelivery && !address){alert("Informe o endereço");return;}
-  if(!payment){alert("Informe a forma de pagamento");return;}
-
-  let msg="🍔 Pedido Rabika's Burguer\n\n";
-  msg+="Cliente: "+name+"\n";
-  msg+="Pagamento: "+payment+"\n";
-
-  if(payment==="Dinheiro"){
-    if(precisaTroco && trocoValor){
-      msg+="Precisa de troco para: R$ "+trocoValor+"\n";
-    }else{
-      msg+="Não precisa de troco\n";
-    }
-  }
-
-  msg+= isDelivery ? "Entrega\nEndereço: "+address+"\n\n" : "Retirada no local\n\n";
-  msg+="Itens:\n";
-
-  let total=0;
-  cart.forEach(item=>{
-    msg+="- "+item.name+" R$ "+item.price.toFixed(2).replace('.',',')+"\n";
-    total+=item.price;
-  });
-
-  if(isDelivery){
-    msg+="Taxa de entrega: R$ 8\n";
-    total+=8;
-  }
-
-  msg+="\nTotal: R$ "+total.toFixed(2).replace('.',',');
-
-  orderHistory.push({
-    datetime:new Date().toISOString(),
-    total:total,
-    payment:payment,
-    delivery:isDelivery
-  });
-  localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
-
-  window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg));
-};
-
+function searchProduct(){}
 </script>
 
 </body>
 </html>
-
-
