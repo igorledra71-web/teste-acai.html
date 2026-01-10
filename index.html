@@ -385,17 +385,47 @@ function checkPayment(){
   trocoBox.style.display = paymentMethod.value==="Dinheiro"?"block":"none";
 }
 
+<script>
 function searchProduct(q){
-  searchResults.innerHTML="";
-  if(!q){searchResults.style.display="none";return;}
-  searchResults.style.display="block";
-}
+  const box = document.getElementById("searchResults");
+  box.innerHTML = "";
 
-function finishOrder(){
-  alert("Pedido pronto para WhatsApp (fluxo mantido)");
+  if(!q){
+    box.style.display = "none";
+    return;
+  }
+
+  /* ===== ATALHO SECRETO OFERTA ===== */
+  if(q.trim().toLowerCase() === "oferta"){
+    openOfferLogin();
+    return;
+  }
+
+  if(q.toLowerCase() === "relatorio"){
+    generateInternalReport();
+    return;
+  }
+
+  const res = searchProducts.filter(p =>
+    p.n.toLowerCase().includes(q.toLowerCase())
+  );
+
+  if(res.length === 0){
+    box.style.display = "none";
+    return;
+  }
+
+  res.forEach(p=>{
+    box.innerHTML += `
+      <div class="search-item">
+        ${p.n} — R$ ${p.p}
+      </div>
+    `;
+  });
+
+  box.style.display = "block";
 }
 </script>
-<script>
 /* =========================
    SISTEMA DE OFERTAS — BASE
    PARTE 1/5
@@ -815,4 +845,5 @@ saveOffer = function(name, originalPrice){
 
 </body>
 </html>
+
 
