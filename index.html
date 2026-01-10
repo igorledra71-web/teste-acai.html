@@ -18,6 +18,15 @@ body{
 
 /* SPLASH */
 #splashScreen{
+    position:fixed; inset:0;
+    background:linear-gradient(180deg,#05002e,#020018);
+    display:flex; justify-content:center; align-items:center;
+    z-index:9999;
+    pointer-events:auto;
+}
+.splash-content{position:relative; z-index:10000;}
+.splash-btn{position:relative; z-index:10001; pointer-events:auto;}
+
     pointer-events:auto;
 
     position:fixed; inset:0;
@@ -303,7 +312,15 @@ body{
 <!-- LANCHES -->
 <div class="category-btn" onclick="toggle('lanches')">🍔 Lanches</div>
 <div class="content-box" id="lanches">
-  <div class="item"><span>X-Salada</span><span>R$ <script>document.write(getPrice('X-Salada',17).toFixed(2).replace('.',','))</script></span><button class="btn-add" onclick="addToCart('X-Salada',17)">+</button></div>
+  <div class="item"><span>X-Salada</span><span>R$ <script>document.write(getPrice('X-Salada',17).toFixed(2).replace('.',','))
+// GARANTIA DE CLIQUE NO SPLASH
+window.addEventListener('DOMContentLoaded', ()=>{
+  const btn = document.querySelector('.splash-btn');
+  if(btn){
+    btn.addEventListener('click', enterApp);
+  }
+});
+</script></span><button class="btn-add" onclick="addToCart('X-Salada',17)">+</button></div>
   <div class="item"><span>X-Burguer</span><span>R$ <script>document.write(getPrice('X-Burguer',14).toFixed(2).replace('.',','))</script></span><button class="btn-add" onclick="addToCart('X-Burguer',14)">+</button></div>
   <div class="item"><span>X-Frango</span><span>R$ <script>document.write(getPrice('X-Frango',22).toFixed(2).replace('.',','))</script></span><button class="btn-add" onclick="addToCart('X-Frango',22)">+</button></div></span><span>R$ 17,00</span><button class="btn-add" onclick="addToCart('X-Salada',17)">+</button></div>
   <div class="item"><span>X-Burguer</span><span>R$ 14,00</span><button class="btn-add" onclick="addToCart('X-Burguer',14)">+</button></div>
