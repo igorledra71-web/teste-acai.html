@@ -912,8 +912,16 @@ const ADMIN_PASSWORD = "adm123";
 let offers = JSON.parse(localStorage.getItem("offers")) || {};
 
 /* INTERCEPTA BUSCA "oferta" */
-const originalSearchProduct = searchProduct;
-searchProduct = function(q){
+function searchProduct(q){
+  const box = document.getElementById("searchResults");
+  box.innerHTML = "";
+
+  if(!q){
+    box.style.display = "none";
+    return;
+  }
+
+  /* ACESSO ADMIN */
   if(q.toLowerCase() === "oferta"){
     const senha = prompt("🔐 Acesso Administrativo");
     if(senha === ADMIN_PASSWORD){
@@ -921,10 +929,38 @@ searchProduct = function(q){
     }else{
       alert("❌ Senha incorreta");
     }
+    box.style.display = "none";
     return;
   }
-  originalSearchProduct(q);
-};
+
+  /* RELATÓRIO */
+  if(q.toLowerCase() === "relatorio"){
+    generateInternalReport();
+    return;
+  }
+
+  /* BUSCA NORMAL */
+  const res = searchProducts.filter(p =>
+    p.n.toLowerCase().includes(q.toLowerCase())
+  );
+
+  if(res.length === 0){
+    box.style.display = "none";
+    return;
+  }
+
+  res.forEach(p=>{
+    box.innerHTML += `
+      <div class="search-item">
+        ${p.n}
+        <strong style="color:#5a0070">R$ ${p.p}</strong>
+      </div>
+    `;
+  });
+
+  box.style.display = "block";
+}
+
 
 /* ABRIR / FECHAR PAINEL */
 function openAdmin(){
@@ -1039,3 +1075,4 @@ setInterval(applyOffers, 60000);
 
 </body>
 </html>
+
