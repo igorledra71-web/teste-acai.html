@@ -116,3 +116,104 @@ function startApp(){
 
 </body>
 </html>
+<!-- CARDÁPIO ENTRA NAS PRÓXIMAS PARTES -->
+<style>
+/* CATEGORIAS */
+.category-btn{
+    width:100%;
+    background:linear-gradient(135deg,#ffcc00,#ff9900);
+    color:#2b0033;
+    padding:16px;
+    border-radius:26px;
+    font-weight:800;
+    margin-bottom:14px;
+    cursor:pointer;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+
+.content-box{
+    width:100%;
+    background:#fff;
+    color:#2b0033;
+    border-radius:26px;
+    padding:16px;
+    margin-bottom:20px;
+    display:none;
+    box-shadow:0 14px 35px rgba(0,0,0,.35);
+}
+
+.item{
+    display:grid;
+    grid-template-columns:1fr auto auto;
+    gap:10px;
+    padding:12px 0;
+    border-bottom:1px dashed #ddd;
+}
+
+.item:last-child{border:none}
+
+.item span:first-child{
+    font-weight:600;
+}
+
+.item span:nth-child(2){
+    font-weight:800;
+    color:#5a0070;
+}
+
+.btn-add{
+    background:#5a0070;
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    padding:6px 12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+</style>
+
+<!-- LANCHES -->
+<div class="category-btn" onclick="toggleBox('lanches')">🍔 Lanches</div>
+<div class="content-box" id="lanches">
+
+<div class="item"><span>X-Salada</span><span>R$ 17,00</span><button class="btn-add" onclick="addItem('X-Salada',17)">+</button></div>
+<div class="item"><span>X-Burguer</span><span>R$ 14,00</span><button class="btn-add" onclick="addItem('X-Burguer',14)">+</button></div>
+<div class="item"><span>X-Frango</span><span>R$ 22,00</span><button class="btn-add" onclick="addItem('X-Frango',22)">+</button></div>
+<div class="item"><span>X-Frango Cremoso</span><span>R$ 20,00</span><button class="btn-add" onclick="addItem('X-Frango Cremoso',20)">+</button></div>
+<div class="item"><span>X-Bacon</span><span>R$ 25,00</span><button class="btn-add" onclick="addItem('X-Bacon',25)">+</button></div>
+<div class="item"><span>X-Calabresa</span><span>R$ 25,00</span><button class="btn-add" onclick="addItem('X-Calabresa',25)">+</button></div>
+<div class="item"><span>X-Coração</span><span>R$ 27,00</span><button class="btn-add" onclick="addItem('X-Coração',27)">+</button></div>
+<div class="item"><span>X-Tudo</span><span>R$ 32,00</span><button class="btn-add" onclick="addItem('X-Tudo',32)">+</button></div>
+<div class="item"><span>X-Burguer Duplo</span><span>R$ 22,00</span><button class="btn-add" onclick="addItem('X-Burguer Duplo',22)">+</button></div>
+<div class="item"><span>X-Egg</span><span>R$ 20,00</span><button class="btn-add" onclick="addItem('X-Egg',20)">+</button></div>
+<div class="item"><span>X-Tribom</span><span>R$ 32,00</span><button class="btn-add" onclick="addItem('X-Tribom',32)">+</button></div>
+<div class="item"><span>X-Da Casa</span><span>R$ 45,00</span><button class="btn-add" onclick="addItem('X-Da Casa',45)">+</button></div>
+<div class="item"><span>X-Dog</span><span>R$ 20,00</span><button class="btn-add" onclick="addItem('X-Dog',20)">+</button></div>
+
+<br><b>➕ Adicionais</b>
+
+<div class="item"><span>Bacon</span><span>R$ 7,00</span><button class="btn-add" onclick="addItem('Adicional Bacon',7)">+</button></div>
+<div class="item"><span>Calabresa</span><span>R$ 7,00</span><button class="btn-add" onclick="addItem('Adicional Calabresa',7)">+</button></div>
+<div class="item"><span>Frango</span><span>R$ 7,00</span><button class="btn-add" onclick="addItem('Adicional Frango',7)">+</button></div>
+<div class="item"><span>Coração</span><span>R$ 8,00</span><button class="btn-add" onclick="addItem('Adicional Coração',8)">+</button></div>
+<div class="item"><span>Ovo</span><span>R$ 3,00</span><button class="btn-add" onclick="addItem('Adicional Ovo',3)">+</button></div>
+<div class="item"><span>Cheddar</span><span>R$ 4,00</span><button class="btn-add" onclick="addItem('Adicional Cheddar',4)">+</button></div>
+<div class="item"><span>Maionese</span><span>R$ 2,00</span><button class="btn-add" onclick="addItem('Adicional Maionese',2)">+</button></div>
+
+</div>
+
+<script>
+let cart = [];
+
+function toggleBox(id){
+    const el = document.getElementById(id);
+    el.style.display = el.style.display === "block" ? "none" : "block";
+}
+
+function addItem(name, price){
+    cart.push({name, price});
+    console.log(cart);
+}
+</script>
+
