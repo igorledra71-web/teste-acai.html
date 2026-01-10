@@ -139,6 +139,7 @@ body{
 }
 
 .price{font-weight:900;color:#5a0070}
+
 .btn-add{
   background:#5a0070;
   color:#fff;
@@ -149,7 +150,7 @@ body{
 }
 
 /* OFERTAS */
-.old-price{text-decoration:line-through;color:#999;font-size:13px}
+.old-price{ text-decoration:line-through;color:#999;font-size:13px }
 .offer-badge{
   background:#e60000;
   color:#fff;
@@ -173,16 +174,28 @@ body{
   display:none;
 }
 
-/* ADMIN OVERLAY */
+/* ADMIN OVERLAY (ÚNICO) */
 #adminOverlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.85);
+  background:rgba(0,0,0,.65);
+  backdrop-filter: blur(4px);
   display:none;
-  align-items:center;
   justify-content:center;
-  z-index:10000;
-  animation:fadeIn .4s ease;
+  align-items:center;
+  z-index:99999;
+  animation: fadeIn .35s ease;
+}
+
+.admin-panel{
+  width:92%;
+  max-width:420px;
+  background:#fff;
+  color:#2b0033;
+  border-radius:22px;
+  box-shadow:0 20px 40px rgba(0,0,0,.45);
+  transform: translateY(30px) scale(.96);
+  animation: slideUp .35s ease forwards;
 }
 
 @keyframes fadeIn{
@@ -190,17 +203,11 @@ body{
   to{opacity:1}
 }
 
-.admin-panel{
-  background:#fff;
-  color:#2b0033;
-  width:90%;
-  max-width:420px;
-  border-radius:20px;
-  overflow:hidden;
+@keyframes slideUp{
+  to{transform: translateY(0) scale(1)}
 }
 </style>
 </head>
-
 <body>
 
 <!-- SPLASH -->
@@ -213,11 +220,21 @@ body{
 
 <!-- APP -->
 <div id="app">
+
   <div class="brand-title">Rabika's Burguer</div>
 
+  <!-- BUSCA (AGORA FUNCIONAL) -->
   <div class="search-box">
-    <input class="search-input" placeholder="Pesquisar produto..." oninput="searchProduct(this.value)">
+    <input
+      class="search-input"
+      id="searchInput"
+      placeholder="Pesquisar produto..."
+      oninput="searchProduct(this.value)"
+    >
   </div>
+
+  <!-- RESULTADOS DA BUSCA -->
+  <div class="content-box" id="searchResults" style="display:none;"></div>
   <!-- LANCHES -->
   <div class="category-btn" onclick="toggle('lanches')">🍔 Lanches</div>
   <div class="content-box" id="lanches">
@@ -656,9 +673,8 @@ body{
     </div>
 
   </div>
-</div>
-<!-- FECHA #app -->
 
+</div>
 <!-- CARRINHO / PAGAMENTO -->
 <div class="cart-footer" id="cartFooter">
 
@@ -717,48 +733,6 @@ body{
   </div>
 
 </div>
-<!-- OVERLAY ADMIN (NÃO APARECE NA TELA DE PEDIDOS) -->
-<div id="adminOverlay">
-
-  <div class="admin-panel">
-
-    <div style="
-      background:#FFD34D;
-      padding:16px;
-      font-weight:900;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    ">
-      <span>🔥 Painel de Ofertas</span>
-
-      <button onclick="closeAdmin()"
-        style="background:none;border:none;font-size:18px;font-weight:bold;cursor:pointer">
-        ✕
-      </button>
-    </div>
-
-    <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
-
-      <select id="offerProduct"></select>
-
-      <input id="offerPrice" placeholder="Preço promocional">
-
-      <input id="offerStart" type="datetime-local">
-
-      <input id="offerEnd" type="datetime-local">
-
-      <button class="btn-add"
-        style="background:#5a0070"
-        onclick="saveOffer()">
-        Salvar Oferta
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
 <script>
 /* ================= VARIÁVEIS GLOBAIS ================= */
 let cart = [];
@@ -787,29 +761,56 @@ function enterApp(){
 /* ================= TOGGLE ================= */
 function toggle(id){
   const el = document.getElementById(id);
+  if(!el) return;
   el.style.display = el.style.display === "block" ? "none" : "block";
 }
 
 /* ================= HORÁRIO ================= */
 function isOpenNow(){
   const d = new Date();
-  const day = d.getDay();
+  const day = d.getDay(); // 0 dom, 1 seg, ...
   const time = d.getHours() + d.getMinutes()/60;
-  if(day === 1) return false;
-  if(time < 18.5 || time > 22.5) return false;
+  if(day === 1) return false;           // fechado segunda
+  if(time < 18.5 || time > 22.5) return false; // 18:30–22:30
   return true;
 }
 
 /* ================= BUSCA / ADMIN ================= */
 function searchProduct(q){
-  if(q.toLowerCase().trim() === "oferta"){
+  const term = q.toLowerCase().trim();
+
+  // abre painel admin ao digitar "oferta"
+  if(term === "oferta"){
     if(prompt("Senha ADM") === "adm123"){
       openAdmin();
     }else{
       alert("Senha incorreta");
     }
-    document.querySelector(".search-input").value = "";
+    document.getElementById("searchInput").value = "";
+    return;
   }
+
+  // busca simples (opcional – mantém layout)
+  const results = document.getElementById("searchResults");
+  if(!term){
+    results.style.display = "none";
+    results.innerHTML = "";
+    return;
+  }
+
+  results.innerHTML = "";
+  let found = 0;
+
+  document.querySelectorAll(".item").forEach(item=>{
+    const prod = (item.getAttribute("data-prod") || "").toLowerCase();
+    if(prod.includes(term)){
+      const clone = item.cloneNode(true);
+      results.appendChild(clone);
+      found++;
+    }
+  });
+
+  results.style.display = found ? "block" : "none";
 }
 
 /* ================= CARRINHO ================= */
@@ -921,17 +922,25 @@ let offers = JSON.parse(localStorage.getItem("offers")) || {};
 
 /* ABRIR / FECHAR ADMIN */
 function openAdmin(){
-  document.getElementById("adminOverlay").style.display = "flex";
-  loadOfferProducts();
+  const overlay = document.getElementById("adminOverlay");
+  if(overlay){
+    overlay.style.display = "flex";
+    loadOfferProducts();
+  }
 }
 
 function closeAdmin(){
-  document.getElementById("adminOverlay").style.display = "none";
+  const overlay = document.getElementById("adminOverlay");
+  if(overlay){
+    overlay.style.display = "none";
+  }
 }
 
 /* CARREGAR PRODUTOS NO SELECT */
 function loadOfferProducts(){
   const select = document.getElementById("offerProduct");
+  if(!select) return;
+
   select.innerHTML = "";
 
   document.querySelectorAll(".item").forEach(item=>{
@@ -959,13 +968,9 @@ function saveOffer(){
     return;
   }
 
-  offers[product] = {
-    price,
-    start,
-    end
-  };
-
+  offers[product] = { price, start, end };
   localStorage.setItem("offers", JSON.stringify(offers));
+
   alert("Oferta salva com sucesso");
   applyOffers();
 }
@@ -981,6 +986,8 @@ function applyOffers(){
     const priceEl = item.querySelector(".price");
     const btn = item.querySelector(".btn-add");
 
+    if(!priceEl || !btn) return;
+
     if(!offer){
       priceEl.innerHTML = "R$ " + basePrice.toFixed(2).replace('.',',');
       btn.setAttribute("onclick","addToCart('"+prod+"',"+basePrice+")");
@@ -992,8 +999,12 @@ function applyOffers(){
 
     if(now >= start && now <= end){
       priceEl.innerHTML = `
-        <span class="old-price">R$ ${basePrice.toFixed(2).replace('.',',')}</span><br>
-        <span>R$ ${offer.price.toFixed(2).replace('.',',')}</span>
+        <span class="old-price">
+          R$ ${basePrice.toFixed(2).replace('.',',')}
+        </span><br>
+        <span>
+          R$ ${offer.price.toFixed(2).replace('.',',')}
+        </span>
         <span class="offer-badge">OFERTA</span>
       `;
       btn.setAttribute("onclick","addToCart('"+prod+"',"+offer.price+")");
@@ -1040,7 +1051,7 @@ document.addEventListener("gesturestart", function (e) {
 });
 </script>
 <style>
-/* ================= OVERLAY ADMIN ================= */
+/* ================= OVERLAY ADMIN FINAL ================= */
 #adminOverlay{
   position:fixed;
   inset:0;
