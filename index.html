@@ -10,7 +10,7 @@
   box-sizing:border-box;
   margin:0;
   padding:0;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color:transparent;
 }
 
 body{
@@ -20,7 +20,7 @@ body{
   overflow-y:auto;
 }
 
-/* ================= SPLASH ================= */
+/* SPLASH */
 #splashScreen{
   position:fixed;
   inset:0;
@@ -60,15 +60,13 @@ body{
   animation:pulse 1.6s infinite;
 }
 
-.splash-btn:active{ transform:scale(.96); }
-
 @keyframes pulse{
   0%{transform:scale(1)}
   50%{transform:scale(1.05)}
   100%{transform:scale(1)}
 }
 
-/* ================= APP ================= */
+/* APP */
 #app{
   width:100%;
   max-width:420px;
@@ -87,9 +85,8 @@ body{
   margin-bottom:12px;
 }
 
-/* ================= BUSCA ================= */
+/* BUSCA */
 .search-box{width:100%;margin-bottom:15px}
-
 .search-input{
   width:100%;
   padding:14px;
@@ -98,20 +95,7 @@ body{
   font-size:16px;
 }
 
-.search-results{
-  background:#fff;
-  color:#2b0033;
-  border-radius:16px;
-  margin-top:8px;
-  display:none;
-}
-
-.search-item{
-  padding:12px;
-  border-bottom:1px dashed #ccc;
-}
-
-/* ================= CATEGORIAS ================= */
+/* CATEGORIAS */
 .category-btn{
   width:100%;
   background:linear-gradient(135deg,#ffcc00,#ff9900);
@@ -124,8 +108,6 @@ body{
   text-align:center;
 }
 
-.category-btn:active{transform:scale(.97)}
-
 .sub-btn{
   width:100%;
   background:#FFD34D;
@@ -137,7 +119,7 @@ body{
   text-align:center;
 }
 
-/* ================= LISTAS ================= */
+/* LISTAS */
 .content-box{
   width:100%;
   background:#fff;
@@ -156,11 +138,7 @@ body{
   border-bottom:1px dashed #ddd;
 }
 
-.price{
-  font-weight:900;
-  color:#5a0070;
-}
-
+.price{font-weight:900;color:#5a0070}
 .btn-add{
   background:#5a0070;
   color:#fff;
@@ -170,14 +148,8 @@ body{
   font-weight:900;
 }
 
-.btn-add:active{transform:scale(.9)}
-
-.old-price{
-  text-decoration:line-through;
-  color:#999;
-  font-size:13px;
-}
-
+/* OFERTAS */
+.old-price{text-decoration:line-through;color:#999;font-size:13px}
 .offer-badge{
   background:#e60000;
   color:#fff;
@@ -186,6 +158,7 @@ body{
   font-size:11px;
 }
 
+/* CARRINHO */
 .cart-footer{
   position:fixed;
   bottom:0;
@@ -200,12 +173,37 @@ body{
   display:none;
 }
 
-#adminScreen{ display:none; }
+/* ADMIN OVERLAY */
+#adminOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
+  animation:fadeIn .4s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+.admin-panel{
+  background:#fff;
+  color:#2b0033;
+  width:90%;
+  max-width:420px;
+  border-radius:20px;
+  overflow:hidden;
+}
 </style>
 </head>
 
 <body>
 
+<!-- SPLASH -->
 <div id="splashScreen">
   <div class="splash-content">
     <img src="logo.png" class="splash-logo">
@@ -213,12 +211,12 @@ body{
   </div>
 </div>
 
+<!-- APP -->
 <div id="app">
   <div class="brand-title">Rabika's Burguer</div>
 
   <div class="search-box">
     <input class="search-input" placeholder="Pesquisar produto..." oninput="searchProduct(this.value)">
-    <div class="search-results" id="searchResults"></div>
   </div>
   <!-- LANCHES -->
   <div class="category-btn" onclick="toggle('lanches')">🍔 Lanches</div>
@@ -302,86 +300,147 @@ body{
       <button class="btn-add" onclick="addToCart('X-Dog',20)">+</button>
     </div>
 
-  <div class="sub-btn" onclick="toggle('extrasLanches')">
-  ➕ Adicionais para Lanches
-</div>
+    <!-- ADICIONAIS DE LANCHES -->
+    <div class="sub-btn" onclick="toggle('extrasLanches')">➕ Adicionais para Lanches</div>
+    <div id="extrasLanches" style="display:none;">
 
-<div id="extrasLanches" style="display:none;">
+      <div class="item" data-prod="Adicional Calabresa" data-price="7">
+        <span>Calabresa</span>
+        <span class="price">R$ 7,00</span>
+        <button class="btn-add" onclick="addToCart('Adicional Calabresa',7)">+</button>
+      </div>
 
-  <div class="item" data-prod="Adicional Calabresa" data-price="7">
-    <span>Calabresa</span>
-    <span class="price">R$ 7,00</span>
-    <button class="btn-add" onclick="addToCart('Adicional Calabresa',7)">+</button>
+      <div class="item" data-prod="Adicional Bacon" data-price="7">
+        <span>Bacon</span>
+        <span class="price">R$ 7,00</span>
+        <button class="btn-add" onclick="addToCart('Adicional Bacon',7)">+</button>
+      </div>
+
+      <div class="item" data-prod="Adicional Coração" data-price="8">
+        <span>Coração</span>
+        <span class="price">R$ 8,00</span>
+        <button class="btn-add" onclick="addToCart('Adicional Coração',8)">+</button>
+      </div>
+
+      <div class="item" data-prod="Adicional Ovo" data-price="3">
+        <span>Ovo</span>
+        <span class="price">R$ 3,00</span>
+        <button class="btn-add" onclick="addToCart('Adicional Ovo',3)">+</button>
+      </div>
+
+      <div class="item" data-prod="Adicional Salsicha" data-price="4">
+        <span>Salsicha</span>
+        <span class="price">R$ 4,00</span>
+        <button class="btn-add" onclick="addToCart('Adicional Salsicha',4)">+</button>
+      </div>
+
+      <div class="item" data-prod="Adicional Frango" data-price="7">
+        <span>Frango</span>
+        <span class="price">R$ 7,00</span>
+        <button class="btn-add" onclick="addToCart('Adicional Frango',7)">+</button>
+      </div>
+
+      <div class="item" data-prod="Adicional Cheddar" data-price="4">
+        <span>Cheddar</span>
+        <span class="price">R$ 4,00</span>
+        <button class="btn-add" onclick="addToCart('Adicional Cheddar',4)">+</button>
+      </div>
+
+      <div class="item" data-prod="Adicional Hambúrguer artesanal" data-price="10">
+        <span>Hambúrguer artesanal</span>
+        <span class="price">R$ 10,00</span>
+        <button class="btn-add" onclick="addToCart('Adicional Hambúrguer artesanal',10)">+</button>
+      </div>
+
+      <div class="item" data-prod="Adicional Maionese caseira" data-price="2">
+        <span>Maionese caseira</span>
+        <span class="price">R$ 2,00</span>
+        <button class="btn-add" onclick="addToCart('Adicional Maionese caseira',2)">+</button>
+      </div>
+
+    </div>
   </div>
-
-  <div class="item" data-prod="Adicional Bacon" data-price="7">
-    <span>Bacon</span>
-    <span class="price">R$ 7,00</span>
-    <button class="btn-add" onclick="addToCart('Adicional Bacon',7)">+</button>
-  </div>
-
-  <div class="item" data-prod="Adicional Coração" data-price="8">
-    <span>Coração</span>
-    <span class="price">R$ 8,00</span>
-    <button class="btn-add" onclick="addToCart('Adicional Coração',8)">+</button>
-  </div>
-
-  <div class="item" data-prod="Adicional Ovo" data-price="3">
-    <span>Ovo</span>
-    <span class="price">R$ 3,00</span>
-    <button class="btn-add" onclick="addToCart('Adicional Ovo',3)">+</button>
-  </div>
-
-  <div class="item" data-prod="Adicional Salsicha" data-price="4">
-    <span>Salsicha</span>
-    <span class="price">R$ 4,00</span>
-    <button class="btn-add" onclick="addToCart('Adicional Salsicha',4)">+</button>
-  </div>
-
-  <div class="item" data-prod="Adicional Frango" data-price="7">
-    <span>Frango</span>
-    <span class="price">R$ 7,00</span>
-    <button class="btn-add" onclick="addToCart('Adicional Frango',7)">+</button>
-  </div>
-
-  <div class="item" data-prod="Adicional Cheddar" data-price="4">
-    <span>Cheddar</span>
-    <span class="price">R$ 4,00</span>
-    <button class="btn-add" onclick="addToCart('Adicional Cheddar',4)">+</button>
-  </div>
-
-  <div class="item" data-prod="Adicional Hambúrguer artesanal" data-price="10">
-    <span>Hambúrguer artesanal</span>
-    <span class="price">R$ 10,00</span>
-    <button class="btn-add" onclick="addToCart('Adicional Hambúrguer artesanal',10)">+</button>
-  </div>
-
-  <div class="item" data-prod="Adicional Maionese caseira" data-price="2">
-    <span>Maionese caseira</span>
-    <span class="price">R$ 2,00</span>
-    <button class="btn-add" onclick="addToCart('Adicional Maionese caseira',2)">+</button>
-  </div>
-
-</div>
-
-
   <!-- PASTÉIS -->
   <div class="category-btn" onclick="toggle('pasteis')">🥟 Pastéis</div>
   <div class="content-box" id="pasteis">
 
-    <div class="item" data-prod="Pastel de Carne" data-price="14"><span>Pastel de Carne</span><span class="price">R$ 14,00</span><button class="btn-add" onclick="addToCart('Pastel de Carne',14)">+</button></div>
-    <div class="item" data-prod="Pastel de Frango" data-price="12"><span>Pastel de Frango</span><span class="price">R$ 12,00</span><button class="btn-add" onclick="addToCart('Pastel de Frango',12)">+</button></div>
-    <div class="item" data-prod="Pastel Frango Bacon Cheddar" data-price="16"><span>Frango Bacon Cheddar</span><span class="price">R$ 16,00</span><button class="btn-add" onclick="addToCart('Pastel Frango Bacon Cheddar',16)">+</button></div>
-    <div class="item" data-prod="Pastel Bacon Cheddar" data-price="15"><span>Bacon Cheddar</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Bacon Cheddar',15)">+</button></div>
-    <div class="item" data-prod="Pastel Calabresa com Cebola" data-price="14"><span>Calabresa c/ Cebola</span><span class="price">R$ 14,00</span><button class="btn-add" onclick="addToCart('Pastel Calabresa com Cebola',14)">+</button></div>
-    <div class="item" data-prod="Pastel Carne e Queijo" data-price="15"><span>Carne e Queijo</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Carne e Queijo',15)">+</button></div>
-    <div class="item" data-prod="Pastel Queijo" data-price="14"><span>Queijo</span><span class="price">R$ 14,00</span><button class="btn-add" onclick="addToCart('Pastel Queijo',14)">+</button></div>
-    <div class="item" data-prod="Pastel Chocolate ao Leite" data-price="15"><span>Chocolate ao Leite</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Chocolate ao Leite',15)">+</button></div>
-    <div class="item" data-prod="Pastel Banana Queijo Canela" data-price="15"><span>Banana Queijo Canela</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Banana Queijo Canela',15)">+</button></div>
-    <div class="item" data-prod="Pastel Romeu e Julieta" data-price="15"><span>Romeu e Julieta</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Romeu e Julieta',15)">+</button></div>
-    <div class="item" data-prod="Pastel Chocolate Branco" data-price="15"><span>Chocolate Branco</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Chocolate Branco',15)">+</button></div>
-    <div class="item" data-prod="Pastel Creme e Ouro Branco" data-price="15"><span>Creme e Ouro Branco</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Creme e Ouro Branco',15)">+</button></div>
-    <div class="item" data-prod="Pastel Creme e Sonho de Valsa" data-price="15"><span>Creme e Sonho de Valsa</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="addToCart('Pastel Creme e Sonho de Valsa',15)">+</button></div>
+    <div class="item" data-prod="Pastel de Carne" data-price="14">
+      <span>Pastel de Carne</span>
+      <span class="price">R$ 14,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel de Carne',14)">+</button>
+    </div>
+
+    <div class="item" data-prod="Pastel de Frango" data-price="12">
+      <span>Pastel de Frango</span>
+      <span class="price">R$ 12,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel de Frango',12)">+</button>
+    </div>
+
+    <div class="item" data-prod="Pastel Frango Bacon Cheddar" data-price="16">
+      <span>Frango Bacon Cheddar</span>
+      <span class="price">R$ 16,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel Frango Bacon Cheddar',16)">+</button>
+    </div>
+
+    <div class="item" data-prod="Pastel Bacon Cheddar" data-price="15">
+      <span>Bacon Cheddar</span>
+      <span class="price">R$ 15,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel Bacon Cheddar',15)">+</button>
+    </div>
+
+    <div class="item" data-prod="Pastel Calabresa com Cebola" data-price="14">
+      <span>Calabresa c/ Cebola</span>
+      <span class="price">R$ 14,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel Calabresa com Cebola',14)">+</button>
+    </div>
+
+    <div class="item" data-prod="Pastel Carne e Queijo" data-price="15">
+      <span>Carne e Queijo</span>
+      <span class="price">R$ 15,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel Carne e Queijo',15)">+</button>
+    </div>
+
+    <div class="item" data-prod="Pastel Queijo" data-price="14">
+      <span>Queijo</span>
+      <span class="price">R$ 14,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel Queijo',14)">+</button>
+    </div>
+
+    <div class="item" data-prod="Pastel Chocolate ao Leite" data-price="15">
+      <span>Chocolate ao Leite</span>
+      <span class="price">R$ 15,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel Chocolate ao Leite',15)">+</button>
+    </div>
+
+    <div class="item" data-prod="Pastel Banana Queijo Canela" data-price="15">
+      <span>Banana Queijo Canela</span>
+      <span class="price">R$ 15,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel Banana Queijo Canela',15)">+</button>
+    </div>
+
+    <div class="item" data-prod="Pastel Romeu e Julieta" data-price="15">
+      <span>Romeu e Julieta</span>
+      <span class="price">R$ 15,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel Romeu e Julieta',15)">+</button>
+    </div>
+
+    <div class="item" data-prod="Pastel Chocolate Branco" data-price="15">
+      <span>Chocolate Branco</span>
+      <span class="price">R$ 15,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel Chocolate Branco',15)">+</button>
+    </div>
+
+    <div class="item" data-prod="Pastel Creme e Ouro Branco" data-price="15">
+      <span>Creme e Ouro Branco</span>
+      <span class="price">R$ 15,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel Creme e Ouro Branco',15)">+</button>
+    </div>
+
+    <div class="item" data-prod="Pastel Creme e Sonho de Valsa" data-price="15">
+      <span>Creme e Sonho de Valsa</span>
+      <span class="price">R$ 15,00</span>
+      <button class="btn-add" onclick="addToCart('Pastel Creme e Sonho de Valsa',15)">+</button>
+    </div>
 
   </div>
 
@@ -389,31 +448,118 @@ body{
   <div class="category-btn" onclick="toggle('porcoes')">🍟 Porções</div>
   <div class="content-box" id="porcoes">
 
-    <div class="item" data-prod="Fritas com Frango" data-price="39.99"><span>Fritas c/ Frango</span><span class="price">R$ 39,99</span><button class="btn-add" onclick="addToCart('Fritas com Frango',39.99)">+</button></div>
-    <div class="item" data-prod="Fritas" data-price="24.99"><span>Fritas</span><span class="price">R$ 24,99</span><button class="btn-add" onclick="addToCart('Fritas',24.99)">+</button></div>
-    <div class="item" data-prod="Fritas com Calabresa" data-price="34.99"><span>Fritas c/ Calabresa</span><span class="price">R$ 34,99</span><button class="btn-add" onclick="addToCart('Fritas com Calabresa',34.99)">+</button></div>
-    <div class="item" data-prod="Fritas com Bacon" data-price="34.99"><span>Fritas c/ Bacon</span><span class="price">R$ 34,99</span><button class="btn-add" onclick="addToCart('Fritas com Bacon',34.99)">+</button></div>
-    <div class="item" data-prod="Anéis de Cebola" data-price="24.99"><span>Anéis de Cebola</span><span class="price">R$ 24,99</span><button class="btn-add" onclick="addToCart('Anéis de Cebola',24.99)">+</button></div>
-    <div class="item" data-prod="Fritas Bacon Calabresa Queijo" data-price="39.99"><span>Fritas c/ Bacon, Calabresa e Queijo</span><span class="price">R$ 39,99</span><button class="btn-add" onclick="addToCart('Fritas Bacon Calabresa Queijo',39.99)">+</button></div>
-    <div class="item" data-prod="Fritas Bacon Cheddar" data-price="39.99"><span>Fritas c/ Bacon Cheddar</span><span class="price">R$ 39,99</span><button class="btn-add" onclick="addToCart('Fritas Bacon Cheddar',39.99)">+</button></div>
-    <div class="item" data-prod="Fritas Polenta Frango" data-price="39.99"><span>Fritas c/ Polenta e Frango</span><span class="price">R$ 39,99</span><button class="btn-add" onclick="addToCart('Fritas Polenta Frango',39.99)">+</button></div>
-    <div class="item" data-prod="Fritas Polenta" data-price="24.99"><span>Fritas c/ Polenta</span><span class="price">R$ 24,99</span><button class="btn-add" onclick="addToCart('Fritas Polenta',24.99)">+</button></div>
-    <div class="item" data-prod="Fritas Calabresa Catupiry" data-price="35.99"><span>Fritas c/ Calabresa e Catupiry</span><span class="price">R$ 35,99</span><button class="btn-add" onclick="addToCart('Fritas Calabresa Catupiry',35.99)">+</button></div>
-    <div class="item" data-prod="Porção Completa" data-price="49.99"><span>Fritas, Polenta, Chuleta e Anel de Cebola</span><span class="price">R$ 49,99</span><button class="btn-add" onclick="addToCart('Porção Completa',49.99)">+</button></div>
+    <div class="item" data-prod="Fritas com Frango" data-price="39.99">
+      <span>Fritas c/ Frango</span>
+      <span class="price">R$ 39,99</span>
+      <button class="btn-add" onclick="addToCart('Fritas com Frango',39.99)">+</button>
+    </div>
+
+    <div class="item" data-prod="Fritas" data-price="24.99">
+      <span>Fritas</span>
+      <span class="price">R$ 24,99</span>
+      <button class="btn-add" onclick="addToCart('Fritas',24.99)">+</button>
+    </div>
+
+    <div class="item" data-prod="Fritas com Calabresa" data-price="34.99">
+      <span>Fritas c/ Calabresa</span>
+      <span class="price">R$ 34,99</span>
+      <button class="btn-add" onclick="addToCart('Fritas com Calabresa',34.99)">+</button>
+    </div>
+
+    <div class="item" data-prod="Fritas com Bacon" data-price="34.99">
+      <span>Fritas c/ Bacon</span>
+      <span class="price">R$ 34,99</span>
+      <button class="btn-add" onclick="addToCart('Fritas com Bacon',34.99)">+</button>
+    </div>
+
+    <div class="item" data-prod="Anéis de Cebola" data-price="24.99">
+      <span>Anéis de Cebola</span>
+      <span class="price">R$ 24,99</span>
+      <button class="btn-add" onclick="addToCart('Anéis de Cebola',24.99)">+</button>
+    </div>
+
+    <div class="item" data-prod="Fritas Bacon Calabresa Queijo" data-price="39.99">
+      <span>Fritas c/ Bacon, Calabresa e Queijo</span>
+      <span class="price">R$ 39,99</span>
+      <button class="btn-add" onclick="addToCart('Fritas Bacon Calabresa Queijo',39.99)">+</button>
+    </div>
+
+    <div class="item" data-prod="Fritas Bacon Cheddar" data-price="39.99">
+      <span>Fritas c/ Bacon Cheddar</span>
+      <span class="price">R$ 39,99</span>
+      <button class="btn-add" onclick="addToCart('Fritas Bacon Cheddar',39.99)">+</button>
+    </div>
+
+    <div class="item" data-prod="Fritas Polenta Frango" data-price="39.99">
+      <span>Fritas c/ Polenta e Frango</span>
+      <span class="price">R$ 39,99</span>
+      <button class="btn-add" onclick="addToCart('Fritas Polenta Frango',39.99)">+</button>
+    </div>
+
+    <div class="item" data-prod="Fritas Polenta" data-price="24.99">
+      <span>Fritas c/ Polenta</span>
+      <span class="price">R$ 24,99</span>
+      <button class="btn-add" onclick="addToCart('Fritas Polenta',24.99)">+</button>
+    </div>
+
+    <div class="item" data-prod="Fritas Calabresa Catupiry" data-price="35.99">
+      <span>Fritas c/ Calabresa e Catupiry</span>
+      <span class="price">R$ 35,99</span>
+      <button class="btn-add" onclick="addToCart('Fritas Calabresa Catupiry',35.99)">+</button>
+    </div>
+
+    <div class="item" data-prod="Porção Completa" data-price="49.99">
+      <span>Fritas, Polenta, Chuleta e Anel de Cebola</span>
+      <span class="price">R$ 49,99</span>
+      <button class="btn-add" onclick="addToCart('Porção Completa',49.99)">+</button>
+    </div>
 
   </div>
-
   <!-- BEBIDAS -->
   <div class="category-btn" onclick="toggle('bebidas')">🥤 Bebidas</div>
   <div class="content-box" id="bebidas">
 
-    <div class="item" data-prod="Cassulinha 200ml" data-price="3"><span>Cassulinha 200ml</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Cassulinha 200ml',3)">+</button></div>
-    <div class="item" data-prod="Coca-Cola 600ml" data-price="8"><span>Coca-Cola 600ml</span><span class="price">R$ 8,00</span><button class="btn-add" onclick="addToCart('Coca-Cola 600ml',8)">+</button></div>
-    <div class="item" data-prod="Coca-Cola 2L" data-price="16"><span>Coca-Cola 2L</span><span class="price">R$ 16,00</span><button class="btn-add" onclick="addToCart('Coca-Cola 2L',16)">+</button></div>
-    <div class="item" data-prod="Refri Lata" data-price="6"><span>Refri Lata</span><span class="price">R$ 6,00</span><button class="btn-add" onclick="addToCart('Refri Lata',6)">+</button></div>
-    <div class="item" data-prod="Refrigerante 2L" data-price="12"><span>Refrigerante 2L</span><span class="price">R$ 12,00</span><button class="btn-add" onclick="addToCart('Refrigerante 2L',12)">+</button></div>
-    <div class="item" data-prod="Cerveja Lata 350ml" data-price="6"><span>Cerveja Lata 350ml</span><span class="price">R$ 6,00</span><button class="btn-add" onclick="addToCart('Cerveja Lata 350ml',6)">+</button></div>
-    <div class="item" data-prod="Achocolatado 200ml" data-price="3"><span>Achocolatado 200ml</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Achocolatado 200ml',3)">+</button></div>
+    <div class="item" data-prod="Cassulinha 200ml" data-price="3">
+      <span>Cassulinha 200ml</span>
+      <span class="price">R$ 3,00</span>
+      <button class="btn-add" onclick="addToCart('Cassulinha 200ml',3)">+</button>
+    </div>
+
+    <div class="item" data-prod="Coca-Cola 600ml" data-price="8">
+      <span>Coca-Cola 600ml</span>
+      <span class="price">R$ 8,00</span>
+      <button class="btn-add" onclick="addToCart('Coca-Cola 600ml',8)">+</button>
+    </div>
+
+    <div class="item" data-prod="Coca-Cola 2L" data-price="16">
+      <span>Coca-Cola 2L</span>
+      <span class="price">R$ 16,00</span>
+      <button class="btn-add" onclick="addToCart('Coca-Cola 2L',16)">+</button>
+    </div>
+
+    <div class="item" data-prod="Refri Lata" data-price="6">
+      <span>Refri Lata</span>
+      <span class="price">R$ 6,00</span>
+      <button class="btn-add" onclick="addToCart('Refri Lata',6)">+</button>
+    </div>
+
+    <div class="item" data-prod="Refrigerante 2L" data-price="12">
+      <span>Refrigerante 2L</span>
+      <span class="price">R$ 12,00</span>
+      <button class="btn-add" onclick="addToCart('Refrigerante 2L',12)">+</button>
+    </div>
+
+    <div class="item" data-prod="Cerveja Lata 350ml" data-price="6">
+      <span>Cerveja Lata 350ml</span>
+      <span class="price">R$ 6,00</span>
+      <button class="btn-add" onclick="addToCart('Cerveja Lata 350ml',6)">+</button>
+    </div>
+
+    <div class="item" data-prod="Achocolatado 200ml" data-price="3">
+      <span>Achocolatado 200ml</span>
+      <span class="price">R$ 3,00</span>
+      <button class="btn-add" onclick="addToCart('Achocolatado 200ml',3)">+</button>
+    </div>
 
   </div>
 
@@ -423,31 +569,98 @@ body{
 
     <div class="sub-btn" onclick="toggle('acaiTamanhos')">🥤 Tamanhos</div>
     <div id="acaiTamanhos" style="display:none;">
-      <div class="item" data-prod="Açaí 300ml" data-price="12"><span>300ml</span><span class="price">R$ 12,00</span><button class="btn-add" onclick="addToCart('Açaí 300ml',12)">+</button></div>
-      <div class="item" data-prod="Açaí 400ml" data-price="15"><span>400ml</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="addToCart('Açaí 400ml',15)">+</button></div>
-      <div class="item" data-prod="Açaí 500ml" data-price="18"><span>500ml</span><span class="price">R$ 18,00</span><button class="btn-add" onclick="addToCart('Açaí 500ml',18)">+</button></div>
+
+      <div class="item" data-prod="Açaí 300ml" data-price="12">
+        <span>300ml</span>
+        <span class="price">R$ 12,00</span>
+        <button class="btn-add" onclick="addToCart('Açaí 300ml',12)">+</button>
+      </div>
+
+      <div class="item" data-prod="Açaí 400ml" data-price="15">
+        <span>400ml</span>
+        <span class="price">R$ 15,00</span>
+        <button class="btn-add" onclick="addToCart('Açaí 400ml',15)">+</button>
+      </div>
+
+      <div class="item" data-prod="Açaí 500ml" data-price="18">
+        <span>500ml</span>
+        <span class="price">R$ 18,00</span>
+        <button class="btn-add" onclick="addToCart('Açaí 500ml',18)">+</button>
+      </div>
+
     </div>
 
     <div class="sub-btn" onclick="toggle('acaiAdicionais')">🍫 Adicionais</div>
     <div id="acaiAdicionais" style="display:none;">
-      <div class="item" data-prod="Paçoca" data-price="2"><span>Paçoca</span><span class="price">R$ 2,00</span><button class="btn-add" onclick="addToCart('Paçoca',2)">+</button></div>
-      <div class="item" data-prod="Leite em pó" data-price="4"><span>Leite em pó</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Leite em pó',4)">+</button></div>
-      <div class="item" data-prod="Granola" data-price="4"><span>Granola</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Granola',4)">+</button></div>
-      <div class="item" data-prod="Morango" data-price="4"><span>Morango</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Morango',4)">+</button></div>
-      <div class="item" data-prod="M&M" data-price="3"><span>M&M</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('M&M',3)">+</button></div>
-      <div class="item" data-prod="Ouro Branco" data-price="3"><span>Ouro Branco</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Ouro Branco',3)">+</button></div>
-      <div class="item" data-prod="Banana" data-price="2"><span>Banana</span><span class="price">R$ 2,00</span><button class="btn-add" onclick="addToCart('Banana',2)">+</button></div>
-      <div class="item" data-prod="Sonho de Valsa" data-price="3"><span>Sonho de Valsa</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Sonho de Valsa',3)">+</button></div>
-      <div class="item" data-prod="Leite Condensado" data-price="3"><span>Leite Condensado</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Leite Condensado',3)">+</button></div>
-      <div class="item" data-prod="Nutella" data-price="4"><span>Nutella</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Nutella',4)">+</button></div>
+
+      <div class="item" data-prod="Paçoca" data-price="2">
+        <span>Paçoca</span>
+        <span class="price">R$ 2,00</span>
+        <button class="btn-add" onclick="addToCart('Paçoca',2)">+</button>
+      </div>
+
+      <div class="item" data-prod="Leite em pó" data-price="4">
+        <span>Leite em pó</span>
+        <span class="price">R$ 4,00</span>
+        <button class="btn-add" onclick="addToCart('Leite em pó',4)">+</button>
+      </div>
+
+      <div class="item" data-prod="Granola" data-price="4">
+        <span>Granola</span>
+        <span class="price">R$ 4,00</span>
+        <button class="btn-add" onclick="addToCart('Granola',4)">+</button>
+      </div>
+
+      <div class="item" data-prod="Morango" data-price="4">
+        <span>Morango</span>
+        <span class="price">R$ 4,00</span>
+        <button class="btn-add" onclick="addToCart('Morango',4)">+</button>
+      </div>
+
+      <div class="item" data-prod="M&M" data-price="3">
+        <span>M&M</span>
+        <span class="price">R$ 3,00</span>
+        <button class="btn-add" onclick="addToCart('M&M',3)">+</button>
+      </div>
+
+      <div class="item" data-prod="Ouro Branco" data-price="3">
+        <span>Ouro Branco</span>
+        <span class="price">R$ 3,00</span>
+        <button class="btn-add" onclick="addToCart('Ouro Branco',3)">+</button>
+      </div>
+
+      <div class="item" data-prod="Banana" data-price="2">
+        <span>Banana</span>
+        <span class="price">R$ 2,00</span>
+        <button class="btn-add" onclick="addToCart('Banana',2)">+</button>
+      </div>
+
+      <div class="item" data-prod="Sonho de Valsa" data-price="3">
+        <span>Sonho de Valsa</span>
+        <span class="price">R$ 3,00</span>
+        <button class="btn-add" onclick="addToCart('Sonho de Valsa',3)">+</button>
+      </div>
+
+      <div class="item" data-prod="Leite Condensado" data-price="3">
+        <span>Leite Condensado</span>
+        <span class="price">R$ 3,00</span>
+        <button class="btn-add" onclick="addToCart('Leite Condensado',3)">+</button>
+      </div>
+
+      <div class="item" data-prod="Nutella" data-price="4">
+        <span>Nutella</span>
+        <span class="price">R$ 4,00</span>
+        <button class="btn-add" onclick="addToCart('Nutella',4)">+</button>
+      </div>
+
     </div>
 
   </div>
 </div>
 <!-- FECHA #app -->
 
-<!-- CARRINHO / PAGAMENTO (INVISÍVEL ATÉ TER ITEM) -->
-<div class="cart-footer" id="cartFooter" style="display:none">
+<!-- CARRINHO / PAGAMENTO -->
+<div class="cart-footer" id="cartFooter">
 
   <div id="cartItems"></div>
 
@@ -504,41 +717,55 @@ body{
   </div>
 
 </div>
+<!-- OVERLAY ADMIN (NÃO APARECE NA TELA DE PEDIDOS) -->
+<div id="adminOverlay">
 
-<!-- ====================== PAINEL ADMINISTRATIVO ====================== -->
-<div id="adminScreen" style="display:none">
+  <div class="admin-panel">
 
-  <div style="
-    background:#FFD34D;
-    padding:16px;
-    font-weight:800;
-    display:flex;
-    justify-content:space-between;
-  ">
-    <span>🔥 Painel de Ofertas</span>
+    <div style="
+      background:#FFD34D;
+      padding:16px;
+      font-weight:900;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    ">
+      <span>🔥 Painel de Ofertas</span>
 
-    <button onclick="adminScreen.style.display='none'"
-      style="background:none;border:none;font-size:18px;font-weight:bold">
-      ✕
-    </button>
-  </div>
+      <button onclick="closeAdmin()"
+        style="background:none;border:none;font-size:18px;font-weight:bold;cursor:pointer">
+        ✕
+      </button>
+    </div>
 
-  <div style="padding:16px">
-    <select id="offerProduct"></select>
-    <input id="offerPrice" placeholder="Preço promocional">
-    <input id="offerStart" type="datetime-local">
-    <input id="offerEnd" type="datetime-local">
-    <button onclick="saveOffer()">Salvar Oferta</button>
+    <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+
+      <select id="offerProduct"></select>
+
+      <input id="offerPrice" placeholder="Preço promocional">
+
+      <input id="offerStart" type="datetime-local">
+
+      <input id="offerEnd" type="datetime-local">
+
+      <button class="btn-add"
+        style="background:#5a0070"
+        onclick="saveOffer()">
+        Salvar Oferta
+      </button>
+
+    </div>
+
   </div>
 
 </div>
 <script>
-/* ====================== VARIÁVEIS GLOBAIS ====================== */
+/* ================= VARIÁVEIS GLOBAIS ================= */
 let cart = [];
 let isDelivery = false;
 let precisaTroco = false;
 
-/* ELEMENTOS DOM */
+/* ================= ELEMENTOS ================= */
 const splashScreen = document.getElementById("splashScreen");
 const app = document.getElementById("app");
 const cartFooter = document.getElementById("cartFooter");
@@ -550,21 +777,20 @@ const trocoValue = document.getElementById("trocoValue");
 const paymentMethod = document.getElementById("paymentMethod");
 const clientName = document.getElementById("clientName");
 const clientAddress = document.getElementById("clientAddress");
-const adminScreen = document.getElementById("adminScreen");
 
-/* ====================== ENTRAR NO APP ====================== */
+/* ================= ENTRAR NO APP ================= */
 function enterApp(){
   splashScreen.style.display = "none";
   app.style.display = "flex";
 }
 
-/* ====================== TOGGLE ====================== */
+/* ================= TOGGLE ================= */
 function toggle(id){
   const el = document.getElementById(id);
   el.style.display = el.style.display === "block" ? "none" : "block";
 }
 
-/* ====================== HORÁRIO ====================== */
+/* ================= HORÁRIO ================= */
 function isOpenNow(){
   const d = new Date();
   const day = d.getDay();
@@ -574,12 +800,11 @@ function isOpenNow(){
   return true;
 }
 
-/* ====================== BUSCA / ADMIN ====================== */
+/* ================= BUSCA / ADMIN ================= */
 function searchProduct(q){
   if(q.toLowerCase().trim() === "oferta"){
     if(prompt("Senha ADM") === "adm123"){
-      adminScreen.style.display = "block";
-      loadOfferProducts();
+      openAdmin();
     }else{
       alert("Senha incorreta");
     }
@@ -587,7 +812,7 @@ function searchProduct(q){
   }
 }
 
-/* ====================== CARRINHO ====================== */
+/* ================= CARRINHO ================= */
 function addToCart(name, price){
   if(!isOpenNow()){
     alert("⏰ Estamos fechados.\nTerça a Domingo das 18:30 às 22:30");
@@ -612,7 +837,9 @@ function updateCart(){
     cartItems.innerHTML += `
       <div style="display:grid;grid-template-columns:1fr auto auto;gap:8px;padding:6px 0;">
         <span>${item.name}</span>
-        <strong style="color:#5a0070">R$ ${item.price.toFixed(2).replace('.',',')}</strong>
+        <strong style="color:#5a0070">
+          R$ ${item.price.toFixed(2).replace('.',',')}
+        </strong>
         <button onclick="removeItem(${i})"
           style="background:#e60000;color:#fff;border:none;border-radius:6px;padding:2px 8px">
           ✕
@@ -625,14 +852,14 @@ function updateCart(){
   totalValue.innerText = "Total: R$ " + total.toFixed(2).replace('.',',');
 }
 
-/* ====================== ENTREGA ====================== */
+/* ================= ENTREGA ================= */
 function setDelivery(v){
   isDelivery = v;
   addressBox.style.display = v ? "block" : "none";
   updateCart();
 }
 
-/* ====================== PAGAMENTO ====================== */
+/* ================= PAGAMENTO ================= */
 function checkPayment(){
   trocoBox.style.display = paymentMethod.value === "Dinheiro" ? "block" : "none";
   trocoValue.style.display = "none";
@@ -644,7 +871,7 @@ function setTroco(v){
   trocoValue.style.display = v ? "block" : "none";
 }
 
-/* ====================== FINALIZAR PEDIDO ====================== */
+/* ================= FINALIZAR PEDIDO ================= */
 function finishOrder(){
   if(!isOpenNow()) return alert("⏰ Estamos fechados no momento");
   if(cart.length === 0) return alert("Adicione ao menos um item");
@@ -681,15 +908,28 @@ function finishOrder(){
 
   msg += "\nTotal: R$ " + total.toFixed(2).replace('.',',');
 
-  window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg));
+  window.open(
+    "https://wa.me/554991789706?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
 }
 </script>
 <script>
-/* ====================== PAINEL DE OFERTAS ====================== */
+/* ================= PAINEL DE OFERTAS ================= */
 
 let offers = JSON.parse(localStorage.getItem("offers")) || {};
 
-/* CARREGA PRODUTOS NO SELECT */
+/* ABRIR / FECHAR ADMIN */
+function openAdmin(){
+  document.getElementById("adminOverlay").style.display = "flex";
+  loadOfferProducts();
+}
+
+function closeAdmin(){
+  document.getElementById("adminOverlay").style.display = "none";
+}
+
+/* CARREGAR PRODUTOS NO SELECT */
 function loadOfferProducts(){
   const select = document.getElementById("offerProduct");
   select.innerHTML = "";
@@ -697,6 +937,7 @@ function loadOfferProducts(){
   document.querySelectorAll(".item").forEach(item=>{
     const prod = item.getAttribute("data-prod");
     const price = item.getAttribute("data-price");
+
     if(prod && price){
       const opt = document.createElement("option");
       opt.value = prod;
@@ -729,7 +970,7 @@ function saveOffer(){
   applyOffers();
 }
 
-/* APLICAR OFERTAS NO CARDÁPIO */
+/* APLICAR OFERTAS */
 function applyOffers(){
   const now = new Date();
 
@@ -738,9 +979,11 @@ function applyOffers(){
     const basePrice = parseFloat(item.getAttribute("data-price"));
     const offer = offers[prod];
     const priceEl = item.querySelector(".price");
+    const btn = item.querySelector(".btn-add");
 
     if(!offer){
       priceEl.innerHTML = "R$ " + basePrice.toFixed(2).replace('.',',');
+      btn.setAttribute("onclick","addToCart('"+prod+"',"+basePrice+")");
       return;
     }
 
@@ -749,30 +992,90 @@ function applyOffers(){
 
     if(now >= start && now <= end){
       priceEl.innerHTML = `
-        <span class="old-price">R$ ${basePrice.toFixed(2).replace('.',',')}</span>
-        <br>
+        <span class="old-price">R$ ${basePrice.toFixed(2).replace('.',',')}</span><br>
         <span>R$ ${offer.price.toFixed(2).replace('.',',')}</span>
         <span class="offer-badge">OFERTA</span>
       `;
-
-      item.querySelector(".btn-add").setAttribute(
-        "onclick",
-        "addToCart('"+prod+"',"+offer.price+")"
-      );
+      btn.setAttribute("onclick","addToCart('"+prod+"',"+offer.price+")");
     }else{
       priceEl.innerHTML = "R$ " + basePrice.toFixed(2).replace('.',',');
-      item.querySelector(".btn-add").setAttribute(
-        "onclick",
-        "addToCart('"+prod+"',"+basePrice+")"
-      );
+      btn.setAttribute("onclick","addToCart('"+prod+"',"+basePrice+")");
     }
   });
 }
 
-/* APLICA OFERTAS AO ABRIR */
+/* APLICAR OFERTAS AO CARREGAR */
 applyOffers();
 </script>
+<script>
+/* ================= AJUSTES FINAIS ================= */
+
+/* GARANTE QUE O OVERLAY ADMIN COMEÇA FECHADO */
+document.addEventListener("DOMContentLoaded", () => {
+  const admin = document.getElementById("adminOverlay");
+  if(admin){
+    admin.style.display = "none";
+  }
+});
+
+/* FECHA ADMIN AO CLICAR FORA DO PAINEL */
+document.addEventListener("click", (e) => {
+  const overlay = document.getElementById("adminOverlay");
+  const panel = document.querySelector(".admin-panel");
+
+  if(
+    overlay &&
+    overlay.style.display === "flex" &&
+    panel &&
+    !panel.contains(e.target) &&
+    !e.target.closest(".search-input")
+  ){
+    closeAdmin();
+  }
+});
+
+/* EVITA ZOOM E SELEÇÃO ACIDENTAL EM MOBILE */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+</script>
+<style>
+/* ================= OVERLAY ADMIN ================= */
+#adminOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  backdrop-filter: blur(4px);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+  animation: fadeIn .35s ease;
+}
+
+.admin-panel{
+  width:92%;
+  max-width:420px;
+  background:#fff;
+  color:#2b0033;
+  border-radius:22px;
+  box-shadow:0 20px 40px rgba(0,0,0,.45);
+  transform: translateY(30px) scale(.96);
+  animation: slideUp .35s ease forwards;
+}
+
+/* ================= ANIMAÇÕES ================= */
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+@keyframes slideUp{
+  to{
+    transform: translateY(0) scale(1);
+  }
+}
+</style>
 
 </body>
 </html>
-
