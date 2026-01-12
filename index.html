@@ -5,7 +5,7 @@
 <title>Rabika's Burguer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -28,10 +28,18 @@ body{
   justify-content:center;
   z-index:9999;
 }
+.splash-box{
+  text-align:center;
+}
+.splash-logo{
+  width:260px;
+  max-width:80%;
+  margin-bottom:28px;
+}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
   border:none;
-  padding:18px 54px;
+  padding:18px 56px;
   border-radius:44px;
   font-size:22px;
   font-weight:900;
@@ -55,7 +63,13 @@ body{
 #status{
   text-align:center;
   font-size:13px;
-  margin-bottom:10px;
+  margin-bottom:6px;
+}
+#hours{
+  text-align:center;
+  font-size:12px;
+  margin-bottom:12px;
+  color:#FFD34D;
 }
 
 /* BUSCA */
@@ -75,15 +89,25 @@ body{
   gap:8px;
 }
 .tab{
-  background:#fff;
+  background:#ffffff;
   color:#2b0033;
-  padding:12px;
+  padding:10px 6px;
   border-radius:18px;
   font-weight:800;
   text-align:center;
   cursor:pointer;
+  font-size:12px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
 }
-.tab.active{background:#FFD34D}
+.tab span{
+  font-size:18px;
+}
+.tab.active{
+  background:#FFD34D;
+  transform:scale(1.05);
+}
 
 /* BOX */
 .box{
@@ -187,22 +211,26 @@ body{
 
 <!-- SPLASH -->
 <div id="splash">
-  <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
+  <div class="splash-box">
+    <img src="logo.png" class="splash-logo">
+    <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
+  </div>
 </div>
 
 <!-- APP -->
 <div id="app">
   <div class="title">Rabika's Burguer</div>
   <div id="status"></div>
+  <div id="hours">🕒 Terça a Domingo — 18:30 às 22:30</div>
 
   <input id="search" class="search" placeholder="Pesquisar no cardápio...">
 
   <div class="tabs">
-    <div class="tab" onclick="openTab('lanches',this)">🍔</div>
-    <div class="tab" onclick="openTab('porcoes',this)">🍟</div>
-    <div class="tab" onclick="openTab('pasteis',this)">🥟</div>
-    <div class="tab" onclick="openTab('acai',this)">🍨</div>
-    <div class="tab" onclick="openTab('bebidas',this)">🥤</div>
+    <div class="tab" onclick="openTab('lanches',this)"><span>🍔</span>Lanches</div>
+    <div class="tab" onclick="openTab('porcoes',this)"><span>🍟</span>Porções</div>
+    <div class="tab" onclick="openTab('pasteis',this)"><span>🥟</span>Pastéis</div>
+    <div class="tab" onclick="openTab('acai',this)"><span>🍨</span>Açaí</div>
+    <div class="tab" onclick="openTab('bebidas',this)"><span>🥤</span>Bebidas</div>
   </div>
 
   <div id="lanches" class="box"></div>
@@ -210,63 +238,6 @@ body{
   <div id="pasteis" class="box"></div>
   <div id="acai" class="box"></div>
   <div id="bebidas" class="box"></div>
-</div>
-
-<div id="cart">
-  <div id="cartItems"></div>
-  <strong id="total"></strong>
-  <button class="btn-green" onclick="sendOrder()">Enviar Pedido</button>
-</div>
-
-<!-- ADMIN MODAL -->
-<div id="adminModal" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeAdmin()">✕</div>
-    <h2 style="text-align:center;color:#5a0070">Painel Administrativo</h2>
-    <h3>Produtos Ativos</h3>
-    <div id="adminActive"></div>
-    <h3 style="color:#b00020">Produtos Ocultos</h3>
-    <div id="adminHidden"></div>
-    <h3>➕ Novo Produto</h3>
-    <input id="newName" class="search" placeholder="Nome do produto">
-    <input id="newPrice" class="search" type="number" placeholder="Preço">
-    <select id="newCategory" class="search">
-      <option value="">Categoria</option>
-      <option value="lanches">Lanches</option>
-      <option value="adicionaisLanches">Adicionais Lanches</option>
-      <option value="porcoes">Porções</option>
-      <option value="pasteis">Pastéis</option>
-      <option value="acaiTamanhos">Açaí Tamanhos</option>
-      <option value="acaiAdicionais">Açaí Adicionais</option>
-      <option value="bebidas">Bebidas</option>
-    </select>
-    <button class="btn-green" onclick="addNewProduct()">Adicionar Produto</button>
-  </div>
-</div>
-
-<!-- OFERTAS MODAL (INALTERADO) -->
-<div id="offerModal" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeOffer()">✕</div>
-    <h2 style="text-align:center;color:#5a0070">Painel de Ofertas</h2>
-    <div id="offerList"></div>
-  </div>
-</div>
-
-<!-- RELATÓRIO MODAL (NOVO) -->
-<div id="reportModal" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeReport()">✕</div>
-    <h2 style="text-align:center;color:#5a0070">Relatório de Vendas</h2>
-
-    <div style="margin-top:14px;font-weight:600">
-      <div>Total vendido: <strong id="repTotal"></strong></div>
-      <div>Dinheiro: <strong id="repCash"></strong></div>
-      <div>Pix: <strong id="repPix"></strong></div>
-      <div>Cartão Débito: <strong id="repDebit"></strong></div>
-      <div>Cartão Crédito: <strong id="repCredit"></strong></div>
-    </div>
-  </div>
 </div>
 <script>
 /* ================= CONFIGURAÇÕES ================= */
@@ -481,19 +452,27 @@ function itemHTML(p){
   `;
 }
 
-/* ================= ABAS ================= */
+/* ================= ABAS (TOGGLE UX) ================= */
 function openTab(id, el){
-  currentTab = id;
+  const box = document.getElementById(id);
+  const isActive = box.classList.contains("active");
 
+  /* fecha todas */
   document.querySelectorAll(".box").forEach(b=>{
     b.classList.remove("active");
   });
-  document.getElementById(id).classList.add("active");
-
   document.querySelectorAll(".tab").forEach(t=>{
     t.classList.remove("active");
   });
-  el.classList.add("active");
+
+  /* se não estava ativa, abre */
+  if(!isActive){
+    box.classList.add("active");
+    el.classList.add("active");
+    currentTab = id;
+  }else{
+    currentTab = null;
+  }
 }
 
 /* ================= BUSCA + GATILHOS ================= */
@@ -600,8 +579,8 @@ function sendOrder(){
     return;
   }
 
-  /* Registro da venda (RELATÓRIO) */
-  const payment = prompt("Forma de pagamento? (dinheiro / pix / debito / credito)") || "dinheiro";
+  const payment =
+    prompt("Forma de pagamento? (dinheiro / pix / debito / credito)") || "dinheiro";
 
   let message = "🍔 Pedido Rabika's Burguer\n\n";
   let total = 0;
@@ -622,7 +601,8 @@ function sendOrder(){
   localStorage.setItem("sales", JSON.stringify(sales));
 
   const phone = "554991789706";
-  const url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+  const url =
+    "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
   window.open(url, "_blank");
 
   cart = [];
@@ -654,8 +634,10 @@ function renderAdmin(){
       const html = `
         <div style="margin-bottom:12px">
           <strong>${p.n}</strong>
-          <input type="number" class="search" value="${price}" id="price-${p.n}">
-          <button class="btn-green" onclick="savePrice('${p.n}')">Salvar</button>
+          <input type="number" class="search"
+            value="${price}" id="price-${p.n}">
+          <button class="btn-green"
+            onclick="savePrice('${p.n}')">Salvar</button>
           <button class="btn-green" style="background:#999"
             onclick="toggleProduct('${p.n}')">
             ${isHidden ? "Reativar" : "Ocultar"}
@@ -677,8 +659,11 @@ function savePrice(name){
 }
 
 function toggleProduct(name){
-  productStatus[name] = productStatus[name] === false ? true : false;
-  localStorage.setItem("productStatus", JSON.stringify(productStatus));
+  productStatus[name] =
+    productStatus[name] === false ? true : false;
+  localStorage.setItem(
+    "productStatus", JSON.stringify(productStatus)
+  );
   renderAll();
   renderAdmin();
 }
@@ -695,7 +680,9 @@ function addNewProduct(){
 
   if(!extraProducts[c]) extraProducts[c] = [];
   extraProducts[c].push({n,p});
-  localStorage.setItem("extraProducts", JSON.stringify(extraProducts));
+  localStorage.setItem(
+    "extraProducts", JSON.stringify(extraProducts)
+  );
 
   document.getElementById("newName").value = "";
   document.getElementById("newPrice").value = "";
@@ -748,8 +735,10 @@ function renderOffers(){
 
           ${
             offers[p.n]
-              ? `<button class="btn-green" style="background:#999;margin-top:6px"
-                   onclick="removeOffer('${p.n}')">Remover Oferta</button>`
+              ? `<button class="btn-green"
+                   style="background:#999;margin-top:6px"
+                   onclick="removeOffer('${p.n}')">
+                   Remover Oferta</button>`
               : ""
           }
         </div>
@@ -759,9 +748,12 @@ function renderOffers(){
 }
 
 function saveOffer(name){
-  const price = Number(document.getElementById("offerPrice-"+name).value);
-  const start = document.getElementById("offerStart-"+name).value;
-  const end = document.getElementById("offerEnd-"+name).value;
+  const price =
+    Number(document.getElementById("offerPrice-"+name).value);
+  const start =
+    document.getElementById("offerStart-"+name).value;
+  const end =
+    document.getElementById("offerEnd-"+name).value;
 
   if(!price || !start || !end){
     alert("Preencha valor e datas");
@@ -801,11 +793,16 @@ function renderReport(){
     if(s.payment === "credito") credit += s.total;
   });
 
-  document.getElementById("repTotal").innerText = "R$ " + total.toFixed(2).replace(".",",");
-  document.getElementById("repCash").innerText = "R$ " + cash.toFixed(2).replace(".",",");
-  document.getElementById("repPix").innerText = "R$ " + pix.toFixed(2).replace(".",",");
-  document.getElementById("repDebit").innerText = "R$ " + debit.toFixed(2).replace(".",",");
-  document.getElementById("repCredit").innerText = "R$ " + credit.toFixed(2).replace(".",",");
+  document.getElementById("repTotal").innerText =
+    "R$ " + total.toFixed(2).replace(".",",");
+  document.getElementById("repCash").innerText =
+    "R$ " + cash.toFixed(2).replace(".",",");
+  document.getElementById("repPix").innerText =
+    "R$ " + pix.toFixed(2).replace(".",",");
+  document.getElementById("repDebit").innerText =
+    "R$ " + debit.toFixed(2).replace(".",",");
+  document.getElementById("repCredit").innerText =
+    "R$ " + credit.toFixed(2).replace(".",",");
 }
 </script>
 
