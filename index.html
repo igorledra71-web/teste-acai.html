@@ -24,7 +24,7 @@ body{
  -webkit-tap-highlight-color:transparent;
 }
 
-/* SPLASH */
+/* ================= SPLASH ================= */
 #splash{
  position:fixed;
  inset:0;
@@ -34,24 +34,35 @@ body{
  justify-content:center;
  z-index:9999;
 }
-.splash-box{text-align:center}
-.splash-logo{
- width:90%;
- max-width:340px;
- margin-bottom:40px;
+
+.splash-box{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ gap:42px;
+ width:100%;
+ padding:20px;
 }
+
+.splash-logo{
+ width:85%;
+ max-width:360px;
+}
+
 .splash-btn{
  background:linear-gradient(135deg,#FFD34D,#FFB000);
  border:none;
- padding:18px 60px;
- border-radius:40px;
+ padding:18px 64px;
+ border-radius:44px;
  font-size:22px;
  font-weight:900;
  color:#2b0033;
  cursor:pointer;
 }
 
-/* APP */
+/* ================= APP ================= */
 #app{
  width:100%;
  max-width:420px;
@@ -97,6 +108,7 @@ body{
  gap:10px;
  margin-bottom:14px;
 }
+
 .tab{
  background:#fff;
  color:#2b0033;
@@ -107,6 +119,7 @@ body{
  cursor:pointer;
  font-size:14px;
 }
+
 .tab.active{
  background:#FFD34D;
 }
@@ -120,6 +133,7 @@ body{
  margin-bottom:18px;
  display:none;
 }
+
 .box.active{display:block}
 
 .section{
@@ -130,6 +144,7 @@ body{
  text-align:center;
 }
 
+/* ITEM */
 .item{
  display:grid;
  grid-template-columns:1fr auto auto;
@@ -138,17 +153,21 @@ body{
  border-bottom:1px dashed #ddd;
  align-items:center;
 }
+
 .item-name{font-weight:600}
+
 .item-price{
  font-weight:900;
  color:#5a0070;
  text-align:right;
 }
+
 .old{
  text-decoration:line-through;
  color:#999;
  font-size:12px;
 }
+
 .offer-badge{
  background:#ff0033;
  color:#fff;
@@ -157,6 +176,7 @@ body{
  border-radius:8px;
  margin-left:6px;
 }
+
 .btn-add{
  background:#5a0070;
  color:#fff;
@@ -167,7 +187,7 @@ body{
  cursor:pointer;
 }
 
-/* CARRINHO */
+/* ================= CARRINHO ================= */
 #cart{
  position:fixed;
  bottom:0;
@@ -182,17 +202,24 @@ body{
  display:none;
  box-shadow:0 -20px 40px rgba(0,0,0,.4);
 }
+
 .cart-item{
  font-size:14px;
  font-weight:700;
  margin-bottom:8px;
 }
+
+.cart-item strong{
+ color:#5a0070;
+}
+
 .total{
  font-size:18px;
  font-weight:900;
  text-align:right;
  margin-top:10px;
 }
+
 .finish{
  background:#25D366;
  color:#fff;
@@ -204,7 +231,7 @@ body{
  cursor:pointer;
 }
 
-/* MODAL */
+/* ================= MODAL ================= */
 .modal{
  position:fixed;
  inset:0;
@@ -214,6 +241,7 @@ body{
  justify-content:center;
  z-index:10000;
 }
+
 .modal-box{
  background:#fff;
  color:#2b0033;
@@ -224,6 +252,7 @@ body{
  max-height:90vh;
  overflow:auto;
 }
+
 .modal-title{
  font-weight:900;
  margin-bottom:10px;
@@ -235,7 +264,7 @@ body{
 
 <body>
 
-<!-- SPLASH -->
+<!-- ================= SPLASH ================= -->
 <div id="splash">
  <div class="splash-box">
   <img src="logo.png" class="splash-logo">
@@ -243,6 +272,7 @@ body{
  </div>
 </div>
 
+<!-- ================= APP ================= -->
 <div id="app">
  <div class="title">Rabika's Burguer</div>
  <div id="closedBanner">🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30</div>
@@ -327,7 +357,7 @@ body{
   </div>
 </div>
 
-<!-- ================= MODAL ADMIN ================= -->
+<!-- ================= MODAL ADMIN OFERTAS ================= -->
 <div id="adminModal" class="modal">
   <div class="modal-box">
     <div class="modal-title">Painel de Ofertas</div>
@@ -343,6 +373,45 @@ body{
     <div class="finish"
          style="background:#999"
          onclick="closeAdmin()">Fechar</div>
+  </div>
+</div>
+
+<!-- ================= MODAL ADMIN PREÇOS / PRODUTOS ================= -->
+<div id="priceAdminModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-title">Painel de Preços & Cardápio</div>
+
+    <p style="text-align:center;font-size:13px;margin-bottom:12px">
+      Altere preços, oculte produtos ou adicione novos itens ao cardápio
+    </p>
+
+    <div id="priceAdminList">
+      <!-- preenchido via JavaScript -->
+    </div>
+
+    <hr style="margin:16px 0">
+
+    <div class="modal-title" style="font-size:16px">➕ Novo Produto</div>
+
+    <input id="newName" class="search" placeholder="Nome do produto">
+    <input id="newPrice" class="search" type="number" placeholder="Preço">
+
+    <select id="newCategory" class="search">
+      <option value="">Categoria</option>
+      <option value="lanches">Lanches</option>
+      <option value="adicionaisLanches">Adicionais de Lanches</option>
+      <option value="porcoes">Porções</option>
+      <option value="pasteis">Pastéis</option>
+      <option value="acaiTamanhos">Açaí - Tamanhos</option>
+      <option value="acaiAdicionais">Açaí - Adicionais</option>
+      <option value="bebidas">Bebidas</option>
+    </select>
+
+    <div class="finish" onclick="addNewProduct()">Adicionar Produto</div>
+
+    <div class="finish"
+         style="background:#999"
+         onclick="closePriceAdmin()">Fechar</div>
   </div>
 </div>
 
@@ -363,24 +432,35 @@ body{
 <script>
 /* ================= CONFIG ================= */
 const FREIGHT = 8;
+const ADMIN_PASSWORD = "1234";
+
 let isDelivery = false;
 let cart = [];
 let currentTab = "lanches";
+
 let offers = JSON.parse(localStorage.getItem("offers")) || {};
-let sales = JSON.parse(localStorage.getItem("sales")) || [];
-let disableTarget = null;
+let sales = JSON.parse(localStorage.getItem("sales")) || {};
+
+// produtos ativos/inativos
+let productStatus = JSON.parse(localStorage.getItem("productStatus")) || {};
+
+// produtos customizados (preços alterados)
+let customPrices = JSON.parse(localStorage.getItem("customPrices")) || {};
+
+// novos produtos adicionados
+let extraProducts = JSON.parse(localStorage.getItem("extraProducts")) || {};
 
 /* ================= HORÁRIO ================= */
 function isOpen(){
   const d = new Date();
-  const day = d.getDay(); // 1 = segunda
+  const day = d.getDay();
   const h = d.getHours() + d.getMinutes()/60;
   if(day === 1) return false;
   if(h < 18.5 || h > 22.5) return false;
   return true;
 }
 
-/* ================= PRODUTOS ================= */
+/* ================= PRODUTOS BASE ================= */
 const products = {
   lanches:[
     {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
@@ -440,109 +520,123 @@ function start(){
 
 /* ================= STATUS ================= */
 function updateOpenStatus(){
-  const open=isOpen();
-  document.getElementById("closedBanner").style.display=open?"none":"block";
+  document.getElementById("closedBanner").style.display = isOpen() ? "none" : "block";
 }
 
 /* ================= TABS ================= */
 function openTab(id,el){
-  currentTab=id;
+  currentTab = id;
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   el.classList.add("active");
   document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
 
-/* ================= RENDER ================= */
-function renderAll(){
-  renderCategory("lanches",products.lanches,products.adicionaisLanches);
-  renderCategory("porcoes",products.porcoes);
-  renderCategory("pasteis",products.pasteis);
-  renderAcai();
-  renderCategory("bebidas",products.bebidas);
-  renderAdmin();
-}
-
-function renderCategory(id,list,extra){
-  const box=document.getElementById(id);
-  box.innerHTML="";
-  list.forEach(p=>box.innerHTML+=itemHTML(p,id));
-  if(extra){
-    box.innerHTML+=`<div class="section">➕ Adicionais</div>`;
-    extra.forEach(p=>box.innerHTML+=itemHTML(p,id));
-  }
-}
-
-function renderAcai(){
-  const box=document.getElementById("acai");
-  box.innerHTML=`<div class="section">🥤 Tamanhos</div>`;
-  products.acaiTamanhos.forEach(p=>box.innerHTML+=itemHTML(p,"acai"));
-  box.innerHTML+=`<div class="section">🍫 Adicionais</div>`;
-  products.acaiAdicionais.forEach(p=>box.innerHTML+=itemHTML(p,"acai"));
-}
-
-/* ================= OFERTAS ================= */
-function getOffer(p){
-  const o=offers[p.n];
-  if(!o) return null;
-  const now=new Date();
-  if(now>=new Date(o.start)&&now<=new Date(o.end)) return o;
-  delete offers[p.n];
-  localStorage.setItem("offers",JSON.stringify(offers));
-  return null;
-}
-
-function itemHTML(p,tab){
-  const o=getOffer(p);
-  let priceHTML=`R$ ${p.p.toFixed(2).replace(".",",")}`;
-  if(o){
-    priceHTML=`<span class="old">R$ ${p.p.toFixed(2).replace(".",",")}</span><br>
-    <b>R$ ${o.price.toFixed(2).replace(".",",")}</b>
-    <span class="offer-badge">OFERTA</span>`;
-  }
-  return `
-  <div class="item" data-name="${p.n.toLowerCase()}" data-tab="${tab}">
-    <span class="item-name">${p.n}</span>
-    <span class="item-price">${priceHTML}</span>
-    <button class="btn-add" onclick="addItem('${p.n}',${o?o.price:p.p})">+</button>
-  </div>`;
-}
-
-/* ================= BUSCA UNIFICADA ================= */
+/* ================= BUSCA + COMANDOS SECRETOS ================= */
 document.getElementById("search").addEventListener("input",e=>{
-  const v=e.target.value.toLowerCase().trim();
+  const v = e.target.value.toLowerCase().trim();
 
-  if(v===""){
+  if(v === "oferta"){
+    const s = prompt("Senha do administrador:");
+    if(s === ADMIN_PASSWORD) openAdmin();
+    e.target.value = "";
+    return;
+  }
+
+  if(v === "preço"){
+    const s = prompt("Senha do administrador:");
+    if(s === ADMIN_PASSWORD) openPriceAdmin();
+    e.target.value = "";
+    return;
+  }
+
+  if(v === ""){
     document.querySelectorAll(".item").forEach(i=>i.style.display="grid");
     return;
   }
 
-  if(v==="oferta"){
-    const senha=prompt("Senha do administrador:");
-    if(senha==="1234") openAdmin();
-    e.target.value="";
-    return;
-  }
-
-  if(v==="relatorio"){
-    gerarRelatorio();
-    e.target.value="";
-    return;
-  }
-
-  let foundTab=null;
   document.querySelectorAll(".item").forEach(i=>{
-    const match=i.dataset.name.includes(v);
-    i.style.display=match?"grid":"none";
-    if(match&&!foundTab) foundTab=i.dataset.tab;
+    i.style.display = i.dataset.name.includes(v) ? "grid" : "none";
   });
-
-  if(foundTab){
-    const tabBtn=[...document.querySelectorAll(".tab")]
-      .find(t=>t.innerText.toLowerCase().includes(foundTab));
-    if(tabBtn) openTab(foundTab,tabBtn);
-  }
 });
+
+/* ================= RENDER ================= */
+function getAllProducts(){
+  let all = JSON.parse(JSON.stringify(products));
+  Object.keys(extraProducts).forEach(cat=>{
+    all[cat] = all[cat].concat(extraProducts[cat]);
+  });
+  return all;
+}
+
+function renderAll(){
+  const all = getAllProducts();
+  renderCategory("lanches", all.lanches, all.adicionaisLanches);
+  renderCategory("porcoes", all.porcoes);
+  renderCategory("pasteis", all.pasteis);
+  renderAcai(all);
+  renderCategory("bebidas", all.bebidas);
+  renderAdmin();
+  renderPriceAdmin();
+}
+
+function getPrice(p){
+  return customPrices[p.n] ?? p.p;
+}
+
+function renderCategory(id,list,extra){
+  const box = document.getElementById(id);
+  box.innerHTML = "";
+  list.forEach(p=>{
+    if(productStatus[p.n] === false) return;
+    const price = getPrice(p);
+    box.innerHTML += `
+      <div class="item" data-name="${p.n.toLowerCase()}">
+        <span class="item-name">${p.n}</span>
+        <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
+        <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
+      </div>`;
+  });
+  if(extra){
+    box.innerHTML += `<div class="section">➕ Adicionais</div>`;
+    extra.forEach(p=>{
+      if(productStatus[p.n] === false) return;
+      const price = getPrice(p);
+      box.innerHTML += `
+        <div class="item" data-name="${p.n.toLowerCase()}">
+          <span class="item-name">${p.n}</span>
+          <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
+          <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
+        </div>`;
+    });
+  }
+}
+
+function renderAcai(all){
+  const box = document.getElementById("acai");
+  box.innerHTML = `<div class="section">🥤 Tamanhos</div>`;
+  all.acaiTamanhos.forEach(p=>{
+    if(productStatus[p.n] === false) return;
+    const price = getPrice(p);
+    box.innerHTML += `
+      <div class="item" data-name="${p.n.toLowerCase()}">
+        <span class="item-name">${p.n}</span>
+        <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
+        <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
+      </div>`;
+  });
+  box.innerHTML += `<div class="section">🍫 Adicionais</div>`;
+  all.acaiAdicionais.forEach(p=>{
+    if(productStatus[p.n] === false) return;
+    const price = getPrice(p);
+    box.innerHTML += `
+      <div class="item" data-name="${p.n.toLowerCase()}">
+        <span class="item-name">${p.n}</span>
+        <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
+        <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
+      </div>`;
+  });
+}
 
 /* ================= CARRINHO ================= */
 function addItem(n,p){
@@ -555,24 +649,24 @@ function addItem(n,p){
 }
 
 function updateCart(){
-  const box=document.getElementById("cartItems");
-  box.innerHTML="";
-  let total=0;
+  const box = document.getElementById("cartItems");
+  box.innerHTML = "";
+  let total = 0;
 
   cart.forEach((i,idx)=>{
-    total+=i.p;
-    box.innerHTML+=`
+    total += i.p;
+    box.innerHTML += `
       <div class="cart-item">
         <strong>${i.n}</strong> — R$ ${i.p.toFixed(2).replace(".",",")}
         <button onclick="removeItem(${idx})">✕</button>
       </div>`;
   });
 
-  if(isDelivery) total+=FREIGHT;
-  document.getElementById("total").innerText=
-   "Total: R$ "+total.toFixed(2).replace(".",",");
+  if(isDelivery) total += FREIGHT;
+  document.getElementById("total").innerText =
+    "Total: R$ " + total.toFixed(2).replace(".",",");
 
-  document.getElementById("cart").style.display=cart.length?"block":"none";
+  document.getElementById("cart").style.display = cart.length ? "block" : "none";
 }
 
 function removeItem(i){
@@ -581,94 +675,92 @@ function removeItem(i){
 }
 
 function setDelivery(v){
-  isDelivery=v;
-  document.getElementById("address").style.display=v?"block":"none";
+  isDelivery = v;
+  document.getElementById("address").style.display = v ? "block" : "none";
   updateCart();
 }
 
-/* ================= ADMIN ================= */
+/* ================= ADMIN OFERTAS ================= */
 function openAdmin(){
   document.getElementById("adminModal").style.display="flex";
 }
-
 function closeAdmin(){
   document.getElementById("adminModal").style.display="none";
 }
 
-function renderAdmin(){
-  const box=document.getElementById("adminList");
-  box.innerHTML="";
+/* ================= ADMIN PREÇOS ================= */
+function openPriceAdmin(){
+  document.getElementById("priceAdminModal").style.display="flex";
+}
+function closePriceAdmin(){
+  document.getElementById("priceAdminModal").style.display="none";
+}
 
-  Object.values(products).flat().forEach(p=>{
-    if(!p.n) return;
-    const o=offers[p.n];
+function renderPriceAdmin(){
+  const box = document.getElementById("priceAdminList");
+  box.innerHTML = "";
+  const all = getAllProducts();
 
-    box.innerHTML+=`
-      <div style="margin-bottom:20px">
-        <strong>${p.n}</strong>
+  Object.keys(all).forEach(cat=>{
+    all[cat].forEach(p=>{
+      box.innerHTML += `
+        <div style="margin-bottom:14px">
+          <strong>${p.n}</strong>
 
-        <input class="search" type="number"
-         id="price-${p.n}" placeholder="Preço promocional"
-         value="${o?o.price:""}">
+          <input class="search" type="number"
+            value="${getPrice(p)}"
+            onchange="updatePrice('${p.n}',this.value)">
 
-        <input class="search" type="date"
-         id="start-${p.n}" value="${o?o.start:""}">
-
-        <input class="search" type="date"
-         id="end-${p.n}" value="${o?o.end:""}">
-
-        <div style="display:flex;gap:8px">
-          <div class="finish"
-           onclick="saveOffer('${p.n}',${p.p})">
-           Salvar Oferta
-          </div>
-
-          ${o?`
-          <div class="finish"
-           style="background:#b00020"
-           onclick="askDisable('${p.n}')">
-           Desativar
-          </div>`:""}
-        </div>
-      </div>`;
+          <label style="font-size:13px">
+            <input type="checkbox"
+              ${productStatus[p.n]===false?"":"checked"}
+              onchange="toggleProduct('${p.n}',this.checked)">
+            Produto ativo
+          </label>
+        </div>`;
+    });
   });
 }
 
-function saveOffer(name,original){
-  const price=document.getElementById("price-"+name).value;
-  const start=document.getElementById("start-"+name).value;
-  const end=document.getElementById("end-"+name).value;
+function updatePrice(name,val){
+  customPrices[name] = parseFloat(val);
+  localStorage.setItem("customPrices",JSON.stringify(customPrices));
+  renderAll();
+}
 
-  if(!price||!start||!end){
-    alert("Preencha preço, início e fim");
+function toggleProduct(name,state){
+  productStatus[name] = state;
+  localStorage.setItem("productStatus",JSON.stringify(productStatus));
+  renderAll();
+}
+
+function addNewProduct(){
+  const n = document.getElementById("newName").value;
+  const p = parseFloat(document.getElementById("newPrice").value);
+  const c = document.getElementById("newCategory").value;
+
+  if(!n||!p||!c){
+    alert("Preencha todos os campos");
     return;
   }
 
-  offers[name]={price:parseFloat(price),start,end};
-  localStorage.setItem("offers",JSON.stringify(offers));
-  alert("Oferta salva");
+  extraProducts[c] = extraProducts[c] || [];
+  extraProducts[c].push({n,p});
+  localStorage.setItem("extraProducts",JSON.stringify(extraProducts));
+
+  document.getElementById("newName").value="";
+  document.getElementById("newPrice").value="";
+  document.getElementById("newCategory").value="";
+
   renderAll();
 }
 
-function askDisable(name){
-  disableTarget=name;
-  document.getElementById("confirmDisableModal").style.display="flex";
-}
-
-function confirmDisableOffer(){
-  delete offers[disableTarget];
-  localStorage.setItem("offers",JSON.stringify(offers));
-  document.getElementById("confirmDisableModal").style.display="none";
-  renderAll();
-}
-
-function closeDisableConfirm(){
-  document.getElementById("confirmDisableModal").style.display="none";
-}
-
-function closeClosedModal(){
-  document.getElementById("closedModal").style.display="none";
-}
+/* ================= FECHAR MODAL AO CLICAR FORA ================= */
+document.querySelectorAll(".modal").forEach(m=>{
+  m.addEventListener("click",e=>{
+    if(e.target===m) m.style.display="none";
+  });
+});
 </script>
 <script>
 /* ================= BEBIDA SIM / NÃO ================= */
@@ -681,39 +773,40 @@ function tryFinishOrder(){
   );
 
   if(temLanche && !temBebida){
-    document.getElementById("drinkModal").style.display="flex";
+    document.getElementById("drinkModal").style.display = "flex";
   }else{
     finishOrder();
   }
 }
 
 function openDrinks(){
-  document.getElementById("drinkModal").style.display="none";
-  const btn=[...document.querySelectorAll(".tab")]
-    .find(t=>t.innerText.includes("Bebidas"));
-  if(btn) openTab("bebidas",btn);
+  document.getElementById("drinkModal").style.display = "none";
+  const btn = [...document.querySelectorAll(".tab")]
+    .find(t => t.innerText.includes("Bebidas"));
+  if(btn) openTab("bebidas", btn);
 }
 
 function skipDrinks(){
-  document.getElementById("drinkModal").style.display="none";
+  document.getElementById("drinkModal").style.display = "none";
   finishOrder();
 }
 
 /* ================= RELATÓRIO ================= */
 function gerarRelatorio(){
-  if(!sales.length){
+  const salesArr = Array.isArray(sales) ? sales : [];
+  if(!salesArr.length){
     alert("Nenhuma venda registrada");
     return;
   }
 
   let total=0,dinheiro=0,pix=0,credito=0,debito=0;
 
-  sales.forEach(s=>{
-    total+=s.total;
-    if(s.pay==="Dinheiro") dinheiro+=s.total;
-    if(s.pay==="Pix") pix+=s.total;
-    if(s.pay==="Cartão de Crédito") credito+=s.total;
-    if(s.pay==="Cartão de Débito") debito+=s.total;
+  salesArr.forEach(s=>{
+    total += s.total;
+    if(s.pay === "Dinheiro") dinheiro += s.total;
+    if(s.pay === "Pix") pix += s.total;
+    if(s.pay === "Cartão de Crédito") credito += s.total;
+    if(s.pay === "Cartão de Débito") debito += s.total;
   });
 
   alert(
@@ -733,61 +826,61 @@ function finishOrder(){
     return;
   }
 
-  const name=document.getElementById("name").value;
-  const pay=document.getElementById("payment").value;
-  const addr=document.getElementById("address").value;
+  const name = document.getElementById("name").value;
+  const pay  = document.getElementById("payment").value;
+  const addr = document.getElementById("address").value;
 
-  if(!name||!pay||(isDelivery&&!addr)){
+  if(!name || !pay || (isDelivery && !addr)){
     alert("Preencha todos os dados");
     return;
   }
 
-  let msg="🍔 Pedido Rabika's Burguer\n\n";
-  msg+="Cliente: "+name+"\n";
-  msg+="Pagamento: "+pay+"\n";
-  msg+=isDelivery
-    ?"Entrega\nEndereço: "+addr+"\n\n"
-    :"Retirada no local\n\n";
+  let msg = "🍔 Pedido Rabika's Burguer\n\n";
+  msg += "Cliente: " + name + "\n";
+  msg += "Pagamento: " + pay + "\n";
+  msg += isDelivery
+    ? "Entrega\nEndereço: " + addr + "\n\n"
+    : "Retirada no local\n\n";
 
-  let total=0;
+  let total = 0;
   cart.forEach(i=>{
-    msg+="- "+i.n+" R$ "+i.p.toFixed(2).replace(".",",")+"\n";
-    total+=i.p;
+    msg += "- " + i.n + " R$ " + i.p.toFixed(2).replace(".",",") + "\n";
+    total += i.p;
   });
 
   if(isDelivery){
-    total+=FREIGHT;
-    msg+="Entrega: R$ 8,00\n";
+    total += FREIGHT;
+    msg += "Entrega: R$ 8,00\n";
   }
 
-  msg+="\nTotal: R$ "+total.toFixed(2).replace(".",",");
+  msg += "\nTotal: R$ " + total.toFixed(2).replace(".",",");
 
   /* SALVA VENDA */
   sales.push({
-    date:new Date().toISOString(),
+    date: new Date().toISOString(),
     total,
     pay
   });
-  localStorage.setItem("sales",JSON.stringify(sales));
+  localStorage.setItem("sales", JSON.stringify(sales));
 
   /* ENVIA WHATSAPP */
   window.open(
-    "https://wa.me/554991789706?text="+encodeURIComponent(msg),
+    "https://wa.me/554991789706?text=" + encodeURIComponent(msg),
     "_blank"
   );
 
   /* LIMPA PEDIDO */
-  cart=[];
+  cart = [];
   updateCart();
-  document.getElementById("name").value="";
-  document.getElementById("address").value="";
-  document.getElementById("payment").value="";
+  document.getElementById("name").value = "";
+  document.getElementById("address").value = "";
+  document.getElementById("payment").value = "";
 }
 
 /* ================= FECHAR MODAIS AO CLICAR FORA ================= */
 document.querySelectorAll(".modal").forEach(m=>{
   m.addEventListener("click",e=>{
-    if(e.target===m) m.style.display="none";
+    if(e.target === m) m.style.display = "none";
   });
 });
 </script>
