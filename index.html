@@ -3,316 +3,260 @@
 <head>
 <meta charset="UTF-8">
 <title>Rabika's Burguer</title>
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-
+*{margin:0;padding:0;box-sizing:border-box}
 body{
- font-family:'Poppins',sans-serif;
- background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
- color:#fff;
- display:flex;
- justify-content:center;
- -webkit-tap-highlight-color:transparent;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(180deg,#05002e,#020018);
+  color:#fff;
+  display:flex;
+  justify-content:center;
 }
 
-/* ================= SPLASH ================= */
+/* SPLASH */
 #splash{
- position:fixed;
- inset:0;
- background:linear-gradient(180deg,#05002e,#020018);
- display:flex;
- align-items:center;
- justify-content:center;
- z-index:9999;
+  position:fixed;inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  background:linear-gradient(180deg,#05002e,#020018);
 }
-
 .splash-box{
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
- text-align:center;
- gap:42px;
- width:100%;
- padding:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:32px;
 }
-
 .splash-logo{
- width:85%;
- max-width:360px;
+  width:85vw;
+  max-width:360px;
 }
-
 .splash-btn{
- background:linear-gradient(135deg,#FFD34D,#FFB000);
- border:none;
- padding:18px 64px;
- border-radius:44px;
- font-size:22px;
- font-weight:900;
- color:#2b0033;
- cursor:pointer;
+  background:linear-gradient(135deg,#FFD34D,#FFB000);
+  border:none;
+  padding:18px 56px;
+  border-radius:50px;
+  font-size:22px;
+  font-weight:900;
+  color:#2b0033;
+  cursor:pointer;
+  box-shadow:0 14px 30px rgba(0,0,0,.45);
 }
 
-/* ================= APP ================= */
+/* APP */
 #app{
- width:100%;
- max-width:420px;
- display:none;
- flex-direction:column;
- padding:14px 14px 340px;
+  width:100%;
+  max-width:420px;
+  padding:16px 16px 360px;
+  display:none;
+  flex-direction:column;
 }
 
-/* TOPO */
-.title{
- text-align:center;
- font-size:30px;
- font-weight:900;
- color:#FFD34D;
- margin-bottom:8px;
+/* HEADER */
+.header-title{
+  text-align:center;
+  font-size:30px;
+  font-weight:900;
+  color:#FFD34D;
+  margin-bottom:8px;
 }
 
+/* FECHADO */
 #closedBanner{
- background:#b00020;
- padding:12px;
- border-radius:18px;
- font-size:14px;
- font-weight:700;
- text-align:center;
- margin-bottom:10px;
- display:none;
+  background:#b00020;
+  border-radius:18px;
+  padding:12px;
+  text-align:center;
+  font-weight:700;
+  font-size:14px;
+  margin-bottom:12px;
 }
 
-/* BUSCA */
+/* SEARCH */
 .search{
- width:100%;
- padding:14px 16px;
- border-radius:22px;
- border:none;
- font-size:15px;
- margin-bottom:12px;
+  width:100%;
+  padding:14px 18px;
+  border-radius:22px;
+  border:none;
+  font-size:15px;
+  margin-bottom:14px;
 }
 
 /* TABS */
 .tabs{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:10px;
- margin-bottom:14px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-bottom:16px;
 }
-
 .tab{
- background:#fff;
- color:#2b0033;
- padding:14px 8px;
- border-radius:22px;
- font-weight:800;
- text-align:center;
- cursor:pointer;
- font-size:14px;
+  background:#fff;
+  color:#2b0033;
+  padding:14px 10px;
+  border-radius:22px;
+  font-weight:800;
+  text-align:center;
+  cursor:pointer;
 }
-
 .tab.active{
- background:#FFD34D;
+  background:#FFD34D;
 }
 
-/* BOX */
+/* CONTENT */
 .box{
- background:#fff;
- color:#2b0033;
- border-radius:28px;
- padding:18px;
- margin-bottom:18px;
- display:none;
+  background:#fff;
+  color:#2b0033;
+  border-radius:28px;
+  padding:18px;
+  display:none;
 }
-
 .box.active{display:block}
 
 .section{
- font-weight:900;
- color:#5a0070;
- margin:18px 0 10px;
- font-size:14px;
- text-align:center;
+  font-weight:900;
+  color:#5a0070;
+  margin:18px 0 10px;
+  text-align:center;
 }
 
-/* ITEM */
 .item{
- display:grid;
- grid-template-columns:1fr auto auto;
- gap:10px;
- padding:12px 0;
- border-bottom:1px dashed #ddd;
- align-items:center;
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px dashed #ddd;
+  align-items:center;
 }
-
+.item:last-child{border:none}
 .item-name{font-weight:600}
-
-.item-price{
- font-weight:900;
- color:#5a0070;
- text-align:right;
-}
-
-.old{
- text-decoration:line-through;
- color:#999;
- font-size:12px;
-}
-
-.offer-badge{
- background:#ff0033;
- color:#fff;
- padding:2px 6px;
- font-size:10px;
- border-radius:8px;
- margin-left:6px;
-}
-
+.item-price{font-weight:900;color:#5a0070}
 .btn-add{
- background:#5a0070;
- color:#fff;
- border:none;
- border-radius:14px;
- padding:6px 14px;
- font-weight:900;
- cursor:pointer;
+  background:#5a0070;
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  padding:6px 14px;
+  font-weight:900;
+  cursor:pointer;
 }
 
-/* ================= CARRINHO ================= */
+/* CART */
 #cart{
- position:fixed;
- bottom:0;
- left:50%;
- transform:translateX(-50%);
- width:100%;
- max-width:420px;
- background:#fff;
- color:#2b0033;
- padding:18px;
- border-radius:28px 28px 0 0;
- display:none;
- box-shadow:0 -20px 40px rgba(0,0,0,.4);
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  color:#2b0033;
+  padding:18px;
+  border-radius:28px 28px 0 0;
+  display:none;
 }
-
 .cart-item{
- font-size:14px;
- font-weight:700;
- margin-bottom:8px;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:6px;
 }
+.cart-item strong{color:#5a0070}
 
-.cart-item strong{
- color:#5a0070;
-}
-
-.total{
- font-size:18px;
- font-weight:900;
- text-align:right;
- margin-top:10px;
-}
-
-.finish{
- background:#25D366;
- color:#fff;
- padding:14px;
- border-radius:24px;
- font-weight:900;
- text-align:center;
- margin-top:12px;
- cursor:pointer;
-}
-
-/* ================= MODAL ================= */
+/* MODAL BASE */
 .modal{
- position:fixed;
- inset:0;
- background:rgba(0,0,0,.6);
- display:none;
- align-items:center;
- justify-content:center;
- z-index:10000;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
 }
-
 .modal-box{
- background:#fff;
- color:#2b0033;
- width:92%;
- max-width:400px;
- border-radius:26px;
- padding:20px;
- max-height:90vh;
- overflow:auto;
+  background:#fff;
+  color:#2b0033;
+  width:92%;
+  max-width:420px;
+  border-radius:26px;
+  padding:20px;
+  max-height:90vh;
+  overflow:auto;
+}
+.modal-title{
+  font-weight:900;
+  color:#5a0070;
+  text-align:center;
+  margin-bottom:10px;
 }
 
-.modal-title{
- font-weight:900;
- margin-bottom:10px;
- color:#5a0070;
- text-align:center;
+/* BUTTONS */
+.btn-green{
+  background:#25D366;
+  color:#fff;
+  padding:16px;
+  border-radius:24px;
+  font-weight:900;
+  text-align:center;
+  cursor:pointer;
+}
+.btn-gray{
+  background:#aaa;
+  color:#fff;
+  padding:14px;
+  border-radius:24px;
+  text-align:center;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= SPLASH ================= -->
+<!-- SPLASH -->
 <div id="splash">
- <div class="splash-box">
-  <img src="logo.png" class="splash-logo">
-  <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
- </div>
+  <div class="splash-box">
+    <img src="logo.png" class="splash-logo">
+    <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
+  </div>
 </div>
 
-<!-- ================= APP ================= -->
+<!-- APP -->
 <div id="app">
- <div class="title">Rabika's Burguer</div>
- <div id="closedBanner">🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30</div>
+  <div class="header-title">Rabika's Burguer</div>
+  <div id="closedBanner">🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30</div>
 
- <input id="search" class="search" placeholder="Pesquisar no cardápio...">
+  <input id="search" class="search" placeholder="Pesquisar no cardápio...">
 
- <div class="tabs">
-  <div class="tab active" onclick="openTab('lanches',this)">🍔 Lanches</div>
-  <div class="tab" onclick="openTab('porcoes',this)">🍟 Porções</div>
-  <div class="tab" onclick="openTab('pasteis',this)">🥟 Pastéis</div>
-  <div class="tab" onclick="openTab('acai',this)">🍨 Açaí</div>
-  <div class="tab" onclick="openTab('bebidas',this)">🥤 Bebidas</div>
- </div>
-
- <div id="lanches" class="box active"></div>
- <div id="porcoes" class="box"></div>
- <div id="pasteis" class="box"></div>
- <div id="acai" class="box"></div>
- <div id="bebidas" class="box"></div>
-</div>
-<!-- ================= CARRINHO ================= -->
-<div id="cart">
-  <div id="cartItems"></div>
-
-  <div style="display:flex;justify-content:space-around;margin:10px 0;font-weight:700">
-    <label>
-      <input type="radio" name="del" checked onclick="setDelivery(false)">
-      Retirada
-    </label>
-    <label>
-      <input type="radio" name="del" onclick="setDelivery(true)">
-      Entrega (+R$8)
-    </label>
+  <div class="tabs">
+    <div class="tab active" onclick="openTab('lanches',this)">🍔 Lanches</div>
+    <div class="tab" onclick="openTab('porcoes',this)">🍟 Porções</div>
+    <div class="tab" onclick="openTab('pasteis',this)">🥟 Pastéis</div>
+    <div class="tab" onclick="openTab('acai',this)">🍨 Açaí</div>
+    <div class="tab" onclick="openTab('bebidas',this)">🥤 Bebidas</div>
   </div>
 
+  <div id="lanches" class="box active"></div>
+  <div id="porcoes" class="box"></div>
+  <div id="pasteis" class="box"></div>
+  <div id="acai" class="box"></div>
+  <div id="bebidas" class="box"></div>
+</div>
+
+<!-- CARRINHO -->
+<div id="cart">
+  <div id="cartItems"></div>
+  <div style="margin-top:10px">
+    <label><input type="radio" name="del" checked onchange="setDelivery(false)"> Retirada</label>
+    <label style="margin-left:12px"><input type="radio" name="del" onchange="setDelivery(true)"> Entrega (+R$8)</label>
+  </div>
   <input id="name" class="search" placeholder="Seu nome">
-
-  <input id="address" class="search" placeholder="Endereço"
-         style="display:none">
-
+  <input id="address" class="search" placeholder="Endereço" style="display:none">
   <select id="payment" class="search">
     <option value="">Forma de pagamento</option>
     <option>Dinheiro</option>
@@ -320,113 +264,92 @@ body{
     <option>Cartão de Crédito</option>
     <option>Cartão de Débito</option>
   </select>
-
-  <div id="total" class="total">Total: R$ 0,00</div>
-
-  <div class="finish" onclick="tryFinishOrder()">
-    Finalizar Pedido
-  </div>
+  <div id="total" style="font-weight:900;text-align:right">Total: R$ 0,00</div>
+  <div class="btn-green" onclick="tryFinishOrder()">Finalizar Pedido</div>
 </div>
-
-<!-- ================= MODAL FECHADO ================= -->
+<!-- MODAL FECHADO -->
 <div id="closedModal" class="modal">
   <div class="modal-box">
-    <div class="modal-title">🔴 Estamos fechados</div>
-    <p style="text-align:center;font-size:14px">
-      Atendimento:<br>
-      <strong>Terça a Domingo</strong><br>
-      <strong>18:30 às 22:30</strong>
+    <div class="modal-title">Estamos fechados</div>
+    <p style="text-align:center;font-weight:600">
+      Atendimento de terça a domingo<br>
+      das <strong>18:30 às 22:30</strong>
     </p>
-    <div class="finish" onclick="closeClosedModal()">Entendi</div>
+    <div class="btn-gray" onclick="this.parentElement.parentElement.style.display='none'">
+      Entendi
+    </div>
   </div>
 </div>
 
-<!-- ================= MODAL BEBIDAS ================= -->
+<!-- MODAL BEBIDAS -->
 <div id="drinkModal" class="modal">
   <div class="modal-box">
-    <div class="modal-title">🥤 Vai querer bebida?</div>
-    <p style="text-align:center;font-size:14px;margin-bottom:10px">
-      Você adicionou um lanche.<br>
-      Deseja adicionar bebidas ao pedido?
+    <div class="modal-title">Vai querer bebida?</div>
+    <p style="text-align:center;margin-bottom:14px">
+      Que tal aproveitar uma bebida para acompanhar seu lanche? 🥤
     </p>
-
-    <div class="finish" onclick="openDrinks()">SIM</div>
-    <div class="finish"
-         style="background:#ccc;color:#333"
-         onclick="skipDrinks()">NÃO</div>
+    <div class="btn-green" onclick="openDrinks()">Sim, quero ver</div>
+    <div class="btn-gray" style="margin-top:10px" onclick="skipDrinks()">Não, continuar</div>
   </div>
 </div>
 
-<!-- ================= MODAL ADMIN OFERTAS ================= -->
+<!-- MODAL ADMIN OFERTAS -->
 <div id="adminModal" class="modal">
   <div class="modal-box">
     <div class="modal-title">Painel de Ofertas</div>
-
-    <p style="text-align:center;font-size:13px;margin-bottom:12px">
-      Defina o período da oferta e o preço promocional
+    <p style="text-align:center;font-size:14px;margin-bottom:10px">
+      Defina preço promocional e período da oferta
     </p>
 
-    <div id="adminList">
-      <!-- preenchido via JavaScript -->
-    </div>
+    <div id="adminOfferList"></div>
 
-    <div class="finish"
-         style="background:#999"
-         onclick="closeAdmin()">Fechar</div>
+    <div class="btn-gray" onclick="closeAdmin()" style="margin-top:16px">
+      Fechar
+    </div>
   </div>
 </div>
 
-<!-- ================= MODAL ADMIN PREÇOS / PRODUTOS ================= -->
+<!-- MODAL ADMIN PREÇOS & CARDÁPIO -->
 <div id="priceAdminModal" class="modal">
   <div class="modal-box">
     <div class="modal-title">Painel de Preços & Cardápio</div>
-
-    <p style="text-align:center;font-size:13px;margin-bottom:12px">
-      Altere preços, oculte produtos ou adicione novos itens ao cardápio
+    <p style="text-align:center;font-size:14px;margin-bottom:14px">
+      Gerencie produtos ativos, ocultos ou adicione novos itens
     </p>
 
-    <div id="priceAdminList">
-      <!-- preenchido via JavaScript -->
+    <!-- PRODUTOS ATIVOS -->
+    <div class="section">Produtos Ativos</div>
+    <div id="priceAdminActive"></div>
+
+    <!-- PRODUTOS OCULTOS -->
+    <div class="section" style="margin-top:20px;color:#b00020">
+      Produtos Ocultos
     </div>
+    <div id="priceAdminHidden"></div>
 
-    <hr style="margin:16px 0">
-
-    <div class="modal-title" style="font-size:16px">➕ Novo Produto</div>
+    <!-- NOVO PRODUTO -->
+    <div class="section" style="margin-top:20px">➕ Novo Produto</div>
 
     <input id="newName" class="search" placeholder="Nome do produto">
     <input id="newPrice" class="search" type="number" placeholder="Preço">
-
     <select id="newCategory" class="search">
       <option value="">Categoria</option>
       <option value="lanches">Lanches</option>
-      <option value="adicionaisLanches">Adicionais de Lanches</option>
+      <option value="adicionaisLanches">Adicionais</option>
       <option value="porcoes">Porções</option>
       <option value="pasteis">Pastéis</option>
-      <option value="acaiTamanhos">Açaí - Tamanhos</option>
-      <option value="acaiAdicionais">Açaí - Adicionais</option>
+      <option value="acaiTamanhos">Açaí (Tamanhos)</option>
+      <option value="acaiAdicionais">Açaí (Adicionais)</option>
       <option value="bebidas">Bebidas</option>
     </select>
 
-    <div class="finish" onclick="addNewProduct()">Adicionar Produto</div>
+    <div class="btn-green" onclick="addNewProduct()" style="margin-top:10px">
+      Adicionar Produto
+    </div>
 
-    <div class="finish"
-         style="background:#999"
-         onclick="closePriceAdmin()">Fechar</div>
-  </div>
-</div>
-
-<!-- ================= CONFIRMA DESATIVAR OFERTA ================= -->
-<div id="confirmDisableModal" class="modal">
-  <div class="modal-box">
-    <div class="modal-title">Desativar oferta?</div>
-    <p style="text-align:center;font-size:14px">
-      Tem certeza que deseja desativar esta oferta agora?
-    </p>
-
-    <div class="finish" onclick="confirmDisableOffer()">SIM</div>
-    <div class="finish"
-         style="background:#ccc;color:#333"
-         onclick="closeDisableConfirm()">Cancelar</div>
+    <div class="btn-gray" onclick="closePriceAdmin()" style="margin-top:14px">
+      Fechar
+    </div>
   </div>
 </div>
 <script>
@@ -438,30 +361,24 @@ let isDelivery = false;
 let cart = [];
 let currentTab = "lanches";
 
-let offers = JSON.parse(localStorage.getItem("offers")) || {};
-let sales = JSON.parse(localStorage.getItem("sales")) || {};
-
-// produtos ativos/inativos
-let productStatus = JSON.parse(localStorage.getItem("productStatus")) || {};
-
-// produtos customizados (preços alterados)
+/* STORAGE */
 let customPrices = JSON.parse(localStorage.getItem("customPrices")) || {};
-
-// novos produtos adicionados
+let productStatus = JSON.parse(localStorage.getItem("productStatus")) || {};
 let extraProducts = JSON.parse(localStorage.getItem("extraProducts")) || {};
+let sales = JSON.parse(localStorage.getItem("sales")) || [];
 
 /* ================= HORÁRIO ================= */
 function isOpen(){
-  const d = new Date();
-  const day = d.getDay();
-  const h = d.getHours() + d.getMinutes()/60;
-  if(day === 1) return false;
-  if(h < 18.5 || h > 22.5) return false;
+  const d=new Date();
+  const day=d.getDay();
+  const h=d.getHours()+d.getMinutes()/60;
+  if(day===1) return false;
+  if(h<18.5||h>22.5) return false;
   return true;
 }
 
 /* ================= PRODUTOS BASE ================= */
-const products = {
+const products={
   lanches:[
     {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
     {n:"X-Frango Cremoso",p:20},{n:"X-Bacon",p:25},{n:"X-Calabresa",p:25},
@@ -515,127 +432,92 @@ function start(){
   document.getElementById("splash").style.display="none";
   document.getElementById("app").style.display="flex";
   renderAll();
-  updateOpenStatus();
-}
-
-/* ================= STATUS ================= */
-function updateOpenStatus(){
-  document.getElementById("closedBanner").style.display = isOpen() ? "none" : "block";
 }
 
 /* ================= TABS ================= */
 function openTab(id,el){
-  currentTab = id;
+  currentTab=id;
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   el.classList.add("active");
   document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
 
-/* ================= BUSCA + COMANDOS SECRETOS ================= */
+/* ================= BUSCA GLOBAL ================= */
 document.getElementById("search").addEventListener("input",e=>{
-  const v = e.target.value.toLowerCase().trim();
+  const v=e.target.value.toLowerCase().trim();
 
-  if(v === "oferta"){
-    const s = prompt("Senha do administrador:");
-    if(s === ADMIN_PASSWORD) openAdmin();
-    e.target.value = "";
-    return;
-  }
-
-  if(v === "preço"){
-    const s = prompt("Senha do administrador:");
-    if(s === ADMIN_PASSWORD) openPriceAdmin();
-    e.target.value = "";
-    return;
-  }
-
-  if(v === ""){
-    document.querySelectorAll(".item").forEach(i=>i.style.display="grid");
+  if(v==="preço"){
+    const s=prompt("Senha do administrador:");
+    if(s===ADMIN_PASSWORD) openPriceAdmin();
+    e.target.value="";
     return;
   }
 
   document.querySelectorAll(".item").forEach(i=>{
-    i.style.display = i.dataset.name.includes(v) ? "grid" : "none";
+    i.style.display=i.dataset.name.includes(v)?"grid":"none";
   });
 });
 
-/* ================= RENDER ================= */
+/* ================= PRODUTOS COM STATUS ================= */
 function getAllProducts(){
-  let all = JSON.parse(JSON.stringify(products));
-  Object.keys(extraProducts).forEach(cat=>{
-    all[cat] = all[cat].concat(extraProducts[cat]);
+  let all=JSON.parse(JSON.stringify(products));
+  Object.keys(extraProducts).forEach(c=>{
+    all[c]=all[c].concat(extraProducts[c]);
   });
   return all;
-}
-
-function renderAll(){
-  const all = getAllProducts();
-  renderCategory("lanches", all.lanches, all.adicionaisLanches);
-  renderCategory("porcoes", all.porcoes);
-  renderCategory("pasteis", all.pasteis);
-  renderAcai(all);
-  renderCategory("bebidas", all.bebidas);
-  renderAdmin();
-  renderPriceAdmin();
 }
 
 function getPrice(p){
   return customPrices[p.n] ?? p.p;
 }
 
+function renderAll(){
+  const all=getAllProducts();
+  renderCategory("lanches",all.lanches,all.adicionaisLanches);
+  renderCategory("porcoes",all.porcoes);
+  renderCategory("pasteis",all.pasteis);
+  renderAcai(all);
+  renderCategory("bebidas",all.bebidas);
+  renderPriceAdmin();
+}
+
 function renderCategory(id,list,extra){
-  const box = document.getElementById(id);
-  box.innerHTML = "";
+  const box=document.getElementById(id);
+  box.innerHTML="";
   list.forEach(p=>{
-    if(productStatus[p.n] === false) return;
-    const price = getPrice(p);
-    box.innerHTML += `
-      <div class="item" data-name="${p.n.toLowerCase()}">
-        <span class="item-name">${p.n}</span>
-        <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
-        <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
-      </div>`;
+    if(productStatus[p.n]===false) return;
+    box.innerHTML+=itemHTML(p);
   });
   if(extra){
-    box.innerHTML += `<div class="section">➕ Adicionais</div>`;
+    box.innerHTML+=`<div class="section">➕ Adicionais</div>`;
     extra.forEach(p=>{
-      if(productStatus[p.n] === false) return;
-      const price = getPrice(p);
-      box.innerHTML += `
-        <div class="item" data-name="${p.n.toLowerCase()}">
-          <span class="item-name">${p.n}</span>
-          <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
-          <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
-        </div>`;
+      if(productStatus[p.n]===false) return;
+      box.innerHTML+=itemHTML(p);
     });
   }
 }
 
 function renderAcai(all){
-  const box = document.getElementById("acai");
-  box.innerHTML = `<div class="section">🥤 Tamanhos</div>`;
+  const box=document.getElementById("acai");
+  box.innerHTML='<div class="section">🥤 Tamanhos</div>';
   all.acaiTamanhos.forEach(p=>{
-    if(productStatus[p.n] === false) return;
-    const price = getPrice(p);
-    box.innerHTML += `
-      <div class="item" data-name="${p.n.toLowerCase()}">
-        <span class="item-name">${p.n}</span>
-        <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
-        <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
-      </div>`;
+    if(productStatus[p.n]!==false) box.innerHTML+=itemHTML(p);
   });
-  box.innerHTML += `<div class="section">🍫 Adicionais</div>`;
+  box.innerHTML+='<div class="section">🍫 Adicionais</div>';
   all.acaiAdicionais.forEach(p=>{
-    if(productStatus[p.n] === false) return;
-    const price = getPrice(p);
-    box.innerHTML += `
-      <div class="item" data-name="${p.n.toLowerCase()}">
-        <span class="item-name">${p.n}</span>
-        <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
-        <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
-      </div>`;
+    if(productStatus[p.n]!==false) box.innerHTML+=itemHTML(p);
   });
+}
+
+function itemHTML(p){
+  const price=getPrice(p);
+  return `
+    <div class="item" data-name="${p.n.toLowerCase()}">
+      <span class="item-name">${p.n}</span>
+      <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
+      <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
+    </div>`;
 }
 
 /* ================= CARRINHO ================= */
@@ -649,24 +531,20 @@ function addItem(n,p){
 }
 
 function updateCart(){
-  const box = document.getElementById("cartItems");
-  box.innerHTML = "";
-  let total = 0;
-
+  const box=document.getElementById("cartItems");
+  box.innerHTML="";
+  let total=0;
   cart.forEach((i,idx)=>{
-    total += i.p;
-    box.innerHTML += `
+    total+=i.p;
+    box.innerHTML+=`
       <div class="cart-item">
-        <strong>${i.n}</strong> — R$ ${i.p.toFixed(2).replace(".",",")}
+        <strong>${i.n}</strong> R$ ${i.p.toFixed(2).replace(".",",")}
         <button onclick="removeItem(${idx})">✕</button>
       </div>`;
   });
-
-  if(isDelivery) total += FREIGHT;
-  document.getElementById("total").innerText =
-    "Total: R$ " + total.toFixed(2).replace(".",",");
-
-  document.getElementById("cart").style.display = cart.length ? "block" : "none";
+  if(isDelivery) total+=FREIGHT;
+  document.getElementById("total").innerText="Total: R$ "+total.toFixed(2).replace(".",",");
+  document.getElementById("cart").style.display=cart.length?"block":"none";
 }
 
 function removeItem(i){
@@ -675,20 +553,12 @@ function removeItem(i){
 }
 
 function setDelivery(v){
-  isDelivery = v;
-  document.getElementById("address").style.display = v ? "block" : "none";
+  isDelivery=v;
+  document.getElementById("address").style.display=v?"block":"none";
   updateCart();
 }
 
-/* ================= ADMIN OFERTAS ================= */
-function openAdmin(){
-  document.getElementById("adminModal").style.display="flex";
-}
-function closeAdmin(){
-  document.getElementById("adminModal").style.display="none";
-}
-
-/* ================= ADMIN PREÇOS ================= */
+/* ================= PAINEL PREÇOS ================= */
 function openPriceAdmin(){
   document.getElementById("priceAdminModal").style.display="flex";
 }
@@ -697,70 +567,56 @@ function closePriceAdmin(){
 }
 
 function renderPriceAdmin(){
-  const box = document.getElementById("priceAdminList");
-  box.innerHTML = "";
-  const all = getAllProducts();
+  const active=document.getElementById("priceAdminActive");
+  const hidden=document.getElementById("priceAdminHidden");
+  active.innerHTML=""; hidden.innerHTML="";
 
+  const all=getAllProducts();
   Object.keys(all).forEach(cat=>{
     all[cat].forEach(p=>{
-      box.innerHTML += `
-        <div style="margin-bottom:14px">
+      const price=getPrice(p);
+      const line=`
+        <div style="margin-bottom:10px">
           <strong>${p.n}</strong>
-
-          <input class="search" type="number"
-            value="${getPrice(p)}"
+          <input type="number" class="search" value="${price}"
             onchange="updatePrice('${p.n}',this.value)">
-
-          <label style="font-size:13px">
-            <input type="checkbox"
-              ${productStatus[p.n]===false?"":"checked"}
-              onchange="toggleProduct('${p.n}',this.checked)">
-            Produto ativo
-          </label>
+          <button class="btn-gray" onclick="toggleProduct('${p.n}')">
+            ${productStatus[p.n]===false?"Reativar":"Ocultar"}
+          </button>
         </div>`;
+      if(productStatus[p.n]===false) hidden.innerHTML+=line;
+      else active.innerHTML+=line;
     });
   });
 }
 
 function updatePrice(name,val){
-  customPrices[name] = parseFloat(val);
+  customPrices[name]=parseFloat(val);
   localStorage.setItem("customPrices",JSON.stringify(customPrices));
   renderAll();
 }
 
-function toggleProduct(name,state){
-  productStatus[name] = state;
+function toggleProduct(name){
+  productStatus[name]=productStatus[name]===false?true:false;
   localStorage.setItem("productStatus",JSON.stringify(productStatus));
   renderAll();
 }
 
 function addNewProduct(){
-  const n = document.getElementById("newName").value;
-  const p = parseFloat(document.getElementById("newPrice").value);
-  const c = document.getElementById("newCategory").value;
+  const n=document.getElementById("newName").value;
+  const p=parseFloat(document.getElementById("newPrice").value);
+  const c=document.getElementById("newCategory").value;
+  if(!n||!p||!c) return alert("Preencha todos os campos");
 
-  if(!n||!p||!c){
-    alert("Preencha todos os campos");
-    return;
-  }
-
-  extraProducts[c] = extraProducts[c] || [];
+  extraProducts[c]=extraProducts[c]||[];
   extraProducts[c].push({n,p});
   localStorage.setItem("extraProducts",JSON.stringify(extraProducts));
 
   document.getElementById("newName").value="";
   document.getElementById("newPrice").value="";
   document.getElementById("newCategory").value="";
-
   renderAll();
 }
-
-/* ================= FECHAR MODAL AO CLICAR FORA ================= */
-document.querySelectorAll(".modal").forEach(m=>{
-  m.addEventListener("click",e=>{
-    if(e.target===m) m.style.display="none";
-  });
-});
 </script>
 <script>
 /* ================= BEBIDA SIM / NÃO ================= */
@@ -793,20 +649,19 @@ function skipDrinks(){
 
 /* ================= RELATÓRIO ================= */
 function gerarRelatorio(){
-  const salesArr = Array.isArray(sales) ? sales : [];
-  if(!salesArr.length){
+  if(!sales.length){
     alert("Nenhuma venda registrada");
     return;
   }
 
   let total=0,dinheiro=0,pix=0,credito=0,debito=0;
 
-  salesArr.forEach(s=>{
+  sales.forEach(s=>{
     total += s.total;
-    if(s.pay === "Dinheiro") dinheiro += s.total;
-    if(s.pay === "Pix") pix += s.total;
-    if(s.pay === "Cartão de Crédito") credito += s.total;
-    if(s.pay === "Cartão de Débito") debito += s.total;
+    if(s.pay==="Dinheiro") dinheiro+=s.total;
+    if(s.pay==="Pix") pix+=s.total;
+    if(s.pay==="Cartão de Crédito") credito+=s.total;
+    if(s.pay==="Cartão de Débito") debito+=s.total;
   });
 
   alert(
@@ -857,30 +712,30 @@ function finishOrder(){
 
   /* SALVA VENDA */
   sales.push({
-    date: new Date().toISOString(),
+    date:new Date().toISOString(),
     total,
     pay
   });
-  localStorage.setItem("sales", JSON.stringify(sales));
+  localStorage.setItem("sales",JSON.stringify(sales));
 
   /* ENVIA WHATSAPP */
   window.open(
-    "https://wa.me/554991789706?text=" + encodeURIComponent(msg),
+    "https://wa.me/554991789706?text="+encodeURIComponent(msg),
     "_blank"
   );
 
   /* LIMPA PEDIDO */
-  cart = [];
+  cart=[];
   updateCart();
-  document.getElementById("name").value = "";
-  document.getElementById("address").value = "";
-  document.getElementById("payment").value = "";
+  document.getElementById("name").value="";
+  document.getElementById("address").value="";
+  document.getElementById("payment").value="";
 }
 
 /* ================= FECHAR MODAIS AO CLICAR FORA ================= */
 document.querySelectorAll(".modal").forEach(m=>{
   m.addEventListener("click",e=>{
-    if(e.target === m) m.style.display = "none";
+    if(e.target===m) m.style.display="none";
   });
 });
 </script>
