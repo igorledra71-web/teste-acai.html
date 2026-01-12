@@ -36,13 +36,14 @@ body{
   font-size:22px;
   font-weight:900;
   color:#2b0033;
+  cursor:pointer;
 }
 
 /* APP */
 #app{
   width:100%;
   max-width:420px;
-  padding:16px 16px 300px;
+  padding:16px 16px 320px;
   display:none;
 }
 .title{
@@ -114,6 +115,13 @@ body{
   font-weight:900;
 }
 
+/* SEÇÕES */
+.section{
+  font-weight:900;
+  margin:10px 0;
+  color:#5a0070;
+}
+
 /* CARRINHO */
 #cart{
   position:fixed;
@@ -142,10 +150,35 @@ body{
   font-weight:900;
   width:100%;
 }
-.section{
+
+/* MODAL ADMIN */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
+}
+.modal-box{
+  background:#fff;
+  color:#2b0033;
+  width:92%;
+  max-width:420px;
+  border-radius:26px;
+  padding:20px;
+  max-height:85vh;
+  overflow-y:auto;
+  position:relative;
+}
+.modal-close{
+  position:absolute;
+  top:10px;
+  right:14px;
+  font-size:22px;
   font-weight:900;
-  margin:10px 0;
-  color:#5a0070;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -172,7 +205,6 @@ body{
     <div class="tab" onclick="openTab('bebidas',this)">🥤</div>
   </div>
 
-  <!-- abas iniciam fechadas -->
   <div id="lanches" class="box"></div>
   <div id="porcoes" class="box"></div>
   <div id="pasteis" class="box"></div>
@@ -185,26 +217,61 @@ body{
   <strong id="total"></strong>
   <button class="btn-green" onclick="sendOrder()">Enviar Pedido</button>
 </div>
+
+<!-- ADMIN MODAL -->
+<div id="adminModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeAdmin()">✕</div>
+
+    <h2 style="text-align:center;color:#5a0070">Painel Administrativo</h2>
+
+    <h3>Produtos Ativos</h3>
+    <div id="adminActive"></div>
+
+    <h3 style="color:#b00020">Produtos Ocultos</h3>
+    <div id="adminHidden"></div>
+
+    <h3>➕ Novo Produto</h3>
+    <input id="newName" class="search" placeholder="Nome do produto">
+    <input id="newPrice" class="search" type="number" placeholder="Preço">
+    <select id="newCategory" class="search">
+      <option value="">Categoria</option>
+      <option value="lanches">Lanches</option>
+      <option value="adicionaisLanches">Adicionais Lanches</option>
+      <option value="porcoes">Porções</option>
+      <option value="pasteis">Pastéis</option>
+      <option value="acaiTamanhos">Açaí Tamanhos</option>
+      <option value="acaiAdicionais">Açaí Adicionais</option>
+      <option value="bebidas">Bebidas</option>
+    </select>
+    <button class="btn-green" onclick="addNewProduct()">Adicionar Produto</button>
+  </div>
+</div>
 <script>
-/* ================= CONFIGURAÇÕES GERAIS ================= */
+/* ================= CONFIGURAÇÕES ================= */
 const ADMIN_PASSWORD = "1234";
 const FREIGHT = 8;
 
 let cart = [];
 let currentTab = null;
 
-/* ================= REGRAS DE NEGÓCIO (HORÁRIO) ================= */
+/* ================= STORAGE ADMIN ================= */
+let customPrices = JSON.parse(localStorage.getItem("customPrices")) || {};
+let productStatus = JSON.parse(localStorage.getItem("productStatus")) || {};
+let extraProducts = JSON.parse(localStorage.getItem("extraProducts")) || {};
+
+/* ================= HORÁRIO DE FUNCIONAMENTO ================= */
 function isOpen(){
   const d = new Date();
   const day = d.getDay(); // 0 domingo | 1 segunda
-  const h = d.getHours() + d.getMinutes() / 60;
+  const h = d.getHours() + d.getMinutes()/60;
 
   if(day === 1) return false;          // segunda fechado
   if(h < 18.5 || h > 22.5) return false;
   return true;
 }
 
-/* ================= BASE DE PRODUTOS (COMPLETA) ================= */
+/* ================= PRODUTOS BASE (ORIGINAIS) ================= */
 const products = {
   lanches:[
     {n:"X-Salada",p:17},
@@ -293,9 +360,23 @@ const products = {
     {n:"Achocolatado 200ml",p:3}
   ]
 };
+
+/* ================= UNIFICAÇÃO DE PRODUTOS ================= */
+function getAllProducts(){
+  let all = JSON.parse(JSON.stringify(products));
+  Object.keys(extraProducts).forEach(cat=>{
+    all[cat] = (all[cat] || []).concat(extraProducts[cat]);
+  });
+  return all;
+}
+
+/* ================= PREÇO FINAL ================= */
+function getPrice(p){
+  return customPrices[p.n] ?? p.p;
+}
 </script>
 <script>
-/* ================= START (BLOCO 1) ================= */
+/* ================= START ================= */
 function start(){
   document.getElementById("splash").style.display = "none";
   document.getElementById("app").style.display = "block";
@@ -306,13 +387,14 @@ function start(){
   renderAll();
 }
 
-/* ================= RENDERIZAÇÃO GERAL (BLOCO 3) ================= */
+/* ================= RENDER GERAL ================= */
 function renderAll(){
-  renderCategory("lanches", products.lanches, products.adicionaisLanches);
-  renderCategory("porcoes", products.porcoes);
-  renderCategory("pasteis", products.pasteis);
-  renderAcai();
-  renderCategory("bebidas", products.bebidas);
+  const all = getAllProducts();
+  renderCategory("lanches", all.lanches, all.adicionaisLanches);
+  renderCategory("porcoes", all.porcoes);
+  renderCategory("pasteis", all.pasteis);
+  renderAcai(all);
+  renderCategory("bebidas", all.bebidas);
 }
 
 /* ================= RENDER CATEGORIA ================= */
@@ -321,62 +403,76 @@ function renderCategory(id, list, extras){
   box.innerHTML = "";
 
   list.forEach(p=>{
+    if(productStatus[p.n] === false) return;
     box.innerHTML += itemHTML(p);
   });
 
   if(extras){
     box.innerHTML += `<div class="section">➕ Adicionais</div>`;
     extras.forEach(p=>{
-      box.innerHTML += itemHTML(p);
+      if(productStatus[p.n] !== false)
+        box.innerHTML += itemHTML(p);
     });
   }
 }
 
 /* ================= RENDER AÇAÍ ================= */
-function renderAcai(){
+function renderAcai(all){
   const box = document.getElementById("acai");
   box.innerHTML = "";
 
   box.innerHTML += `<div class="section">🥤 Tamanhos</div>`;
-  products.acaiTamanhos.forEach(p=>{
-    box.innerHTML += itemHTML(p);
+  all.acaiTamanhos.forEach(p=>{
+    if(productStatus[p.n] !== false)
+      box.innerHTML += itemHTML(p);
   });
 
   box.innerHTML += `<div class="section">🍫 Adicionais</div>`;
-  products.acaiAdicionais.forEach(p=>{
-    box.innerHTML += itemHTML(p);
+  all.acaiAdicionais.forEach(p=>{
+    if(productStatus[p.n] !== false)
+      box.innerHTML += itemHTML(p);
   });
 }
 
-/* ================= ITEM HTML ================= */
+/* ================= ITEM ================= */
 function itemHTML(p){
+  const price = getPrice(p);
   return `
     <div class="item" data-name="${p.n.toLowerCase()}">
       <span>${p.n}</span>
-      <span class="item-price">R$ ${p.p.toFixed(2).replace(".",",")}</span>
-      <button class="btn-add" onclick="addItem('${p.n}',${p.p})">+</button>
+      <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
+      <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
     </div>
   `;
 }
 
-/* ================= NAVEGAÇÃO POR ABAS (BLOCO 2) ================= */
+/* ================= TABS ================= */
 function openTab(id, el){
   currentTab = id;
 
-  document.querySelectorAll(".box").forEach(b=>{
-    b.classList.remove("active");
-  });
+  document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 
-  document.querySelectorAll(".tab").forEach(t=>{
-    t.classList.remove("active");
-  });
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   el.classList.add("active");
 }
 
-/* ================= BUSCA GLOBAL (BLOCO 4) ================= */
+/* ================= BUSCA GLOBAL + ADMIN ================= */
 document.getElementById("search").addEventListener("input", function(){
   const v = this.value.toLowerCase().trim();
+
+  /* atalhos ADMIN */
+  if(v === "admin" || v === "preço" || v === "precos"){
+    const s = prompt("Senha do administrador:");
+    if(s === ADMIN_PASSWORD){
+      openAdmin();
+    }else{
+      alert("Senha incorreta");
+    }
+    this.value = "";
+    return;
+  }
+
   let foundTab = null;
 
   document.querySelectorAll(".item").forEach(item=>{
@@ -402,7 +498,7 @@ document.getElementById("search").addEventListener("input", function(){
 });
 </script>
 <script>
-/* ================= CARRINHO (BLOCO 5) ================= */
+/* ================= CARRINHO ================= */
 function addItem(name, price){
   if(!isOpen()){
     alert("Estamos fechados no momento.\nTerça a Domingo das 18:30 às 22:30");
@@ -417,7 +513,7 @@ function updateCart(){
   box.innerHTML = "";
   let totalValue = 0;
 
-  cart.forEach((item, index)=>{
+  cart.forEach((item)=>{
     totalValue += item.price;
     box.innerHTML += `
       <div class="cart-item">
@@ -434,7 +530,7 @@ function updateCart(){
     cart.length ? "block" : "none";
 }
 
-/* ================= PEDIDO / WHATSAPP (BLOCO 7) ================= */
+/* ================= WHATSAPP ================= */
 function sendOrder(){
   if(!cart.length){
     alert("Seu carrinho está vazio");
@@ -454,6 +550,82 @@ function sendOrder(){
   const phone = "554991789706";
   const url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
   window.open(url, "_blank");
+}
+
+/* ================= BLOCO 8 — ADMIN ================= */
+function openAdmin(){
+  document.getElementById("adminModal").style.display = "flex";
+  renderAdmin();
+}
+function closeAdmin(){
+  document.getElementById("adminModal").style.display = "none";
+}
+
+function renderAdmin(){
+  const active = document.getElementById("adminActive");
+  const hidden = document.getElementById("adminHidden");
+  active.innerHTML = "";
+  hidden.innerHTML = "";
+
+  const all = getAllProducts();
+
+  Object.keys(all).forEach(cat=>{
+    all[cat].forEach(p=>{
+      const price = getPrice(p);
+      const isHidden = productStatus[p.n] === false;
+
+      const html = `
+        <div style="margin-bottom:12px">
+          <strong>${p.n}</strong>
+          <input type="number" class="search" value="${price}" id="price-${p.n}">
+          <button class="btn-green" onclick="savePrice('${p.n}')">Salvar</button>
+          <button class="btn-green" style="background:#999"
+            onclick="toggleProduct('${p.n}')">
+            ${isHidden ? "Reativar" : "Ocultar"}
+          </button>
+        </div>
+      `;
+
+      if(isHidden) hidden.innerHTML += html;
+      else active.innerHTML += html;
+    });
+  });
+}
+
+function savePrice(name){
+  const v = document.getElementById("price-"+name).value;
+  customPrices[name] = Number(v);
+  localStorage.setItem("customPrices", JSON.stringify(customPrices));
+  renderAll();
+}
+
+function toggleProduct(name){
+  productStatus[name] = productStatus[name] === false ? true : false;
+  localStorage.setItem("productStatus", JSON.stringify(productStatus));
+  renderAll();
+  renderAdmin();
+}
+
+function addNewProduct(){
+  const n = document.getElementById("newName").value.trim();
+  const p = Number(document.getElementById("newPrice").value);
+  const c = document.getElementById("newCategory").value;
+
+  if(!n || !p || !c){
+    alert("Preencha todos os campos");
+    return;
+  }
+
+  if(!extraProducts[c]) extraProducts[c] = [];
+  extraProducts[c].push({n,p});
+  localStorage.setItem("extraProducts", JSON.stringify(extraProducts));
+
+  document.getElementById("newName").value = "";
+  document.getElementById("newPrice").value = "";
+  document.getElementById("newCategory").value = "";
+
+  renderAll();
+  renderAdmin();
 }
 </script>
 
