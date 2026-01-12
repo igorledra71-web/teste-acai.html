@@ -31,16 +31,12 @@ body{
   z-index:9999;
 }
 .splash-box{text-align:center}
-.splash-logo{
-  width:90%;
-  max-width:360px;
-  margin-bottom:32px;
-}
+.splash-logo{width:90%;max-width:340px;margin-bottom:32px}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
   border:none;
-  padding:18px 56px;
-  border-radius:46px;
+  padding:18px 54px;
+  border-radius:44px;
   font-size:22px;
   font-weight:900;
   color:#2b0033;
@@ -51,11 +47,9 @@ body{
 #app{
   width:100%;
   max-width:420px;
-  padding:16px 16px 340px;
+  padding:14px 14px 320px;
   display:none;
 }
-
-/* TOPO */
 .title{
   text-align:center;
   font-size:30px;
@@ -66,7 +60,6 @@ body{
 
 /* FECHADO */
 #closedBanner{
-  display:none;
   background:#b00020;
   color:#fff;
   text-align:center;
@@ -74,7 +67,8 @@ body{
   border-radius:18px;
   font-size:13px;
   font-weight:600;
-  margin-bottom:12px;
+  margin-bottom:10px;
+  display:none;
 }
 
 /* BUSCA */
@@ -92,7 +86,7 @@ body{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
 .tab{
   background:#fff;
@@ -135,17 +129,6 @@ body{
   border-radius:14px;
   padding:6px 14px;
   font-weight:900;
-}
-
-/* SUB */
-.sub-btn{
-  margin-top:14px;
-  background:#FFD34D;
-  color:#2b0033;
-  padding:12px;
-  border-radius:22px;
-  font-weight:900;
-  text-align:center;
   cursor:pointer;
 }
 
@@ -162,7 +145,6 @@ body{
   padding:18px;
   border-radius:28px 28px 0 0;
   display:none;
-  z-index:999;
 }
 .cart-item{
   display:flex;
@@ -170,21 +152,6 @@ body{
   margin-bottom:6px;
 }
 .cart-item strong{color:#5a0070}
-.total{
-  text-align:right;
-  font-size:18px;
-  font-weight:900;
-}
-.finish{
-  background:#25D366;
-  color:#fff;
-  padding:16px;
-  border-radius:26px;
-  font-weight:900;
-  text-align:center;
-  margin-top:12px;
-  cursor:pointer;
-}
 </style>
 </head>
 
@@ -201,9 +168,7 @@ body{
 <!-- APP -->
 <div id="app">
   <div class="title">Rabika's Burguer</div>
-  <div id="closedBanner">
-    🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30
-  </div>
+  <div id="closedBanner">🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30</div>
 
   <input
     id="search"
@@ -226,16 +191,27 @@ body{
   <div id="acai" class="box"></div>
   <div id="bebidas" class="box"></div>
 </div>
+
+<!-- CARRINHO -->
+<div id="cart">
+  <div id="cartItems"></div>
+  <div id="total" style="text-align:right;font-weight:900">Total: R$ 0,00</div>
+  <button onclick="finishOrder()" style="margin-top:10px;width:100%;padding:14px;border:none;border-radius:22px;background:#25D366;color:#fff;font-weight:900">
+    Finalizar Pedido
+  </button>
+</div>
 <script>
 /* =========================
-   ESTADO GLOBAL
+   CONFIGURAÇÃO GERAL
 ========================= */
+const ADMIN_PASSWORD = "1234";
+const FREIGHT = 8;
+
 let cart = [];
 let currentTab = "lanches";
-let searchText = "";
 
 /* =========================
-   HORÁRIO
+   HORÁRIO DE FUNCIONAMENTO
 ========================= */
 function isOpen(){
   const d = new Date();
@@ -255,130 +231,153 @@ function start(){
   updateOpenStatus();
   renderAll();
 }
+
+/* =========================
+   STATUS ABERTO / FECHADO
+========================= */
 function updateOpenStatus(){
   document.getElementById("closedBanner").style.display =
     isOpen() ? "none" : "block";
 }
 
 /* =========================
-   PRODUTOS (100% COMPLETOS)
+   PRODUTOS COMPLETOS
 ========================= */
-const produtos = {
+const products = {
   lanches:[
-    {n:'X-Salada',p:17},{n:'X-Burguer',p:14},{n:'X-Frango',p:22},
-    {n:'X-Frango Cremoso',p:20},{n:'X-Bacon',p:25},{n:'X-Calabresa',p:25},
-    {n:'X-Coração',p:27},{n:'X-Tudo',p:32},{n:'X-Burguer Duplo',p:22},
-    {n:'X-Egg',p:20},{n:'X-Tribom',p:32},{n:'X-Da Casa',p:45},{n:'X-Dog',p:20}
+    {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
+    {n:"X-Frango Cremoso",p:20},{n:"X-Bacon",p:25},{n:"X-Calabresa",p:25},
+    {n:"X-Coração",p:27},{n:"X-Tudo",p:32},{n:"X-Burguer Duplo",p:22},
+    {n:"X-Egg",p:20},{n:"X-Tribom",p:32},{n:"X-Da Casa",p:45},
+    {n:"X-Dog",p:20}
   ],
   adicionaisLanches:[
-    {n:'Calabresa',p:7},{n:'Bacon',p:7},{n:'Coração',p:8},{n:'Ovo',p:3},
-    {n:'Salsicha',p:4},{n:'Frango',p:7},{n:'Cheddar',p:4},
-    {n:'Hambúrguer artesanal',p:10},{n:'Maionese caseira',p:2}
+    {n:"Calabresa",p:7},{n:"Bacon",p:7},{n:"Coração",p:8},
+    {n:"Ovo",p:3},{n:"Salsicha",p:4},{n:"Frango",p:7},
+    {n:"Cheddar",p:4},{n:"Hambúrguer artesanal",p:10},
+    {n:"Maionese caseira",p:2}
   ],
   porcoes:[
-    {n:'Fritas',p:24.99},{n:'Fritas c/ Frango',p:39.99},
-    {n:'Fritas c/ Calabresa',p:34.99},{n:'Fritas c/ Bacon',p:34.99},
-    {n:'Anéis de Cebola',p:24.99},
-    {n:'Fritas c/ Bacon, Calabresa e Queijo',p:39.99},
-    {n:'Fritas c/ Bacon Cheddar',p:39.99},
-    {n:'Fritas c/ Polenta e Frango',p:39.99},
-    {n:'Fritas c/ Polenta',p:24.99},
-    {n:'Fritas c/ Calabresa e Catupiry',p:35.99},
-    {n:'Fritas, Polenta, Chuleta e Anel de Cebola',p:49.99}
+    {n:"Fritas",p:24.99},{n:"Fritas c/ Frango",p:39.99},
+    {n:"Fritas c/ Calabresa",p:34.99},{n:"Fritas c/ Bacon",p:34.99},
+    {n:"Anéis de Cebola",p:24.99},
+    {n:"Fritas c/ Bacon, Calabresa e Queijo",p:39.99},
+    {n:"Fritas c/ Bacon Cheddar",p:39.99},
+    {n:"Fritas c/ Polenta e Frango",p:39.99},
+    {n:"Fritas c/ Polenta",p:24.99},
+    {n:"Fritas c/ Calabresa e Catupiry",p:35.99},
+    {n:"Fritas, Polenta, Chuleta e Anel de Cebola",p:49.99}
   ],
   pasteis:[
-    {n:'Pastel de Carne',p:14},{n:'Pastel de Frango',p:12},
-    {n:'Frango Bacon Cheddar',p:16},{n:'Bacon Cheddar',p:15},
-    {n:'Calabresa c/ Cebola',p:14},{n:'Carne e Queijo',p:15},
-    {n:'Queijo',p:14},{n:'Chocolate ao Leite',p:15},
-    {n:'Banana Queijo Canela',p:15},{n:'Romeu e Julieta',p:15},
-    {n:'Chocolate Branco',p:15},{n:'Creme e Ouro Branco',p:15},
-    {n:'Creme e Sonho de Valsa',p:15}
+    {n:"Pastel de Carne",p:14},{n:"Pastel de Frango",p:12},
+    {n:"Frango Bacon Cheddar",p:16},{n:"Bacon Cheddar",p:15},
+    {n:"Calabresa c/ Cebola",p:14},{n:"Carne e Queijo",p:15},
+    {n:"Queijo",p:14},{n:"Chocolate ao Leite",p:15},
+    {n:"Banana Queijo Canela",p:15},{n:"Romeu e Julieta",p:15},
+    {n:"Chocolate Branco",p:15},{n:"Creme e Ouro Branco",p:15},
+    {n:"Creme e Sonho de Valsa",p:15}
   ],
   acaiTamanhos:[
-    {n:'Açaí 300ml',p:12},{n:'Açaí 400ml',p:15},{n:'Açaí 500ml',p:18}
+    {n:"Açaí 300ml",p:12},{n:"Açaí 400ml",p:15},{n:"Açaí 500ml",p:18}
   ],
   acaiAdicionais:[
-    {n:'Paçoca',p:2},{n:'Leite em pó',p:4},{n:'Granola',p:4},
-    {n:'Morango',p:4},{n:'M&M',p:3},{n:'Ouro Branco',p:3},
-    {n:'Banana',p:2},{n:'Sonho de Valsa',p:3},
-    {n:'Leite Condensado',p:3},{n:'Nutella',p:4}
+    {n:"Paçoca",p:2},{n:"Leite em pó",p:4},{n:"Granola",p:4},
+    {n:"Morango",p:4},{n:"M&M",p:3},{n:"Ouro Branco",p:3},
+    {n:"Banana",p:2},{n:"Sonho de Valsa",p:3},
+    {n:"Leite Condensado",p:3},{n:"Nutella",p:4}
   ],
   bebidas:[
-    {n:'Cassulinha 200ml',p:3},{n:'Coca-Cola 600ml',p:8},
-    {n:'Coca-Cola 2L',p:16},{n:'Refri Lata',p:6},
-    {n:'Refrigerante 2L',p:12},{n:'Cerveja Lata 350ml',p:6},
-    {n:'Achocolatado 200ml',p:3}
+    {n:"Cassulinha 200ml",p:3},{n:"Coca-Cola 600ml",p:8},
+    {n:"Coca-Cola 2L",p:16},{n:"Refri Lata",p:6},
+    {n:"Refrigerante 2L",p:12},{n:"Cerveja Lata 350ml",p:6},
+    {n:"Achocolatado 200ml",p:3}
   ]
 };
 
 /* =========================
-   BUSCA GLOBAL
+   BUSCA GLOBAL (CORRIGIDA)
 ========================= */
 function handleSearch(value){
-  searchText = value.toLowerCase().trim();
-  renderAll();
-}
+  const v = value.toLowerCase().trim();
 
-/* =========================
-   TABS
-========================= */
-function openTab(cat,el){
-  currentTab = cat;
-  document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));
-  document.getElementById(cat).classList.add('active');
-
-  if(el){
-    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-    el.classList.add('active');
+  if(v === "preço" || v === "precos"){
+    if(prompt("Senha ADM") === ADMIN_PASSWORD) alert("Painel de preços depois");
+    return;
   }
+
+  if(v === "oferta" || v === "ofertas"){
+    if(prompt("Senha ADM") === ADMIN_PASSWORD) alert("Painel de ofertas depois");
+    return;
+  }
+
+  let firstTab = null;
+
+  Object.keys(products).forEach(cat=>{
+    products[cat].forEach(p=>{
+      if(p.n.toLowerCase().includes(v)){
+        if(!firstTab){
+          firstTab =
+            cat.includes("acai") ? "acai" :
+            cat === "adicionaisLanches" ? "lanches" :
+            cat;
+        }
+      }
+    });
+  });
+
+  if(firstTab){
+    const btn = [...document.querySelectorAll(".tab")]
+      .find(t=>t.getAttribute("onclick").includes(firstTab));
+    openTab(firstTab, btn);
+  }
+
+  renderAll();
 }
 
 /* =========================
    RENDERIZAÇÃO
 ========================= */
 function renderAll(){
-  renderCategory("lanches", produtos.lanches, produtos.adicionaisLanches);
-  renderCategory("porcoes", produtos.porcoes);
-  renderCategory("pasteis", produtos.pasteis);
+  renderCategory("lanches", products.lanches, products.adicionaisLanches);
+  renderCategory("porcoes", products.porcoes);
+  renderCategory("pasteis", products.pasteis);
   renderAcai();
-  renderCategory("bebidas", produtos.bebidas);
+  renderCategory("bebidas", products.bebidas);
 }
 
-function renderCategory(id,list,extras){
+function renderCategory(id,list,extra){
   const box = document.getElementById(id);
+  const search = document.getElementById("search").value.toLowerCase().trim();
   box.innerHTML = "";
 
   list.forEach(p=>{
-    if(p.n.toLowerCase().includes(searchText)){
-      box.innerHTML += itemHTML(p);
-    }
+    if(search && !p.n.toLowerCase().includes(search)) return;
+    box.innerHTML += itemHTML(p);
   });
 
-  if(extras){
-    box.innerHTML += `
-      <div class="sub-btn" onclick="toggleExtras()">➕ Adicionais para Lanches</div>
-      <div id="extras" style="display:none">
-        ${extras.map(e=>itemHTML(e)).join("")}
-      </div>
-    `;
+  if(extra){
+    box.innerHTML += `<div style="margin:14px 0;font-weight:900;color:#5a0070">➕ Adicionais</div>`;
+    extra.forEach(p=>{
+      if(search && !p.n.toLowerCase().includes(search)) return;
+      box.innerHTML += itemHTML(p);
+    });
   }
 }
 
 function renderAcai(){
   const box = document.getElementById("acai");
-  box.innerHTML = `<div class="sub-btn">🥤 Tamanhos</div>`;
-  produtos.acaiTamanhos.forEach(p=>{
-    if(p.n.toLowerCase().includes(searchText)){
-      box.innerHTML += itemHTML(p);
-    }
+  const search = document.getElementById("search").value.toLowerCase().trim();
+  box.innerHTML = `<div style="margin-bottom:10px;font-weight:900;color:#5a0070">🥤 Tamanhos</div>`;
+
+  products.acaiTamanhos.forEach(p=>{
+    if(search && !p.n.toLowerCase().includes(search)) return;
+    box.innerHTML += itemHTML(p);
   });
 
-  box.innerHTML += `<div class="sub-btn">🍫 Adicionais</div>`;
-  produtos.acaiAdicionais.forEach(p=>{
-    if(p.n.toLowerCase().includes(searchText)){
-      box.innerHTML += itemHTML(p);
-    }
+  box.innerHTML += `<div style="margin:14px 0;font-weight:900;color:#5a0070">🍫 Adicionais</div>`;
+  products.acaiAdicionais.forEach(p=>{
+    if(search && !p.n.toLowerCase().includes(search)) return;
+    box.innerHTML += itemHTML(p);
   });
 }
 
@@ -390,12 +389,6 @@ function itemHTML(p){
       <button class="btn-add" onclick="addItem('${p.n}',${p.p})">+</button>
     </div>
   `;
-}
-
-function toggleExtras(){
-  const e = document.getElementById("extras");
-  if(!e) return;
-  e.style.display = e.style.display === "none" ? "block" : "none";
 }
 </script>
 <script>
@@ -424,7 +417,7 @@ function updateCart(){
       <div class="cart-item">
         <strong>${item.n}</strong>
         <span>R$ ${item.p.toFixed(2).replace('.',',')}</span>
-        <button onclick="removeItem(${index})">✕</button>
+        <button onclick="removeItem(${index})" style="border:none;background:none;font-size:18px;cursor:pointer">✕</button>
       </div>
     `;
   });
@@ -442,7 +435,7 @@ function removeItem(index){
 
 /* =========================
    FINALIZAR PEDIDO
-   (PERGUNTA SOBRE BEBIDA)
+   (PERGUNTA BEBIDA SIM / NÃO)
 ========================= */
 function finishOrder(){
   if(cart.length === 0){
@@ -450,21 +443,16 @@ function finishOrder(){
     return;
   }
 
-  const bebidas = [
-    "Cassulinha 200ml","Coca-Cola 600ml","Coca-Cola 2L",
-    "Refri Lata","Refrigerante 2L",
-    "Cerveja Lata 350ml","Achocolatado 200ml"
-  ];
-
+  const bebidas = products.bebidas.map(b => b.n);
   const temBebida = cart.some(i => bebidas.includes(i.n));
 
   if(!temBebida){
-    const resp = confirm(
-      "Você ainda não adicionou bebida.\nDeseja ver as opções?"
+    const quer = confirm(
+      "Você ainda não adicionou bebida.\nDeseja ver as opções agora?"
     );
-    if(resp){
-      const tabs = document.querySelectorAll(".tab");
-      openTab("bebidas", tabs[4]);
+    if(quer){
+      const btn = [...document.querySelectorAll(".tab")][4];
+      openTab("bebidas", btn);
       return;
     }
   }
@@ -477,23 +465,23 @@ function finishOrder(){
    ENVIO PARA WHATSAPP
 ========================= */
 function sendOrder(){
-  let mensagem = "🍔 *Pedido Rabika's Burguer*\n\n";
+  let msg = "🍔 *Pedido Rabika's Burguer*\n\n";
   let total = 0;
 
   cart.forEach(item=>{
-    mensagem += `• ${item.n} - R$ ${item.p.toFixed(2).replace('.',',')}\n`;
+    msg += `• ${item.n} - R$ ${item.p.toFixed(2).replace('.',',')}\n`;
     total += item.p;
   });
 
-  mensagem += `\n💰 *Total: R$ ${total.toFixed(2).replace('.',',')}*`;
-  mensagem += `\n\n📍 Retirada no local`;
+  msg += `\n💰 *Total: R$ ${total.toFixed(2).replace('.',',')}*`;
+  msg += `\n\n📍 Retirada no local`;
 
-  const phone = "554991789706"; // troque se precisar
+  const telefone = "554991789706"; // WhatsApp da loja
   const url =
     "https://wa.me/" +
-    phone +
+    telefone +
     "?text=" +
-    encodeURIComponent(mensagem);
+    encodeURIComponent(msg);
 
   window.open(url, "_blank");
 }
