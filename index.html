@@ -3,12 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Rabika's Burguer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
 body{
   font-family:'Poppins',sans-serif;
   background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
@@ -17,52 +20,100 @@ body{
   justify-content:center;
 }
 
+/* APP */
+#app{
+  width:100%;
+  max-width:420px;
+  padding:14px 14px 320px;
+  display:none;
+}
+
 /* SPLASH */
 #splash{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background:linear-gradient(180deg,#05002e,#020018);
-  display:flex;align-items:center;justify-content:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   z-index:9999;
 }
 .splash-box{text-align:center}
-.splash-logo{width:85vw;max-width:360px;margin-bottom:30px}
+.splash-logo{
+  width:90%;
+  max-width:340px;
+  margin-bottom:32px;
+}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
-  border:none;padding:18px 50px;border-radius:50px;
-  font-size:22px;font-weight:900;color:#2b0033;
+  border:none;
+  padding:18px 54px;
+  border-radius:44px;
+  font-size:22px;
+  font-weight:900;
+  color:#2b0033;
+  cursor:pointer;
 }
 
-/* APP */
-#app{width:100%;max-width:420px;padding:16px 16px 340px;display:none}
-.title{text-align:center;font-size:32px;font-weight:900;color:#FFD34D;margin-bottom:10px}
+/* TOPO */
+.title{
+  text-align:center;
+  font-size:30px;
+  font-weight:900;
+  color:#FFD34D;
+  margin-bottom:8px;
+}
 
+/* FECHADO */
 #closedBanner{
-  background:#b00020;color:#fff;text-align:center;
-  padding:12px;border-radius:20px;font-weight:600;margin-bottom:12px
+  background:#b00020;
+  color:#fff;
+  text-align:center;
+  padding:12px;
+  border-radius:18px;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:10px;
 }
 
+/* BUSCA */
 .search{
-  width:100%;padding:14px 18px;border-radius:24px;
-  border:none;font-size:15px;margin-bottom:14px
+  width:100%;
+  padding:14px 16px;
+  border-radius:22px;
+  border:none;
+  font-size:15px;
+  margin-bottom:14px;
 }
 
 /* TABS */
 .tabs{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:10px;margin-bottom:16px
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:14px;
 }
 .tab{
-  background:#fff;color:#2b0033;
-  padding:14px;border-radius:22px;
-  font-weight:800;text-align:center
+  background:#fff;
+  color:#2b0033;
+  padding:14px;
+  border-radius:22px;
+  font-weight:800;
+  text-align:center;
+  cursor:pointer;
 }
-.tab.active{background:#FFD34D}
+.tab.active{
+  background:#FFD34D;
+}
 
-/* CONTENT */
+/* CONTEÚDO */
 .box{
-  background:#fff;color:#2b0033;
-  border-radius:28px;padding:18px;
-  margin-bottom:20px;display:none
+  background:#fff;
+  color:#2b0033;
+  border-radius:28px;
+  padding:18px;
+  margin-bottom:20px;
+  display:none;
 }
 .box.active{display:block}
 
@@ -70,60 +121,92 @@ body{
 .item{
   display:grid;
   grid-template-columns:1fr auto auto;
-  gap:10px;padding:14px 0;
-  border-bottom:1px dashed #ddd;
-  align-items:center
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px dashed #e3e3e3;
+  align-items:center;
 }
 .item:last-child{border:none}
 .item-name{font-weight:600}
 .item-price{font-weight:900;color:#5a0070}
 .btn-add{
-  background:#5a0070;color:#fff;
-  border:none;border-radius:14px;
-  padding:6px 14px;font-weight:900
+  background:#5a0070;
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  padding:6px 14px;
+  font-weight:900;
 }
 
-/* CART */
+/* CARRINHO */
 #cart{
-  position:fixed;bottom:0;left:50%;
+  position:fixed;
+  bottom:0;
+  left:50%;
   transform:translateX(-50%);
-  width:100%;max-width:420px;
-  background:#fff;color:#2b0033;
-  padding:18px;border-radius:28px 28px 0 0;
-  display:none
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  color:#2b0033;
+  padding:18px;
+  border-radius:28px 28px 0 0;
+  display:none;
+  z-index:999;
 }
 .cart-item{
-  display:flex;justify-content:space-between;
-  font-weight:700;margin-bottom:6px
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:6px;
 }
-.total{font-size:18px;font-weight:900;text-align:right}
-.finish{
-  background:#25D366;color:#fff;
-  padding:16px;border-radius:26px;
-  font-weight:900;text-align:center;margin-top:12px
-}
+.cart-item strong{color:#5a0070}
 
-/* MODAL PADRÃO */
+/* MODAIS */
 .modal{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background:rgba(0,0,0,.6);
-  display:none;align-items:center;justify-content:center;
-  z-index:99999
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
 }
 .modal-box{
-  background:#fff;color:#2b0033;
-  width:94%;max-width:420px;
-  border-radius:30px;padding:22px;
-  max-height:90vh;overflow:auto;
-  position:relative
+  background:#fff;
+  color:#2b0033;
+  width:92%;
+  max-width:420px;
+  border-radius:26px;
+  padding:20px;
+  max-height:85vh;
+  overflow-y:auto;
+  position:relative;
 }
 .modal-close{
-  position:absolute;top:14px;right:16px;
-  font-size:26px;font-weight:900;color:#5a0070
+  position:absolute;
+  top:12px;
+  right:14px;
+  font-size:22px;
+  font-weight:900;
+  cursor:pointer;
 }
-.modal-title{
-  font-size:22px;font-weight:900;
-  text-align:center;margin-bottom:14px
+
+/* BOTÕES */
+.btn-green{
+  background:#25D366;
+  color:#fff;
+  border:none;
+  padding:14px;
+  border-radius:22px;
+  font-weight:900;
+  width:100%;
+}
+.btn-gray{
+  background:#ccc;
+  color:#333;
+  border:none;
+  padding:10px;
+  border-radius:18px;
+  margin-top:6px;
 }
 </style>
 </head>
@@ -143,7 +226,7 @@ body{
   <div class="title">Rabika's Burguer</div>
   <div id="closedBanner">🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30</div>
 
-  <input class="search" placeholder="Pesquisar no cardápio..." oninput="handleSearch(this.value)">
+  <input id="search" class="search" placeholder="Pesquisar no cardápio...">
 
   <div class="tabs">
     <div class="tab active" onclick="openTab('lanches',this)">🍔 Lanches</div>
@@ -159,442 +242,498 @@ body{
   <div id="acai" class="box"></div>
   <div id="bebidas" class="box"></div>
 </div>
-
-<!-- CARRINHO -->
-<div id="cart">
-  <div id="cartItems"></div>
-  <div class="total" id="total">Total: R$ 0,00</div>
-  <div class="finish" onclick="finishOrder()">Finalizar Pedido</div>
-</div>
-
-<!-- PAINEL PREÇOS -->
-<div id="pricePanel" class="modal">
+<!-- MODAL PAINEL DE PREÇOS -->
+<div id="priceAdminModal" class="modal">
   <div class="modal-box">
-    <div class="modal-close" onclick="closePricePanel()">✕</div>
-    <div class="modal-title">Painel de Preços & Cardápio</div>
 
-    <div style="display:flex;gap:10px;margin-bottom:14px">
-      <button onclick="toggleHiddenList()">Produtos Ocultos</button>
-      <button onclick="toggleNewProduct()">+ Novo Produto</button>
-    </div>
+    <div class="modal-close" onclick="closePriceAdmin()">✕</div>
 
-    <div id="priceList"></div>
-    <div id="hiddenList" style="display:none"></div>
-    <div id="newProductBox" style="display:none"></div>
+    <h2 style="text-align:center;color:#5a0070">Painel de Preços & Cardápio</h2>
+    <p style="text-align:center;font-size:13px;margin-bottom:14px">
+      Gerencie produtos ativos, ocultos ou adicione novos itens
+    </p>
+
+    <!-- PRODUTOS ATIVOS -->
+    <h3 style="margin-top:10px;color:#5a0070">Produtos Ativos</h3>
+    <div id="priceAdminActive"></div>
+
+    <!-- PRODUTOS OCULTOS -->
+    <h3 style="margin-top:20px;color:#b00020">Produtos Ocultos</h3>
+    <div id="priceAdminHidden"></div>
+
+    <!-- NOVO PRODUTO -->
+    <h3 style="margin-top:20px;color:#5a0070">+ Novo Produto</h3>
+
+    <input id="newName" class="search" placeholder="Nome do produto">
+    <input id="newPrice" class="search" type="number" placeholder="Preço">
+    <select id="newCategory" class="search">
+      <option value="">Categoria</option>
+      <option value="lanches">Lanches</option>
+      <option value="adicionaisLanches">Adicionais</option>
+      <option value="porcoes">Porções</option>
+      <option value="pasteis">Pastéis</option>
+      <option value="acaiTamanhos">Açaí (Tamanho)</option>
+      <option value="acaiAdicionais">Açaí (Adicional)</option>
+      <option value="bebidas">Bebidas</option>
+    </select>
+
+    <button class="btn-green" onclick="addNewProduct()">Adicionar Produto</button>
+
   </div>
 </div>
 
-<!-- PAINEL OFERTAS -->
-<div id="offerPanel" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeOfferPanel()">✕</div>
-    <div class="modal-title">Painel de Ofertas</div>
-    <div id="offerList"></div>
-  </div>
-</div>
 <script>
-/* =========================
-   ESTADO GLOBAL
-========================= */
-let cart = [];
-let searchText = '';
-const ADM_PASSWORD = '1234';
+/* ================= BUSCA ADMINISTRATIVA ================= */
+document.getElementById("search").addEventListener("input",function(){
+  const v=this.value.toLowerCase().trim();
 
-/* =========================
-   PRODUTOS (TODOS)
-========================= */
-let produtos = [
-  // LANCHES
-  {id:'L01',nome:'X-Salada',preco:17,categoria:'lanches',ativo:true},
-  {id:'L02',nome:'X-Burguer',preco:14,categoria:'lanches',ativo:true},
-  {id:'L03',nome:'X-Frango',preco:22,categoria:'lanches',ativo:true},
-  {id:'L04',nome:'X-Frango Cremoso',preco:20,categoria:'lanches',ativo:true},
-  {id:'L05',nome:'X-Bacon',preco:25,categoria:'lanches',ativo:true},
-  {id:'L06',nome:'X-Calabresa',preco:25,categoria:'lanches',ativo:true},
-  {id:'L07',nome:'X-Coração',preco:27,categoria:'lanches',ativo:true},
-  {id:'L08',nome:'X-Tudo',preco:32,categoria:'lanches',ativo:true},
-  {id:'L09',nome:'X-Burguer Duplo',preco:22,categoria:'lanches',ativo:true},
-  {id:'L10',nome:'X-Egg',preco:20,categoria:'lanches',ativo:true},
-  {id:'L11',nome:'X-Tribom',preco:32,categoria:'lanches',ativo:true},
-  {id:'L12',nome:'X-Da Casa',preco:45,categoria:'lanches',ativo:true},
-  {id:'L13',nome:'X-Dog',preco:20,categoria:'lanches',ativo:true},
-
-  // PORÇÕES
-  {id:'P01',nome:'Fritas',preco:15,categoria:'porcoes',ativo:true},
-  {id:'P02',nome:'Fritas c/ Bacon',preco:22,categoria:'porcoes',ativo:true},
-  {id:'P03',nome:'Fritas c/ Bacon Cheddar',preco:25,categoria:'porcoes',ativo:true},
-  {id:'P04',nome:'Fritas c/ Calabresa',preco:23,categoria:'porcoes',ativo:true},
-  {id:'P05',nome:'Fritas c/ Polenta',preco:20,categoria:'porcoes',ativo:true},
-
-  // PASTÉIS
-  {id:'PA01',nome:'Pastel de Carne',preco:8,categoria:'pasteis',ativo:true},
-  {id:'PA02',nome:'Pastel de Frango',preco:8,categoria:'pasteis',ativo:true},
-  {id:'PA03',nome:'Pastel Bacon Cheddar',preco:10,categoria:'pasteis',ativo:true},
-  {id:'PA04',nome:'Pastel Calabresa c/ Cebola',preco:9,categoria:'pasteis',ativo:true},
-  {id:'PA05',nome:'Pastel Carne e Queijo',preco:10,categoria:'pasteis',ativo:true},
-
-  // AÇAÍ
-  {id:'A01',nome:'Açaí 300ml',preco:12,categoria:'acai',ativo:true},
-  {id:'A02',nome:'Açaí 500ml',preco:16,categoria:'acai',ativo:true},
-  {id:'A03',nome:'Açaí 700ml',preco:20,categoria:'acai',ativo:true},
-
-  // BEBIDAS
-  {id:'B01',nome:'Cassulinha 200ml',preco:3,categoria:'bebidas',ativo:true},
-  {id:'B02',nome:'Coca-Cola 600ml',preco:8,categoria:'bebidas',ativo:true},
-  {id:'B03',nome:'Coca-Cola 2L',preco:16,categoria:'bebidas',ativo:true},
-  {id:'B04',nome:'Refrigerante Lata',preco:6,categoria:'bebidas',ativo:true},
-  {id:'B05',nome:'Refrigerante 2L',preco:12,categoria:'bebidas',ativo:true},
-  {id:'B06',nome:'Cerveja Lata 350ml',preco:6,categoria:'bebidas',ativo:true},
-  {id:'B07',nome:'Achocolatado 200ml',preco:3,categoria:'bebidas',ativo:true},
-];
-
-/* =========================
-   INICIALIZAÇÃO
-========================= */
-function start(){
-  document.getElementById('splash').style.display='none';
-  document.getElementById('app').style.display='block';
-  renderAll();
-}
-
-/* =========================
-   TABS
-========================= */
-function openTab(cat,el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));
-  document.getElementById(cat).classList.add('active');
-  renderAll();
-}
-
-/* =========================
-   BUSCA GLOBAL
-========================= */
-function handleSearch(v){
-  searchText = v.toLowerCase().trim();
-
-  if(searchText === 'preço' || searchText === 'preco'){
-    const s = prompt('Senha ADM');
-    if(s === ADM_PASSWORD) openPricePanel();
+  if(v==="preço" || v==="precos"){
+    const s=prompt("Senha do administrador:");
+    if(s===ADMIN_PASSWORD) openPriceAdmin();
+    this.value="";
     return;
   }
 
-  if(searchText === 'ofertas'){
-    const s = prompt('Senha ADM');
-    if(s === ADM_PASSWORD) openOfferPanel();
+  if(v==="ofertas"){
+    const s=prompt("Senha do administrador:");
+    if(s===ADMIN_PASSWORD) openOfferAdmin();
+    this.value="";
     return;
   }
 
-  renderAll();
+  /* BUSCA GLOBAL CLIENTE */
+  let foundTab=null;
+
+  document.querySelectorAll(".item").forEach(i=>{
+    const match=i.dataset.name.includes(v);
+    i.style.display=match?"grid":"none";
+    if(match && !foundTab){
+      foundTab=i.closest(".box").id;
+    }
+  });
+
+  if(foundTab){
+    const btn=[...document.querySelectorAll(".tab")]
+      .find(t=>t.getAttribute("onclick").includes(foundTab));
+    if(btn) openTab(foundTab,btn);
+  }
+});
+
+/* ================= PAINEL PREÇOS ================= */
+function openPriceAdmin(){
+  document.getElementById("priceAdminModal").style.display="flex";
+  renderPriceAdmin();
+}
+function closePriceAdmin(){
+  document.getElementById("priceAdminModal").style.display="none";
 }
 
-/* =========================
-   RENDERIZAÇÃO
-========================= */
-function renderAll(){
-  ['lanches','porcoes','pasteis','acai','bebidas'].forEach(cat=>{
-    const box = document.getElementById(cat);
-    box.innerHTML='';
-    produtos
-      .filter(p=>p.categoria===cat && p.ativo)
-      .filter(p=>p.nome.toLowerCase().includes(searchText))
-      .forEach(p=>{
-        box.innerHTML+=`
-        <div class="item">
-          <div class="item-name">${p.nome}</div>
-          <div class="item-price">R$ ${p.preco},00</div>
-          <button class="btn-add" onclick="addToCart('${p.id}')">+</button>
-        </div>`;
-      });
+/* ================= RENDER PAINEL ================= */
+function renderPriceAdmin(){
+  const active=document.getElementById("priceAdminActive");
+  const hidden=document.getElementById("priceAdminHidden");
+  active.innerHTML="";
+  hidden.innerHTML="";
+
+  const all=getAllProducts();
+
+  Object.keys(all).forEach(cat=>{
+    all[cat].forEach(p=>{
+      const price=getPrice(p);
+      const isHidden=productStatus[p.n]===false;
+
+      const html=`
+        <div style="margin-bottom:12px">
+          <strong>${p.n}</strong>
+          <input type="number" class="search" value="${price}" id="price-${p.n}">
+          <button class="btn-green" onclick="savePrice('${p.n}')">Salvar</button>
+          <button class="btn-gray" onclick="toggleProduct('${p.n}')">
+            ${isHidden?"Reativar":"Ocultar"}
+          </button>
+        </div>
+      `;
+
+      if(isHidden) hidden.innerHTML+=html;
+      else active.innerHTML+=html;
+    });
   });
 }
 
-/* =========================
-   CARRINHO
-========================= */
-function addToCart(id){
-  const p = produtos.find(x=>x.id===id);
-  cart.push(p);
+/* ================= SALVAR PREÇO ================= */
+function savePrice(name){
+  const val=document.getElementById("price-"+name).value;
+  customPrices[name]=parseFloat(val);
+  localStorage.setItem("customPrices",JSON.stringify(customPrices));
+  renderAll();
+}
+
+/* ================= OCULTAR / REATIVAR ================= */
+function toggleProduct(name){
+  productStatus[name]=productStatus[name]===false?true:false;
+  localStorage.setItem("productStatus",JSON.stringify(productStatus));
+  renderAll();
+}
+</script>
+<script>
+/* ================= CONFIG ================= */
+const FREIGHT = 8;
+const ADMIN_PASSWORD = "1234";
+
+let cart = [];
+let isDelivery = false;
+let currentTab = "lanches";
+
+/* ================= STORAGE ================= */
+let customPrices = JSON.parse(localStorage.getItem("customPrices")) || {};
+let productStatus = JSON.parse(localStorage.getItem("productStatus")) || {};
+let extraProducts = JSON.parse(localStorage.getItem("extraProducts")) || {};
+let sales = JSON.parse(localStorage.getItem("sales")) || [];
+
+/* ================= HORÁRIO ================= */
+function isOpen(){
+  const d = new Date();
+  const day = d.getDay();
+  const h = d.getHours() + d.getMinutes()/60;
+  if(day === 1) return false;
+  if(h < 18.5 || h > 22.5) return false;
+  return true;
+}
+
+/* ================= PRODUTOS BASE ================= */
+const products = {
+  lanches:[
+    {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
+    {n:"X-Frango Cremoso",p:20},{n:"X-Bacon",p:25},{n:"X-Calabresa",p:25},
+    {n:"X-Coração",p:27},{n:"X-Tudo",p:32},{n:"X-Burguer Duplo",p:22},
+    {n:"X-Egg",p:20},{n:"X-Tribom",p:32},{n:"X-Da Casa",p:45},{n:"X-Dog",p:20}
+  ],
+  adicionaisLanches:[
+    {n:"Calabresa",p:7},{n:"Bacon",p:7},{n:"Coração",p:8},
+    {n:"Ovo",p:3},{n:"Salsicha",p:4},{n:"Frango",p:7},
+    {n:"Cheddar",p:4},{n:"Hambúrguer artesanal",p:10},{n:"Maionese caseira",p:2}
+  ],
+  porcoes:[
+    {n:"Fritas c/ Frango",p:39.99},{n:"Fritas",p:24.99},
+    {n:"Fritas c/ Calabresa",p:34.99},{n:"Fritas c/ Bacon",p:34.99},
+    {n:"Anéis de Cebola",p:24.99},
+    {n:"Fritas c/ Bacon, Calabresa e Queijo",p:39.99},
+    {n:"Fritas c/ Bacon Cheddar",p:39.99},
+    {n:"Fritas c/ Polenta e Frango",p:39.99},
+    {n:"Fritas c/ Polenta",p:24.99},
+    {n:"Fritas c/ Calabresa e Catupiry",p:35.99},
+    {n:"Fritas, Polenta, Chuleta e Anel de Cebola",p:49.99}
+  ],
+  pasteis:[
+    {n:"Pastel de Carne",p:14},{n:"Pastel de Frango",p:12},
+    {n:"Frango Bacon Cheddar",p:16},{n:"Bacon Cheddar",p:15},
+    {n:"Calabresa c/ Cebola",p:14},{n:"Carne e Queijo",p:15},
+    {n:"Queijo",p:14},{n:"Chocolate ao Leite",p:15},
+    {n:"Banana Queijo Canela",p:15},{n:"Romeu e Julieta",p:15},
+    {n:"Chocolate Branco",p:15},{n:"Creme e Ouro Branco",p:15},
+    {n:"Creme e Sonho de Valsa",p:15}
+  ],
+  acaiTamanhos:[
+    {n:"Açaí 300ml",p:12},{n:"Açaí 400ml",p:15},{n:"Açaí 500ml",p:18}
+  ],
+  acaiAdicionais:[
+    {n:"Paçoca",p:2},{n:"Leite em pó",p:4},{n:"Granola",p:4},
+    {n:"Morango",p:4},{n:"M&M",p:3},{n:"Ouro Branco",p:3},
+    {n:"Banana",p:2},{n:"Sonho de Valsa",p:3},
+    {n:"Leite Condensado",p:3},{n:"Nutella",p:4}
+  ],
+  bebidas:[
+    {n:"Cassulinha 200ml",p:3},{n:"Coca-Cola 600ml",p:8},
+    {n:"Coca-Cola 2L",p:16},{n:"Refri Lata",p:6},
+    {n:"Refrigerante 2L",p:12},{n:"Cerveja Lata 350ml",p:6},
+    {n:"Achocolatado 200ml",p:3}
+  ]
+};
+
+/* ================= START ================= */
+function start(){
+  document.getElementById("splash").style.display="none";
+  document.getElementById("app").style.display="block";
+  renderAll();
+  updateOpenStatus();
+}
+
+/* ================= STATUS ABERTO ================= */
+function updateOpenStatus(){
+  document.getElementById("closedBanner").style.display = isOpen() ? "none" : "block";
+}
+
+/* ================= PRODUTOS ================= */
+function getAllProducts(){
+  let all = JSON.parse(JSON.stringify(products));
+  Object.keys(extraProducts).forEach(c=>{
+    all[c] = (all[c] || []).concat(extraProducts[c]);
+  });
+  return all;
+}
+
+function getPrice(p){
+  return customPrices[p.n] ?? p.p;
+}
+
+function renderAll(){
+  const all = getAllProducts();
+  renderCategory("lanches", all.lanches, all.adicionaisLanches);
+  renderCategory("porcoes", all.porcoes);
+  renderCategory("pasteis", all.pasteis);
+  renderAcai(all);
+  renderCategory("bebidas", all.bebidas);
+}
+
+function renderCategory(id,list,extra){
+  const box = document.getElementById(id);
+  box.innerHTML="";
+  list.forEach(p=>{
+    if(productStatus[p.n] === false) return;
+    box.innerHTML += itemHTML(p);
+  });
+  if(extra){
+    box.innerHTML += `<div class="section">➕ Adicionais</div>`;
+    extra.forEach(p=>{
+      if(productStatus[p.n] !== false)
+        box.innerHTML += itemHTML(p);
+    });
+  }
+}
+
+function renderAcai(all){
+  const box = document.getElementById("acai");
+  box.innerHTML = '<div class="section">🥤 Tamanhos</div>';
+  all.acaiTamanhos.forEach(p=>{
+    if(productStatus[p.n] !== false)
+      box.innerHTML += itemHTML(p);
+  });
+  box.innerHTML += '<div class="section">🍫 Adicionais</div>';
+  all.acaiAdicionais.forEach(p=>{
+    if(productStatus[p.n] !== false)
+      box.innerHTML += itemHTML(p);
+  });
+}
+
+function itemHTML(p){
+  const price = getPrice(p);
+  return `
+    <div class="item" data-name="${p.n.toLowerCase()}">
+      <span class="item-name">${p.n}</span>
+      <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
+      <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
+    </div>`;
+}
+
+/* ================= CARRINHO ================= */
+function addItem(n,p){
+  if(!isOpen()){
+    alert("Estamos fechados no momento.\nTerça a Domingo das 18:30 às 22:30");
+    return;
+  }
+  cart.push({n,p});
   updateCart();
 }
 
 function updateCart(){
-  const box = document.getElementById('cart');
-  const list = document.getElementById('cartItems');
-  list.innerHTML='';
+  const box=document.getElementById("cartItems");
+  if(!box) return;
+  box.innerHTML="";
   let total=0;
-
-  cart.forEach(p=>{
-    total+=p.preco;
-    list.innerHTML+=`
+  cart.forEach((i,idx)=>{
+    total+=i.p;
+    box.innerHTML+=`
       <div class="cart-item">
-        <span>${p.nome}</span>
-        <span>R$ ${p.preco},00</span>
+        <strong>${i.n}</strong>
+        <span>R$ ${i.p.toFixed(2).replace(".",",")}</span>
+        <button onclick="removeItem(${idx})">✕</button>
       </div>`;
   });
-
-  document.getElementById('total').innerText=`Total: R$ ${total},00`;
-  box.style.display = cart.length ? 'block':'none';
-}
-/* =========================
-   PAINEL DE PREÇOS
-========================= */
-function openPricePanel(){
-  document.getElementById('pricePanel').style.display='flex';
-  renderPricePanel();
-}
-function closePricePanel(){
-  document.getElementById('pricePanel').style.display='none';
+  if(isDelivery) total+=FREIGHT;
+  document.getElementById("total").innerText="Total: R$ "+total.toFixed(2).replace(".",",");
+  document.getElementById("cart").style.display = cart.length ? "block" : "none";
 }
 
-function toggleHiddenList(){
-  document.getElementById('hiddenList').style.display='block';
-  document.getElementById('newProductBox').style.display='none';
-}
-function toggleNewProduct(){
-  document.getElementById('newProductBox').style.display='block';
-  document.getElementById('hiddenList').style.display='none';
+function removeItem(i){
+  cart.splice(i,1);
+  updateCart();
 }
 
-/* =========================
-   RENDER PAINEL PREÇOS
-========================= */
-function renderPricePanel(){
-  const list = document.getElementById('priceList');
-  const hidden = document.getElementById('hiddenList');
-  const novo = document.getElementById('newProductBox');
+function setDelivery(v){
+  isDelivery=v;
+  document.getElementById("address").style.display=v?"block":"none";
+  updateCart();
+}
+</script>
+<script>
+/* ================= BUSCA GLOBAL ================= */
+function handleSearch(v){
+  v = v.toLowerCase().trim();
 
-  list.innerHTML = '<h3>Produtos Ativos</h3>';
-  hidden.innerHTML = '<h3 style="color:#b00020">Produtos Ocultos</h3>';
+  /* atalhos administrativos */
+  if(v === "oferta" || v === "ofertas"){
+    askAdmin(() => openOfferPanel());
+    return;
+  }
 
-  produtos.forEach(p=>{
-    if(p.ativo){
-      list.innerHTML += `
-        <div class="item">
-          <div>${p.nome}</div>
-          <input type="number" value="${p.preco}" 
-            onchange="p.preco=this.value">
-          <button onclick="savePrice('${p.id}')">Salvar</button>
-          <button onclick="hideProduct('${p.id}')">Ocultar</button>
-        </div>`;
-    } else {
-      hidden.innerHTML += `
-        <div class="item">
-          <div>${p.nome}</div>
-          <button onclick="showProduct('${p.id}')">Reativar</button>
-        </div>`;
+  if(v === "preço" || v === "precos"){
+    askAdmin(() => openPricePanel());
+    return;
+  }
+
+  if(v === "relatorio" || v === "relatório"){
+    askAdmin(() => showReport());
+    return;
+  }
+
+  /* busca global em TODAS as abas */
+  document.querySelectorAll(".item").forEach(el=>{
+    el.style.display = el.dataset.name.includes(v) ? "grid" : "none";
+  });
+}
+
+/* ================= CONFIRMA SENHA ================= */
+function askAdmin(callback){
+  const senha = prompt("Digite a senha do administrador:");
+  if(senha === ADMIN_PASSWORD){
+    callback();
+  }else{
+    alert("Senha incorreta");
+  }
+}
+
+/* ================= BEBIDA SIM / NÃO ================= */
+function finishOrder(){
+  const hasDrink = cart.some(i =>
+    products.bebidas.some(b => b.n === i.n)
+  );
+
+  if(!hasDrink){
+    if(confirm("Vai querer bebida?")){
+      openTab("bebidas");
+      return;
+    }
+  }
+  sendOrder();
+}
+
+/* ================= WHATSAPP ================= */
+function sendOrder(){
+  let msg = "🍔 Pedido Rabika's Burguer\n\n";
+  let total = 0;
+
+  cart.forEach(i=>{
+    msg += `- ${i.n} R$ ${i.p.toFixed(2).replace(".",",")}\n`;
+    total += i.p;
+  });
+
+  if(isDelivery){
+    msg += "\nEntrega: R$ 8,00\n";
+    total += FREIGHT;
+  }else{
+    msg += "\nRetirada no local\n";
+  }
+
+  msg += `\nTotal: R$ ${total.toFixed(2).replace(".",",")}`;
+
+  sales.push({
+    date:new Date().toISOString(),
+    total,
+    payment:document.getElementById("payment").value || "Não informado"
+  });
+  localStorage.setItem("sales",JSON.stringify(sales));
+
+  window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg));
+}
+
+/* ================= RELATÓRIO ================= */
+function showReport(){
+  let today = new Date().toISOString().split("T")[0];
+  let t=0,d=0,p=0,c=0;
+
+  sales.forEach(s=>{
+    if(s.date.startsWith(today)){
+      t+=s.total;
+      if(s.payment==="Dinheiro")d+=s.total;
+      if(s.payment==="Pix")p+=s.total;
+      if(s.payment.includes("Cartão"))c+=s.total;
     }
   });
 
-  novo.innerHTML = `
-    <h3>Novo Produto</h3>
-    <input id="newName" placeholder="Nome do produto">
-    <input id="newPrice" placeholder="Preço" type="number">
-    <select id="newCat">
-      <option value="lanches">Lanches</option>
-      <option value="porcoes">Porções</option>
-      <option value="pasteis">Pastéis</option>
-      <option value="acai">Açaí</option>
-      <option value="bebidas">Bebidas</option>
-    </select>
-    <button onclick="addNewProduct()">Adicionar Produto</button>
-  `;
+  alert(
+    "RELATÓRIO DO DIA\n\n"+
+    "Total: R$ "+t.toFixed(2).replace(".",",")+"\n"+
+    "Dinheiro: R$ "+d.toFixed(2).replace(".",",")+"\n"+
+    "Pix: R$ "+p.toFixed(2).replace(".",",")+"\n"+
+    "Cartão: R$ "+c.toFixed(2).replace(".",",")
+  );
 }
 
-/* =========================
-   AÇÕES PREÇOS
-========================= */
-function savePrice(id){
-  alert('Preço atualizado com sucesso');
-  renderAll();
-}
-
-function hideProduct(id){
-  const p = produtos.find(x=>x.id===id);
-  p.ativo = false;
-  alert('Produto ocultado com sucesso');
-  renderPricePanel();
-  renderAll();
-}
-
-function showProduct(id){
-  const p = produtos.find(x=>x.id===id);
-  p.ativo = true;
-  alert('Produto reativado');
-  renderPricePanel();
-  renderAll();
-}
-
-function addNewProduct(){
-  const nome = document.getElementById('newName').value;
-  const preco = Number(document.getElementById('newPrice').value);
-  const cat = document.getElementById('newCat').value;
-  if(!nome || !preco) return alert('Preencha todos os campos');
-
-  produtos.push({
-    id:'N'+Date.now(),
-    nome,preco,categoria:cat,ativo:true
-  });
-
-  alert('Produto adicionado');
-  renderPricePanel();
-  renderAll();
-}
-
-/* =========================
-   FINALIZAR PEDIDO
-========================= */
-function finishOrder(){
-  if(cart.length===0) return;
-  let msg = 'Pedido:%0A';
-  cart.forEach(p=>msg+=`- ${p.nome} R$ ${p.preco},00%0A`);
-  window.open(`https://wa.me/55SEUNUMERO?text=${msg}`);
-}
-/* =========================
-   PAINEL DE OFERTAS
-========================= */
+/* ================= PAINEL OFERTAS ================= */
 function openOfferPanel(){
-  document.getElementById('offerPanel').style.display='flex';
-  renderOfferPanel();
+  document.getElementById("offerPanel").style.display="flex";
 }
 function closeOfferPanel(){
-  document.getElementById('offerPanel').style.display='none';
+  document.getElementById("offerPanel").style.display="none";
 }
-
-function renderOfferPanel(){
-  const box = document.getElementById('offerList');
-  box.innerHTML = '';
-
-  produtos.forEach(p=>{
-    if(!p.ativo) return;
-
-    box.innerHTML += `
-      <div class="item">
-        <strong>${p.nome}</strong>
-        <input type="number" placeholder="Preço oferta"
-          value="${p.oferta?.preco||''}"
-          onchange="setOfferPrice('${p.id}',this.value)">
-        <input type="date"
-          value="${p.oferta?.inicio||''}"
-          onchange="setOfferStart('${p.id}',this.value)">
-        <input type="date"
-          value="${p.oferta?.fim||''}"
-          onchange="setOfferEnd('${p.id}',this.value)">
-        <button onclick="saveOffer('${p.id}')">Salvar Oferta</button>
-        ${p.oferta?`<button onclick="removeOffer('${p.id}')">Desativar</button>`:''}
-      </div>
-    `;
-  });
+function saveOffer(name){
+  const price = document.getElementById("offerPrice_"+name).value;
+  const end = document.getElementById("offerEnd_"+name).value;
+  if(!price || !end) return alert("Preencha todos os campos");
+  customPrices[name]=Number(price);
+  localStorage.setItem("customPrices",JSON.stringify(customPrices));
+  alert("Oferta salva");
+  renderAll();
 }
-
-function setOfferPrice(id,v){
-  const p = produtos.find(x=>x.id===id);
-  if(!p.oferta) p.oferta={};
-  p.oferta.preco = Number(v);
-}
-function setOfferStart(id,v){
-  const p = produtos.find(x=>x.id===id);
-  if(!p.oferta) p.oferta={};
-  p.oferta.inicio = v;
-}
-function setOfferEnd(id,v){
-  const p = produtos.find(x=>x.id===id);
-  if(!p.oferta) p.oferta={};
-  p.oferta.fim = v;
-}
-
-function saveOffer(id){
-  alert('Oferta salva com sucesso');
+function removeOffer(name){
+  delete customPrices[name];
+  localStorage.setItem("customPrices",JSON.stringify(customPrices));
   renderAll();
 }
 
-function removeOffer(id){
-  const p = produtos.find(x=>x.id===id);
-  delete p.oferta;
-  alert('Oferta desativada');
-  renderOfferPanel();
+/* ================= PAINEL PREÇOS ================= */
+function openPricePanel(){
+  document.getElementById("pricePanel").style.display="flex";
+}
+function closePricePanel(){
+  document.getElementById("pricePanel").style.display="none";
+}
+
+function updatePrice(name){
+  const v = document.getElementById("price_"+name).value;
+  if(!v) return;
+  customPrices[name]=Number(v);
+  localStorage.setItem("customPrices",JSON.stringify(customPrices));
   renderAll();
 }
 
-/* =========================
-   APLICA OFERTA NO CARDÁPIO
-========================= */
-function getPrice(p){
-  if(p.oferta){
-    const hoje = new Date().toISOString().split('T')[0];
-    if(hoje>=p.oferta.inicio && hoje<=p.oferta.fim){
-      return `
-        <span style="text-decoration:line-through;color:#999">
-          R$ ${p.preco},00
-        </span>
-        <span style="color:#b00020;font-weight:900">
-          R$ ${p.oferta.preco},00 🔥
-        </span>`;
-    }
-  }
-  return `R$ ${p.preco},00`;
+function hideProduct(name){
+  productStatus[name]=false;
+  localStorage.setItem("productStatus",JSON.stringify(productStatus));
+  renderAll();
 }
 
-/* =========================
-   BLOQUEIO HORÁRIO
-========================= */
-function checkOpen(){
-  const d=new Date();
-  const dia=d.getDay();
-  const h=d.getHours()+d.getMinutes()/60;
-  const aberto = dia!==1 && h>=18.5 && h<=22.5;
-  document.querySelectorAll('.btn-add')
-    .forEach(b=>b.disabled=!aberto);
+function restoreProduct(name){
+  productStatus[name]=true;
+  localStorage.setItem("productStatus",JSON.stringify(productStatus));
+  renderAll();
 }
 
-/* =========================
-   BUSCA GLOBAL
-========================= */
-function handleSearch(v){
-  v=v.toLowerCase();
-  document.querySelectorAll('.item')
-    .forEach(i=>{
-      i.style.display =
-        i.innerText.toLowerCase().includes(v)
-        ?'grid':'none';
-    });
+/* ================= TABS ================= */
+function openTab(id,el){
+  currentTab=id;
+  document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 
-  if(v==='preço'){
-    const s = prompt('Senha painel');
-    if(s===ADMIN_PASS) openPricePanel();
-  }
-  if(v==='ofertas'){
-    const s = prompt('Senha painel');
-    if(s===ADMIN_PASS) openOfferPanel();
+  if(el){
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    el.classList.add("active");
   }
 }
 
-/* =========================
-   HTML FINAL
-========================= */
+/* ================= OFFLINE ================= */
+window.addEventListener("offline",()=>document.getElementById("offline").style.display="flex");
+window.addEventListener("online",()=>document.getElementById("offline").style.display="none");
 </script>
-
-<!-- PAINEL PREÇOS -->
-<div id="pricePanel" class="modal">
-  <div class="modal-box">
-    <button onclick="closePricePanel()">✖</button>
-    <div id="priceList"></div>
-    <button onclick="toggleHiddenList()">Ocultos</button>
-    <button onclick="toggleNewProduct()">Novo Produto</button>
-    <div id="hiddenList"></div>
-    <div id="newProductBox"></div>
-  </div>
-</div>
-
-<!-- PAINEL OFERTAS -->
-<div id="offerPanel" class="modal">
-  <div class="modal-box">
-    <button onclick="closeOfferPanel()">✖</button>
-    <h2>Painel de Ofertas</h2>
-    <div id="offerList"></div>
-  </div>
-</div>
 
 </body>
 </html>
