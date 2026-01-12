@@ -1,608 +1,242 @@
-/* ======================================================
-   ESTADO ÚNICO DO APLICATIVO
-   (NUNCA duplicar isso)
-====================================================== */
-const state = {
-  products: [],      // todos os produtos (cardápio completo)
-  cart: [],          // itens no carrinho
-  offers: {},        // ofertas ativas { productId: {price, start, end} }
-  adminPrices: {},   // preços alterados pelo admin { productId: price }
-  sales: [],         // histórico de vendas
-  ui: {
-    currentTab: null,
-    isOpen: true
-  }
-};
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Rabika's Burguer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-/* ======================================================
-   CONFIGURAÇÕES GERAIS
-====================================================== */
-const CONFIG = {
-  adminPassword: "1234",
-  taxaEntrega: 8,
-  horario: {
-    fechadoDia: 1,        // segunda-feira
-    abre: 18.5,           // 18:30
-    fecha: 22.5           // 22:30
-  }
-};
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
-/* ======================================================
-   FUNÇÃO DE HORÁRIO (ISOLADA)
-====================================================== */
-function checkIsOpen(date = new Date()) {
-  const day = date.getDay();
-  const hour = date.getHours() + date.getMinutes() / 60;
-
-  if (day === CONFIG.horario.fechadoDia) return false;
-  if (hour < CONFIG.horario.abre || hour > CONFIG.horario.fecha) return false;
-  return true;
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
+  color:#fff;
 }
 
-/* ======================================================
-   MODELO DE PRODUTO
-====================================================== */
-/*
-Produto = {
-  id: string,
-  name: string,
-  category: string,
-  price: number,
-  active: boolean
+/* SPLASH */
+#splash{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg,#05002e,#020018);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
 }
-*/
-
-/* ======================================================
-   CARRINHO — FUNÇÕES PURAS
-====================================================== */
-function addToCart(productId) {
-  const product = state.products.find(p => p.id === productId && p.active);
-  if (!product) return false;
-
-  state.cart.push({
-    id: product.id,
-    name: product.name,
-    price: getFinalPrice(product),
-    category: product.category
-  });
-  return true;
+.splash-box{text-align:center}
+.splash-box h1{
+  font-size:36px;
+  color:#FFD34D;
+  margin-bottom:20px;
+}
+.splash-btn{
+  padding:16px 40px;
+  font-size:20px;
+  font-weight:800;
+  border:none;
+  border-radius:40px;
+  background:#FFD34D;
+  color:#2b0033;
+  cursor:pointer;
 }
 
-function removeFromCart(index) {
-  if (index < 0 || index >= state.cart.length) return;
-  state.cart.splice(index, 1);
+/* APP */
+#app{
+  display:none;
+  max-width:420px;
+  margin:0 auto;
+  padding:16px 16px 120px;
+}
+.header{
+  text-align:center;
+  font-size:28px;
+  font-weight:800;
+  color:#FFD34D;
+  margin-bottom:10px;
+}
+#closed{
+  display:none;
+  background:#b00020;
+  padding:10px;
+  border-radius:16px;
+  text-align:center;
+  font-size:13px;
+  margin-bottom:12px;
+}
+.search{
+  width:100%;
+  padding:14px;
+  border-radius:22px;
+  border:none;
+  margin-bottom:14px;
 }
 
-function clearCart() {
-  state.cart = [];
+/* TABS */
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+  margin-bottom:14px;
+}
+.tab{
+  background:#fff;
+  color:#2b0033;
+  padding:10px;
+  border-radius:18px;
+  font-size:12px;
+  font-weight:700;
+  text-align:center;
+  cursor:pointer;
+}
+.tab.active{background:#FFD34D}
+
+/* CONTEÚDO */
+.box{
+  display:none;
+  background:#fff;
+  color:#2b0033;
+  border-radius:24px;
+  padding:14px;
+}
+.box.active{display:block}
+
+/* ITEM */
+.item{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px dashed #ddd;
+}
+.item:last-child{border:none}
+.item button{
+  background:#5a0070;
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  padding:4px 10px;
+  font-weight:800;
 }
 
-function calculateTotal(isDelivery = false) {
-  let total = 0;
-  state.cart.forEach(i => total += i.price);
-  if (isDelivery) total += CONFIG.taxaEntrega;
-  return total;
+/* CARRINHO */
+#cart{
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  color:#2b0033;
+  padding:14px;
+  border-radius:24px 24px 0 0;
 }
+</style>
+</head>
 
-/* ======================================================
-   PREÇOS E OFERTAS
-====================================================== */
-function getFinalPrice(product) {
-  const adminPrice = state.adminPrices[product.id];
-  const offer = state.offers[product.id];
+<body>
 
-  if (offer) {
-    const today = new Date().toISOString().split("T")[0];
-    if (today >= offer.start && today <= offer.end) {
-      return offer.price;
-    }
-  }
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-box">
+    <h1>Rabika's Burguer</h1>
+    <button class="splash-btn" onclick="startApp()">Fazer Pedido</button>
+  </div>
+</div>
 
-  return adminPrice ?? product.price;
-}
+<!-- APP -->
+<div id="app">
+  <div class="header">Rabika's Burguer</div>
+  <div id="closed">🔴 Estamos fechados — Terça a Domingo 18:30 às 22:30</div>
 
-/* ======================================================
-   BUSCA GLOBAL (SEM DOM)
-====================================================== */
-function searchProducts(query) {
-  const q = query.toLowerCase();
-  return state.products.filter(
-    p => p.active && p.name.toLowerCase().includes(q)
-  );
-}
+  <input class="search" placeholder="Pesquisar no cardápio..." oninput="search(this.value)">
 
-/* ======================================================
-   ADMIN — CONTROLE
-====================================================== */
-function adminLogin(password) {
-  return password === CONFIG.adminPassword;
-}
-
-function setAdminPrice(productId, newPrice) {
-  state.adminPrices[productId] = Number(newPrice);
-}
-
-function setOffer(productId, price, start, end) {
-  state.offers[productId] = {
-    price: Number(price),
-    start,
-    end
-  };
-}
-
-function removeOffer(productId) {
-  delete state.offers[productId];
-}
-
-function toggleProductActive(productId) {
-  const product = state.products.find(p => p.id === productId);
-  if (product) product.active = !product.active;
-}
-
-/* ======================================================
-   VENDAS / RELATÓRIO
-====================================================== */
-function registerSale({ total, payment }) {
-  state.sales.push({
-    date: new Date().toISOString(),
-    total,
-    payment
-  });
-}
-
-function getSalesReport() {
-  let report = { total: 0, dinheiro: 0, pix: 0, cartao: 0 };
-
-  state.sales.forEach(s => {
-    report.total += s.total;
-    if (s.payment === "Dinheiro") report.dinheiro += s.total;
-    if (s.payment === "Pix") report.pix += s.total;
-    if (s.payment.includes("Cartão")) report.cartao += s.total;
-  });
-
-  return report;
-}
-       /* ======================================================
-   CARDÁPIO COMPLETO — PRODUTOS BASE
-====================================================== */
-state.products = [
-
-  /* ================= LANCHES ================= */
-  { id:"L01", name:"X-Salada", category:"lanches", price:17, active:true },
-  { id:"L02", name:"X-Burguer", category:"lanches", price:14, active:true },
-  { id:"L03", name:"X-Frango", category:"lanches", price:22, active:true },
-  { id:"L04", name:"X-Frango Cremoso", category:"lanches", price:20, active:true },
-  { id:"L05", name:"X-Bacon", category:"lanches", price:25, active:true },
-  { id:"L06", name:"X-Calabresa", category:"lanches", price:25, active:true },
-  { id:"L07", name:"X-Coração", category:"lanches", price:27, active:true },
-  { id:"L08", name:"X-Tudo", category:"lanches", price:32, active:true },
-  { id:"L09", name:"X-Burguer Duplo", category:"lanches", price:22, active:true },
-  { id:"L10", name:"X-Egg", category:"lanches", price:20, active:true },
-  { id:"L11", name:"X-Tribom", category:"lanches", price:32, active:true },
-  { id:"L12", name:"X-Da Casa", category:"lanches", price:45, active:true },
-  { id:"L13", name:"X-Dog", category:"lanches", price:20, active:true },
-
-  /* -------- ADICIONAIS LANCHES -------- */
-  { id:"AL01", name:"Calabresa (Adicional)", category:"adicionais_lanches", price:7, active:true },
-  { id:"AL02", name:"Bacon (Adicional)", category:"adicionais_lanches", price:7, active:true },
-  { id:"AL03", name:"Coração (Adicional)", category:"adicionais_lanches", price:8, active:true },
-  { id:"AL04", name:"Ovo (Adicional)", category:"adicionais_lanches", price:3, active:true },
-  { id:"AL05", name:"Salsicha (Adicional)", category:"adicionais_lanches", price:4, active:true },
-  { id:"AL06", name:"Frango (Adicional)", category:"adicionais_lanches", price:7, active:true },
-  { id:"AL07", name:"Cheddar (Adicional)", category:"adicionais_lanches", price:4, active:true },
-  { id:"AL08", name:"Hambúrguer Artesanal (Adicional)", category:"adicionais_lanches", price:10, active:true },
-  { id:"AL09", name:"Maionese Caseira (Adicional)", category:"adicionais_lanches", price:2, active:true },
-
-  /* ================= PORÇÕES ================= */
-  { id:"P01", name:"Fritas", category:"porcoes", price:24.99, active:true },
-  { id:"P02", name:"Fritas c/ Frango", category:"porcoes", price:39.99, active:true },
-  { id:"P03", name:"Fritas c/ Calabresa", category:"porcoes", price:34.99, active:true },
-  { id:"P04", name:"Fritas c/ Bacon", category:"porcoes", price:34.99, active:true },
-  { id:"P05", name:"Anéis de Cebola", category:"porcoes", price:24.99, active:true },
-  { id:"P06", name:"Fritas c/ Bacon, Calabresa e Queijo", category:"porcoes", price:39.99, active:true },
-  { id:"P07", name:"Fritas c/ Bacon Cheddar", category:"porcoes", price:39.99, active:true },
-  { id:"P08", name:"Fritas c/ Polenta e Frango", category:"porcoes", price:39.99, active:true },
-  { id:"P09", name:"Fritas c/ Polenta", category:"porcoes", price:24.99, active:true },
-  { id:"P10", name:"Fritas c/ Calabresa e Catupiry", category:"porcoes", price:35.99, active:true },
-  { id:"P11", name:"Fritas, Polenta, Chuleta e Anel de Cebola", category:"porcoes", price:49.99, active:true },
-
-  /* ================= PASTÉIS ================= */
-  { id:"PA01", name:"Pastel de Carne", category:"pasteis", price:14, active:true },
-  { id:"PA02", name:"Pastel de Frango", category:"pasteis", price:12, active:true },
-  { id:"PA03", name:"Frango Bacon Cheddar", category:"pasteis", price:16, active:true },
-  { id:"PA04", name:"Bacon Cheddar", category:"pasteis", price:15, active:true },
-  { id:"PA05", name:"Calabresa c/ Cebola", category:"pasteis", price:14, active:true },
-  { id:"PA06", name:"Carne e Queijo", category:"pasteis", price:15, active:true },
-  { id:"PA07", name:"Queijo", category:"pasteis", price:14, active:true },
-  { id:"PA08", name:"Chocolate ao Leite", category:"pasteis", price:15, active:true },
-  { id:"PA09", name:"Banana Queijo Canela", category:"pasteis", price:15, active:true },
-  { id:"PA10", name:"Romeu e Julieta", category:"pasteis", price:15, active:true },
-  { id:"PA11", name:"Chocolate Branco", category:"pasteis", price:15, active:true },
-  { id:"PA12", name:"Creme e Ouro Branco", category:"pasteis", price:15, active:true },
-  { id:"PA13", name:"Creme e Sonho de Valsa", category:"pasteis", price:15, active:true },
-
-  /* ================= AÇAÍ (TAMANHOS) ================= */
-  { id:"A01", name:"Açaí 300ml", category:"acai_tamanho", price:12, active:true },
-  { id:"A02", name:"Açaí 400ml", category:"acai_tamanho", price:15, active:true },
-  { id:"A03", name:"Açaí 500ml", category:"acai_tamanho", price:18, active:true },
-
-  /* -------- ADICIONAIS AÇAÍ -------- */
-  { id:"AA01", name:"Paçoca", category:"acai_adicional", price:2, active:true },
-  { id:"AA02", name:"Leite em pó", category:"acai_adicional", price:4, active:true },
-  { id:"AA03", name:"Granola", category:"acai_adicional", price:4, active:true },
-  { id:"AA04", name:"Morango", category:"acai_adicional", price:4, active:true },
-  { id:"AA05", name:"M&M", category:"acai_adicional", price:3, active:true },
-  { id:"AA06", name:"Ouro Branco", category:"acai_adicional", price:3, active:true },
-  { id:"AA07", name:"Banana", category:"acai_adicional", price:2, active:true },
-  { id:"AA08", name:"Sonho de Valsa", category:"acai_adicional", price:3, active:true },
-  { id:"AA09", name:"Leite Condensado", category:"acai_adicional", price:3, active:true },
-  { id:"AA10", name:"Nutella", category:"acai_adicional", price:4, active:true },
-
-  /* ================= BEBIDAS ================= */
-  { id:"B01", name:"Cassulinha 200ml", category:"bebidas", price:3, active:true },
-  { id:"B02", name:"Coca-Cola 600ml", category:"bebidas", price:8, active:true },
-  { id:"B03", name:"Coca-Cola 2L", category:"bebidas", price:16, active:true },
-  { id:"B04", name:"Refri Lata", category:"bebidas", price:6, active:true },
-  { id:"B05", name:"Refrigerante 2L", category:"bebidas", price:12, active:true },
-  { id:"B06", name:"Cerveja Lata 350ml", category:"bebidas", price:6, active:true },
-  { id:"B07", name:"Achocolatado 200ml", category:"bebidas", price:3, active:true }
-];
-<script>
-/* ======================================================
-   START DO APP
-====================================================== */
-function startApp(){
-  document.getElementById("splash").style.display="none";
-  document.getElementById("app").style.display="block";
-
-  state.ui.isOpen = checkIsOpen();
-  document.getElementById("closedMsg").style.display =
-    state.ui.isOpen ? "none" : "block";
-
-  state.ui.currentTab = null;
-  document.getElementById("content").innerHTML =
-    "<p>Escolha uma categoria acima</p>";
-}
-
-/* ======================================================
-   ABAS (ABREM SÓ QUANDO CLICADAS)
-====================================================== */
-function openTab(category){
-  state.ui.currentTab = category;
-  renderCategory(category);
-}
-
-/* ======================================================
-   RENDER DE CATEGORIA
-====================================================== */
-function renderCategory(category){
-  const container = document.getElementById("content");
-  container.innerHTML = "";
-
-  let list = [];
-
-  if(category === "acai"){
-    list = state.products.filter(p =>
-      p.category === "acai_tamanho" ||
-      p.category === "acai_adicional"
-    );
-  }else{
-    list = state.products.filter(p => p.category === category);
-  }
-
-  list
-    .filter(p => p.active)
-    .forEach(p=>{
-      const price = getFinalPrice(p);
-
-      const div = document.createElement("div");
-      div.innerHTML = `
-        <strong>${p.name}</strong><br>
-        R$ ${price.toFixed(2).replace(".",",")}
-        <button onclick="handleAdd('${p.id}')">+</button>
-        <hr>
-      `;
-      container.appendChild(div);
-    });
-}
-
-/* ======================================================
-   BUSCA GLOBAL (FUNCIONA EM TODAS AS ABAS)
-====================================================== */
-function onSearch(text){
-  const q = text.trim().toLowerCase();
-  const container = document.getElementById("content");
-  container.innerHTML = "";
-
-  if(q === ""){
-    if(state.ui.currentTab){
-      renderCategory(state.ui.currentTab);
-    }
-    return;
-  }
-
-  const results = searchProducts(q);
-
-  if(results.length === 0){
-    container.innerHTML = "<p>Nenhum produto encontrado</p>";
-    return;
-  }
-
-  results.forEach(p=>{
-    const price = getFinalPrice(p);
-    const div = document.createElement("div");
-    div.innerHTML = `
-      <strong>${p.name}</strong><br>
-      R$ ${price.toFixed(2).replace(".",",")}
-      <button onclick="handleAdd('${p.id}')">+</button>
-      <hr>
-    `;
-    container.appendChild(div);
-  });
-}
-
-/* ======================================================
-   ADICIONAR AO CARRINHO
-====================================================== */
-function handleAdd(productId){
-  if(!checkIsOpen()){
-    alert("Estamos fechados no momento");
-    return;
-  }
-
-  addToCart(productId);
-  renderCart();
-}
-
-/* ======================================================
-   RENDER DO CARRINHO
-====================================================== */
-function renderCart(){
-  const cartBox = document.getElementById("cart");
-  const itemsBox = document.getElementById("cartItems");
-  const totalBox = document.getElementById("cartTotal");
-
-  itemsBox.innerHTML = "";
-
-  if(state.cart.length === 0){
-    cartBox.style.display="none";
-    return;
-  }
-
-  cartBox.style.display="block";
-
-  state.cart.forEach((i,idx)=>{
-    const div = document.createElement("div");
-    div.innerHTML = `
-      ${i.name} — R$ ${i.price.toFixed(2).replace(".",",")}
-      <button onclick="removeItem(${idx})">x</button>
-    `;
-    itemsBox.appendChild(div);
-  });
-
-  totalBox.innerHTML =
-    "Total: R$ " +
-    calculateTotal(false).toFixed(2).replace(".",",");
-}
-
-/* ======================================================
-   REMOVER ITEM
-====================================================== */
-function removeItem(index){
-  removeFromCart(index);
-  renderCart();
-}
-</script>
-<!-- FINALIZAÇÃO -->
-<div id="checkout" style="display:none">
-  <h3>Finalizar Pedido</h3>
-
-  <input id="clientName" placeholder="Seu nome">
-
-  <div>
-    <label>
-      <input type="radio" name="delivery" checked onclick="setDelivery(false)">
-      Retirada
-    </label>
-    <label>
-      <input type="radio" name="delivery" onclick="setDelivery(true)">
-      Entrega (+ R$ 8)
-    </label>
+  <div class="tabs">
+    <div class="tab active" onclick="openTab('lanches',this)">Lanches</div>
+    <div class="tab" onclick="openTab('porcoes',this)">Porções</div>
+    <div class="tab" onclick="openTab('pasteis',this)">Pastéis</div>
+    <div class="tab" onclick="openTab('acai',this)">Açaí</div>
+    <div class="tab" onclick="openTab('bebidas',this)">Bebidas</div>
   </div>
 
-  <input id="clientAddress" placeholder="Endereço" style="display:none">
-
-  <select id="paymentMethod">
-    <option value="">Forma de pagamento</option>
-    <option>Dinheiro</option>
-    <option>Pix</option>
-    <option>Cartão Débito</option>
-    <option>Cartão Crédito</option>
-  </select>
-
-  <button onclick="confirmOrder()">Confirmar Pedido</button>
+  <div id="lanches" class="box active"></div>
+  <div id="porcoes" class="box"></div>
+  <div id="pasteis" class="box"></div>
+  <div id="acai" class="box"></div>
+  <div id="bebidas" class="box"></div>
 </div>
 
-<!-- ADMIN — OFERTAS -->
-<div id="adminOffers" style="display:none">
-  <h3>Painel de Ofertas</h3>
-  <div id="offerList"></div>
-  <button onclick="closeAdmin()">Fechar</button>
+<!-- CARRINHO -->
+<div id="cart">
+  <strong>Carrinho ativo</strong>
 </div>
 
-<!-- ADMIN — RELATÓRIO -->
-<div id="adminReport" style="display:none">
-  <h3>Relatório do Dia</h3>
-  <pre id="reportText"></pre>
-  <button onclick="closeAdmin()">Fechar</button>
-</div>
 <script>
-/* ======================================================
-   ENTREGA
-====================================================== */
-function setDelivery(value){
-  state.delivery = value;
-  document.getElementById("clientAddress").style.display =
-    value ? "block" : "none";
+/* ESTADO */
+let currentTab = 'lanches';
+
+/* START */
+function startApp(){
+  document.getElementById('splash').style.display='none';
+  document.getElementById('app').style.display='block';
+  checkOpen();
+  renderBase();
 }
 
-/* ======================================================
-   ABRIR CHECKOUT
-====================================================== */
-function openCheckout(){
-  if(state.cart.length === 0){
-    alert("Carrinho vazio");
-    return;
-  }
-
-  const hasDrink = state.cart.some(i =>
-    state.products.find(p => p.id === i.id)?.category === "bebidas"
-  );
-
-  if(!hasDrink){
-    if(confirm("Vai querer bebida?")){
-      openTab("bebidas");
-      return;
-    }
-  }
-
-  document.getElementById("checkout").style.display="block";
+/* HORÁRIO */
+function checkOpen(){
+  const d=new Date();
+  const h=d.getHours()+d.getMinutes()/60;
+  const closed = d.getDay()===1 || h<18.5 || h>22.5;
+  document.getElementById('closed').style.display = closed?'block':'none';
 }
 
-/* ======================================================
-   CONFIRMAR PEDIDO
-====================================================== */
-function confirmOrder(){
-  const name = document.getElementById("clientName").value;
-  const address = document.getElementById("clientAddress").value;
-  const payment = document.getElementById("paymentMethod").value;
-
-  if(!name) return alert("Informe seu nome");
-  if(state.delivery && !address) return alert("Informe o endereço");
-  if(!payment) return alert("Informe a forma de pagamento");
-
-  sendWhatsApp(name,address,payment);
+/* TABS */
+function openTab(id,el){
+  currentTab=id;
+  document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
 }
-</script>
-<script>
-function sendWhatsApp(name,address,payment){
-  let msg = "🍔 *Pedido Rabika's Burguer*\n\n";
-  let total = 0;
 
-  state.cart.forEach(i=>{
-    msg += `- ${i.name} R$ ${i.price.toFixed(2).replace(".",",")}\n`;
-    total += i.price;
+/* BASE DE TESTE */
+const base={
+  lanches:['X-Salada','X-Burguer'],
+  porcoes:['Fritas'],
+  pasteis:['Pastel de Carne'],
+  acai:['Açaí 300ml'],
+  bebidas:['Refrigerante']
+};
+
+function renderBase(){
+  Object.keys(base).forEach(cat=>{
+    const box=document.getElementById(cat);
+    box.innerHTML='';
+    base[cat].forEach(n=>{
+      box.innerHTML+=`
+        <div class="item">
+          <span>${n}</span>
+          <button onclick="add()">+</button>
+        </div>`;
+    });
   });
+}
 
-  if(state.delivery){
-    msg += "\nEntrega: R$ 8,00\n";
-    total += state.freight;
-    msg += "Endereço: " + address + "\n";
-  }else{
-    msg += "\nRetirada no local\n";
-  }
+function add(){
+  document.getElementById('cart').style.display='block';
+}
 
-  msg += "\nPagamento: " + payment;
-  msg += "\n\nTotal: R$ " + total.toFixed(2).replace(".",",");
-
-  // salva venda
-  state.sales.push({
-    date: new Date().toISOString(),
-    total,
-    payment
+/* BUSCA */
+function search(v){
+  v=v.toLowerCase();
+  document.querySelectorAll('.item').forEach(i=>{
+    i.style.display=i.innerText.toLowerCase().includes(v)?'flex':'none';
   });
-  saveStorage();
-
-  window.open(
-    "https://wa.me/554991789706?text=" +
-    encodeURIComponent(msg)
-  );
-}
-</script>
-<script>
-/* ======================================================
-   ADMIN VIA BUSCA
-====================================================== */
-function adminCommand(text){
-  if(text === "oferta"){
-    askPassword(()=>openOffers());
-  }
-  if(text === "relatorio"){
-    askPassword(()=>openReport());
-  }
-}
-
-function askPassword(cb){
-  const s = prompt("Senha do administrador:");
-  if(s === "1234") cb();
-  else alert("Senha incorreta");
-}
-
-/* ======================================================
-   OFERTAS
-====================================================== */
-function openOffers(){
-  const box = document.getElementById("offerList");
-  box.innerHTML = "";
-
-  state.products.forEach(p=>{
-    if(!p.active) return;
-
-    box.innerHTML += `
-      <div>
-        <strong>${p.name}</strong><br>
-        <input type="number" placeholder="Preço oferta" id="ofp_${p.id}">
-        <input type="date" id="ofi_${p.id}">
-        <input type="date" id="off_${p.id}">
-        <button onclick="saveOffer('${p.id}')">Salvar</button>
-      </div><hr>
-    `;
-  });
-
-  document.getElementById("adminOffers").style.display="block";
-}
-
-function saveOffer(id){
-  const p = state.products.find(x=>x.id===id);
-  p.offer = {
-    price: Number(document.getElementById("ofp_"+id).value),
-    start: document.getElementById("ofi_"+id).value,
-    end: document.getElementById("off_"+id).value
-  };
-  saveStorage();
-  renderCart();
-  alert("Oferta salva");
-}
-
-/* ======================================================
-   RELATÓRIO
-====================================================== */
-function openReport(){
-  let today = new Date().toISOString().split("T")[0];
-  let t=0,d=0,p=0,c=0;
-
-  state.sales.forEach(s=>{
-    if(s.date.startsWith(today)){
-      t+=s.total;
-      if(s.payment==="Dinheiro")d+=s.total;
-      if(s.payment==="Pix")p+=s.total;
-      if(s.payment.includes("Cartão"))c+=s.total;
-    }
-  });
-
-  document.getElementById("reportText").innerText =
-    `Total: R$ ${t.toFixed(2)}\nDinheiro: R$ ${d.toFixed(2)}\nPix: R$ ${p.toFixed(2)}\nCartão: R$ ${c.toFixed(2)}`;
-
-  document.getElementById("adminReport").style.display="block";
-}
-
-function closeAdmin(){
-  document.getElementById("adminOffers").style.display="none";
-  document.getElementById("adminReport").style.display="none";
 }
 </script>
 
 </body>
 </html>
-
-
