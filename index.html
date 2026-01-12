@@ -8,8 +8,6 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 
 <title>Rabika's Burguer</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
@@ -39,22 +37,13 @@ body{
   justify-content:center;
   z-index:9999;
 }
-.splash-box{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
-}
-.splash-logo{
-  width:80vw;
-  max-width:360px;
-  margin-bottom:26px;
-}
+.splash-box{text-align:center}
+.splash-logo{width:85vw;max-width:380px;margin-bottom:24px}
 .splash-btn{
-  background:linear-gradient(135deg,#FFD34D,#FFB000);
+  background:#FFD34D;
   border:none;
-  padding:18px 56px;
-  border-radius:48px;
+  padding:18px 60px;
+  border-radius:50px;
   font-size:20px;
   font-weight:900;
   color:#2b0033;
@@ -63,8 +52,8 @@ body{
 /* APP */
 #app{
   width:100%;
-  max-width:460px;
-  padding:14px 14px 340px;
+  max-width:480px;
+  padding:14px 14px 360px;
   display:none;
 }
 .title{
@@ -72,24 +61,26 @@ body{
   font-size:30px;
   font-weight:900;
   color:#FFD34D;
+  margin-bottom:6px;
 }
-#closedBanner{
+#closed{
   display:none;
   background:#b00020;
+  text-align:center;
   padding:10px;
-  border-radius:0 0 18px 18px;
+  border-radius:16px;
   font-size:13px;
   font-weight:700;
-  text-align:center;
-  margin:10px 0;
+  margin-bottom:10px;
 }
+
 .search{
   width:100%;
-  padding:14px;
-  border-radius:22px;
+  padding:14px 18px;
+  border-radius:24px;
   border:none;
-  margin-bottom:12px;
   font-size:16px;
+  margin-bottom:12px;
 }
 
 /* TABS */
@@ -105,10 +96,10 @@ body{
 .tab{
   background:#fff;
   color:#2b0033;
+  border-radius:22px;
   padding:12px;
-  border-radius:20px;
-  font-weight:800;
   text-align:center;
+  font-weight:800;
   cursor:pointer;
 }
 .tab.active{background:#FFD34D}
@@ -117,38 +108,38 @@ body{
 .box{
   background:#fff;
   color:#2b0033;
-  border-radius:28px;
+  border-radius:30px;
   padding:18px;
-  margin-bottom:20px;
   display:none;
 }
 .box.active{display:block}
 
 .section{
+  text-align:center;
   font-weight:900;
   color:#5a0070;
-  margin:18px 0 10px;
-  text-align:center;
+  margin:18px 0 12px;
 }
 
 .item{
   display:grid;
   grid-template-columns:1fr auto auto;
+  align-items:center;
   gap:10px;
-  padding:12px 0;
+  padding:14px 0;
   border-bottom:1px dashed #e3e3e3;
 }
 .item:last-child{border:none}
 .item-name{font-weight:600}
 .item-price{font-weight:900;color:#5a0070}
-.old-price{text-decoration:line-through;color:#999;font-size:12px}
-.offer{color:#b00020;font-weight:900;font-size:13px}
+.old{text-decoration:line-through;color:#999;font-size:12px}
+.offer{color:#b00020;font-size:13px;font-weight:900}
 .btn-add{
   background:#5a0070;
   color:#fff;
   border:none;
-  border-radius:14px;
-  padding:6px 14px;
+  border-radius:16px;
+  padding:6px 16px;
   font-weight:900;
 }
 
@@ -159,11 +150,11 @@ body{
   left:50%;
   transform:translateX(-50%);
   width:100%;
-  max-width:460px;
+  max-width:480px;
   background:#fff;
   color:#2b0033;
   padding:16px;
-  border-radius:28px 28px 0 0;
+  border-radius:30px 30px 0 0;
   display:none;
 }
 .cart-item{
@@ -189,14 +180,10 @@ body{
   padding:12px;
   border-radius:18px;
   border:1px solid #ccc;
-  margin-top:8px;
   font-size:16px;
+  margin-top:8px;
 }
-.total{
-  text-align:right;
-  font-size:18px;
-  font-weight:900;
-}
+.total{text-align:right;font-size:18px;font-weight:900}
 .finish{
   background:#25D366;
   color:#fff;
@@ -215,13 +202,14 @@ body{
   display:none;
   align-items:center;
   justify-content:center;
+  z-index:9999;
 }
-.admin-box{
+.admin{
   background:#fff;
   color:#2b0033;
-  width:92%;
-  max-width:420px;
-  border-radius:26px;
+  width:94%;
+  max-width:440px;
+  border-radius:28px;
   padding:20px;
   max-height:80vh;
   overflow-y:auto;
@@ -231,23 +219,11 @@ body{
   justify-content:space-between;
   align-items:center;
 }
-.admin-close{
-  background:none;
-  border:none;
-  font-size:22px;
-  font-weight:900;
-  cursor:pointer;
-  color:#5a0070;
-}
 .admin-row{
   display:grid;
-  grid-template-columns:1fr 90px 130px auto;
-  gap:6px;
+  grid-template-columns:1fr 90px auto;
+  gap:8px;
   margin-bottom:10px;
-}
-.admin-row.active-admin{
-  border:2px solid #25D366;
-  background:#eafff2;
 }
 .admin-row input{
   padding:8px;
@@ -264,86 +240,14 @@ body{
 </style>
 </head>
 <body>
-
-<!-- SPLASH -->
-<div id="splash">
-  <div class="splash-box">
-    <img src="logo.png" class="splash-logo">
-    <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
-  </div>
-</div>
-
-<!-- APP -->
-<div id="app">
-  <div class="title">Rabika's Burguer</div>
-  <div id="closedBanner">🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30</div>
-
-  <input class="search" id="search" placeholder="Pesquisar no cardápio..." oninput="handleSearch(this.value)">
-
-  <div class="tabs">
-    <div class="tab active" onclick="openTab('lanches',this)">🍔 Lanches</div>
-    <div class="tab" onclick="openTab('porcoes',this)">🍟 Porções</div>
-    <div class="tab" onclick="openTab('pasteis',this)">🥟 Pastéis</div>
-    <div class="tab" onclick="openTab('acai',this)">🍨 Açaí</div>
-    <div class="tab" onclick="openTab('bebidas',this)">🥤 Bebidas</div>
-  </div>
-
-  <div id="lanches" class="box active"></div>
-  <div id="porcoes" class="box"></div>
-  <div id="pasteis" class="box"></div>
-  <div id="acai" class="box"></div>
-  <div id="bebidas" class="box"></div>
-</div>
-
-<!-- CART -->
-<div id="cart">
-  <div id="cartItems"></div>
-  <div class="delivery">
-    <label><input type="radio" name="del" checked onchange="setDelivery(false)"> Retirada</label>
-    <label><input type="radio" name="del" onchange="setDelivery(true)"> Entrega (+R$8)</label>
-  </div>
-  <input class="input" id="name" placeholder="Seu nome">
-  <input class="input" id="address" placeholder="Endereço" style="display:none">
-  <select class="select" id="payment">
-    <option value="">Forma de pagamento</option>
-    <option>Dinheiro</option>
-    <option>Pix</option>
-    <option>Cartão</option>
-  </select>
-  <div class="total" id="total">Total: R$ 0,00</div>
-  <div class="finish" onclick="sendOrder()">Finalizar Pedido</div>
-</div>
-
-<!-- ADMIN -->
-<div id="adminModal" class="modal" onclick="closeAdmin()">
-  <div class="admin-box" onclick="event.stopPropagation()">
-    <div class="admin-header">
-      <h3>Painel de Ofertas</h3>
-      <button class="admin-close" onclick="closeAdmin()">✕</button>
-    </div>
-    <p style="text-align:center;font-size:13px;margin:10px 0">
-      Defina um preço promocional e a data final da oferta
-    </p>
-    <div id="adminList"></div>
-  </div>
-</div>
 <script>
 /* ================= CONFIG ================= */
 const FREIGHT = 8;
-const ADMIN_PASSWORD = "oferta";
-let isDelivery = false;
-let cart = [];
-let offers = JSON.parse(localStorage.getItem("offers")) || {};
+const ADMIN_KEY = "oferta";
 
-/* ================= HORÁRIO ================= */
-function isOpen(){
-  const d = new Date();
-  const day = d.getDay();
-  const h = d.getHours() + d.getMinutes()/60;
-  if(day === 1) return false;
-  if(h < 18.5 || h > 22.5) return false;
-  return true;
-}
+let cart = [];
+let isDelivery = false;
+let offers = JSON.parse(localStorage.getItem("offers")) || {};
 
 /* ================= PRODUTOS ================= */
 const products = {
@@ -400,23 +304,16 @@ function start(){
   document.getElementById("splash").style.display="none";
   document.getElementById("app").style.display="block";
   renderAll();
-  document.getElementById("closedBanner").style.display = isOpen() ? "none" : "block";
 }
 
 /* ================= RENDER ================= */
-function itemHTML(p){
-  const offer = offers[p.n];
-  const price = offer ? offer.price : p.p;
-  return `
-  <div class="item">
-    <div class="item-name">
-      ${p.n}
-      ${offer ? `<div class="old-price">R$ ${p.p.toFixed(2).replace('.',',')}</div>` : ``}
-      ${offer ? `<div class="offer">Oferta</div>` : ``}
-    </div>
-    <div class="item-price">R$ ${price.toFixed(2).replace('.',',')}</div>
-    <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
-  </div>`;
+function renderAll(){
+  renderCategory("lanches",products.lanches,products.adicionais);
+  renderCategory("porcoes",products.porcoes);
+  renderCategory("pasteis",products.pasteis);
+  renderAcai();
+  renderCategory("bebidas",products.bebidas);
+  renderAdmin();
 }
 
 function renderCategory(id,list,extra){
@@ -437,15 +334,21 @@ function renderAcai(){
   products.acaiA.forEach(p=>box.innerHTML+=itemHTML(p));
 }
 
-function renderAll(){
-  renderCategory("lanches",products.lanches,products.adicionais);
-  renderCategory("porcoes",products.porcoes);
-  renderCategory("pasteis",products.pasteis);
-  renderAcai();
-  renderCategory("bebidas",products.bebidas);
-  renderAdmin();
+function itemHTML(p){
+  const o=offers[p.n];
+  const price=o?o.price:p.p;
+  return `
+  <div class="item" data-name="${p.n.toLowerCase()}">
+    <div class="item-name">
+      ${p.n}
+      ${o?`<div class="old">R$ ${p.p.toFixed(2).replace('.',',')}</div>
+          <div class="offer">OFERTA</div>`:""}
+    </div>
+    <div class="item-price">R$ ${price.toFixed(2).replace('.',',')}</div>
+    <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
+  </div>`;
 }
-
+<script>
 /* ================= ABAS ================= */
 function openTab(id,el){
   document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
@@ -454,12 +357,40 @@ function openTab(id,el){
   el.classList.add("active");
 }
 
-/* ================= BUSCA ================= */
+/* ================= BUSCA GLOBAL ================= */
 function handleSearch(v){
-  v=v.toLowerCase();
-  document.querySelectorAll(".item").forEach(i=>{
-    i.style.display = i.innerText.toLowerCase().includes(v) ? "grid" : "none";
+  v=v.toLowerCase().trim();
+
+  if(v===ADMIN_KEY){
+    openAdmin();
+    document.getElementById("search").value="";
+    return;
+  }
+
+  if(!v){
+    renderAll();
+    return;
+  }
+
+  let first=null;
+
+  document.querySelectorAll(".box").forEach(box=>{
+    let found=false;
+    box.querySelectorAll(".item").forEach(i=>{
+      const match=i.dataset.name.includes(v);
+      i.style.display=match?"grid":"none";
+      if(match) found=true;
+    });
+    if(found&&!first) first=box.id;
   });
+
+  if(first){
+    document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
+    document.getElementById(first).classList.add("active");
+    document.querySelectorAll(".tab").forEach(t=>{
+      t.classList.toggle("active",t.innerText.toLowerCase().includes(first));
+    });
+  }
 }
 
 /* ================= CARRINHO ================= */
@@ -476,7 +407,7 @@ function updateCart(){
     total+=i.p*i.q;
     box.innerHTML+=`
     <div class="cart-item">
-      <span>${i.n}</span>
+      <span>${i.n} x${i.q}</span>
       <div class="qty">
         <button onclick="chg(${idx},-1)">-</button>
         <button onclick="chg(${idx},1)">+</button>
@@ -500,27 +431,9 @@ function setDelivery(v){
   updateCart();
 }
 
-/* ================= WHATSAPP ================= */
-function sendOrder(){
-  const name=document.getElementById("name").value;
-  const pay=document.getElementById("payment").value;
-  const addr=document.getElementById("address").value;
-  if(!name||!pay||(isDelivery&&!addr)) return alert("Preencha todos os dados");
-
-  let msg="🍔 Pedido Rabika's Burguer\n\n";
-  cart.forEach(i=>msg+=`- ${i.n} x${i.q}\n`);
-  if(isDelivery) msg+="Entrega: R$ 8\n";
-  msg+=document.getElementById("total").innerText;
-
-  window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg));
-}
-
 /* ================= ADMIN ================= */
 function openAdmin(){
-  const pass=prompt("Senha do ADM:");
-  if(pass===ADMIN_PASSWORD){
-    document.getElementById("adminModal").style.display="flex";
-  }
+  document.getElementById("adminModal").style.display="flex";
 }
 
 function closeAdmin(){
@@ -531,21 +444,18 @@ function renderAdmin(){
   const list=document.getElementById("adminList");
   list.innerHTML="";
   Object.values(products).flat().forEach(p=>{
-    if(!p.n) return;
     list.innerHTML+=`
     <div class="admin-row ${offers[p.n]?'active-admin':''}">
-      <input value="${p.n}" disabled>
-      <input type="number" placeholder="Oferta" id="of-${p.n}">
-      <input type="date" id="dt-${p.n}">
-      <button onclick="setOffer('${p.n}',${p.p})">OK</button>
+      <input value="${p.n}" readonly>
+      <input type="number" placeholder="Preço oferta">
+      <button onclick="setOffer('${p.n}',this.previousElementSibling.value)">OK</button>
       ${offers[p.n]?`<button class="admin-remove" onclick="removeOffer('${p.n}')">X</button>`:""}
     </div>`;
   });
 }
 
-function setOffer(n,p){
-  const v=document.getElementById("of-"+n).value;
-  if(!v) return;
+function setOffer(n,v){
+  if(!v)return;
   offers[n]={price:parseFloat(v)};
   localStorage.setItem("offers",JSON.stringify(offers));
   renderAll();
@@ -557,10 +467,24 @@ function removeOffer(n){
   renderAll();
 }
 
-/* ================= GATILHO ADM ================= */
-document.getElementById("search").addEventListener("input",e=>{
-  if(e.target.value.toLowerCase()==="oferta") openAdmin();
-});
+/* ================= WHATSAPP ================= */
+function sendOrder(){
+  const name=document.getElementById("name").value;
+  const pay=document.getElementById("payment").value;
+  const addr=document.getElementById("address").value;
+  if(!name||!pay||(isDelivery&&!addr)){
+    alert("Preencha todos os dados");
+    return;
+  }
+
+  let msg="🍔 Pedido Rabika's Burguer\n\n";
+  cart.forEach(i=>msg+=`- ${i.n} x${i.q}\n`);
+  if(isDelivery) msg+="Entrega: R$ 8\n";
+  msg+=document.getElementById("total").innerText;
+
+  window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg));
+}
 </script>
+
 </body>
 </html>
