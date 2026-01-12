@@ -11,7 +11,6 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
 body{
   font-family:'Poppins',sans-serif;
   background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
@@ -22,20 +21,13 @@ body{
 
 /* SPLASH */
 #splash{
-  position:fixed;
-  inset:0;
+  position:fixed; inset:0;
   background:linear-gradient(180deg,#05002e,#020018);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:flex; align-items:center; justify-content:center;
   z-index:9999;
 }
 .splash-box{text-align:center}
-.splash-logo{
-  width:90%;
-  max-width:340px;
-  margin-bottom:32px;
-}
+.splash-logo{width:90%;max-width:340px;margin-bottom:30px}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
   border:none;
@@ -44,7 +36,6 @@ body{
   font-size:22px;
   font-weight:900;
   color:#2b0033;
-  cursor:pointer;
 }
 
 /* APP */
@@ -54,27 +45,24 @@ body{
   padding:14px 14px 320px;
   display:none;
 }
-
 .title{
   text-align:center;
   font-size:30px;
   font-weight:900;
   color:#FFD34D;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
-
 #closedBanner{
   background:#b00020;
-  color:#fff;
-  text-align:center;
   padding:12px;
   border-radius:18px;
   font-size:13px;
-  font-weight:600;
+  text-align:center;
   margin-bottom:10px;
+  display:none;
 }
 
-/* BUSCA */
+/* SEARCH */
 .search{
   width:100%;
   padding:14px 16px;
@@ -98,11 +86,10 @@ body{
   border-radius:22px;
   font-weight:800;
   text-align:center;
-  cursor:pointer;
 }
 .tab.active{background:#FFD34D}
 
-/* CONTEÚDO */
+/* CONTENT */
 .box{
   background:#fff;
   color:#2b0033;
@@ -132,14 +119,12 @@ body{
   border-radius:14px;
   padding:6px 14px;
   font-weight:900;
-  cursor:pointer;
 }
 
-/* CARRINHO */
+/* CART */
 #cart{
   position:fixed;
-  bottom:0;
-  left:50%;
+  bottom:0; left:50%;
   transform:translateX(-50%);
   width:100%;
   max-width:420px;
@@ -148,7 +133,6 @@ body{
   padding:18px;
   border-radius:28px 28px 0 0;
   display:none;
-  z-index:999;
 }
 .cart-item{
   display:flex;
@@ -157,21 +141,46 @@ body{
 }
 .cart-item strong{color:#5a0070}
 
+/* MODAL */
+.modal{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
+}
+.modal-box{
+  background:#fff;
+  color:#2b0033;
+  width:92%;
+  max-width:420px;
+  border-radius:26px;
+  padding:20px;
+  max-height:85vh;
+  overflow-y:auto;
+  position:relative;
+}
+.modal-close{
+  position:absolute;
+  top:12px;
+  right:14px;
+  font-size:22px;
+  font-weight:900;
+}
 .btn-green{
   background:#25D366;
   color:#fff;
   border:none;
-  padding:16px;
-  border-radius:26px;
+  padding:14px;
+  border-radius:22px;
   font-weight:900;
   width:100%;
-  margin-top:10px;
 }
 </style>
 </head>
 
 <body>
-
 <!-- SPLASH -->
 <div id="splash">
   <div class="splash-box">
@@ -179,19 +188,15 @@ body{
     <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
   </div>
 </div>
+
 <!-- APP -->
 <div id="app">
   <div class="title">Rabika's Burguer</div>
-
   <div id="closedBanner">
     🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30
   </div>
 
-  <input
-    class="search"
-    placeholder="Pesquisar no cardápio..."
-    oninput="handleSearch(this.value)"
-  >
+  <input id="search" class="search" placeholder="Pesquisar no cardápio...">
 
   <div class="tabs">
     <div class="tab active" onclick="openTab('lanches',this)">🍔 Lanches</div>
@@ -211,19 +216,37 @@ body{
 <!-- CARRINHO -->
 <div id="cart">
   <div id="cartItems"></div>
-  <div id="total" style="text-align:right;font-weight:900">
+  <div id="total" style="font-weight:900;text-align:right;margin-top:8px">
     Total: R$ 0,00
   </div>
-  <button class="btn-green" onclick="finishOrder()">
+  <button class="btn-green" style="margin-top:10px" onclick="finishOrder()">
     Finalizar Pedido
   </button>
+</div>
+
+<!-- PAINEL ADMIN -->
+<div id="adminPanel" class="modal">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeAdmin()">✕</div>
+    <h2 style="text-align:center;color:#5a0070">Painel Administrativo</h2>
+    <p style="text-align:center;font-size:13px;margin-bottom:14px">
+      Alterar preços e ocultar produtos
+    </p>
+    <div id="adminList"></div>
+  </div>
 </div>
 <script>
 /* ================= CONFIG ================= */
 const ADMIN_PASSWORD = "1234";
 const FREIGHT = 8;
+
+/* ================= ESTADO ================= */
 let cart = [];
 let currentTab = "lanches";
+
+/* ================= STORAGE ================= */
+let customPrices = JSON.parse(localStorage.getItem("customPrices")) || {};
+let hiddenProducts = JSON.parse(localStorage.getItem("hiddenProducts")) || {};
 
 /* ================= HORÁRIO ================= */
 function isOpen(){
@@ -235,156 +258,207 @@ function isOpen(){
   return true;
 }
 
-/* ================= START ================= */
-function start(){
-  document.getElementById("splash").style.display = "none";
-  document.getElementById("app").style.display = "block";
-  renderAll();
-}
-
 /* ================= PRODUTOS ================= */
 const products = {
-  lanches: [
-    {n:'X-Salada',p:17},{n:'X-Burguer',p:14},{n:'X-Frango',p:22},
-    {n:'X-Frango Cremoso',p:20},{n:'X-Bacon',p:25},{n:'X-Calabresa',p:25},
-    {n:'X-Coração',p:27},{n:'X-Tudo',p:32},{n:'X-Burguer Duplo',p:22},
-    {n:'X-Egg',p:20},{n:'X-Tribom',p:32},{n:'X-Da Casa',p:45},{n:'X-Dog',p:20}
+  lanches:[
+    {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
+    {n:"X-Frango Cremoso",p:20},{n:"X-Bacon",p:25},{n:"X-Calabresa",p:25},
+    {n:"X-Coração",p:27},{n:"X-Tudo",p:32},{n:"X-Burguer Duplo",p:22},
+    {n:"X-Egg",p:20},{n:"X-Tribom",p:32},{n:"X-Da Casa",p:45},{n:"X-Dog",p:20}
   ],
-  adicionaisLanches: [
-    {n:'Calabresa',p:7},{n:'Bacon',p:7},{n:'Coração',p:8},
-    {n:'Ovo',p:3},{n:'Salsicha',p:4},{n:'Frango',p:7},
-    {n:'Cheddar',p:4},{n:'Hambúrguer artesanal',p:10},{n:'Maionese caseira',p:2}
+  adicionaisLanches:[
+    {n:"Calabresa",p:7},{n:"Bacon",p:7},{n:"Coração",p:8},
+    {n:"Ovo",p:3},{n:"Salsicha",p:4},{n:"Frango",p:7},
+    {n:"Cheddar",p:4},{n:"Hambúrguer artesanal",p:10},{n:"Maionese caseira",p:2}
   ],
-  porcoes: [
-    {n:'Fritas',p:24.99},{n:'Fritas c/ Frango',p:39.99},
-    {n:'Fritas c/ Calabresa',p:34.99},{n:'Fritas c/ Bacon',p:34.99},
-    {n:'Anéis de Cebola',p:24.99},
-    {n:'Fritas c/ Bacon, Calabresa e Queijo',p:39.99},
-    {n:'Fritas c/ Bacon Cheddar',p:39.99},
-    {n:'Fritas c/ Polenta e Frango',p:39.99},
-    {n:'Fritas c/ Polenta',p:24.99},
-    {n:'Fritas c/ Calabresa e Catupiry',p:35.99},
-    {n:'Fritas, Polenta, Chuleta e Anel de Cebola',p:49.99}
+  porcoes:[
+    {n:"Fritas",p:24.99},{n:"Fritas c/ Frango",p:39.99},
+    {n:"Fritas c/ Calabresa",p:34.99},{n:"Fritas c/ Bacon",p:34.99},
+    {n:"Anéis de Cebola",p:24.99},
+    {n:"Fritas c/ Bacon, Calabresa e Queijo",p:39.99},
+    {n:"Fritas c/ Bacon Cheddar",p:39.99},
+    {n:"Fritas c/ Polenta e Frango",p:39.99},
+    {n:"Fritas c/ Polenta",p:24.99},
+    {n:"Fritas c/ Calabresa e Catupiry",p:35.99},
+    {n:"Fritas, Polenta, Chuleta e Anel de Cebola",p:49.99}
   ],
-  pasteis: [
-    {n:'Pastel de Carne',p:14},{n:'Pastel de Frango',p:12},
-    {n:'Frango Bacon Cheddar',p:16},{n:'Bacon Cheddar',p:15},
-    {n:'Calabresa c/ Cebola',p:14},{n:'Carne e Queijo',p:15},
-    {n:'Queijo',p:14},{n:'Chocolate ao Leite',p:15},
-    {n:'Banana Queijo Canela',p:15},{n:'Romeu e Julieta',p:15},
-    {n:'Chocolate Branco',p:15},{n:'Creme e Ouro Branco',p:15},
-    {n:'Creme e Sonho de Valsa',p:15}
+  pasteis:[
+    {n:"Pastel de Carne",p:14},{n:"Pastel de Frango",p:12},
+    {n:"Frango Bacon Cheddar",p:16},{n:"Bacon Cheddar",p:15},
+    {n:"Calabresa c/ Cebola",p:14},{n:"Carne e Queijo",p:15},
+    {n:"Queijo",p:14},{n:"Chocolate ao Leite",p:15},
+    {n:"Banana Queijo Canela",p:15},{n:"Romeu e Julieta",p:15},
+    {n:"Chocolate Branco",p:15},{n:"Creme e Ouro Branco",p:15},
+    {n:"Creme e Sonho de Valsa",p:15}
   ],
-  acaiTamanhos: [
-    {n:'Açaí 300ml',p:12},{n:'Açaí 400ml',p:15},{n:'Açaí 500ml',p:18}
+  acaiTamanhos:[
+    {n:"Açaí 300ml",p:12},{n:"Açaí 400ml",p:15},{n:"Açaí 500ml",p:18}
   ],
-  acaiAdicionais: [
-    {n:'Paçoca',p:2},{n:'Leite em pó',p:4},{n:'Granola',p:4},
-    {n:'Morango',p:4},{n:'M&M',p:3},{n:'Ouro Branco',p:3},
-    {n:'Banana',p:2},{n:'Sonho de Valsa',p:3},
-    {n:'Leite Condensado',p:3},{n:'Nutella',p:4}
+  acaiAdicionais:[
+    {n:"Paçoca",p:2},{n:"Leite em pó",p:4},{n:"Granola",p:4},
+    {n:"Morango",p:4},{n:"M&M",p:3},{n:"Ouro Branco",p:3},
+    {n:"Banana",p:2},{n:"Sonho de Valsa",p:3},
+    {n:"Leite Condensado",p:3},{n:"Nutella",p:4}
   ],
-  bebidas: [
-    {n:'Cassulinha 200ml',p:3},{n:'Coca-Cola 600ml',p:8},
-    {n:'Coca-Cola 2L',p:16},{n:'Refri Lata',p:6},
-    {n:'Refrigerante 2L',p:12},{n:'Cerveja Lata 350ml',p:6},
-    {n:'Achocolatado 200ml',p:3}
+  bebidas:[
+    {n:"Cassulinha 200ml",p:3},{n:"Coca-Cola 600ml",p:8},
+    {n:"Coca-Cola 2L",p:16},{n:"Refri Lata",p:6},
+    {n:"Refrigerante 2L",p:12},{n:"Cerveja Lata 350ml",p:6},
+    {n:"Achocolatado 200ml",p:3}
   ]
 };
 
-/* ================= RENDER ================= */
-function renderAll(){
-  renderCategory("lanches", products.lanches, products.adicionaisLanches);
-  renderCategory("porcoes", products.porcoes);
-  renderCategory("pasteis", products.pasteis);
-  renderAcai();
-  renderCategory("bebidas", products.bebidas);
+/* ================= START ================= */
+function start(){
+  document.getElementById("splash").style.display="none";
+  document.getElementById("app").style.display="block";
+  updateOpenStatus();
+  renderAll();
 }
 
-function renderCategory(id, list, extra){
-  const box = document.getElementById(id);
-  box.innerHTML = "";
-  list.forEach(p => box.innerHTML += itemHTML(p));
+/* ================= STATUS ================= */
+function updateOpenStatus(){
+  document.getElementById("closedBanner").style.display =
+    isOpen() ? "none" : "block";
+}
+
+/* ================= RENDER ================= */
+function renderAll(){
+  renderCategory("lanches",products.lanches,products.adicionaisLanches);
+  renderCategory("porcoes",products.porcoes);
+  renderCategory("pasteis",products.pasteis);
+  renderAcai();
+  renderCategory("bebidas",products.bebidas);
+}
+
+function renderCategory(id,list,extra){
+  const box=document.getElementById(id);
+  box.innerHTML="";
+  list.forEach(p=>{
+    if(hiddenProducts[p.n]) return;
+    box.innerHTML+=itemHTML(p);
+  });
   if(extra){
-    box.innerHTML += "<hr style='margin:14px 0'>";
-    extra.forEach(p => box.innerHTML += itemHTML(p));
+    box.innerHTML+='<div style="font-weight:900;margin:12px 0">➕ Adicionais</div>';
+    extra.forEach(p=>{
+      if(!hiddenProducts[p.n]) box.innerHTML+=itemHTML(p);
+    });
   }
 }
 
 function renderAcai(){
-  const box = document.getElementById("acai");
-  box.innerHTML = "<strong>Tamanhos</strong>";
-  products.acaiTamanhos.forEach(p => box.innerHTML += itemHTML(p));
-  box.innerHTML += "<strong style='display:block;margin-top:14px'>Adicionais</strong>";
-  products.acaiAdicionais.forEach(p => box.innerHTML += itemHTML(p));
+  const box=document.getElementById("acai");
+  box.innerHTML='<div style="font-weight:900;margin-bottom:10px">🥤 Tamanhos</div>';
+  products.acaiTamanhos.forEach(p=>{
+    if(!hiddenProducts[p.n]) box.innerHTML+=itemHTML(p);
+  });
+  box.innerHTML+='<div style="font-weight:900;margin:12px 0">🍫 Adicionais</div>';
+  products.acaiAdicionais.forEach(p=>{
+    if(!hiddenProducts[p.n]) box.innerHTML+=itemHTML(p);
+  });
 }
 
 function itemHTML(p){
+  const price = customPrices[p.n] ?? p.p;
   return `
     <div class="item" data-name="${p.n.toLowerCase()}">
       <span class="item-name">${p.n}</span>
-      <span class="item-price">R$ ${p.p.toFixed(2).replace('.',',')}</span>
-      <button class="btn-add" onclick="addItem('${p.n}',${p.p})">+</button>
+      <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
+      <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
     </div>
   `;
 }
 
-/* ================= BUSCA (CORRIGIDA) ================= */
-function handleSearch(value){
-  const v = value.toLowerCase().trim();
-  document.querySelectorAll(".item").forEach(item=>{
-    item.style.display = (!v || item.dataset.name.includes(v)) ? "grid" : "none";
-  });
-}
-
-/* ================= TABS ================= */
-function openTab(id, el){
-  document.querySelectorAll(".box").forEach(b => b.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-
-  if(el){
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    el.classList.add("active");
-  }
-}
-
 /* ================= CARRINHO ================= */
-function addItem(name, price){
+function addItem(n,p){
   if(!isOpen()){
     alert("Estamos fechados.\nTerça a Domingo das 18:30 às 22:30");
     return;
   }
-  cart.push({name, price});
+  cart.push({name:n,price:p});
   updateCart();
 }
 
 function updateCart(){
-  const list = document.getElementById("cartItems");
-  list.innerHTML = "";
-  let total = 0;
-
-  cart.forEach((i, idx)=>{
-    total += i.price;
-    list.innerHTML += `
+  const list=document.getElementById("cartItems");
+  let total=0;
+  list.innerHTML="";
+  cart.forEach((i,idx)=>{
+    total+=i.price;
+    list.innerHTML+=`
       <div class="cart-item">
         <strong>${i.name}</strong>
-        <span>R$ ${i.price.toFixed(2).replace('.',',')}</span>
-      </div>
-    `;
+        <span>R$ ${i.price.toFixed(2).replace(".",",")}</span>
+      </div>`;
   });
-
   document.getElementById("total").innerText =
-    "Total: R$ " + total.toFixed(2).replace('.',',');
-
+    "Total: R$ "+total.toFixed(2).replace(".",",");
   document.getElementById("cart").style.display =
     cart.length ? "block" : "none";
+}
+
+/* ================= BUSCA ================= */
+document.getElementById("search").addEventListener("input",function(){
+  const v=this.value.toLowerCase().trim();
+
+  if(v==="preço"||v==="precos"){
+    const s=prompt("Senha do administrador:");
+    if(s===ADMIN_PASSWORD) openAdmin();
+    this.value="";
+    return;
+  }
+
+  document.querySelectorAll(".item").forEach(i=>{
+    i.style.display = i.dataset.name.includes(v) ? "grid" : "none";
+  });
+});
+
+/* ================= ADMIN ================= */
+function openAdmin(){
+  document.getElementById("adminPanel").style.display="flex";
+  renderAdmin();
+}
+function closeAdmin(){
+  document.getElementById("adminPanel").style.display="none";
+}
+
+function renderAdmin(){
+  const box=document.getElementById("adminList");
+  box.innerHTML="";
+  Object.values(products).flat().forEach(p=>{
+    const price=customPrices[p.n]??p.p;
+    const hidden=hiddenProducts[p.n];
+    box.innerHTML+=`
+      <div style="margin-bottom:14px">
+        <strong>${p.n}</strong>
+        <input type="number" value="${price}"
+          style="width:100%;padding:10px;border-radius:14px;margin:6px 0"
+          onchange="savePrice('${p.n}',this.value)">
+        <button class="btn-green" onclick="toggleProduct('${p.n}')">
+          ${hidden?"Reativar":"Ocultar"}
+        </button>
+      </div>`;
+  });
+}
+
+function savePrice(n,v){
+  customPrices[n]=Number(v);
+  localStorage.setItem("customPrices",JSON.stringify(customPrices));
+  renderAll();
+}
+
+function toggleProduct(n){
+  hiddenProducts[n]=!hiddenProducts[n];
+  localStorage.setItem("hiddenProducts",JSON.stringify(hiddenProducts));
+  renderAdmin();
+  renderAll();
 }
 </script>
 <script>
 /* ================= FINALIZAR PEDIDO ================= */
 function finishOrder(){
-  const temBebida = cart.some(i =>
-    products.bebidas.some(b => b.n === i.name)
+  const temBebida = cart.some(item =>
+    products.bebidas.some(b => b.n === item.name)
   );
 
   if(!temBebida){
@@ -403,16 +477,27 @@ function sendOrder(){
   let total = 0;
 
   cart.forEach(i=>{
-    msg += `- ${i.name} — R$ ${i.price.toFixed(2).replace('.',',')}\n`;
+    msg += `- ${i.name} — R$ ${i.price.toFixed(2).replace(".",",")}\n`;
     total += i.price;
   });
 
-  msg += `\nTotal: R$ ${total.toFixed(2).replace('.',',')}`;
+  msg += `\nTotal: R$ ${total.toFixed(2).replace(".",",")}`;
 
   window.open(
     "https://wa.me/554991789706?text=" + encodeURIComponent(msg),
     "_blank"
   );
+}
+
+/* ================= TABS ================= */
+function openTab(id,el){
+  document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+
+  if(el){
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    el.classList.add("active");
+  }
 }
 </script>
 
