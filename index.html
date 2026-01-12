@@ -28,14 +28,8 @@ body{
   justify-content:center;
   z-index:9999;
 }
-.splash-box{
-  text-align:center;
-}
-.splash-logo{
-  width:260px;
-  max-width:80%;
-  margin-bottom:28px;
-}
+.splash-box{text-align:center}
+.splash-logo{width:260px;max-width:80%;margin-bottom:28px}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
   border:none;
@@ -54,23 +48,9 @@ body{
   padding:16px 16px 320px;
   display:none;
 }
-.title{
-  text-align:center;
-  font-size:30px;
-  font-weight:900;
-  color:#FFD34D;
-}
-#status{
-  text-align:center;
-  font-size:13px;
-  margin-bottom:6px;
-}
-#hours{
-  text-align:center;
-  font-size:12px;
-  margin-bottom:12px;
-  color:#FFD34D;
-}
+.title{text-align:center;font-size:30px;font-weight:900;color:#FFD34D}
+#status{text-align:center;font-size:13px;margin-bottom:6px}
+#hours{text-align:center;font-size:12px;margin-bottom:12px;color:#FFD34D}
 
 /* BUSCA */
 .search{
@@ -83,13 +63,9 @@ body{
 }
 
 /* TABS */
-.tabs{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:8px;
-}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
 .tab{
-  background:#ffffff;
+  background:#fff;
   color:#2b0033;
   padding:10px 6px;
   border-radius:18px;
@@ -101,13 +77,8 @@ body{
   flex-direction:column;
   gap:4px;
 }
-.tab span{
-  font-size:18px;
-}
-.tab.active{
-  background:#FFD34D;
-  transform:scale(1.05);
-}
+.tab span{font-size:18px}
+.tab.active{background:#FFD34D;transform:scale(1.05)}
 
 /* BOX */
 .box{
@@ -140,11 +111,7 @@ body{
 }
 
 /* SEÇÕES */
-.section{
-  font-weight:900;
-  margin:10px 0;
-  color:#5a0070;
-}
+.section{font-weight:900;margin:10px 0;color:#5a0070}
 
 /* CARRINHO */
 #cart{
@@ -160,11 +127,7 @@ body{
   border-radius:26px 26px 0 0;
   display:none;
 }
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:6px;
-}
+.cart-item{display:flex;justify-content:space-between;margin-bottom:6px}
 .btn-green{
   background:#25D366;
   color:#fff;
@@ -208,37 +171,6 @@ body{
 </head>
 
 <body>
-
-<!-- SPLASH -->
-<div id="splash">
-  <div class="splash-box">
-    <img src="logo.png" class="splash-logo">
-    <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
-  </div>
-</div>
-
-<!-- APP -->
-<div id="app">
-  <div class="title">Rabika's Burguer</div>
-  <div id="status"></div>
-  <div id="hours">🕒 Terça a Domingo — 18:30 às 22:30</div>
-
-  <input id="search" class="search" placeholder="Pesquisar no cardápio...">
-
-  <div class="tabs">
-    <div class="tab" onclick="openTab('lanches',this)"><span>🍔</span>Lanches</div>
-    <div class="tab" onclick="openTab('porcoes',this)"><span>🍟</span>Porções</div>
-    <div class="tab" onclick="openTab('pasteis',this)"><span>🥟</span>Pastéis</div>
-    <div class="tab" onclick="openTab('acai',this)"><span>🍨</span>Açaí</div>
-    <div class="tab" onclick="openTab('bebidas',this)"><span>🥤</span>Bebidas</div>
-  </div>
-
-  <div id="lanches" class="box"></div>
-  <div id="porcoes" class="box"></div>
-  <div id="pasteis" class="box"></div>
-  <div id="acai" class="box"></div>
-  <div id="bebidas" class="box"></div>
-</div>
 <script>
 /* ================= CONFIGURAÇÕES ================= */
 const ADMIN_PASSWORD = "1234";
@@ -452,20 +384,14 @@ function itemHTML(p){
   `;
 }
 
-/* ================= ABAS (TOGGLE UX) ================= */
+/* ================= ABAS (TOGGLE) ================= */
 function openTab(id, el){
   const box = document.getElementById(id);
   const isActive = box.classList.contains("active");
 
-  /* fecha todas */
-  document.querySelectorAll(".box").forEach(b=>{
-    b.classList.remove("active");
-  });
-  document.querySelectorAll(".tab").forEach(t=>{
-    t.classList.remove("active");
-  });
+  document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
 
-  /* se não estava ativa, abre */
   if(!isActive){
     box.classList.add("active");
     el.classList.add("active");
@@ -475,12 +401,17 @@ function openTab(id, el){
   }
 }
 
-/* ================= BUSCA + GATILHOS ================= */
+/* ================= BUSCA & ATALHOS (CORRIGIDO) ================= */
 document.getElementById("search").addEventListener("input", function(){
-  const v = this.value.toLowerCase().trim();
+  const raw = this.value;
+  const v = raw.toLowerCase().trim();
 
-  /* ADMIN */
-  if(v === "admin" || v === "preço" || v === "precos"){
+  /* ---------- ATALHOS ADMINISTRATIVOS (PRIORIDADE) ---------- */
+  if(
+    v === "admin" ||
+    v === "preço" ||
+    v === "precos"
+  ){
     const s = prompt("Senha do administrador:");
     if(s === ADMIN_PASSWORD){
       openAdmin();
@@ -491,7 +422,6 @@ document.getElementById("search").addEventListener("input", function(){
     return;
   }
 
-  /* OFERTAS */
   if(v === "oferta" || v === "ofertas"){
     const s = prompt("Senha do administrador:");
     if(s === ADMIN_PASSWORD){
@@ -503,7 +433,6 @@ document.getElementById("search").addEventListener("input", function(){
     return;
   }
 
-  /* RELATÓRIO */
   if(v === "relatorio" || v === "relatório"){
     const s = prompt("Senha do administrador:");
     if(s === ADMIN_PASSWORD){
@@ -515,6 +444,7 @@ document.getElementById("search").addEventListener("input", function(){
     return;
   }
 
+  /* ---------- BUSCA DE PRODUTOS ---------- */
   let foundTab = null;
 
   document.querySelectorAll(".item").forEach(item=>{
