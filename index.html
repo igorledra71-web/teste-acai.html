@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Rabika's Burguer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,10 +14,10 @@
 html,body{height:100%}
 body{
   font-family:'Poppins',sans-serif;
-  background:linear-gradient(180deg,#06003a 0%,#0a045a 50%,#03001f 100%);
-  color:#fff;
+  background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
   display:flex;
   justify-content:center;
+  color:#fff;
 }
 
 /* SPLASH */
@@ -31,11 +31,7 @@ body{
   z-index:9999;
 }
 .splash-box{text-align:center}
-.splash-logo{
-  width:340px;
-  max-width:90%;
-  margin-bottom:36px;
-}
+.splash-logo{width:340px;max-width:90%;margin-bottom:32px}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
   border:none;
@@ -61,19 +57,9 @@ body{
   font-size:30px;
   font-weight:900;
   color:#FFD34D;
-  margin-bottom:6px;
 }
-#status{
-  text-align:center;
-  font-size:13px;
-  margin-bottom:4px;
-}
-#hours{
-  text-align:center;
-  font-size:12px;
-  color:#FFD34D;
-  margin-bottom:12px;
-}
+#status{text-align:center;font-size:13px;margin-bottom:4px}
+#hours{text-align:center;font-size:12px;color:#FFD34D;margin-bottom:12px}
 
 /* BUSCA */
 .search{
@@ -83,7 +69,6 @@ body{
   border:none;
   font-size:15px;
   margin-bottom:16px;
-  outline:none;
 }
 
 /* ABAS */
@@ -102,17 +87,9 @@ body{
   font-size:12px;
   text-align:center;
   cursor:pointer;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-  transition:.2s;
 }
-.tab span{font-size:22px}
-.tab.active{
-  background:#FFD34D;
-  transform:scale(1.06);
-}
+.tab span{font-size:22px;display:block}
+.tab.active{background:#FFD34D}
 
 /* BOX */
 .box{
@@ -134,11 +111,7 @@ body{
   border-bottom:1px dashed #ddd;
   align-items:center;
 }
-.item:last-child{border:none}
-.item-price{
-  font-weight:900;
-  color:#5a0070;
-}
+.item-price{font-weight:900;color:#5a0070}
 .btn-add{
   background:#5a0070;
   color:#fff;
@@ -148,91 +121,26 @@ body{
   font-weight:900;
 }
 
-/* SEÇÕES */
-.section{
-  font-weight:900;
-  margin:14px 0 6px;
-  color:#5a0070;
-}
-
-/* CARRINHO */
-#cart{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:420px;
-  background:#fff;
-  color:#2b0033;
-  padding:16px;
-  border-radius:26px 26px 0 0;
-  display:none;
-  z-index:999;
-}
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:6px;
-}
-.btn-green{
-  background:#25D366;
-  color:#fff;
-  border:none;
-  padding:14px;
-  border-radius:22px;
-  font-weight:900;
-  width:100%;
-}
-
-/* MODAIS */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:10000;
-}
-.modal-box{
-  background:#fff;
-  color:#2b0033;
-  width:92%;
-  max-width:420px;
-  border-radius:26px;
-  padding:20px;
-  max-height:85vh;
-  overflow-y:auto;
-  position:relative;
-}
-.modal-close{
-  position:absolute;
-  top:10px;
-  right:14px;
-  font-size:22px;
-  font-weight:900;
-  cursor:pointer;
-}
+/* SEÇÃO */
+.section{font-weight:900;margin:14px 0 6px;color:#5a0070}
 </style>
 </head>
 
 <body>
-<!-- SPLASH -->
+
 <div id="splash">
   <div class="splash-box">
-    <img src="logo.png" alt="Rabika's Burguer" class="splash-logo">
+    <img src="logo.png" class="splash-logo">
     <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <div class="title">Rabika's Burguer</div>
   <div id="status"></div>
   <div id="hours">🕒 Terça a Domingo — 18:30 às 22:30</div>
 
-  <input id="search" class="search" type="text" placeholder="Pesquisar no cardápio...">
+  <input id="search" class="search" placeholder="Pesquisar no cardápio...">
 
   <div class="tabs">
     <div class="tab" onclick="openTab('lanches',this)"><span>🍔</span>Lanches</div>
@@ -248,98 +156,46 @@ body{
   <div id="acai" class="box"></div>
   <div id="bebidas" class="box"></div>
 </div>
-
-<!-- CARRINHO -->
-<div id="cart">
-  <div id="cartItems"></div>
-  <div id="total" style="font-weight:900;margin:8px 0"></div>
-  <button class="btn-green" onclick="sendOrder()">Finalizar Pedido</button>
-</div>
-
-<!-- ADMIN -->
-<div id="adminModal" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeAdmin()">✕</div>
-    <h2 style="text-align:center;color:#5a0070">Painel Admin</h2>
-    <h3 style="margin-top:12px;color:#5a0070">Produtos Ativos</h3>
-    <div id="adminActive"></div>
-    <h3 style="margin-top:16px;color:#b00020">Produtos Ocultos</h3>
-    <div id="adminHidden"></div>
-    <h3 style="margin-top:16px;color:#5a0070">+ Novo Produto</h3>
-    <input id="newName" class="search" placeholder="Nome do produto">
-    <input id="newPrice" class="search" type="number" placeholder="Preço">
-    <select id="newCategory" class="search">
-      <option value="">Categoria</option>
-      <option value="lanches">Lanches</option>
-      <option value="adicionaisLanches">Adicionais</option>
-      <option value="porcoes">Porções</option>
-      <option value="pasteis">Pastéis</option>
-      <option value="acaiTamanhos">Açaí (Tamanho)</option>
-      <option value="acaiAdicionais">Açaí (Adicional)</option>
-      <option value="bebidas">Bebidas</option>
-    </select>
-    <button class="btn-green" onclick="addNewProduct()">Adicionar Produto</button>
-  </div>
-</div>
-
-<!-- OFERTAS -->
-<div id="offerModal" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeOffer()">✕</div>
-    <h2 style="text-align:center;color:#5a0070">Ofertas</h2>
-    <div id="offerList"></div>
-  </div>
-</div>
-
-<!-- RELATÓRIO -->
-<div id="reportModal" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeReport()">✕</div>
-    <h2 style="text-align:center;color:#5a0070">Relatório de Vendas</h2>
-    <div style="margin-top:14px;font-weight:600">
-      <div>Total: <strong id="repTotal"></strong></div>
-      <div>Dinheiro: <strong id="repCash"></strong></div>
-      <div>Pix: <strong id="repPix"></strong></div>
-      <div>Débito: <strong id="repDebit"></strong></div>
-      <div>Crédito: <strong id="repCredit"></strong></div>
-    </div>
-  </div>
-</div>
 <script>
-const ADMIN_PASSWORD="1234";
-const FREIGHT=8;
-let cart=[];
-let currentTab=null;
+/* ================= CONFIGURAÇÕES GERAIS ================= */
+const ADMIN_PASSWORD = "1234";
+const FREIGHT = 8;
 
-let customPrices=JSON.parse(localStorage.getItem("customPrices"))||{};
-let productStatus=JSON.parse(localStorage.getItem("productStatus"))||{};
-let extraProducts=JSON.parse(localStorage.getItem("extraProducts"))||{};
-let offers=JSON.parse(localStorage.getItem("offers"))||{};
-let sales=JSON.parse(localStorage.getItem("sales"))||[];
+/* ================= ESTADO GLOBAL ================= */
+let cart = [];
+let currentTab = null;
 
+/* ================= STORAGE ================= */
+let customPrices = JSON.parse(localStorage.getItem("customPrices")) || {};
+let productStatus = JSON.parse(localStorage.getItem("productStatus")) || {};
+let extraProducts = JSON.parse(localStorage.getItem("extraProducts")) || {};
+let offers = JSON.parse(localStorage.getItem("offers")) || {};
+let sales = JSON.parse(localStorage.getItem("sales")) || [];
+
+/* ================= HORÁRIO DE FUNCIONAMENTO ================= */
 function isOpen(){
-  const d=new Date(), day=d.getDay(), h=d.getHours()+d.getMinutes()/60;
-  if(day===1) return false;
-  if(h<18.5||h>22.5) return false;
+  const d = new Date();
+  const day = d.getDay();
+  const h = d.getHours() + d.getMinutes() / 60;
+  if(day === 1) return false;
+  if(h < 18.5 || h > 22.5) return false;
   return true;
 }
 
-const products={/* produtos completos – continuam na parte 4 */};
-<script>
 /* ================= PRODUTOS BASE ================= */
-const products={
-  lanches:[
+const products = {
+  lanches: [
     {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
     {n:"X-Frango Cremoso",p:20},{n:"X-Bacon",p:25},{n:"X-Calabresa",p:25},
     {n:"X-Coração",p:27},{n:"X-Tudo",p:32},{n:"X-Burguer Duplo",p:22},
     {n:"X-Egg",p:20},{n:"X-Tribom",p:32},{n:"X-Da Casa",p:45},{n:"X-Dog",p:20}
   ],
-  adicionaisLanches:[
-    {n:"Calabresa",p:7},{n:"Bacon",p:7},{n:"Coração",p:8},{n:"Ovo",p:3},
-    {n:"Salsicha",p:4},{n:"Frango",p:7},{n:"Cheddar",p:4},
-    {n:"Hambúrguer artesanal",p:10},{n:"Maionese caseira",p:2}
+  adicionaisLanches: [
+    {n:"Calabresa",p:7},{n:"Bacon",p:7},{n:"Coração",p:8},
+    {n:"Ovo",p:3},{n:"Salsicha",p:4},{n:"Frango",p:7},
+    {n:"Cheddar",p:4},{n:"Hambúrguer artesanal",p:10},{n:"Maionese caseira",p:2}
   ],
-  porcoes:[
+  porcoes: [
     {n:"Fritas c/ Frango",p:39.99},{n:"Fritas",p:24.99},
     {n:"Fritas c/ Calabresa",p:34.99},{n:"Fritas c/ Bacon",p:34.99},
     {n:"Anéis de Cebola",p:24.99},
@@ -350,7 +206,7 @@ const products={
     {n:"Fritas c/ Calabresa e Catupiry",p:35.99},
     {n:"Fritas, Polenta, Chuleta e Anel de Cebola",p:49.99}
   ],
-  pasteis:[
+  pasteis: [
     {n:"Pastel de Carne",p:14},{n:"Pastel de Frango",p:12},
     {n:"Frango Bacon Cheddar",p:16},{n:"Bacon Cheddar",p:15},
     {n:"Calabresa c/ Cebola",p:14},{n:"Carne e Queijo",p:15},
@@ -359,16 +215,16 @@ const products={
     {n:"Chocolate Branco",p:15},{n:"Creme e Ouro Branco",p:15},
     {n:"Creme e Sonho de Valsa",p:15}
   ],
-  acaiTamanhos:[
+  acaiTamanhos: [
     {n:"Açaí 300ml",p:12},{n:"Açaí 400ml",p:15},{n:"Açaí 500ml",p:18}
   ],
-  acaiAdicionais:[
+  acaiAdicionais: [
     {n:"Paçoca",p:2},{n:"Leite em pó",p:4},{n:"Granola",p:4},
     {n:"Morango",p:4},{n:"M&M",p:3},{n:"Ouro Branco",p:3},
     {n:"Banana",p:2},{n:"Sonho de Valsa",p:3},
     {n:"Leite Condensado",p:3},{n:"Nutella",p:4}
   ],
-  bebidas:[
+  bebidas: [
     {n:"Cassulinha 200ml",p:3},{n:"Coca-Cola 600ml",p:8},
     {n:"Coca-Cola 2L",p:16},{n:"Refri Lata",p:6},
     {n:"Refrigerante 2L",p:12},{n:"Cerveja Lata 350ml",p:6},
@@ -376,147 +232,505 @@ const products={
   ]
 };
 
-/* ================= UTILITÁRIOS ================= */
+/* ================= UTILITÁRIOS DE PRODUTOS ================= */
 function getAllProducts(){
-  let all=JSON.parse(JSON.stringify(products));
-  Object.keys(extraProducts).forEach(c=>{
-    all[c]=(all[c]||[]).concat(extraProducts[c]);
+  let all = JSON.parse(JSON.stringify(products));
+  Object.keys(extraProducts).forEach(cat=>{
+    all[cat] = (all[cat] || []).concat(extraProducts[cat]);
   });
   return all;
 }
+
 function getPrice(p){
-  const base=customPrices[p.n]??p.p;
-  const o=offers[p.n];
+  const base = customPrices[p.n] ?? p.p;
+  const o = offers[p.n];
   if(o){
-    const t=new Date().toISOString().split("T")[0];
-    if(t>=o.start&&t<=o.end) return o.price;
+    const today = new Date().toISOString().split("T")[0];
+    if(today >= o.start && today <= o.end){
+      return o.price;
+    }
   }
   return base;
 }
+</script>
+<script>
+/* ================= START ================= */
+function start(){
+  document.getElementById("splash").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("status").innerText =
+    isOpen() ? "🟢 Aberto agora" : "🔴 Fechado — pedidos indisponíveis";
+  renderAll();
+}
 
+/* ================= RENDER GERAL ================= */
+function renderAll(){
+  const all = getAllProducts();
+  renderCategory("lanches", all.lanches, all.adicionaisLanches);
+  renderCategory("porcoes", all.porcoes);
+  renderCategory("pasteis", all.pasteis);
+  renderAcai(all);
+  renderCategory("bebidas", all.bebidas);
+}
+
+/* ================= RENDER CATEGORIA ================= */
+function renderCategory(id, list, extras){
+  const box = document.getElementById(id);
+  box.innerHTML = "";
+
+  list.forEach(p=>{
+    if(productStatus[p.n] === false) return;
+    box.innerHTML += itemHTML(p);
+  });
+
+  if(extras){
+    box.innerHTML += `<div class="section">➕ Adicionais</div>`;
+    extras.forEach(p=>{
+      if(productStatus[p.n] !== false){
+        box.innerHTML += itemHTML(p);
+      }
+    });
+  }
+}
+
+/* ================= RENDER AÇAÍ ================= */
+function renderAcai(all){
+  const box = document.getElementById("acai");
+  box.innerHTML = "";
+
+  box.innerHTML += `<div class="section">🥤 Tamanhos</div>`;
+  all.acaiTamanhos.forEach(p=>{
+    if(productStatus[p.n] !== false){
+      box.innerHTML += itemHTML(p);
+    }
+  });
+
+  box.innerHTML += `<div class="section">🍫 Adicionais</div>`;
+  all.acaiAdicionais.forEach(p=>{
+    if(productStatus[p.n] !== false){
+      box.innerHTML += itemHTML(p);
+    }
+  });
+}
+
+/* ================= ITEM ================= */
+function itemHTML(p){
+  const price = getPrice(p);
+  return `
+    <div class="item" data-name="${p.n.toLowerCase()}">
+      <span>${p.n}</span>
+      <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
+      <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
+    </div>
+  `;
+}
+
+/* ================= ABAS (ABRE / FECHA) ================= */
+function openTab(id, el){
+  const box = document.getElementById(id);
+  const isActive = box.classList.contains("active");
+
+  document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+
+  if(!isActive){
+    box.classList.add("active");
+    el.classList.add("active");
+    currentTab = id;
+  }else{
+    currentTab = null;
+  }
+}
+
+/* ================= BUSCA GLOBAL + ATALHOS ================= */
+document.getElementById("search").addEventListener("input", function(){
+  const v = this.value.toLowerCase().trim();
+
+  /* ---- ATALHOS ADMINISTRATIVOS ---- */
+  if(v === "admin" || v === "preço" || v === "precos"){
+    const s = prompt("Senha do administrador:");
+    if(s === ADMIN_PASSWORD) openAdmin();
+    this.value = "";
+    return;
+  }
+
+  if(v === "oferta" || v === "ofertas"){
+    const s = prompt("Senha do administrador:");
+    if(s === ADMIN_PASSWORD) openOffer();
+    this.value = "";
+    return;
+  }
+
+  if(v === "relatorio" || v === "relatório"){
+    const s = prompt("Senha do administrador:");
+    if(s === ADMIN_PASSWORD) openReport();
+    this.value = "";
+    return;
+  }
+
+  /* ---- BUSCA DE PRODUTOS ---- */
+  let foundTab = null;
+
+  document.querySelectorAll(".item").forEach(item=>{
+    const match = item.dataset.name.includes(v);
+    item.style.display = match ? "grid" : "none";
+
+    if(match && !foundTab){
+      foundTab = item.closest(".box").id;
+    }
+  });
+
+  if(foundTab){
+    const tab = [...document.querySelectorAll(".tab")]
+      .find(t => t.getAttribute("onclick").includes(foundTab));
+    if(tab) openTab(foundTab, tab);
+  }
+
+  if(!v){
+    document.querySelectorAll(".item").forEach(i=>{
+      i.style.display = "grid";
+    });
+  }
+});
+</script>
+<script>
 /* ================= CARRINHO ================= */
-function addItem(name,price){
+function addItem(name, price){
   if(!isOpen()){
     alert("Estamos fechados.\nTerça a Domingo das 18:30 às 22:30");
     return;
   }
-  cart.push({name,price});
+  cart.push({ name, price });
   updateCart();
 }
+
 function updateCart(){
-  const box=document.getElementById("cartItems");
-  box.innerHTML="";
-  let total=0;
-  cart.forEach(i=>{
-    total+=i.price;
-    box.innerHTML+=`<div class="cart-item"><span>${i.name}</span><span>R$ ${i.price.toFixed(2).replace(".",",")}</span></div>`;
+  const box = document.getElementById("cartItems");
+  if(!box) return;
+
+  box.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((item, index)=>{
+    total += item.price;
+    box.innerHTML += `
+      <div class="cart-item">
+        <span>${item.name}</span>
+        <span>R$ ${item.price.toFixed(2).replace(".",",")}</span>
+        <button onclick="removeItem(${index})">✕</button>
+      </div>
+    `;
   });
-  document.getElementById("total").innerText="Total: R$ "+total.toFixed(2).replace(".",",");
-  document.getElementById("cart").style.display=cart.length?"block":"none";
+
+  document.getElementById("total").innerText =
+    "Total: R$ " + total.toFixed(2).replace(".",",");
+
+  document.getElementById("cart").style.display =
+    cart.length ? "block" : "none";
 }
 
-/* ================= WHATSAPP ================= */
-function sendOrder(){
-  if(!cart.length){alert("Seu carrinho está vazio");return;}
-  const payment=(prompt("Forma de pagamento? (dinheiro / pix / debito / credito)")||"dinheiro").toLowerCase();
-  let msg="🍔 Pedido Rabika's Burguer\n\n",total=0;
-  cart.forEach(i=>{msg+=`- ${i.name} R$ ${i.price.toFixed(2).replace(".",",")}\n`;total+=i.price;});
-  msg+=`\nPagamento: ${payment}\nTotal: R$ ${total.toFixed(2).replace(".",",")}`;
-  sales.push({date:new Date().toISOString(),total,payment});
-  localStorage.setItem("sales",JSON.stringify(sales));
-  window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg),"_blank");
-  cart=[];
+function removeItem(index){
+  cart.splice(index, 1);
   updateCart();
 }
 
+/* ================= FINALIZAR PEDIDO ================= */
+function sendOrder(){
+  if(!cart.length){
+    alert("Seu carrinho está vazio");
+    return;
+  }
+
+  const payment =
+    (prompt("Forma de pagamento? (dinheiro / pix / debito / credito)") || "dinheiro")
+    .toLowerCase();
+
+  let msg = "🍔 Pedido Rabika's Burguer\n\n";
+  let total = 0;
+
+  cart.forEach(i=>{
+    msg += `- ${i.name} R$ ${i.price.toFixed(2).replace(".",",")}\n`;
+    total += i.price;
+  });
+
+  msg += `\nPagamento: ${payment}`;
+  msg += `\nTotal: R$ ${total.toFixed(2).replace(".",",")}`;
+
+  sales.push({
+    date: new Date().toISOString(),
+    total,
+    payment
+  });
+  localStorage.setItem("sales", JSON.stringify(sales));
+
+  window.open(
+    "https://wa.me/554991789706?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
+
+  cart = [];
+  updateCart();
+}
+</script>
+<script>
 /* ================= ADMIN ================= */
-function openAdmin(){document.getElementById("adminModal").style.display="flex";renderAdmin();}
-function closeAdmin(){document.getElementById("adminModal").style.display="none";}
+function openAdmin(){
+  document.getElementById("adminModal").style.display = "flex";
+  renderAdmin();
+}
+
+function closeAdmin(){
+  document.getElementById("adminModal").style.display = "none";
+}
+
+/* ================= RENDER ADMIN ================= */
 function renderAdmin(){
-  const a=document.getElementById("adminActive"),h=document.getElementById("adminHidden");
-  a.innerHTML="";h.innerHTML="";
-  const all=getAllProducts();
-  Object.keys(all).forEach(c=>{
-    all[c].forEach(p=>{
-      const price=getPrice(p),hid=productStatus[p.n]===false;
-      const html=`<div style="margin-bottom:12px"><strong>${p.n}</strong><input type="number" class="search" value="${price}" id="price-${p.n}"><button class="btn-green" onclick="savePrice('${p.n}')">Salvar</button><button class="btn-green" style="background:#999" onclick="toggleProduct('${p.n}')">${hid?"Reativar":"Ocultar"}</button></div>`;
-      hid?h.innerHTML+=html:a.innerHTML+=html;
+  const activeBox = document.getElementById("adminActive");
+  const hiddenBox = document.getElementById("adminHidden");
+
+  activeBox.innerHTML = "";
+  hiddenBox.innerHTML = "";
+
+  const all = getAllProducts();
+
+  Object.keys(all).forEach(cat=>{
+    all[cat].forEach(p=>{
+      const price = getPrice(p);
+      const isHidden = productStatus[p.n] === false;
+
+      const html = `
+        <div style="margin-bottom:14px">
+          <strong>${p.n}</strong>
+          <input
+            type="number"
+            class="search"
+            id="price-${p.n}"
+            value="${price}"
+          >
+          <button class="btn-green" onclick="savePrice('${p.n}')">
+            Salvar
+          </button>
+          <button
+            class="btn-green"
+            style="background:#999;margin-top:6px"
+            onclick="toggleProduct('${p.n}')"
+          >
+            ${isHidden ? "Reativar" : "Ocultar"}
+          </button>
+        </div>
+      `;
+
+      if(isHidden){
+        hiddenBox.innerHTML += html;
+      }else{
+        activeBox.innerHTML += html;
+      }
     });
   });
 }
-function savePrice(n){
-  customPrices[n]=Number(document.getElementById("price-"+n).value);
-  localStorage.setItem("customPrices",JSON.stringify(customPrices));
+
+/* ================= SALVAR PREÇO ================= */
+function savePrice(name){
+  const input = document.getElementById("price-" + name);
+  if(!input) return;
+
+  customPrices[name] = Number(input.value);
+  localStorage.setItem("customPrices", JSON.stringify(customPrices));
   renderAll();
 }
-function toggleProduct(n){
-  productStatus[n]=productStatus[n]===false?true:false;
-  localStorage.setItem("productStatus",JSON.stringify(productStatus));
-  renderAll();renderAdmin();
-}
-function addNewProduct(){
-  const n=document.getElementById("newName").value.trim();
-  const p=Number(document.getElementById("newPrice").value);
-  const c=document.getElementById("newCategory").value;
-  if(!n||!p||!c){alert("Preencha todos os campos");return;}
-  if(!extraProducts[c]) extraProducts[c]=[];
-  extraProducts[c].push({n,p});
-  localStorage.setItem("extraProducts",JSON.stringify(extraProducts));
-  document.getElementById("newName").value="";
-  document.getElementById("newPrice").value="";
-  document.getElementById("newCategory").value="";
-  renderAll();renderAdmin();
+
+/* ================= OCULTAR / REATIVAR ================= */
+function toggleProduct(name){
+  productStatus[name] = productStatus[name] === false ? true : false;
+  localStorage.setItem("productStatus", JSON.stringify(productStatus));
+  renderAll();
+  renderAdmin();
 }
 
+/* ================= ADICIONAR NOVO PRODUTO ================= */
+function addNewProduct(){
+  const name = document.getElementById("newName").value.trim();
+  const price = Number(document.getElementById("newPrice").value);
+  const category = document.getElementById("newCategory").value;
+
+  if(!name || !price || !category){
+    alert("Preencha todos os campos");
+    return;
+  }
+
+  if(!extraProducts[category]){
+    extraProducts[category] = [];
+  }
+
+  extraProducts[category].push({ n: name, p: price });
+  localStorage.setItem("extraProducts", JSON.stringify(extraProducts));
+
+  document.getElementById("newName").value = "";
+  document.getElementById("newPrice").value = "";
+  document.getElementById("newCategory").value = "";
+
+  renderAll();
+  renderAdmin();
+}
+</script>
+<script>
 /* ================= OFERTAS ================= */
-function openOffer(){document.getElementById("offerModal").style.display="flex";renderOffers();}
-function closeOffer(){document.getElementById("offerModal").style.display="none";}
+function openOffer(){
+  document.getElementById("offerModal").style.display = "flex";
+  renderOffers();
+}
+
+function closeOffer(){
+  document.getElementById("offerModal").style.display = "none";
+}
+
+/* ================= RENDER OFERTAS ================= */
 function renderOffers(){
-  const box=document.getElementById("offerList");
-  box.innerHTML="";
-  const all=getAllProducts();
-  Object.keys(all).forEach(c=>{
-    all[c].forEach(p=>{
-      const o=offers[p.n]||{};
-      box.innerHTML+=`<div style="margin-bottom:16px"><strong>${p.n}</strong><input class="search" type="number" placeholder="Valor de oferta" value="${o.price??""}" id="offerPrice-${p.n}"><input class="search" type="date" value="${o.start??""}" id="offerStart-${p.n}"><input class="search" type="date" value="${o.end??""}" id="offerEnd-${p.n}"><button class="btn-green" onclick="saveOffer('${p.n}')">Salvar Oferta</button>${offers[p.n]?`<button class="btn-green" style="background:#999;margin-top:6px" onclick="removeOffer('${p.n}')">Remover Oferta</button>`:""}</div>`;
+  const box = document.getElementById("offerList");
+  box.innerHTML = "";
+
+  const all = getAllProducts();
+
+  Object.keys(all).forEach(cat=>{
+    all[cat].forEach(p=>{
+      const offer = offers[p.n] || {};
+
+      box.innerHTML += `
+        <div style="margin-bottom:18px">
+          <strong>${p.n}</strong>
+
+          <input
+            class="search"
+            type="number"
+            placeholder="Valor de oferta"
+            id="offerPrice-${p.n}"
+            value="${offer.price ?? ""}"
+          >
+
+          <input
+            class="search"
+            type="date"
+            id="offerStart-${p.n}"
+            value="${offer.start ?? ""}"
+          >
+
+          <input
+            class="search"
+            type="date"
+            id="offerEnd-${p.n}"
+            value="${offer.end ?? ""}"
+          >
+
+          <button
+            class="btn-green"
+            onclick="saveOffer('${p.n}')"
+          >
+            Salvar Oferta
+          </button>
+
+          ${
+            offers[p.n]
+              ? `<button
+                   class="btn-green"
+                   style="background:#999;margin-top:6px"
+                   onclick="removeOffer('${p.n}')"
+                 >
+                   Remover Oferta
+                 </button>`
+              : ""
+          }
+        </div>
+      `;
     });
   });
 }
-function saveOffer(n){
-  const price=Number(document.getElementById("offerPrice-"+n).value);
-  const start=document.getElementById("offerStart-"+n).value;
-  const end=document.getElementById("offerEnd-"+n).value;
-  if(!price||!start||!end){alert("Preencha valor e datas");return;}
-  offers[n]={price,start,end};
-  localStorage.setItem("offers",JSON.stringify(offers));
-  renderAll();renderOffers();
-}
-function removeOffer(n){
-  delete offers[n];
-  localStorage.setItem("offers",JSON.stringify(offers));
-  renderAll();renderOffers();
+
+/* ================= SALVAR OFERTA ================= */
+function saveOffer(name){
+  const priceInput = document.getElementById("offerPrice-" + name);
+  const startInput = document.getElementById("offerStart-" + name);
+  const endInput = document.getElementById("offerEnd-" + name);
+
+  if(!priceInput || !startInput || !endInput){
+    alert("Erro ao localizar campos da oferta");
+    return;
+  }
+
+  const price = Number(priceInput.value);
+  const start = startInput.value;
+  const end = endInput.value;
+
+  if(!price || !start || !end){
+    alert("Preencha valor e datas da oferta");
+    return;
+  }
+
+  offers[name] = { price, start, end };
+  localStorage.setItem("offers", JSON.stringify(offers));
+
+  renderAll();
+  renderOffers();
 }
 
-/* ================= RELATÓRIO ================= */
-function openReport(){document.getElementById("reportModal").style.display="flex";renderReport();}
-function closeReport(){document.getElementById("reportModal").style.display="none";}
-function renderReport(){
-  let t=0,c=0,p=0,d=0,cr=0;
-  sales.forEach(s=>{
-    t+=s.total;
-    if(s.payment==="dinheiro")c+=s.total;
-    if(s.payment==="pix")p+=s.total;
-    if(s.payment==="debito")d+=s.total;
-    if(s.payment==="credito")cr+=s.total;
-  });
-  document.getElementById("repTotal").innerText="R$ "+t.toFixed(2).replace(".",",");
-  document.getElementById("repCash").innerText="R$ "+c.toFixed(2).replace(".",",");
-  document.getElementById("repPix").innerText="R$ "+p.toFixed(2).replace(".",",");
-  document.getElementById("repDebit").innerText="R$ "+d.toFixed(2).replace(".",",");
-  document.getElementById("repCredit").innerText="R$ "+cr.toFixed(2).replace(".",",");
+/* ================= REMOVER OFERTA ================= */
+function removeOffer(name){
+  delete offers[name];
+  localStorage.setItem("offers", JSON.stringify(offers));
+
+  renderAll();
+  renderOffers();
 }
+</script>
+<script>
+/* ================= RELATÓRIO ================= */
+function openReport(){
+  document.getElementById("reportModal").style.display = "flex";
+  renderReport();
+}
+
+function closeReport(){
+  document.getElementById("reportModal").style.display = "none";
+}
+
+/* ================= RENDER RELATÓRIO ================= */
+function renderReport(){
+  let total = 0;
+  let dinheiro = 0;
+  let pix = 0;
+  let debito = 0;
+  let credito = 0;
+
+  sales.forEach(s=>{
+    total += s.total;
+
+    if(s.payment === "dinheiro") dinheiro += s.total;
+    if(s.payment === "pix") pix += s.total;
+    if(s.payment === "debito") debito += s.total;
+    if(s.payment === "credito") credito += s.total;
+  });
+
+  document.getElementById("repTotal").innerText =
+    "R$ " + total.toFixed(2).replace(".",",");
+
+  document.getElementById("repCash").innerText =
+    "R$ " + dinheiro.toFixed(2).replace(".",",");
+
+  document.getElementById("repPix").innerText =
+    "R$ " + pix.toFixed(2).replace(".",",");
+
+  document.getElementById("repDebit").innerText =
+    "R$ " + debito.toFixed(2).replace(".",",");
+
+  document.getElementById("repCredit").innerText =
+    "R$ " + credito.toFixed(2).replace(".",",");
+}
+
+/* ================= SEGURANÇA BÁSICA ================= */
+/* Evita erro caso modais não existam */
+window.addEventListener("error", function(e){
+  console.error("Erro capturado:", e.message);
+});
 </script>
 
 </body>
 </html>
-
