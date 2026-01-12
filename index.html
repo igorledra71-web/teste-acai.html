@@ -22,18 +22,25 @@ body{
 
 /* SPLASH */
 #splash{
-  position:fixed; inset:0;
+  position:fixed;
+  inset:0;
   background:linear-gradient(180deg,#05002e,#020018);
-  display:flex; align-items:center; justify-content:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   z-index:9999;
 }
 .splash-box{text-align:center}
-.splash-logo{width:90%;max-width:340px;margin-bottom:32px}
+.splash-logo{
+  width:90%;
+  max-width:360px;
+  margin-bottom:32px;
+}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
   border:none;
-  padding:18px 54px;
-  border-radius:44px;
+  padding:18px 56px;
+  border-radius:46px;
   font-size:22px;
   font-weight:900;
   color:#2b0033;
@@ -44,7 +51,7 @@ body{
 #app{
   width:100%;
   max-width:420px;
-  padding:14px 14px 320px;
+  padding:16px 16px 340px;
   display:none;
 }
 
@@ -56,7 +63,10 @@ body{
   color:#FFD34D;
   margin-bottom:8px;
 }
+
+/* FECHADO */
 #closedBanner{
+  display:none;
   background:#b00020;
   color:#fff;
   text-align:center;
@@ -64,7 +74,7 @@ body{
   border-radius:18px;
   font-size:13px;
   font-weight:600;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
 
 /* BUSCA */
@@ -82,7 +92,7 @@ body{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
-  margin-bottom:14px;
+  margin-bottom:16px;
 }
 .tab{
   background:#fff;
@@ -106,23 +116,6 @@ body{
 }
 .box.active{display:block}
 
-.section{
-  font-weight:900;
-  color:#5a0070;
-  margin:16px 0 8px;
-  text-align:center;
-}
-.sub-btn{
-  background:#eee;
-  color:#5a0070;
-  padding:10px;
-  border-radius:14px;
-  font-weight:800;
-  text-align:center;
-  margin:10px 0;
-  cursor:pointer;
-}
-
 /* ITEM */
 .item{
   display:grid;
@@ -142,13 +135,25 @@ body{
   border-radius:14px;
   padding:6px 14px;
   font-weight:900;
+}
+
+/* SUB */
+.sub-btn{
+  margin-top:14px;
+  background:#FFD34D;
+  color:#2b0033;
+  padding:12px;
+  border-radius:22px;
+  font-weight:900;
+  text-align:center;
   cursor:pointer;
 }
 
 /* CARRINHO */
 #cart{
   position:fixed;
-  bottom:0; left:50%;
+  bottom:0;
+  left:50%;
   transform:translateX(-50%);
   width:100%;
   max-width:420px;
@@ -165,14 +170,20 @@ body{
   margin-bottom:6px;
 }
 .cart-item strong{color:#5a0070}
-.btn-green{
+.total{
+  text-align:right;
+  font-size:18px;
+  font-weight:900;
+}
+.finish{
   background:#25D366;
   color:#fff;
-  border:none;
-  padding:14px;
-  border-radius:22px;
+  padding:16px;
+  border-radius:26px;
   font-weight:900;
-  width:100%;
+  text-align:center;
+  margin-top:12px;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -190,9 +201,16 @@ body{
 <!-- APP -->
 <div id="app">
   <div class="title">Rabika's Burguer</div>
-  <div id="closedBanner">🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30</div>
+  <div id="closedBanner">
+    🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30
+  </div>
 
-  <input class="search" placeholder="Pesquisar no cardápio..." oninput="handleSearch(this.value)">
+  <input
+    id="search"
+    class="search"
+    placeholder="Pesquisar no cardápio..."
+    oninput="handleSearch(this.value)"
+  >
 
   <div class="tabs">
     <div class="tab active" onclick="openTab('lanches',this)">🍔 Lanches</div>
@@ -208,16 +226,9 @@ body{
   <div id="acai" class="box"></div>
   <div id="bebidas" class="box"></div>
 </div>
-
-<!-- CARRINHO -->
-<div id="cart">
-  <div id="cartItems"></div>
-  <div id="total" style="text-align:right;font-weight:900"></div>
-  <button class="btn-green" onclick="finishOrder()">Finalizar Pedido</button>
-</div>
 <script>
 /* =========================
-   CONFIG & ESTADO
+   ESTADO GLOBAL
 ========================= */
 let cart = [];
 let currentTab = "lanches";
@@ -239,17 +250,18 @@ function isOpen(){
    START
 ========================= */
 function start(){
-  document.getElementById("splash").style.display="none";
-  document.getElementById("app").style.display="block";
+  document.getElementById("splash").style.display = "none";
+  document.getElementById("app").style.display = "block";
   updateOpenStatus();
   renderAll();
 }
 function updateOpenStatus(){
-  document.getElementById("closedBanner").style.display = isOpen() ? "none" : "block";
+  document.getElementById("closedBanner").style.display =
+    isOpen() ? "none" : "block";
 }
 
 /* =========================
-   PRODUTOS (COMPLETOS)
+   PRODUTOS (100% COMPLETOS)
 ========================= */
 const produtos = {
   lanches:[
@@ -264,79 +276,108 @@ const produtos = {
     {n:'Hambúrguer artesanal',p:10},{n:'Maionese caseira',p:2}
   ],
   porcoes:[
-    {n:'Fritas',p:24.99},{n:'Fritas c/ Frango',p:39.99},{n:'Fritas c/ Calabresa',p:34.99},
-    {n:'Fritas c/ Bacon',p:34.99},{n:'Anéis de Cebola',p:24.99},
+    {n:'Fritas',p:24.99},{n:'Fritas c/ Frango',p:39.99},
+    {n:'Fritas c/ Calabresa',p:34.99},{n:'Fritas c/ Bacon',p:34.99},
+    {n:'Anéis de Cebola',p:24.99},
     {n:'Fritas c/ Bacon, Calabresa e Queijo',p:39.99},
-    {n:'Fritas c/ Bacon Cheddar',p:39.99},{n:'Fritas c/ Polenta e Frango',p:39.99},
-    {n:'Fritas c/ Polenta',p:24.99},{n:'Fritas c/ Calabresa e Catupiry',p:35.99},
+    {n:'Fritas c/ Bacon Cheddar',p:39.99},
+    {n:'Fritas c/ Polenta e Frango',p:39.99},
+    {n:'Fritas c/ Polenta',p:24.99},
+    {n:'Fritas c/ Calabresa e Catupiry',p:35.99},
     {n:'Fritas, Polenta, Chuleta e Anel de Cebola',p:49.99}
   ],
   pasteis:[
-    {n:'Pastel de Carne',p:14},{n:'Pastel de Frango',p:12},{n:'Frango Bacon Cheddar',p:16},
-    {n:'Bacon Cheddar',p:15},{n:'Calabresa c/ Cebola',p:14},{n:'Carne e Queijo',p:15},
-    {n:'Queijo',p:14},{n:'Chocolate ao Leite',p:15},{n:'Banana Queijo Canela',p:15},
-    {n:'Romeu e Julieta',p:15},{n:'Chocolate Branco',p:15},
-    {n:'Creme e Ouro Branco',p:15},{n:'Creme e Sonho de Valsa',p:15}
+    {n:'Pastel de Carne',p:14},{n:'Pastel de Frango',p:12},
+    {n:'Frango Bacon Cheddar',p:16},{n:'Bacon Cheddar',p:15},
+    {n:'Calabresa c/ Cebola',p:14},{n:'Carne e Queijo',p:15},
+    {n:'Queijo',p:14},{n:'Chocolate ao Leite',p:15},
+    {n:'Banana Queijo Canela',p:15},{n:'Romeu e Julieta',p:15},
+    {n:'Chocolate Branco',p:15},{n:'Creme e Ouro Branco',p:15},
+    {n:'Creme e Sonho de Valsa',p:15}
   ],
   acaiTamanhos:[
     {n:'Açaí 300ml',p:12},{n:'Açaí 400ml',p:15},{n:'Açaí 500ml',p:18}
   ],
   acaiAdicionais:[
-    {n:'Paçoca',p:2},{n:'Leite em pó',p:4},{n:'Granola',p:4},{n:'Morango',p:4},
-    {n:'M&M',p:3},{n:'Ouro Branco',p:3},{n:'Banana',p:2},
-    {n:'Sonho de Valsa',p:3},{n:'Leite Condensado',p:3},{n:'Nutella',p:4}
+    {n:'Paçoca',p:2},{n:'Leite em pó',p:4},{n:'Granola',p:4},
+    {n:'Morango',p:4},{n:'M&M',p:3},{n:'Ouro Branco',p:3},
+    {n:'Banana',p:2},{n:'Sonho de Valsa',p:3},
+    {n:'Leite Condensado',p:3},{n:'Nutella',p:4}
   ],
   bebidas:[
-    {n:'Cassulinha 200ml',p:3},{n:'Coca-Cola 600ml',p:8},{n:'Coca-Cola 2L',p:16},
-    {n:'Refri Lata',p:6},{n:'Refrigerante 2L',p:12},
-    {n:'Cerveja Lata 350ml',p:6},{n:'Achocolatado 200ml',p:3}
+    {n:'Cassulinha 200ml',p:3},{n:'Coca-Cola 600ml',p:8},
+    {n:'Coca-Cola 2L',p:16},{n:'Refri Lata',p:6},
+    {n:'Refrigerante 2L',p:12},{n:'Cerveja Lata 350ml',p:6},
+    {n:'Achocolatado 200ml',p:3}
   ]
 };
 
 /* =========================
-   TABS & BUSCA
+   BUSCA GLOBAL
+========================= */
+function handleSearch(value){
+  searchText = value.toLowerCase().trim();
+  renderAll();
+}
+
+/* =========================
+   TABS
 ========================= */
 function openTab(cat,el){
   currentTab = cat;
   document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));
   document.getElementById(cat).classList.add('active');
+
   if(el){
     document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
     el.classList.add('active');
   }
-}
-function handleSearch(v){
-  searchText = v.toLowerCase();
-  renderAll();
 }
 
 /* =========================
    RENDERIZAÇÃO
 ========================= */
 function renderAll(){
-  ['lanches','porcoes','pasteis','acai','bebidas'].forEach(cat=>{
-    const box = document.getElementById(cat);
-    box.innerHTML = '';
+  renderCategory("lanches", produtos.lanches, produtos.adicionaisLanches);
+  renderCategory("porcoes", produtos.porcoes);
+  renderCategory("pasteis", produtos.pasteis);
+  renderAcai();
+  renderCategory("bebidas", produtos.bebidas);
+}
 
-    if(cat === 'acai'){
-      box.innerHTML += `<div class="section">🥤 Tamanhos</div>`;
-      produtos.acaiTamanhos.forEach(p=> box.innerHTML += itemHTML(p));
-      box.innerHTML += `<div class="section">🍫 Adicionais</div>`;
-      produtos.acaiAdicionais.forEach(p=> box.innerHTML += itemHTML(p));
-      return;
+function renderCategory(id,list,extras){
+  const box = document.getElementById(id);
+  box.innerHTML = "";
+
+  list.forEach(p=>{
+    if(p.n.toLowerCase().includes(searchText)){
+      box.innerHTML += itemHTML(p);
     }
+  });
 
-    produtos[cat].forEach(p=>{
-      if(p.n.toLowerCase().includes(searchText))
-        box.innerHTML += itemHTML(p);
-    });
+  if(extras){
+    box.innerHTML += `
+      <div class="sub-btn" onclick="toggleExtras()">➕ Adicionais para Lanches</div>
+      <div id="extras" style="display:none">
+        ${extras.map(e=>itemHTML(e)).join("")}
+      </div>
+    `;
+  }
+}
 
-    if(cat === 'lanches'){
-      box.innerHTML += `
-        <div class="sub-btn" onclick="toggleExtras()">➕ Adicionais para Lanches</div>
-        <div id="extras" style="display:none">
-          ${produtos.adicionaisLanches.map(a=>itemHTML(a)).join('')}
-        </div>`;
+function renderAcai(){
+  const box = document.getElementById("acai");
+  box.innerHTML = `<div class="sub-btn">🥤 Tamanhos</div>`;
+  produtos.acaiTamanhos.forEach(p=>{
+    if(p.n.toLowerCase().includes(searchText)){
+      box.innerHTML += itemHTML(p);
+    }
+  });
+
+  box.innerHTML += `<div class="sub-btn">🍫 Adicionais</div>`;
+  produtos.acaiAdicionais.forEach(p=>{
+    if(p.n.toLowerCase().includes(searchText)){
+      box.innerHTML += itemHTML(p);
     }
   });
 }
@@ -347,50 +388,61 @@ function itemHTML(p){
       <span class="item-name">${p.n}</span>
       <span class="item-price">R$ ${p.p.toFixed(2).replace('.',',')}</span>
       <button class="btn-add" onclick="addItem('${p.n}',${p.p})">+</button>
-    </div>`;
+    </div>
+  `;
 }
 
 function toggleExtras(){
-  const e = document.getElementById('extras');
-  e.style.display = (e.style.display === 'none') ? 'block' : 'none';
-}
-
-/* =========================
-   CARRINHO
-========================= */
-function addItem(n,p){
-  if(!isOpen()){
-    alert("Estamos fechados.\nTerça a Domingo das 18:30 às 22:30");
-    return;
-  }
-  cart.push({n,p});
-  updateCart();
-}
-function updateCart(){
-  const box = document.getElementById('cart');
-  const list = document.getElementById('cartItems');
-  let total = 0;
-  list.innerHTML = '';
-
-  cart.forEach(i=>{
-    total += i.p;
-    list.innerHTML += `
-      <div class="cart-item">
-        <strong>${i.n}</strong>
-        <span>R$ ${i.p.toFixed(2).replace('.',',')}</span>
-      </div>`;
-  });
-
-  document.getElementById('total').innerText =
-    'Total: R$ ' + total.toFixed(2).replace('.',',');
-
-  box.style.display = cart.length ? 'block' : 'none';
+  const e = document.getElementById("extras");
+  if(!e) return;
+  e.style.display = e.style.display === "none" ? "block" : "none";
 }
 </script>
 <script>
 /* =========================
+   CARRINHO
+========================= */
+function addItem(nome, preco){
+  if(!isOpen()){
+    alert("Estamos fechados.\nTerça a Domingo das 18:30 às 22:30");
+    return;
+  }
+  cart.push({ n: nome, p: preco });
+  updateCart();
+}
+
+function updateCart(){
+  const cartBox = document.getElementById("cart");
+  const list = document.getElementById("cartItems");
+  list.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach((item, index)=>{
+    total += item.p;
+    list.innerHTML += `
+      <div class="cart-item">
+        <strong>${item.n}</strong>
+        <span>R$ ${item.p.toFixed(2).replace('.',',')}</span>
+        <button onclick="removeItem(${index})">✕</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText =
+    "Total: R$ " + total.toFixed(2).replace('.',',');
+
+  cartBox.style.display = cart.length ? "block" : "none";
+}
+
+function removeItem(index){
+  cart.splice(index, 1);
+  updateCart();
+}
+
+/* =========================
    FINALIZAR PEDIDO
-   (BEBIDA SIM / NÃO)
+   (PERGUNTA SOBRE BEBIDA)
 ========================= */
 function finishOrder(){
   if(cart.length === 0){
@@ -398,18 +450,19 @@ function finishOrder(){
     return;
   }
 
-  // verifica se tem bebida no carrinho
   const bebidas = [
-    'Cassulinha 200ml','Coca-Cola 600ml','Coca-Cola 2L',
-    'Refri Lata','Refrigerante 2L','Cerveja Lata 350ml',
-    'Achocolatado 200ml'
+    "Cassulinha 200ml","Coca-Cola 600ml","Coca-Cola 2L",
+    "Refri Lata","Refrigerante 2L",
+    "Cerveja Lata 350ml","Achocolatado 200ml"
   ];
 
   const temBebida = cart.some(i => bebidas.includes(i.n));
 
   if(!temBebida){
-    const r = confirm("Você ainda não adicionou bebida.\nDeseja ver as opções?");
-    if(r){
+    const resp = confirm(
+      "Você ainda não adicionou bebida.\nDeseja ver as opções?"
+    );
+    if(resp){
       const tabs = document.querySelectorAll(".tab");
       openTab("bebidas", tabs[4]);
       return;
@@ -418,27 +471,39 @@ function finishOrder(){
 
   sendOrder();
 }
-
+</script>
+<script>
 /* =========================
-   ENVIO WHATSAPP
+   ENVIO PARA WHATSAPP
 ========================= */
 function sendOrder(){
-  let msg = "🍔 *Pedido Rabika's Burguer*\n\n";
+  let mensagem = "🍔 *Pedido Rabika's Burguer*\n\n";
   let total = 0;
 
-  cart.forEach(i=>{
-    msg += `• ${i.n} — R$ ${i.p.toFixed(2).replace('.',',')}\n`;
-    total += i.p;
+  cart.forEach(item=>{
+    mensagem += `• ${item.n} - R$ ${item.p.toFixed(2).replace('.',',')}\n`;
+    total += item.p;
   });
 
-  msg += `\n*Total: R$ ${total.toFixed(2).replace('.',',')}*`;
+  mensagem += `\n💰 *Total: R$ ${total.toFixed(2).replace('.',',')}*`;
+  mensagem += `\n\n📍 Retirada no local`;
 
+  const phone = "554991789706"; // troque se precisar
   const url =
-    "https://wa.me/554991789706?text=" +
-    encodeURIComponent(msg);
+    "https://wa.me/" +
+    phone +
+    "?text=" +
+    encodeURIComponent(mensagem);
 
   window.open(url, "_blank");
 }
+
+/* =========================
+   OFFLINE / ONLINE
+========================= */
+window.addEventListener("offline", () => {
+  alert("Você está sem conexão com a internet.");
+});
 </script>
 
 </body>
