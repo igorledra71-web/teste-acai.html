@@ -161,7 +161,7 @@ body{
     <div class="tab" onclick="openTab('bebidas',this)">Bebidas</div>
   </div>
 
-  <div id="lanches" class="box active"></div>
+ <div id="lanches" class="box"></div>
   <div id="porcoes" class="box"></div>
   <div id="pasteis" class="box"></div>
   <div id="acai" class="box"></div>
@@ -263,12 +263,38 @@ function openTab(id,el){
 /* =========================
    BUSCA GLOBAL
 ========================= */
-function search(v){
-  v=v.toLowerCase();
-  document.querySelectorAll('.item').forEach(i=>{
-    i.style.display=i.dataset.name.includes(v)?'flex':'none';
+function search(value){
+  value = value.toLowerCase().trim();
+  let foundTab = null;
+
+  document.querySelectorAll('.box').forEach(box=>{
+    let hasVisible = false;
+
+    box.querySelectorAll('.item').forEach(item=>{
+      const match = item.dataset.name.includes(value);
+      item.style.display = match ? 'flex' : 'none';
+      if(match) hasVisible = true;
+    });
+
+    if(hasVisible && !foundTab){
+      foundTab = box.id;
+    }
   });
+
+  // abre automaticamente a aba onde achou resultado
+  if(foundTab){
+    document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));
+    document.getElementById(foundTab).classList.add('active');
+
+    document.querySelectorAll('.tab').forEach(t=>{
+      t.classList.toggle(
+        'active',
+        t.getAttribute('onclick').includes(foundTab)
+      );
+    });
+  }
 }
+
 
 /* =========================
    CARRINHO
@@ -294,5 +320,6 @@ function updateCart(){
   cartBox.style.display='block';
 }
 </script>
+
 
 
