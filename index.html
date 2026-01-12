@@ -2,310 +2,271 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
+<title>Rabika's Burguer</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>Rabika's Burguer</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
 
 body{
-  font-family:'Poppins',sans-serif;
-  background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
-  color:#fff;
-  display:flex;
-  justify-content:center;
-  min-height:100vh;
+ font-family:'Poppins',sans-serif;
+ background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
+ color:#fff;
+ display:flex;
+ justify-content:center;
+ -webkit-tap-highlight-color:transparent;
 }
 
 /* SPLASH */
 #splash{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(180deg,#05002e,#020018);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
+ position:fixed;
+ inset:0;
+ background:linear-gradient(180deg,#05002e,#020018);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ z-index:9999;
 }
-.splash-box{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
-}
+.splash-box{text-align:center}
 .splash-logo{
-  width:85vw;
-  max-width:380px;
-  margin-bottom:24px;
+ width:90%;
+ max-width:340px;
+ margin-bottom:40px;
 }
 .splash-btn{
-  background:#FFD34D;
-  border:none;
-  padding:18px 60px;
-  border-radius:50px;
-  font-size:20px;
-  font-weight:900;
-  color:#2b0033;
+ background:linear-gradient(135deg,#FFD34D,#FFB000);
+ border:none;
+ padding:18px 60px;
+ border-radius:40px;
+ font-size:22px;
+ font-weight:900;
+ color:#2b0033;
+ cursor:pointer;
 }
 
 /* APP */
 #app{
-  width:100%;
-  max-width:480px;
-  padding:14px 14px 360px;
-  display:none;
-  flex-direction:column;
+ width:100%;
+ max-width:420px;
+ display:none;
+ flex-direction:column;
+ padding:14px 14px 330px;
 }
 
-/* HEADER */
+/* TOPO */
 .title{
-  text-align:center;
-  font-size:30px;
-  font-weight:900;
-  color:#FFD34D;
-  margin-bottom:6px;
+ text-align:center;
+ font-size:30px;
+ font-weight:900;
+ color:#FFD34D;
+ margin-bottom:8px;
 }
 
 #closedBanner{
-  display:none;
-  background:#b00020;
-  color:#fff;
-  text-align:center;
-  padding:10px;
-  border-radius:16px;
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:10px;
+ background:#b00020;
+ padding:12px;
+ border-radius:18px;
+ font-size:14px;
+ font-weight:700;
+ text-align:center;
+ margin-bottom:10px;
 }
 
-/* SEARCH */
+/* BUSCA */
 .search{
-  width:100%;
-  padding:14px 18px;
-  border-radius:24px;
-  border:none;
-  font-size:16px;
-  margin-bottom:12px;
+ width:100%;
+ padding:14px 16px;
+ border-radius:22px;
+ border:none;
+ font-size:15px;
+ margin-bottom:12px;
 }
 
 /* TABS */
 .tabs{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-bottom:14px;
-}
-@media(min-width:480px){
-  .tabs{grid-template-columns:repeat(5,1fr)}
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+ margin-bottom:14px;
 }
 .tab{
-  background:#fff;
-  color:#2b0033;
-  border-radius:22px;
-  padding:12px;
-  text-align:center;
-  font-weight:800;
-  cursor:pointer;
+ background:#fff;
+ color:#2b0033;
+ padding:14px 8px;
+ border-radius:22px;
+ font-weight:800;
+ text-align:center;
+ cursor:pointer;
+ font-size:14px;
 }
-.tab.active{background:#FFD34D}
+.tab.active{
+ background:#FFD34D;
+}
 
-/* CONTENT */
+/* BOX */
 .box{
-  background:#fff;
-  color:#2b0033;
-  border-radius:30px;
-  padding:18px;
-  display:none;
+ background:#fff;
+ color:#2b0033;
+ border-radius:28px;
+ padding:18px;
+ margin-bottom:18px;
+ display:none;
 }
 .box.active{display:block}
 
 .section{
-  text-align:center;
-  font-weight:900;
-  color:#5a0070;
-  margin:18px 0 12px;
+ font-weight:900;
+ color:#5a0070;
+ margin:18px 0 10px;
+ font-size:14px;
+ text-align:center;
 }
 
 .item{
-  display:grid;
-  grid-template-columns:1fr auto auto;
-  align-items:center;
-  gap:10px;
-  padding:14px 0;
-  border-bottom:1px dashed #e3e3e3;
+ display:grid;
+ grid-template-columns:1fr auto auto;
+ gap:10px;
+ padding:12px 0;
+ border-bottom:1px dashed #ddd;
+ align-items:center;
 }
-.item:last-child{border:none}
-
-.item-name{
-  font-weight:700;
-}
-
+.item-name{font-weight:600}
 .item-price{
-  font-weight:900;
-  color:#5a0070;
-  white-space:nowrap;
+ font-weight:900;
+ color:#5a0070;
+ text-align:right;
 }
-
 .old{
-  text-decoration:line-through;
-  color:#999;
-  font-size:12px;
+ text-decoration:line-through;
+ color:#999;
+ font-size:12px;
 }
-
 .offer-badge{
-  background:#b00020;
-  color:#fff;
-  font-size:10px;
-  padding:2px 6px;
-  border-radius:6px;
-  margin-left:6px;
+ background:#ff0033;
+ color:#fff;
+ padding:2px 6px;
+ font-size:10px;
+ border-radius:8px;
+ margin-left:6px;
 }
-
 .btn-add{
-  background:#5a0070;
-  color:#fff;
-  border:none;
-  border-radius:16px;
-  padding:8px 18px;
-  font-weight:900;
-  min-width:44px;
+ background:#5a0070;
+ color:#fff;
+ border:none;
+ border-radius:14px;
+ padding:6px 14px;
+ font-weight:900;
+ cursor:pointer;
 }
 
-/* CART */
+/* CARRINHO */
 #cart{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:480px;
-  background:#fff;
-  color:#2b0033;
-  padding:16px;
-  border-radius:30px 30px 0 0;
-  display:none;
-  z-index:999;
+ position:fixed;
+ bottom:0;
+ left:50%;
+ transform:translateX(-50%);
+ width:100%;
+ max-width:420px;
+ background:#fff;
+ color:#2b0033;
+ padding:18px;
+ border-radius:28px 28px 0 0;
+ display:none;
+ box-shadow:0 -20px 40px rgba(0,0,0,.4);
 }
-
 .cart-item{
-  font-size:14px;
-  font-weight:800;
-  padding:6px 0;
-  border-bottom:1px dashed #ddd;
+ font-size:14px;
+ font-weight:700;
+ margin-bottom:8px;
 }
-
-.cart-item:last-child{border:none}
-
-.delivery{
-  display:flex;
-  justify-content:space-around;
-  margin:12px 0;
-}
-
-.input,.select{
-  width:100%;
-  padding:12px;
-  border-radius:18px;
-  border:1px solid #ccc;
-  font-size:16px;
-  margin-top:8px;
-}
-
 .total{
-  text-align:right;
-  font-size:18px;
-  font-weight:900;
+ font-size:18px;
+ font-weight:900;
+ text-align:right;
+ margin-top:10px;
 }
-
 .finish{
-  background:#25D366;
-  color:#fff;
-  padding:16px;
-  border-radius:24px;
-  font-weight:900;
-  margin-top:12px;
-  text-align:center;
+ background:#25D366;
+ color:#fff;
+ padding:14px;
+ border-radius:24px;
+ font-weight:900;
+ text-align:center;
+ margin-top:12px;
+ cursor:pointer;
 }
 
 /* MODAL */
 .modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:10000;
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.6);
+ display:none;
+ align-items:center;
+ justify-content:center;
+ z-index:10000;
 }
-
 .modal-box{
-  background:#fff;
-  color:#2b0033;
-  width:92%;
-  max-width:420px;
-  max-height:90vh;
-  border-radius:28px;
-  padding:20px;
-  overflow-y:auto;
+ background:#fff;
+ color:#2b0033;
+ width:92%;
+ max-width:400px;
+ border-radius:26px;
+ padding:20px;
+ max-height:90vh;
+ overflow:auto;
+}
+.modal-title{
+ font-weight:900;
+ margin-bottom:10px;
+ color:#5a0070;
+ text-align:center;
 }
 </style>
 </head>
+
 <body>
+
 <!-- SPLASH -->
 <div id="splash">
-  <div class="splash-box">
-    <img src="logo.png" class="splash-logo" alt="Rabika's Burguer">
-    <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
-  </div>
+ <div class="splash-box">
+  <img src="logo.png" class="splash-logo">
+  <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
+ </div>
 </div>
 
-<!-- APP -->
 <div id="app">
+ <div class="title">Rabika's Burguer</div>
+ <div id="closedBanner">🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30</div>
 
-  <div class="title">Rabika's Burguer</div>
+ <input id="search" class="search" placeholder="Pesquisar no cardápio...">
 
-  <div id="closedBanner">
-    🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30
-  </div>
+ <div class="tabs">
+  <div class="tab active" onclick="openTab('lanches',this)">🍔 Lanches</div>
+  <div class="tab" onclick="openTab('porcoes',this)">🍟 Porções</div>
+  <div class="tab" onclick="openTab('pasteis',this)">🥟 Pastéis</div>
+  <div class="tab" onclick="openTab('acai',this)">🍨 Açaí</div>
+  <div class="tab" onclick="openTab('bebidas',this)">🥤 Bebidas</div>
+ </div>
 
-  <input
-    class="search"
-    id="search"
-    placeholder="Pesquisar no cardápio..."
-    onkeyup="handleSearch(this.value)"
-  >
-
-  <div class="tabs">
-    <div class="tab active" onclick="openTab('lanches',this)">🍔 Lanches</div>
-    <div class="tab" onclick="openTab('porcoes',this)">🍟 Porções</div>
-    <div class="tab" onclick="openTab('pasteis',this)">🥟 Pastéis</div>
-    <div class="tab" onclick="openTab('acai',this)">🍨 Açaí</div>
-    <div class="tab" onclick="openTab('bebidas',this)">🥤 Bebidas</div>
-  </div>
-
-  <div id="lanches" class="box active"></div>
-  <div id="porcoes" class="box"></div>
-  <div id="pasteis" class="box"></div>
-  <div id="acai" class="box"></div>
-  <div id="bebidas" class="box"></div>
-
+ <div id="lanches" class="box active"></div>
+ <div id="porcoes" class="box"></div>
+ <div id="pasteis" class="box"></div>
+ <div id="acai" class="box"></div>
+ <div id="bebidas" class="box"></div>
 </div>
-
-<!-- CARRINHO -->
+<!-- ================= CARRINHO ================= -->
 <div id="cart">
-
   <div id="cartItems"></div>
 
-  <div class="delivery">
+  <div style="display:flex;justify-content:space-around;margin:10px 0;font-weight:700">
     <label>
       <input type="radio" name="del" checked onclick="setDelivery(false)">
       Retirada
@@ -316,57 +277,79 @@ body{
     </label>
   </div>
 
-  <input class="input" id="name" placeholder="Seu nome">
-  <input class="input" id="address" placeholder="Endereço" style="display:none">
+  <input id="name" class="search" placeholder="Seu nome">
 
-  <select class="select" id="payment">
+  <input id="address" class="search" placeholder="Endereço"
+   style="display:none">
+
+  <select id="payment" class="search">
     <option value="">Forma de pagamento</option>
     <option>Dinheiro</option>
     <option>Pix</option>
-    <option>Cartão</option>
+    <option>Cartão de Crédito</option>
+    <option>Cartão de Débito</option>
   </select>
 
-  <div class="total" id="total">Total: R$ 0,00</div>
+  <div id="total" class="total">Total: R$ 0,00</div>
 
   <div class="finish" onclick="tryFinishOrder()">
     Finalizar Pedido
   </div>
-
 </div>
 
-<!-- MODAL BEBIDA -->
+<!-- ================= MODAL FECHADO ================= -->
+<div id="closedModal" class="modal">
+ <div class="modal-box">
+  <div class="modal-title">🔴 Estamos fechados</div>
+  <p style="text-align:center">
+   Atendimento:<br>
+   <strong>Terça a Domingo</strong><br>
+   <strong>18:30 às 22:30</strong>
+  </p>
+  <div class="finish" onclick="closeClosedModal()">Entendi</div>
+ </div>
+</div>
+
+<!-- ================= MODAL BEBIDAS ================= -->
 <div id="drinkModal" class="modal">
-  <div class="modal-box">
-    <h3 style="text-align:center">🥤 Vai querer bebida?</h3>
-    <p style="text-align:center;font-size:14px;margin:10px 0">
-      Você adicionou lanche, mas nenhuma bebida.
-    </p>
-
-    <div style="display:flex;gap:10px">
-      <button class="finish" onclick="openDrinks()">SIM</button>
-      <button class="btn-add" onclick="skipDrinks()">NÃO</button>
-    </div>
-  </div>
+ <div class="modal-box">
+  <div class="modal-title">🥤 Vai querer bebida?</div>
+  <p style="text-align:center;margin-bottom:10px">
+   Você escolheu um lanche.<br>
+   Deseja adicionar bebidas?
+  </p>
+  <div class="finish" onclick="openDrinks()">SIM</div>
+  <div class="finish" style="background:#ccc;color:#333"
+   onclick="skipDrinks()">NÃO</div>
+ </div>
 </div>
 
-<!-- PAINEL ADM -->
+<!-- ================= MODAL ADMIN ================= -->
 <div id="adminModal" class="modal">
-  <div class="modal-box">
+ <div class="modal-box">
+  <div class="modal-title">Painel de Ofertas</div>
+  <p style="text-align:center;font-size:14px;margin-bottom:10px">
+   Defina o período da oferta (início e fim) e o preço promocional
+  </p>
 
-    <div class="admin-header">
-      <h3>Painel de Ofertas</h3>
-      <button class="admin-close" onclick="closeAdmin()">✕</button>
-    </div>
+  <div id="adminList"></div>
 
-    <p style="text-align:center;font-size:13px;margin-bottom:10px">
-      Defina o período da oferta (início e fim) e o preço promocional
-    </p>
+  <div class="finish" style="background:#999"
+   onclick="closeAdmin()">Fechar</div>
+ </div>
+</div>
 
-    <div id="adminList">
-      <!-- gerado via JS -->
-    </div>
-
-  </div>
+<!-- ================= MODAL CONFIRMA DESATIVAR ================= -->
+<div id="confirmDisableModal" class="modal">
+ <div class="modal-box">
+  <div class="modal-title">Desativar oferta?</div>
+  <p style="text-align:center">
+   Tem certeza que deseja desativar esta oferta agora?
+  </p>
+  <div class="finish" onclick="confirmDisableOffer()">SIM</div>
+  <div class="finish" style="background:#ccc;color:#333"
+   onclick="closeDisableConfirm()">Cancelar</div>
+ </div>
 </div>
 <script>
 /* ================= CONFIG ================= */
@@ -376,6 +359,7 @@ let cart = [];
 let currentTab = "lanches";
 let offers = JSON.parse(localStorage.getItem("offers")) || {};
 let sales = JSON.parse(localStorage.getItem("sales")) || [];
+let disableTarget = null;
 
 /* ================= HORÁRIO ================= */
 function isOpen(){
@@ -449,7 +433,6 @@ function start(){
 function updateOpenStatus(){
   const open=isOpen();
   document.getElementById("closedBanner").style.display=open?"none":"block";
-  document.querySelectorAll(".btn-add").forEach(b=>b.disabled=!open);
 }
 
 /* ================= TABS ================= */
@@ -474,21 +457,22 @@ function renderAll(){
 function renderCategory(id,list,extra){
   const box=document.getElementById(id);
   box.innerHTML="";
-  list.forEach(p=>box.innerHTML+=itemHTML(p));
+  list.forEach(p=>box.innerHTML+=itemHTML(p,id));
   if(extra){
     box.innerHTML+=`<div class="section">➕ Adicionais</div>`;
-    extra.forEach(p=>box.innerHTML+=itemHTML(p));
+    extra.forEach(p=>box.innerHTML+=itemHTML(p,id));
   }
 }
 
 function renderAcai(){
   const box=document.getElementById("acai");
   box.innerHTML=`<div class="section">🥤 Tamanhos</div>`;
-  products.acaiTamanhos.forEach(p=>box.innerHTML+=itemHTML(p));
+  products.acaiTamanhos.forEach(p=>box.innerHTML+=itemHTML(p,"acai"));
   box.innerHTML+=`<div class="section">🍫 Adicionais</div>`;
-  products.acaiAdicionais.forEach(p=>box.innerHTML+=itemHTML(p));
+  products.acaiAdicionais.forEach(p=>box.innerHTML+=itemHTML(p,"acai"));
 }
 
+/* ================= OFERTAS ================= */
 function getOffer(p){
   const o=offers[p.n];
   if(!o) return null;
@@ -497,7 +481,7 @@ function getOffer(p){
   return null;
 }
 
-function itemHTML(p){
+function itemHTML(p,tab){
   const o=getOffer(p);
   let priceHTML=`R$ ${p.p.toFixed(2).replace(".",",")}`;
   if(o){
@@ -506,7 +490,7 @@ function itemHTML(p){
     <span class="offer-badge">OFERTA</span>`;
   }
   return `
-  <div class="item">
+  <div class="item" data-name="${p.n.toLowerCase()}" data-tab="${tab}">
     <span class="item-name">${p.n}</span>
     <span class="item-price">${priceHTML}</span>
     <button class="btn-add" onclick="addItem('${p.n}',${o?o.price:p.p})">+</button>
@@ -514,15 +498,29 @@ function itemHTML(p){
 }
 
 /* ================= BUSCA GLOBAL ================= */
-function handleSearch(v){
-  v=v.toLowerCase();
+document.getElementById("search").addEventListener("input",e=>{
+  const v=e.target.value.toLowerCase();
+  let foundTab=null;
+
   document.querySelectorAll(".item").forEach(i=>{
-    i.style.display=i.innerText.toLowerCase().includes(v)?"grid":"none";
+    const match=i.dataset.name.includes(v);
+    i.style.display=match?"grid":"none";
+    if(match&&!foundTab) foundTab=i.dataset.tab;
   });
-}
+
+  if(foundTab){
+    const tabBtn=[...document.querySelectorAll(".tab")]
+      .find(t=>t.innerText.toLowerCase().includes(foundTab));
+    if(tabBtn) openTab(foundTab,tabBtn);
+  }
+});
 
 /* ================= CARRINHO ================= */
 function addItem(n,p){
+  if(!isOpen()){
+    document.getElementById("closedModal").style.display="flex";
+    return;
+  }
   cart.push({n,p});
   updateCart();
 }
@@ -531,16 +529,20 @@ function updateCart(){
   const box=document.getElementById("cartItems");
   box.innerHTML="";
   let total=0;
+
   cart.forEach((i,idx)=>{
     total+=i.p;
     box.innerHTML+=`
       <div class="cart-item">
-        🔸 <strong>${i.n}</strong> — R$ ${i.p.toFixed(2).replace(".",",")}
+        <strong>${i.n}</strong> — R$ ${i.p.toFixed(2).replace(".",",")}
         <button onclick="removeItem(${idx})">✕</button>
       </div>`;
   });
+
   if(isDelivery) total+=FREIGHT;
-  document.getElementById("total").innerText="Total: R$ "+total.toFixed(2).replace(".",",");
+  document.getElementById("total").innerText=
+   "Total: R$ "+total.toFixed(2).replace(".",",");
+
   document.getElementById("cart").style.display=cart.length?"block":"none";
 }
 
@@ -554,90 +556,46 @@ function setDelivery(v){
   document.getElementById("address").style.display=v?"block":"none";
   updateCart();
 }
-</script>
-<script>
-/* ================== MODAL BEBIDA ================== */
-function tryFinishOrder(){
-  const temLanche = cart.some(i => products.lanches.some(l => l.n === i.n));
-  const temBebida = cart.some(i => products.bebidas.some(b => b.n === i.n));
 
-  if(temLanche && !temBebida){
-    document.getElementById("drinkModal").style.display = "flex";
-  }else{
-    finishOrder();
-  }
-}
-
-function openDrinks(){
-  document.getElementById("drinkModal").style.display = "none";
-  const tab = [...document.querySelectorAll(".tab")]
-    .find(t => t.innerText.includes("Bebidas"));
-  openTab("bebidas", tab);
-}
-
-function skipDrinks(){
-  document.getElementById("drinkModal").style.display = "none";
-  finishOrder(); // ✅ agora funciona
-}
-
-/* ================== PAINEL ADM ================== */
-function openAdmin(){
-  document.getElementById("adminModal").style.display="flex";
-}
-function closeAdmin(){
-  document.getElementById("adminModal").style.display="none";
-}
-
-/* Atalho secreto: digitar OFERTA */
-document.getElementById("search").addEventListener("keyup",e=>{
-  const v=e.target.value.toLowerCase();
-  if(v==="oferta"){
-    const senha=prompt("Senha do administrador:");
-    if(senha==="1234"){ // 🔐 ALTERE AQUI
-      openAdmin();
-      e.target.value="";
-    }else{
-      alert("Senha incorreta");
-    }
-  }
-
-  /* RELATÓRIO */
-  if(v==="relatorio"){
-    gerarRelatorio();
-    e.target.value="";
-  }
-});
-
-/* ================== RENDER ADM ================== */
+/* ================= ADMIN ================= */
 function renderAdmin(){
   const box=document.getElementById("adminList");
   box.innerHTML="";
+
   Object.values(products).flat().forEach(p=>{
     if(!p.n) return;
+    const hasOffer=!!offers[p.n];
+
     box.innerHTML+=`
-      <div style="margin-bottom:14px">
+      <div style="margin-bottom:18px">
         <strong>${p.n}</strong>
 
-        <input class="input" type="number"
-          placeholder="Preço promocional"
-          id="price-${p.n}">
+        <input class="search" type="number"
+         placeholder="Preço promocional"
+         id="price-${p.n}">
 
-        <input class="input" type="date"
-          id="start-${p.n}">
+        <input class="search" type="date"
+         id="start-${p.n}">
+        <input class="search" type="date"
+         id="end-${p.n}">
 
-        <input class="input" type="date"
-          id="end-${p.n}">
+        <div style="display:flex;gap:8px">
+          <div class="finish"
+           onclick="saveOffer('${p.n}',${p.p})">
+           Salvar Oferta
+          </div>
 
-        <button class="finish"
-          style="margin-top:6px"
-          onclick="saveOffer('${p.n}',${p.p})">
-          Salvar Oferta
-        </button>
+          ${hasOffer?`
+          <div class="finish"
+           style="background:#b00020"
+           onclick="askDisable('${p.n}')">
+           Desativar
+          </div>`:""}
+        </div>
       </div>`;
   });
 }
 
-/* ================== SALVAR OFERTA ================== */
 function saveOffer(name,original){
   const price=document.getElementById("price-"+name).value;
   const start=document.getElementById("start-"+name).value;
@@ -648,47 +606,105 @@ function saveOffer(name,original){
     return;
   }
 
-  offers[name]={
-    price:parseFloat(price),
-    start,
-    end
-  };
-
+  offers[name]={price:parseFloat(price),start,end};
   localStorage.setItem("offers",JSON.stringify(offers));
-  alert("Oferta salva com sucesso");
+  alert("Oferta salva");
   renderAll();
 }
 
-/* ================== RELATÓRIO ================== */
+function askDisable(name){
+  disableTarget=name;
+  document.getElementById("confirmDisableModal").style.display="flex";
+}
+function confirmDisableOffer(){
+  delete offers[disableTarget];
+  localStorage.setItem("offers",JSON.stringify(offers));
+  document.getElementById("confirmDisableModal").style.display="none";
+  renderAll();
+}
+function closeDisableConfirm(){
+  document.getElementById("confirmDisableModal").style.display="none";
+}
+function closeClosedModal(){
+  document.getElementById("closedModal").style.display="none";
+}
+</script>
+<script>
+/* ================= BEBIDAS ================= */
+function tryFinishOrder(){
+  const temLanche = cart.some(i => products.lanches.some(l => l.n === i.n));
+  const temBebida = cart.some(i => products.bebidas.some(b => b.n === i.n));
+
+  if(temLanche && !temBebida){
+    document.getElementById("drinkModal").style.display="flex";
+  }else{
+    finishOrder();
+  }
+}
+
+function openDrinks(){
+  document.getElementById("drinkModal").style.display="none";
+  const btn=[...document.querySelectorAll(".tab")]
+   .find(t=>t.innerText.includes("Bebidas"));
+  openTab("bebidas",btn);
+}
+
+function skipDrinks(){
+  document.getElementById("drinkModal").style.display="none";
+  finishOrder();
+}
+
+/* ================= ADMIN (ATALHOS) ================= */
+document.getElementById("search").addEventListener("keyup",e=>{
+  const v=e.target.value.toLowerCase();
+
+  if(v==="oferta"){
+    const senha=prompt("Senha do administrador:");
+    if(senha==="1234"){
+      openAdmin();
+      e.target.value="";
+    }else{
+      alert("Senha incorreta");
+    }
+  }
+
+  if(v==="relatorio"){
+    gerarRelatorio();
+    e.target.value="";
+  }
+});
+
+/* ================= RELATÓRIO ================= */
 function gerarRelatorio(){
   if(!sales.length){
     alert("Nenhuma venda registrada");
     return;
   }
 
-  let total=0;
-  let dinheiro=0,pix=0,cartao=0;
+  let total=0,dinheiro=0,pix=0,credito=0,debito=0;
 
   sales.forEach(s=>{
     total+=s.total;
     if(s.pay==="Dinheiro") dinheiro+=s.total;
     if(s.pay==="Pix") pix+=s.total;
-    if(s.pay==="Cartão") cartao+=s.total;
+    if(s.pay==="Cartão de Crédito") credito+=s.total;
+    if(s.pay==="Cartão de Débito") debito+=s.total;
   });
 
   alert(
-    "📊 RELATÓRIO\n\n"+
+    "📊 RELATÓRIO DE VENDAS\n\n"+
     "Total: R$ "+total.toFixed(2)+"\n"+
     "Dinheiro: R$ "+dinheiro.toFixed(2)+"\n"+
     "Pix: R$ "+pix.toFixed(2)+"\n"+
-    "Cartão: R$ "+cartao.toFixed(2)
+    "Crédito: R$ "+credito.toFixed(2)+"\n"+
+    "Débito: R$ "+debito.toFixed(2)
   );
 }
 
-/* ================== FINALIZAR PEDIDO ================== */
+/* ================= FINALIZAR PEDIDO ================= */
 function finishOrder(){
   if(!isOpen()){
-    alert("Estamos fechados no momento");
+    document.getElementById("closedModal").style.display="flex";
     return;
   }
 
@@ -726,13 +742,11 @@ function finishOrder(){
   });
   localStorage.setItem("sales",JSON.stringify(sales));
 
-  window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg));
+  window.open(
+    "https://wa.me/554991789706?text="+encodeURIComponent(msg),
+    "_blank"
+  );
 }
-
-/* ================== OFFLINE ================== */
-window.addEventListener("offline",()=>{
-  alert("Sem conexão com a internet");
-});
 </script>
 
 </body>
