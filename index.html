@@ -53,7 +53,7 @@ body{
 #app{
   width:100%;
   max-width:480px;
-  padding:14px 14px 360px;
+  padding:14px 14px 380px;
   display:none;
 }
 .title{
@@ -63,17 +63,6 @@ body{
   color:#FFD34D;
   margin-bottom:6px;
 }
-#closed{
-  display:none;
-  background:#b00020;
-  text-align:center;
-  padding:10px;
-  border-radius:16px;
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:10px;
-}
-
 .search{
   width:100%;
   padding:14px 18px;
@@ -134,6 +123,7 @@ body{
 .item-price{font-weight:900;color:#5a0070}
 .old{text-decoration:line-through;color:#999;font-size:12px}
 .offer{color:#b00020;font-size:13px;font-weight:900}
+
 .btn-add{
   background:#5a0070;
   color:#fff;
@@ -194,7 +184,7 @@ body{
   text-align:center;
 }
 
-/* ADMIN */
+/* MODAL */
 .modal{
   position:fixed;
   inset:0;
@@ -204,42 +194,104 @@ body{
   justify-content:center;
   z-index:9999;
 }
-.admin{
+.modal-box{
   background:#fff;
   color:#2b0033;
-  width:94%;
-  max-width:440px;
+  width:92%;
+  max-width:420px;
   border-radius:28px;
   padding:20px;
-  max-height:80vh;
-  overflow-y:auto;
-}
-.admin-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.admin-row{
-  display:grid;
-  grid-template-columns:1fr 90px auto;
-  gap:8px;
-  margin-bottom:10px;
-}
-.admin-row input{
-  padding:8px;
-  border-radius:10px;
-  border:1px solid #ccc;
-}
-.admin-remove{
-  background:#e60000;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  padding:6px 10px;
 }
 </style>
 </head>
 <body>
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-box">
+    <img src="logo.png" class="splash-logo">
+    <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="title">Rabika's Burguer</div>
+
+  <input class="search" id="search" placeholder="Pesquisar no cardápio..."
+         onkeyup="handleSearch(this.value)">
+
+  <div class="tabs">
+    <div class="tab active" onclick="openTab('lanches',this)">🍔 Lanches</div>
+    <div class="tab" onclick="openTab('porcoes',this)">🍟 Porções</div>
+    <div class="tab" onclick="openTab('pasteis',this)">🥟 Pastéis</div>
+    <div class="tab" onclick="openTab('acai',this)">🍨 Açaí</div>
+    <div class="tab" onclick="openTab('bebidas',this)">🥤 Bebidas</div>
+  </div>
+
+  <div id="lanches" class="box active"></div>
+  <div id="porcoes" class="box"></div>
+  <div id="pasteis" class="box"></div>
+  <div id="acai" class="box"></div>
+  <div id="bebidas" class="box"></div>
+</div>
+
+<!-- CARRINHO -->
+<div id="cart">
+  <div id="cartItems"></div>
+
+  <div class="delivery">
+    <label>
+      <input type="radio" name="del" checked onclick="setDelivery(false)">
+      Retirada
+    </label>
+    <label>
+      <input type="radio" name="del" onclick="setDelivery(true)">
+      Entrega (+R$8)
+    </label>
+  </div>
+
+  <input class="input" id="name" placeholder="Seu nome">
+  <input class="input" id="address" placeholder="Endereço"
+         style="display:none">
+
+  <select class="select" id="payment">
+    <option value="">Forma de pagamento</option>
+    <option>Dinheiro</option>
+    <option>Pix</option>
+    <option>Cartão</option>
+  </select>
+
+  <div class="total" id="total">Total: R$ 0,00</div>
+  <div class="finish" onclick="tryFinishOrder()">Finalizar Pedido</div>
+</div>
+
+<!-- MODAL BEBIDA -->
+<div id="drinkModal" class="modal">
+  <div class="modal-box">
+    <h3 style="text-align:center">🥤 Vai querer bebida?</h3>
+    <p style="text-align:center;font-size:14px;margin:10px 0">
+      Que tal adicionar uma bebida para acompanhar seu lanche?
+    </p>
+
+    <div style="display:flex;gap:10px">
+      <button class="finish" onclick="openDrinks()">SIM</button>
+      <button class="btn-add" onclick="skipDrinks()">NÃO</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAINEL ADM -->
+<div id="adminModal" class="modal" onclick="closeAdmin()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <h3 style="text-align:center">Painel de Ofertas</h3>
+    <p style="text-align:center;font-size:13px;margin:10px 0">
+      Defina preço promocional para os produtos
+    </p>
+    <div id="adminList"></div>
+    <button class="btn-add" style="margin-top:10px;width:100%"
+            onclick="closeAdmin()">Fechar</button>
+  </div>
+</div>
 <script>
 /* ================= CONFIG ================= */
 const FREIGHT = 8;
@@ -316,6 +368,22 @@ function renderAll(){
   renderAdmin();
 }
 
+function itemHTML(p){
+  const offer = offers[p.n];
+  const price = offer ? offer.price : p.p;
+
+  return `
+  <div class="item" data-name="${p.n.toLowerCase()}">
+    <div class="item-name">
+      ${p.n}
+      ${offer ? `<div class="old">R$ ${p.p.toFixed(2).replace('.',',')}</div>
+                 <div class="offer">OFERTA</div>` : ``}
+    </div>
+    <div class="item-price">R$ ${price.toFixed(2).replace('.',',')}</div>
+    <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
+  </div>`;
+}
+
 function renderCategory(id,list,extra){
   const box=document.getElementById(id);
   box.innerHTML="";
@@ -332,29 +400,6 @@ function renderAcai(){
   products.acaiT.forEach(p=>box.innerHTML+=itemHTML(p));
   box.innerHTML+=`<div class="section">🍫 Adicionais</div>`;
   products.acaiA.forEach(p=>box.innerHTML+=itemHTML(p));
-}
-
-function itemHTML(p){
-  const o=offers[p.n];
-  const price=o?o.price:p.p;
-  return `
-  <div class="item" data-name="${p.n.toLowerCase()}">
-    <div class="item-name">
-      ${p.n}
-      ${o?`<div class="old">R$ ${p.p.toFixed(2).replace('.',',')}</div>
-          <div class="offer">OFERTA</div>`:""}
-    </div>
-    <div class="item-price">R$ ${price.toFixed(2).replace('.',',')}</div>
-    <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
-  </div>`;
-}
-<script>
-/* ================= ABAS ================= */
-function openTab(id,el){
-  document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  el.classList.add("active");
 }
 
 /* ================= BUSCA GLOBAL ================= */
@@ -387,9 +432,6 @@ function handleSearch(v){
   if(first){
     document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
     document.getElementById(first).classList.add("active");
-    document.querySelectorAll(".tab").forEach(t=>{
-      t.classList.toggle("active",t.innerText.toLowerCase().includes(first));
-    });
   }
 }
 
@@ -403,6 +445,7 @@ function updateCart(){
   const box=document.getElementById("cartItems");
   box.innerHTML="";
   let total=0;
+
   cart.forEach((i,idx)=>{
     total+=i.p*i.q;
     box.innerHTML+=`
@@ -414,6 +457,7 @@ function updateCart(){
       </div>
     </div>`;
   });
+
   if(isDelivery) total+=FREIGHT;
   document.getElementById("total").innerText="Total: R$ "+total.toFixed(2).replace('.',',');
   document.getElementById("cart").style.display=cart.length?"block":"none";
@@ -431,6 +475,42 @@ function setDelivery(v){
   updateCart();
 }
 
+/* ================= LÓGICA BEBIDA ================= */
+function hasFood(){
+  return cart.some(i=>products.lanches.some(l=>l.n===i.n));
+}
+function hasDrink(){
+  return cart.some(i=>products.bebidas.some(b=>b.n===i.n));
+}
+
+function tryFinishOrder(){
+  if(hasFood() && !hasDrink()){
+    document.getElementById("drinkModal").style.display="flex";
+  }else{
+    sendOrder();
+  }
+}
+
+function openDrinks(){
+  document.getElementById("drinkModal").style.display="none";
+  openTab("bebidas",document.querySelector(".tab:last-child"));
+}
+
+function skipDrinks(){
+  document.getElementById("drinkModal").style.display="none";
+  sendOrder();
+}
+</script>
+<script>
+/* ================= ABAS ================= */
+function openTab(id,el){
+  document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  if(el) el.classList.add("active");
+}
+
 /* ================= ADMIN ================= */
 function openAdmin(){
   document.getElementById("adminModal").style.display="flex";
@@ -442,48 +522,96 @@ function closeAdmin(){
 
 function renderAdmin(){
   const list=document.getElementById("adminList");
+  if(!list) return;
+
   list.innerHTML="";
+
   Object.values(products).flat().forEach(p=>{
-    list.innerHTML+=`
-    <div class="admin-row ${offers[p.n]?'active-admin':''}">
-      <input value="${p.n}" readonly>
-      <input type="number" placeholder="Preço oferta">
-      <button onclick="setOffer('${p.n}',this.previousElementSibling.value)">OK</button>
-      ${offers[p.n]?`<button class="admin-remove" onclick="removeOffer('${p.n}')">X</button>`:""}
-    </div>`;
+    if(!p || !p.n) return;
+
+    const active = offers[p.n] ? "style='background:#eafff2;border:2px solid #25D366'" : "";
+
+    list.innerHTML += `
+      <div class="admin-row" ${active}>
+        <input value="${p.n}" readonly>
+        <input type="number" placeholder="Preço oferta" id="of-${p.n}">
+        <button class="btn-add" onclick="applyOffer('${p.n}',${p.p})">OK</button>
+        ${offers[p.n] ? `<button class="admin-remove" onclick="removeOffer('${p.n}')">X</button>` : ``}
+      </div>
+    `;
   });
 }
 
-function setOffer(n,v){
-  if(!v)return;
-  offers[n]={price:parseFloat(v)};
-  localStorage.setItem("offers",JSON.stringify(offers));
+function applyOffer(name, original){
+  const input = document.getElementById("of-"+name);
+  if(!input || !input.value) return;
+
+  offers[name] = {
+    price: parseFloat(input.value),
+    original: original
+  };
+
+  localStorage.setItem("offers", JSON.stringify(offers));
   renderAll();
 }
 
-function removeOffer(n){
-  delete offers[n];
-  localStorage.setItem("offers",JSON.stringify(offers));
+function removeOffer(name){
+  delete offers[name];
+  localStorage.setItem("offers", JSON.stringify(offers));
   renderAll();
 }
 
 /* ================= WHATSAPP ================= */
 function sendOrder(){
-  const name=document.getElementById("name").value;
-  const pay=document.getElementById("payment").value;
-  const addr=document.getElementById("address").value;
-  if(!name||!pay||(isDelivery&&!addr)){
-    alert("Preencha todos os dados");
+  const name = document.getElementById("name").value;
+  const payment = document.getElementById("payment").value;
+  const address = document.getElementById("address").value;
+
+  if(!name){
+    alert("Informe seu nome");
+    return;
+  }
+  if(isDelivery && !address){
+    alert("Informe o endereço");
+    return;
+  }
+  if(!payment){
+    alert("Informe a forma de pagamento");
     return;
   }
 
-  let msg="🍔 Pedido Rabika's Burguer\n\n";
-  cart.forEach(i=>msg+=`- ${i.n} x${i.q}\n`);
-  if(isDelivery) msg+="Entrega: R$ 8\n";
-  msg+=document.getElementById("total").innerText;
+  let total = 0;
+  let msg = "🍔 *Pedido Rabika's Burguer*\n\n";
+  msg += "Cliente: " + name + "\n";
+  msg += "Pagamento: " + payment + "\n";
+  msg += isDelivery ? "Entrega\nEndereço: " + address + "\n\n" : "Retirada no local\n\n";
+  msg += "*Itens:*\n";
 
-  window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg));
+  cart.forEach(i=>{
+    msg += `- ${i.n} x${i.q} (R$ ${i.p.toFixed(2).replace('.',',')})\n`;
+    total += i.p * i.q;
+  });
+
+  if(isDelivery){
+    msg += "Taxa de entrega: R$ 8,00\n";
+    total += FREIGHT;
+  }
+
+  msg += "\n*Total: R$ " + total.toFixed(2).replace('.',',') + "*";
+
+  window.open(
+    "https://wa.me/554991789706?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
 }
+
+/* ================= GATILHO ADMIN VIA BUSCA ================= */
+document.getElementById("search").addEventListener("keyup", e=>{
+  if(e.key === "Enter" && e.target.value.toLowerCase() === ADMIN_KEY){
+    e.target.value="";
+    openAdmin();
+  }
+});
 </script>
 
 </body>
