@@ -47,10 +47,9 @@ body{
 }
 .title{
   text-align:center;
-  font-size:28px;
+  font-size:30px;
   font-weight:900;
   color:#FFD34D;
-  margin-bottom:6px;
 }
 #status{
   text-align:center;
@@ -173,6 +172,7 @@ body{
     <div class="tab" onclick="openTab('bebidas',this)">🥤</div>
   </div>
 
+  <!-- abas iniciam fechadas -->
   <div id="lanches" class="box"></div>
   <div id="porcoes" class="box"></div>
   <div id="pasteis" class="box"></div>
@@ -186,25 +186,25 @@ body{
   <button class="btn-green" onclick="sendOrder()">Enviar Pedido</button>
 </div>
 <script>
-/* ================= CONFIGURAÇÕES ================= */
+/* ================= CONFIGURAÇÕES GERAIS ================= */
 const ADMIN_PASSWORD = "1234";
 const FREIGHT = 8;
 
 let cart = [];
 let currentTab = null;
 
-/* ================= HORÁRIO DE FUNCIONAMENTO ================= */
+/* ================= REGRAS DE NEGÓCIO (HORÁRIO) ================= */
 function isOpen(){
   const d = new Date();
-  const day = d.getDay(); // 0 domingo, 1 segunda
-  const h = d.getHours() + d.getMinutes()/60;
+  const day = d.getDay(); // 0 domingo | 1 segunda
+  const h = d.getHours() + d.getMinutes() / 60;
 
   if(day === 1) return false;          // segunda fechado
   if(h < 18.5 || h > 22.5) return false;
   return true;
 }
 
-/* ================= PRODUTOS (100% COMPLETO) ================= */
+/* ================= BASE DE PRODUTOS (COMPLETA) ================= */
 const products = {
   lanches:[
     {n:"X-Salada",p:17},
@@ -295,16 +295,18 @@ const products = {
 };
 </script>
 <script>
-/* ================= START ================= */
+/* ================= START (BLOCO 1) ================= */
 function start(){
-  document.getElementById("splash").style.display="none";
-  document.getElementById("app").style.display="block";
-  renderAll();
+  document.getElementById("splash").style.display = "none";
+  document.getElementById("app").style.display = "block";
+
   document.getElementById("status").innerText =
     isOpen() ? "🟢 Aberto agora" : "🔴 Fechado — pedidos indisponíveis";
+
+  renderAll();
 }
 
-/* ================= RENDER GERAL ================= */
+/* ================= RENDERIZAÇÃO GERAL (BLOCO 3) ================= */
 function renderAll(){
   renderCategory("lanches", products.lanches, products.adicionaisLanches);
   renderCategory("porcoes", products.porcoes);
@@ -357,7 +359,7 @@ function itemHTML(p){
   `;
 }
 
-/* ================= TABS ================= */
+/* ================= NAVEGAÇÃO POR ABAS (BLOCO 2) ================= */
 function openTab(id, el){
   currentTab = id;
 
@@ -372,8 +374,8 @@ function openTab(id, el){
   el.classList.add("active");
 }
 
-/* ================= BUSCA GLOBAL ================= */
-document.getElementById("search").addEventListener("input",function(){
+/* ================= BUSCA GLOBAL (BLOCO 4) ================= */
+document.getElementById("search").addEventListener("input", function(){
   const v = this.value.toLowerCase().trim();
   let foundTab = null;
 
@@ -400,7 +402,7 @@ document.getElementById("search").addEventListener("input",function(){
 });
 </script>
 <script>
-/* ================= CARRINHO ================= */
+/* ================= CARRINHO (BLOCO 5) ================= */
 function addItem(name, price){
   if(!isOpen()){
     alert("Estamos fechados no momento.\nTerça a Domingo das 18:30 às 22:30");
@@ -432,9 +434,12 @@ function updateCart(){
     cart.length ? "block" : "none";
 }
 
-/* ================= WHATSAPP ================= */
+/* ================= PEDIDO / WHATSAPP (BLOCO 7) ================= */
 function sendOrder(){
-  if(!cart.length) return;
+  if(!cart.length){
+    alert("Seu carrinho está vazio");
+    return;
+  }
 
   let message = "🍔 Pedido Rabika's Burguer\n\n";
   let total = 0;
