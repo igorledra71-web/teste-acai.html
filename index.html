@@ -37,8 +37,17 @@ body{
   justify-content:center;
   z-index:9999;
 }
-.splash-box{text-align:center}
-.splash-logo{width:85vw;max-width:380px;margin-bottom:24px}
+.splash-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+.splash-logo{
+  width:85vw;
+  max-width:380px;
+  margin-bottom:24px;
+}
 .splash-btn{
   background:#FFD34D;
   border:none;
@@ -62,6 +71,17 @@ body{
   font-weight:900;
   color:#FFD34D;
   margin-bottom:6px;
+}
+#closedBanner{
+  display:none;
+  background:#b00020;
+  color:#fff;
+  text-align:center;
+  padding:10px;
+  border-radius:16px;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:10px;
 }
 .search{
   width:100%;
@@ -216,9 +236,14 @@ body{
 <!-- APP -->
 <div id="app">
   <div class="title">Rabika's Burguer</div>
+  <div id="closedBanner">🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30</div>
 
-  <input class="search" id="search" placeholder="Pesquisar no cardápio..."
-         onkeyup="handleSearch(this.value)">
+  <input
+    class="search"
+    id="search"
+    placeholder="Pesquisar no cardápio..."
+    onkeyup="handleSearch(this.value)"
+  >
 
   <div class="tabs">
     <div class="tab active" onclick="openTab('lanches',this)">🍔 Lanches</div>
@@ -251,8 +276,12 @@ body{
   </div>
 
   <input class="input" id="name" placeholder="Seu nome">
-  <input class="input" id="address" placeholder="Endereço"
-         style="display:none">
+  <input
+    class="input"
+    id="address"
+    placeholder="Endereço"
+    style="display:none"
+  >
 
   <select class="select" id="payment">
     <option value="">Forma de pagamento</option>
@@ -270,7 +299,7 @@ body{
   <div class="modal-box">
     <h3 style="text-align:center">🥤 Vai querer bebida?</h3>
     <p style="text-align:center;font-size:14px;margin:10px 0">
-      Que tal adicionar uma bebida para acompanhar seu lanche?
+      Que tal adicionar uma bebida para acompanhar seu pedido?
     </p>
 
     <div style="display:flex;gap:10px">
@@ -285,11 +314,18 @@ body{
   <div class="modal-box" onclick="event.stopPropagation()">
     <h3 style="text-align:center">Painel de Ofertas</h3>
     <p style="text-align:center;font-size:13px;margin:10px 0">
-      Defina preço promocional para os produtos
+      Defina o preço promocional e a data de validade da oferta
     </p>
+
     <div id="adminList"></div>
-    <button class="btn-add" style="margin-top:10px;width:100%"
-            onclick="closeAdmin()">Fechar</button>
+
+    <button
+      class="btn-add"
+      style="margin-top:12px;width:100%"
+      onclick="closeAdmin()"
+    >
+      Fechar
+    </button>
   </div>
 </div>
 <script>
@@ -300,6 +336,17 @@ const ADMIN_KEY = "oferta";
 let cart = [];
 let isDelivery = false;
 let offers = JSON.parse(localStorage.getItem("offers")) || {};
+
+/* ================= HORÁRIO ================= */
+function isOpenNow(){
+  const d = new Date();
+  const day = d.getDay(); // 0 dom, 1 seg
+  const time = d.getHours() + d.getMinutes()/60;
+
+  if(day === 1) return false; // segunda fechado
+  if(time < 18.5 || time > 22.5) return false; // 18:30 às 22:30
+  return true;
+}
 
 /* ================= PRODUTOS ================= */
 const products = {
@@ -356,6 +403,13 @@ function start(){
   document.getElementById("splash").style.display="none";
   document.getElementById("app").style.display="block";
   renderAll();
+  updateOpenStatus();
+}
+
+/* ================= STATUS ABERTO ================= */
+function updateOpenStatus(){
+  const open = isOpenNow();
+  document.getElementById("closedBanner").style.display = open ? "none" : "block";
 }
 
 /* ================= RENDER ================= */
@@ -371,6 +425,7 @@ function renderAll(){
 function itemHTML(p){
   const offer = offers[p.n];
   const price = offer ? offer.price : p.p;
+  const disabled = !isOpenNow() ? "disabled" : "";
 
   return `
   <div class="item" data-name="${p.n.toLowerCase()}">
@@ -380,7 +435,7 @@ function itemHTML(p){
                  <div class="offer">OFERTA</div>` : ``}
     </div>
     <div class="item-price">R$ ${price.toFixed(2).replace('.',',')}</div>
-    <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
+    <button class="btn-add" ${disabled} onclick="addItem('${p.n}',${price})">+</button>
   </div>`;
 }
 
@@ -426,7 +481,7 @@ function handleSearch(v){
       i.style.display=match?"grid":"none";
       if(match) found=true;
     });
-    if(found&&!first) first=box.id;
+    if(found && !first) first=box.id;
   });
 
   if(first){
@@ -437,6 +492,10 @@ function handleSearch(v){
 
 /* ================= CARRINHO ================= */
 function addItem(n,p){
+  if(!isOpenNow()){
+    alert("⏰ Estamos fechados.\nAtendimento: Terça a Domingo das 18:30 às 22:30");
+    return;
+  }
   cart.push({n,p,q:1});
   updateCart();
 }
@@ -474,8 +533,81 @@ function setDelivery(v){
   document.getElementById("address").style.display=v?"block":"none";
   updateCart();
 }
+</script>
+<script>
+/* ================= ADMIN ================= */
+function openAdmin(){
+  document.getElementById("adminModal").style.display="flex";
+  renderAdmin();
+}
 
-/* ================= LÓGICA BEBIDA ================= */
+function closeAdmin(){
+  document.getElementById("adminModal").style.display="none";
+}
+
+/* aplica expiração automática ao carregar */
+function normalizeOffers(){
+  const today = new Date().toISOString().split("T")[0];
+  let changed = false;
+
+  Object.keys(offers).forEach(k=>{
+    if(offers[k].expires && offers[k].expires < today){
+      delete offers[k];
+      changed = true;
+    }
+  });
+
+  if(changed){
+    localStorage.setItem("offers", JSON.stringify(offers));
+  }
+}
+
+function renderAdmin(){
+  normalizeOffers();
+  const list = document.getElementById("adminList");
+  list.innerHTML = "";
+
+  Object.values(products).flat().forEach(p=>{
+    if(!p || !p.n) return;
+
+    const active = offers[p.n];
+    const exp = active?.expires || "";
+
+    list.innerHTML += `
+      <div class="admin-row" style="${active?'background:#eafff2;border:2px solid #25D366':''}">
+        <input value="${p.n}" readonly>
+        <input type="number" placeholder="Preço oferta" id="of-${p.n}">
+        <input type="date" value="${exp}" id="dt-${p.n}">
+        <button class="btn-add" onclick="applyOffer('${p.n}',${p.p})">OK</button>
+        ${active?`<button class="admin-remove" onclick="removeOffer('${p.n}')">X</button>`:""}
+      </div>
+    `;
+  });
+}
+
+function applyOffer(name, original){
+  const priceInput = document.getElementById("of-"+name);
+  const dateInput  = document.getElementById("dt-"+name);
+
+  if(!priceInput || !priceInput.value) return;
+
+  offers[name] = {
+    price: parseFloat(priceInput.value),
+    original: original,
+    expires: dateInput ? dateInput.value : ""
+  };
+
+  localStorage.setItem("offers", JSON.stringify(offers));
+  renderAll();
+}
+
+function removeOffer(name){
+  delete offers[name];
+  localStorage.setItem("offers", JSON.stringify(offers));
+  renderAll();
+}
+
+/* ================= LÓGICA BEBIDA (mantida) ================= */
 function hasFood(){
   return cart.some(i=>products.lanches.some(l=>l.n===i.n));
 }
@@ -493,72 +625,12 @@ function tryFinishOrder(){
 
 function openDrinks(){
   document.getElementById("drinkModal").style.display="none";
-  openTab("bebidas",document.querySelector(".tab:last-child"));
+  openTab("bebidas", document.querySelector(".tab:last-child"));
 }
 
 function skipDrinks(){
   document.getElementById("drinkModal").style.display="none";
   sendOrder();
-}
-</script>
-<script>
-/* ================= ABAS ================= */
-function openTab(id,el){
-  document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  if(el) el.classList.add("active");
-}
-
-/* ================= ADMIN ================= */
-function openAdmin(){
-  document.getElementById("adminModal").style.display="flex";
-}
-
-function closeAdmin(){
-  document.getElementById("adminModal").style.display="none";
-}
-
-function renderAdmin(){
-  const list=document.getElementById("adminList");
-  if(!list) return;
-
-  list.innerHTML="";
-
-  Object.values(products).flat().forEach(p=>{
-    if(!p || !p.n) return;
-
-    const active = offers[p.n] ? "style='background:#eafff2;border:2px solid #25D366'" : "";
-
-    list.innerHTML += `
-      <div class="admin-row" ${active}>
-        <input value="${p.n}" readonly>
-        <input type="number" placeholder="Preço oferta" id="of-${p.n}">
-        <button class="btn-add" onclick="applyOffer('${p.n}',${p.p})">OK</button>
-        ${offers[p.n] ? `<button class="admin-remove" onclick="removeOffer('${p.n}')">X</button>` : ``}
-      </div>
-    `;
-  });
-}
-
-function applyOffer(name, original){
-  const input = document.getElementById("of-"+name);
-  if(!input || !input.value) return;
-
-  offers[name] = {
-    price: parseFloat(input.value),
-    original: original
-  };
-
-  localStorage.setItem("offers", JSON.stringify(offers));
-  renderAll();
-}
-
-function removeOffer(name){
-  delete offers[name];
-  localStorage.setItem("offers", JSON.stringify(offers));
-  renderAll();
 }
 
 /* ================= WHATSAPP ================= */
@@ -612,6 +684,9 @@ document.getElementById("search").addEventListener("keyup", e=>{
     openAdmin();
   }
 });
+
+/* ================= NORMALIZA AO CARREGAR ================= */
+normalizeOffers();
 </script>
 
 </body>
