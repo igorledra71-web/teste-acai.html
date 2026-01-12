@@ -15,7 +15,6 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
   box-sizing:border-box;
   margin:0;
   padding:0;
-  touch-action:manipulation;
 }
 
 body{
@@ -41,6 +40,7 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
+  text-align:center;
 }
 .splash-logo{
   width:85vw;
@@ -61,11 +61,180 @@ body{
 #app{
   width:100%;
   max-width:480px;
-  padding:14px 14px 380px;
+  padding:14px 14px 360px;
   display:none;
+  flex-direction:column;
 }
 
-/* MODAL BASE */
+/* HEADER */
+.title{
+  text-align:center;
+  font-size:30px;
+  font-weight:900;
+  color:#FFD34D;
+  margin-bottom:6px;
+}
+
+#closedBanner{
+  display:none;
+  background:#b00020;
+  color:#fff;
+  text-align:center;
+  padding:10px;
+  border-radius:16px;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+/* SEARCH */
+.search{
+  width:100%;
+  padding:14px 18px;
+  border-radius:24px;
+  border:none;
+  font-size:16px;
+  margin-bottom:12px;
+}
+
+/* TABS */
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+@media(min-width:480px){
+  .tabs{grid-template-columns:repeat(5,1fr)}
+}
+.tab{
+  background:#fff;
+  color:#2b0033;
+  border-radius:22px;
+  padding:12px;
+  text-align:center;
+  font-weight:800;
+  cursor:pointer;
+}
+.tab.active{background:#FFD34D}
+
+/* CONTENT */
+.box{
+  background:#fff;
+  color:#2b0033;
+  border-radius:30px;
+  padding:18px;
+  display:none;
+}
+.box.active{display:block}
+
+.section{
+  text-align:center;
+  font-weight:900;
+  color:#5a0070;
+  margin:18px 0 12px;
+}
+
+.item{
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  align-items:center;
+  gap:10px;
+  padding:14px 0;
+  border-bottom:1px dashed #e3e3e3;
+}
+.item:last-child{border:none}
+
+.item-name{
+  font-weight:600;
+}
+
+.item-price{
+  font-weight:900;
+  color:#5a0070;
+  white-space:nowrap;
+}
+
+.old{
+  text-decoration:line-through;
+  color:#999;
+  font-size:12px;
+}
+
+.btn-add{
+  background:#5a0070;
+  color:#fff;
+  border:none;
+  border-radius:16px;
+  padding:8px 18px;
+  font-weight:900;
+  min-width:42px;
+}
+
+/* CART */
+#cart{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:480px;
+  background:#fff;
+  color:#2b0033;
+  padding:16px;
+  border-radius:30px 30px 0 0;
+  display:none;
+  z-index:999;
+}
+
+.cart-item{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  font-size:13px;
+  margin-bottom:6px;
+}
+
+.qty button{
+  background:#FFD34D;
+  border:none;
+  border-radius:10px;
+  padding:2px 10px;
+  font-weight:900;
+}
+
+.delivery{
+  display:flex;
+  justify-content:space-around;
+  margin:12px 0;
+}
+
+.input,.select{
+  width:100%;
+  padding:12px;
+  border-radius:18px;
+  border:1px solid #ccc;
+  font-size:16px;
+  margin-top:8px;
+}
+
+.total{
+  text-align:right;
+  font-size:18px;
+  font-weight:900;
+}
+
+.finish{
+  background:#25D366;
+  color:#fff;
+  padding:16px;
+  border-radius:24px;
+  font-weight:900;
+  margin-top:12px;
+  text-align:center;
+}
+
+/* MODAL */
 .modal{
   position:fixed;
   inset:0;
@@ -76,70 +245,15 @@ body{
   z-index:10000;
 }
 
-/* PAINEL ADM */
-#adminModal .modal-box{
+.modal-box{
   background:#fff;
   color:#2b0033;
-  width:94%;
+  width:92%;
   max-width:420px;
   max-height:90vh;
   border-radius:28px;
-  padding:16px;
-  display:flex;
-  flex-direction:column;
-}
-
-.admin-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
-}
-
-.admin-header h3{
-  font-size:18px;
-  font-weight:900;
-}
-
-.admin-close{
-  background:#b00020;
-  color:#fff;
-  border:none;
-  border-radius:50%;
-  width:32px;
-  height:32px;
-  font-weight:900;
-}
-
-#adminList{
+  padding:20px;
   overflow-y:auto;
-  flex:1;
-  padding-right:6px;
-}
-
-.admin-row{
-  display:grid;
-  grid-template-columns:1fr 90px 110px 44px;
-  gap:6px;
-  align-items:center;
-  margin-bottom:8px;
-}
-
-.admin-row input{
-  padding:8px;
-  border-radius:10px;
-  border:1px solid #ccc;
-  font-size:12px;
-}
-
-.admin-row button{
-  background:#5a0070;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  padding:6px;
-  font-weight:800;
-  cursor:pointer;
 }
 </style>
 </head>
@@ -147,15 +261,19 @@ body{
 <!-- SPLASH -->
 <div id="splash">
   <div class="splash-box">
-    <img src="logo.png" class="splash-logo">
+    <img src="logo.png" class="splash-logo" alt="Rabika's Burguer">
     <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
   </div>
 </div>
 
 <!-- APP -->
 <div id="app">
+
   <div class="title">Rabika's Burguer</div>
-  <div id="closedBanner">🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30</div>
+
+  <div id="closedBanner">
+    🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30
+  </div>
 
   <input
     class="search"
@@ -177,10 +295,12 @@ body{
   <div id="pasteis" class="box"></div>
   <div id="acai" class="box"></div>
   <div id="bebidas" class="box"></div>
+
 </div>
 
 <!-- CARRINHO -->
 <div id="cart">
+
   <div id="cartItems"></div>
 
   <div class="delivery">
@@ -195,12 +315,7 @@ body{
   </div>
 
   <input class="input" id="name" placeholder="Seu nome">
-  <input
-    class="input"
-    id="address"
-    placeholder="Endereço"
-    style="display:none"
-  >
+  <input class="input" id="address" placeholder="Endereço" style="display:none">
 
   <select class="select" id="payment">
     <option value="">Forma de pagamento</option>
@@ -210,7 +325,11 @@ body{
   </select>
 
   <div class="total" id="total">Total: R$ 0,00</div>
-  <div class="finish" onclick="tryFinishOrder()">Finalizar Pedido</div>
+
+  <div class="finish" onclick="tryFinishOrder()">
+    Finalizar Pedido
+  </div>
+
 </div>
 
 <!-- MODAL BEBIDA -->
@@ -218,7 +337,7 @@ body{
   <div class="modal-box">
     <h3 style="text-align:center">🥤 Vai querer bebida?</h3>
     <p style="text-align:center;font-size:14px;margin:10px 0">
-      Que tal adicionar uma bebida para acompanhar seu pedido?
+      Você adicionou lanche, mas nenhuma bebida.
     </p>
 
     <div style="display:flex;gap:10px">
@@ -237,7 +356,7 @@ body{
       <button class="admin-close" onclick="closeAdmin()">✕</button>
     </div>
 
-    <p style="font-size:13px;text-align:center;margin-bottom:8px">
+    <p style="text-align:center;font-size:13px;margin-bottom:10px">
       Defina o preço promocional e a data final da oferta
     </p>
 
@@ -248,70 +367,68 @@ body{
 <script>
 /* ================= CONFIG ================= */
 const FREIGHT = 8;
-const ADMIN_KEY = "oferta";
-
-let cart = [];
 let isDelivery = false;
+let cart = [];
 let offers = JSON.parse(localStorage.getItem("offers")) || {};
+let currentTab = "lanches";
 
 /* ================= HORÁRIO ================= */
-function isOpenNow(){
+function isOpen(){
   const d = new Date();
-  const day = d.getDay(); // 0 dom, 1 seg
-  const time = d.getHours() + d.getMinutes()/60;
-
-  if(day === 1) return false;               // segunda fechado
-  if(time < 18.5 || time > 22.5) return false; // 18:30 às 22:30
+  const day = d.getDay(); // 1 = segunda
+  const h = d.getHours() + d.getMinutes()/60;
+  if(day === 1) return false;
+  if(h < 18.5 || h > 22.5) return false;
   return true;
 }
 
 /* ================= PRODUTOS ================= */
 const products = {
   lanches:[
-    {n:'X-Salada',p:17},{n:'X-Burguer',p:14},{n:'X-Frango',p:22},
-    {n:'X-Frango Cremoso',p:20},{n:'X-Bacon',p:25},{n:'X-Calabresa',p:25},
-    {n:'X-Coração',p:27},{n:'X-Tudo',p:32},{n:'X-Burguer Duplo',p:22},
-    {n:'X-Egg',p:20},{n:'X-Tribom',p:32},{n:'X-Da Casa',p:45},{n:'X-Dog',p:20}
+    {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
+    {n:"X-Frango Cremoso",p:20},{n:"X-Bacon",p:25},{n:"X-Calabresa",p:25},
+    {n:"X-Coração",p:27},{n:"X-Tudo",p:32},{n:"X-Burguer Duplo",p:22},
+    {n:"X-Egg",p:20},{n:"X-Tribom",p:32},{n:"X-Da Casa",p:45},{n:"X-Dog",p:20}
   ],
-  adicionais:[
-    {n:'Calabresa',p:7},{n:'Bacon',p:7},{n:'Coração',p:8},
-    {n:'Ovo',p:3},{n:'Salsicha',p:4},{n:'Frango',p:7},
-    {n:'Cheddar',p:4},{n:'Hambúrguer artesanal',p:10},{n:'Maionese caseira',p:2}
+  adicionaisLanches:[
+    {n:"Calabresa",p:7},{n:"Bacon",p:7},{n:"Coração",p:8},
+    {n:"Ovo",p:3},{n:"Salsicha",p:4},{n:"Frango",p:7},
+    {n:"Cheddar",p:4},{n:"Hambúrguer artesanal",p:10},{n:"Maionese caseira",p:2}
   ],
   porcoes:[
-    {n:'Fritas',p:24.99},{n:'Fritas c/ Frango',p:39.99},
-    {n:'Fritas c/ Calabresa',p:34.99},{n:'Fritas c/ Bacon',p:34.99},
-    {n:'Anéis de Cebola',p:24.99},
-    {n:'Fritas c/ Bacon, Calabresa e Queijo',p:39.99},
-    {n:'Fritas c/ Bacon Cheddar',p:39.99},
-    {n:'Fritas c/ Polenta e Frango',p:39.99},
-    {n:'Fritas c/ Polenta',p:24.99},
-    {n:'Fritas c/ Calabresa e Catupiry',p:35.99},
-    {n:'Fritas, Polenta, Chuleta e Anel de Cebola',p:49.99}
+    {n:"Fritas c/ Frango",p:39.99},{n:"Fritas",p:24.99},
+    {n:"Fritas c/ Calabresa",p:34.99},{n:"Fritas c/ Bacon",p:34.99},
+    {n:"Anéis de Cebola",p:24.99},
+    {n:"Fritas c/ Bacon, Calabresa e Queijo",p:39.99},
+    {n:"Fritas c/ Bacon Cheddar",p:39.99},
+    {n:"Fritas c/ Polenta e Frango",p:39.99},
+    {n:"Fritas c/ Polenta",p:24.99},
+    {n:"Fritas c/ Calabresa e Catupiry",p:35.99},
+    {n:"Fritas, Polenta, Chuleta e Anel de Cebola",p:49.99}
   ],
   pasteis:[
-    {n:'Pastel de Carne',p:14},{n:'Pastel de Frango',p:12},
-    {n:'Frango Bacon Cheddar',p:16},{n:'Bacon Cheddar',p:15},
-    {n:'Calabresa c/ Cebola',p:14},{n:'Carne e Queijo',p:15},
-    {n:'Queijo',p:14},{n:'Chocolate ao Leite',p:15},
-    {n:'Banana Queijo Canela',p:15},{n:'Romeu e Julieta',p:15},
-    {n:'Chocolate Branco',p:15},{n:'Creme e Ouro Branco',p:15},
-    {n:'Creme e Sonho de Valsa',p:15}
+    {n:"Pastel de Carne",p:14},{n:"Pastel de Frango",p:12},
+    {n:"Frango Bacon Cheddar",p:16},{n:"Bacon Cheddar",p:15},
+    {n:"Calabresa c/ Cebola",p:14},{n:"Carne e Queijo",p:15},
+    {n:"Queijo",p:14},{n:"Chocolate ao Leite",p:15},
+    {n:"Banana Queijo Canela",p:15},{n:"Romeu e Julieta",p:15},
+    {n:"Chocolate Branco",p:15},{n:"Creme e Ouro Branco",p:15},
+    {n:"Creme e Sonho de Valsa",p:15}
   ],
-  acaiT:[
-    {n:'Açaí 300ml',p:12},{n:'Açaí 400ml',p:15},{n:'Açaí 500ml',p:18}
+  acaiTamanhos:[
+    {n:"Açaí 300ml",p:12},{n:"Açaí 400ml",p:15},{n:"Açaí 500ml",p:18}
   ],
-  acaiA:[
-    {n:'Paçoca',p:2},{n:'Leite em pó',p:4},{n:'Granola',p:4},
-    {n:'Morango',p:4},{n:'M&M',p:3},{n:'Ouro Branco',p:3},
-    {n:'Banana',p:2},{n:'Sonho de Valsa',p:3},
-    {n:'Leite Condensado',p:3},{n:'Nutella',p:4}
+  acaiAdicionais:[
+    {n:"Paçoca",p:2},{n:"Leite em pó",p:4},{n:"Granola",p:4},
+    {n:"Morango",p:4},{n:"M&M",p:3},{n:"Ouro Branco",p:3},
+    {n:"Banana",p:2},{n:"Sonho de Valsa",p:3},
+    {n:"Leite Condensado",p:3},{n:"Nutella",p:4}
   ],
   bebidas:[
-    {n:'Cassulinha 200ml',p:3},{n:'Coca-Cola 600ml',p:8},
-    {n:'Coca-Cola 2L',p:16},{n:'Refri Lata',p:6},
-    {n:'Refrigerante 2L',p:12},{n:'Cerveja Lata 350ml',p:6},
-    {n:'Achocolatado 200ml',p:3}
+    {n:"Cassulinha 200ml",p:3},{n:"Coca-Cola 600ml",p:8},
+    {n:"Coca-Cola 2L",p:16},{n:"Refri Lata",p:6},
+    {n:"Refrigerante 2L",p:12},{n:"Cerveja Lata 350ml",p:6},
+    {n:"Achocolatado 200ml",p:3}
   ]
 };
 
@@ -319,20 +436,29 @@ const products = {
 function start(){
   document.getElementById("splash").style.display="none";
   document.getElementById("app").style.display="block";
-  normalizeOffers();
   renderAll();
   updateOpenStatus();
 }
 
 /* ================= STATUS ================= */
 function updateOpenStatus(){
-  document.getElementById("closedBanner").style.display =
-    isOpenNow() ? "none" : "block";
+  const open = isOpen();
+  document.getElementById("closedBanner").style.display = open ? "none" : "block";
+  document.querySelectorAll(".btn-add").forEach(b=>b.disabled=!open);
+}
+
+/* ================= TABS ================= */
+function openTab(id,el){
+  currentTab = id;
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+  document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
 
 /* ================= RENDER ================= */
 function renderAll(){
-  renderCategory("lanches",products.lanches,products.adicionais);
+  renderCategory("lanches",products.lanches,products.adicionaisLanches);
   renderCategory("porcoes",products.porcoes);
   renderCategory("pasteis",products.pasteis);
   renderAcai();
@@ -340,79 +466,55 @@ function renderAll(){
   renderAdmin();
 }
 
-function itemHTML(p){
-  const offer = offers[p.n];
-  const price = offer ? offer.price : p.p;
-  const disabled = !isOpenNow() ? "disabled" : "";
-
-  return `
-  <div class="item" data-name="${p.n.toLowerCase()}">
-    <span class="item-name">${p.n}</span>
-    <span class="item-price">
-      ${offer ? `<span class="old">R$ ${p.p.toFixed(2).replace('.',',')}</span><br>` : ``}
-      R$ ${price.toFixed(2).replace('.',',')}
-    </span>
-    <button class="btn-add" ${disabled} onclick="addItem('${p.n}',${price})">+</button>
-  </div>`;
-}
-
 function renderCategory(id,list,extra){
   const box=document.getElementById(id);
   box.innerHTML="";
   list.forEach(p=>box.innerHTML+=itemHTML(p));
   if(extra){
-    box.innerHTML+=`<div class="section">➕ Adicionais</div>`;
+    box.innerHTML+="<div class='section'>➕ Adicionais</div>";
     extra.forEach(p=>box.innerHTML+=itemHTML(p));
   }
 }
 
 function renderAcai(){
   const box=document.getElementById("acai");
-  box.innerHTML=`<div class="section">🥤 Tamanhos</div>`;
-  products.acaiT.forEach(p=>box.innerHTML+=itemHTML(p));
-  box.innerHTML+=`<div class="section">🍫 Adicionais</div>`;
-  products.acaiA.forEach(p=>box.innerHTML+=itemHTML(p));
+  box.innerHTML="<div class='section'>🥤 Tamanhos</div>";
+  products.acaiTamanhos.forEach(p=>box.innerHTML+=itemHTML(p));
+  box.innerHTML+="<div class='section'>🍫 Adicionais</div>";
+  products.acaiAdicionais.forEach(p=>box.innerHTML+=itemHTML(p));
+}
+
+function getPrice(p){
+  const offer=offers[p.n];
+  if(offer && new Date(offer.end)>=new Date()) return offer.price;
+  return p.p;
+}
+
+function itemHTML(p){
+  const offer=offers[p.n];
+  let priceHTML = "R$ "+getPrice(p).toFixed(2).replace(".",",");
+  if(offer && new Date(offer.end)>=new Date()){
+    priceHTML = `<s>R$ ${p.p.toFixed(2).replace(".",",")}</s><br><b>${priceHTML}</b>`;
+  }
+  return `
+    <div class="item">
+      <span class="item-name">${p.n}</span>
+      <span class="item-price">${priceHTML}</span>
+      <button class="btn-add" onclick="addItem('${p.n}',${getPrice(p)})">+</button>
+    </div>`;
 }
 
 /* ================= BUSCA GLOBAL ================= */
 function handleSearch(v){
-  v=v.toLowerCase().trim();
-
-  if(v===ADMIN_KEY){
-    openAdmin();
-    document.getElementById("search").value="";
-    return;
-  }
-
-  if(!v){
-    renderAll();
-    return;
-  }
-
-  let first=null;
-  document.querySelectorAll(".box").forEach(box=>{
-    let found=false;
-    box.querySelectorAll(".item").forEach(i=>{
-      const match=i.dataset.name.includes(v);
-      i.style.display=match?"grid":"none";
-      if(match) found=true;
-    });
-    if(found && !first) first=box.id;
+  v=v.toLowerCase();
+  document.querySelectorAll(".item").forEach(i=>{
+    i.style.display = i.innerText.toLowerCase().includes(v) ? "grid" : "none";
   });
-
-  if(first){
-    document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
-    document.getElementById(first).classList.add("active");
-  }
 }
 
 /* ================= CARRINHO ================= */
 function addItem(n,p){
-  if(!isOpenNow()){
-    alert("⏰ Estamos fechados.\nTerça a Domingo das 18:30 às 22:30");
-    return;
-  }
-  cart.push({n,p,q:1});
+  cart.push({n,p});
   updateCart();
 }
 
@@ -420,29 +522,21 @@ function updateCart(){
   const box=document.getElementById("cartItems");
   box.innerHTML="";
   let total=0;
-
   cart.forEach((i,idx)=>{
-    total+=i.p*i.q;
+    total+=i.p;
     box.innerHTML+=`
-    <div class="cart-item">
-      <span>${i.n} x${i.q}</span>
-      <div class="qty">
-        <button onclick="chg(${idx},-1)">-</button>
-        <button onclick="chg(${idx},1)">+</button>
-      </div>
-    </div>`;
+      <div class="cart-item">
+        <span>${i.n}</span>
+        <button onclick="removeItem(${idx})">✕</button>
+      </div>`;
   });
-
   if(isDelivery) total+=FREIGHT;
-  document.getElementById("total").innerText =
-    "Total: R$ "+total.toFixed(2).replace('.',',');
-
-  document.getElementById("cart").style.display = cart.length?"block":"none";
+  document.getElementById("total").innerText="Total: R$ "+total.toFixed(2).replace(".",",");
+  document.getElementById("cart").style.display=cart.length?"block":"none";
 }
 
-function chg(i,v){
-  cart[i].q+=v;
-  if(cart[i].q<=0) cart.splice(i,1);
+function removeItem(i){
+  cart.splice(i,1);
   updateCart();
 }
 
@@ -451,103 +545,122 @@ function setDelivery(v){
   document.getElementById("address").style.display=v?"block":"none";
   updateCart();
 }
-
-/* ================= ADMIN ================= */
+</script>
+<script>
+/* ================= ADM ================= */
 function openAdmin(){
   document.getElementById("adminModal").style.display="flex";
-  renderAdmin();
 }
 
 function closeAdmin(){
   document.getElementById("adminModal").style.display="none";
 }
 
-function normalizeOffers(){
-  const today = new Date().toISOString().split("T")[0];
-  Object.keys(offers).forEach(k=>{
-    if(offers[k].expires && offers[k].expires < today){
-      delete offers[k];
+/* Abre ADM digitando "oferta" */
+document.getElementById("search").addEventListener("keyup",e=>{
+  if(e.target.value.toLowerCase()==="oferta"){
+    const senha=prompt("Senha do administrador:");
+    if(senha==="1234"){ // ALTERE AQUI SUA SENHA
+      openAdmin();
+      e.target.value="";
+    }else{
+      alert("Senha incorreta");
     }
-  });
-  localStorage.setItem("offers",JSON.stringify(offers));
-}
+  }
+});
 
+/* ================= RENDER ADM ================= */
 function renderAdmin(){
-  const list=document.getElementById("adminList");
-  if(!list) return;
-  list.innerHTML="";
-
+  const box=document.getElementById("adminList");
+  box.innerHTML="";
   Object.values(products).flat().forEach(p=>{
-    list.innerHTML+=`
-    <div class="admin-row">
-      <input value="${p.n}" readonly>
-      <input type="number" placeholder="Preço oferta" id="of-${p.n}">
-      <input type="date" id="dt-${p.n}">
-      <button onclick="applyOffer('${p.n}',${p.p})">OK</button>
-    </div>`;
+    if(!p.n) return;
+    box.innerHTML+=`
+      <div style="margin-bottom:12px">
+        <strong>${p.n}</strong>
+        <input class="input" placeholder="Preço oferta"
+          id="price-${p.n}">
+        <input class="input" type="date"
+          id="date-${p.n}">
+        <button class="finish" style="margin-top:6px"
+          onclick="saveOffer('${p.n}',${p.p})">
+          OK
+        </button>
+      </div>
+    `;
   });
 }
 
-function applyOffer(name,original){
-  const price=document.getElementById("of-"+name).value;
-  const date=document.getElementById("dt-"+name).value;
-  if(!price) return;
-
-  offers[name]={price:parseFloat(price),original,expires:date};
+/* ================= SALVAR OFERTA ================= */
+function saveOffer(name,original){
+  const price=document.getElementById("price-"+name).value;
+  const date=document.getElementById("date-"+name).value;
+  if(!price || !date){
+    alert("Informe preço e data");
+    return;
+  }
+  offers[name]={
+    price:parseFloat(price),
+    end:date
+  };
   localStorage.setItem("offers",JSON.stringify(offers));
+  alert("Oferta salva");
   renderAll();
 }
 
-/* ================= BEBIDA ================= */
-function hasFood(){
-  return cart.some(i=>products.lanches.some(l=>l.n===i.n));
-}
-function hasDrink(){
-  return cart.some(i=>products.bebidas.some(b=>b.n===i.n));
-}
-
+/* ================= FINALIZAR PEDIDO ================= */
 function tryFinishOrder(){
-  if(hasFood() && !hasDrink()){
+  const hasLanche = cart.some(i=>products.lanches.some(l=>l.n===i.n));
+  const hasDrink = cart.some(i=>products.bebidas.some(b=>b.n===i.n));
+
+  if(hasLanche && !hasDrink){
     document.getElementById("drinkModal").style.display="flex";
-  }else sendOrder();
+  }else{
+    finishOrder();
+  }
 }
 
 function openDrinks(){
   document.getElementById("drinkModal").style.display="none";
-  openTab("bebidas");
+  openTab("bebidas",document.querySelector(".tab:last-child"));
 }
 
 function skipDrinks(){
   document.getElementById("drinkModal").style.display="none";
-  sendOrder();
+  finishOrder();
 }
 
 /* ================= WHATSAPP ================= */
-function sendOrder(){
-  let msg="🍔 Pedido Rabika's Burguer\n\n";
-  let total=0;
+function finishOrder(){
+  const name=document.getElementById("name").value;
+  const pay=document.getElementById("payment").value;
+  const addr=document.getElementById("address").value;
 
-  cart.forEach(i=>{
-    msg+=`- ${i.n} x${i.q}\n`;
-    total+=i.p*i.q;
-  });
-
-  if(isDelivery){
-    msg+="Entrega: R$ 8\n";
-    total+=FREIGHT;
+  if(!name || !pay || (isDelivery && !addr)){
+    alert("Preencha todos os dados");
+    return;
   }
 
-  msg+=`\nTotal: R$ ${total.toFixed(2).replace('.',',')}`;
+  let msg="🍔 Pedido Rabika's Burguer\n\n";
+  msg+="Cliente: "+name+"\n";
+  msg+="Pagamento: "+pay+"\n";
+  msg+=isDelivery?"Entrega\nEndereço: "+addr+"\n\n":"Retirada\n\n";
+
+  let total=0;
+  cart.forEach(i=>{
+    msg+="- "+i.n+" R$ "+i.p.toFixed(2).replace(".",",")+"\n";
+    total+=i.p;
+  });
+
+  if(isDelivery){ total+=FREIGHT; msg+="Entrega: R$ 8,00\n"; }
+
+  msg+="\nTotal: R$ "+total.toFixed(2).replace(".",",");
+
   window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg));
 }
 
-/* ================= ADMIN VIA BUSCA ================= */
-document.getElementById("search").addEventListener("keyup",e=>{
-  if(e.key==="Enter" && e.target.value.toLowerCase()===ADMIN_KEY){
-    openAdmin();
-    e.target.value="";
-  }
-});
+/* ================= OFFLINE ================= */
+window.addEventListener("offline",()=>alert("Sem internet"));
 </script>
 
 </body>
