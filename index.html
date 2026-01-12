@@ -174,26 +174,84 @@ body{
 </div>
 
 <script>
-/* ESTADO */
+/* =========================
+   ESTADO GLOBAL
+========================= */
 let currentTab = 'lanches';
+let cart = [];
 
-/* START */
+/* =========================
+   HORÁRIO
+========================= */
+function isOpen(){
+  const d = new Date();
+  const h = d.getHours() + d.getMinutes()/60;
+  if(d.getDay() === 1) return false;
+  if(h < 18.5 || h > 22.5) return false;
+  return true;
+}
+
+/* =========================
+   START
+========================= */
 function startApp(){
   document.getElementById('splash').style.display='none';
   document.getElementById('app').style.display='block';
-  checkOpen();
-  renderBase();
+  document.getElementById('closed').style.display = isOpen() ? 'none' : 'block';
+  renderAll();
 }
 
-/* HORÁRIO */
-function checkOpen(){
-  const d=new Date();
-  const h=d.getHours()+d.getMinutes()/60;
-  const closed = d.getDay()===1 || h<18.5 || h>22.5;
-  document.getElementById('closed').style.display = closed?'block':'none';
+/* =========================
+   PRODUTOS COMPLETOS
+========================= */
+const products = {
+  lanches:[
+    {n:'X-Salada',p:17},{n:'X-Burguer',p:14},{n:'X-Frango',p:22},
+    {n:'X-Frango Cremoso',p:20},{n:'X-Bacon',p:25},{n:'X-Calabresa',p:25},
+    {n:'X-Coração',p:27},{n:'X-Tudo',p:32},{n:'X-Burguer Duplo',p:22},
+    {n:'X-Egg',p:20},{n:'X-Tribom',p:32},{n:'X-Da Casa',p:45},{n:'X-Dog',p:20}
+  ],
+  porcoes:[
+    {n:'Fritas',p:24.99},{n:'Fritas c/ Frango',p:39.99},
+    {n:'Fritas c/ Calabresa',p:34.99},{n:'Fritas c/ Bacon',p:34.99},
+    {n:'Anéis de Cebola',p:24.99},{n:'Fritas c/ Bacon Cheddar',p:39.99}
+  ],
+  pasteis:[
+    {n:'Pastel de Carne',p:14},{n:'Pastel de Frango',p:12},
+    {n:'Frango Bacon Cheddar',p:16},{n:'Bacon Cheddar',p:15},
+    {n:'Queijo',p:14},{n:'Chocolate ao Leite',p:15}
+  ],
+  acai:[
+    {n:'Açaí 300ml',p:12},{n:'Açaí 400ml',p:15},{n:'Açaí 500ml',p:18}
+  ],
+  bebidas:[
+    {n:'Cassulinha 200ml',p:3},{n:'Coca-Cola 600ml',p:8},
+    {n:'Coca-Cola 2L',p:16},{n:'Refri Lata',p:6},
+    {n:'Refrigerante 2L',p:12},{n:'Achocolatado 200ml',p:3}
+  ]
+};
+
+/* =========================
+   RENDER
+========================= */
+function renderAll(){
+  Object.keys(products).forEach(cat=>{
+    const box=document.getElementById(cat);
+    box.innerHTML='';
+    products[cat].forEach(p=>{
+      box.innerHTML+=`
+        <div class="item" data-name="${p.n.toLowerCase()}">
+          <span>${p.n}</span>
+          <span>R$ ${p.p.toFixed(2).replace('.',',')}</span>
+          <button onclick="addItem('${p.n}',${p.p})">+</button>
+        </div>`;
+    });
+  });
 }
 
-/* TABS */
+/* =========================
+   TABS
+========================= */
 function openTab(id,el){
   currentTab=id;
   document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));
@@ -202,41 +260,39 @@ function openTab(id,el){
   el.classList.add('active');
 }
 
-/* BASE DE TESTE */
-const base={
-  lanches:['X-Salada','X-Burguer'],
-  porcoes:['Fritas'],
-  pasteis:['Pastel de Carne'],
-  acai:['Açaí 300ml'],
-  bebidas:['Refrigerante']
-};
-
-function renderBase(){
-  Object.keys(base).forEach(cat=>{
-    const box=document.getElementById(cat);
-    box.innerHTML='';
-    base[cat].forEach(n=>{
-      box.innerHTML+=`
-        <div class="item">
-          <span>${n}</span>
-          <button onclick="add()">+</button>
-        </div>`;
-    });
-  });
-}
-
-function add(){
-  document.getElementById('cart').style.display='block';
-}
-
-/* BUSCA */
+/* =========================
+   BUSCA GLOBAL
+========================= */
 function search(v){
   v=v.toLowerCase();
   document.querySelectorAll('.item').forEach(i=>{
-    i.style.display=i.innerText.toLowerCase().includes(v)?'flex':'none';
+    i.style.display=i.dataset.name.includes(v)?'flex':'none';
   });
+}
+
+/* =========================
+   CARRINHO
+========================= */
+function addItem(n,p){
+  if(!isOpen()){
+    alert('Estamos fechados.\nTerça a Domingo 18:30 às 22:30');
+    return;
+  }
+  cart.push({n,p});
+  updateCart();
+}
+
+function updateCart(){
+  const cartBox=document.getElementById('cart');
+  cartBox.innerHTML='<strong>Pedido</strong><br>';
+  let total=0;
+  cart.forEach(i=>{
+    total+=i.p;
+    cartBox.innerHTML+=`${i.n} — R$ ${i.p.toFixed(2).replace('.',',')}<br>`;
+  });
+  cartBox.innerHTML+=`<hr><strong>Total: R$ ${total.toFixed(2).replace('.',',')}</strong>`;
+  cartBox.style.display='block';
 }
 </script>
 
-</body>
-</html>
+
