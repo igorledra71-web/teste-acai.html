@@ -151,7 +151,7 @@ body{
   width:100%;
 }
 
-/* MODAIS (ADMIN / OFERTAS) */
+/* MODAIS */
 .modal{
   position:fixed;
   inset:0;
@@ -244,15 +244,28 @@ body{
   </div>
 </div>
 
-<!-- OFERTAS MODAL -->
+<!-- OFERTAS MODAL (INALTERADO) -->
 <div id="offerModal" class="modal">
   <div class="modal-box">
     <div class="modal-close" onclick="closeOffer()">✕</div>
     <h2 style="text-align:center;color:#5a0070">Painel de Ofertas</h2>
-    <p style="text-align:center;font-size:13px;margin-bottom:14px">
-      Configure valores promocionais por período
-    </p>
     <div id="offerList"></div>
+  </div>
+</div>
+
+<!-- RELATÓRIO MODAL (NOVO) -->
+<div id="reportModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeReport()">✕</div>
+    <h2 style="text-align:center;color:#5a0070">Relatório de Vendas</h2>
+
+    <div style="margin-top:14px;font-weight:600">
+      <div>Total vendido: <strong id="repTotal"></strong></div>
+      <div>Dinheiro: <strong id="repCash"></strong></div>
+      <div>Pix: <strong id="repPix"></strong></div>
+      <div>Cartão Débito: <strong id="repDebit"></strong></div>
+      <div>Cartão Crédito: <strong id="repCredit"></strong></div>
+    </div>
   </div>
 </div>
 <script>
@@ -263,11 +276,12 @@ const FREIGHT = 8;
 let cart = [];
 let currentTab = null;
 
-/* ================= STORAGE (ADMIN / OFERTAS) ================= */
+/* ================= STORAGE ================= */
 let customPrices = JSON.parse(localStorage.getItem("customPrices")) || {};
 let productStatus = JSON.parse(localStorage.getItem("productStatus")) || {};
 let extraProducts = JSON.parse(localStorage.getItem("extraProducts")) || {};
 let offers = JSON.parse(localStorage.getItem("offers")) || {};
+let sales = JSON.parse(localStorage.getItem("sales")) || [];
 
 /* ================= HORÁRIO DE FUNCIONAMENTO ================= */
 function isOpen(){
@@ -275,12 +289,12 @@ function isOpen(){
   const day = d.getDay(); // 0 domingo | 1 segunda
   const h = d.getHours() + d.getMinutes()/60;
 
-  if(day === 1) return false;          // segunda fechado
+  if(day === 1) return false;
   if(h < 18.5 || h > 22.5) return false;
   return true;
 }
 
-/* ================= PRODUTOS BASE (ORIGINAIS) ================= */
+/* ================= PRODUTOS BASE ================= */
 const products = {
   lanches:[
     {n:"X-Salada",p:17},
@@ -379,7 +393,7 @@ function getAllProducts(){
   return all;
 }
 
-/* ================= PREÇO FINAL (BASE + OFERTA) ================= */
+/* ================= PREÇO FINAL ================= */
 function getPrice(p){
   const basePrice = customPrices[p.n] ?? p.p;
   const o = offers[p.n];
@@ -455,7 +469,7 @@ function renderAcai(all){
   });
 }
 
-/* ================= ITEM HTML ================= */
+/* ================= ITEM ================= */
 function itemHTML(p){
   const price = getPrice(p);
   return `
@@ -467,7 +481,7 @@ function itemHTML(p){
   `;
 }
 
-/* ================= NAVEGAÇÃO POR ABAS ================= */
+/* ================= ABAS ================= */
 function openTab(id, el){
   currentTab = id;
 
@@ -482,11 +496,11 @@ function openTab(id, el){
   el.classList.add("active");
 }
 
-/* ================= BUSCA GLOBAL + GATILHOS ================= */
+/* ================= BUSCA + GATILHOS ================= */
 document.getElementById("search").addEventListener("input", function(){
   const v = this.value.toLowerCase().trim();
 
-  /* GATILHO ADMIN */
+  /* ADMIN */
   if(v === "admin" || v === "preço" || v === "precos"){
     const s = prompt("Senha do administrador:");
     if(s === ADMIN_PASSWORD){
@@ -498,11 +512,23 @@ document.getElementById("search").addEventListener("input", function(){
     return;
   }
 
-  /* GATILHO OFERTAS */
+  /* OFERTAS */
   if(v === "oferta" || v === "ofertas"){
     const s = prompt("Senha do administrador:");
     if(s === ADMIN_PASSWORD){
       openOffer();
+    }else{
+      alert("Senha incorreta");
+    }
+    this.value = "";
+    return;
+  }
+
+  /* RELATÓRIO */
+  if(v === "relatorio" || v === "relatório"){
+    const s = prompt("Senha do administrador:");
+    if(s === ADMIN_PASSWORD){
+      openReport();
     }else{
       alert("Senha incorreta");
     }
@@ -574,6 +600,9 @@ function sendOrder(){
     return;
   }
 
+  /* Registro da venda (RELATÓRIO) */
+  const payment = prompt("Forma de pagamento? (dinheiro / pix / debito / credito)") || "dinheiro";
+
   let message = "🍔 Pedido Rabika's Burguer\n\n";
   let total = 0;
 
@@ -582,11 +611,22 @@ function sendOrder(){
     total += i.price;
   });
 
+  message += `\nPagamento: ${payment}`;
   message += `\nTotal: R$ ${total.toFixed(2).replace(".",",")}`;
+
+  sales.push({
+    date: new Date().toISOString(),
+    total: total,
+    payment: payment.toLowerCase()
+  });
+  localStorage.setItem("sales", JSON.stringify(sales));
 
   const phone = "554991789706";
   const url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
   window.open(url, "_blank");
+
+  cart = [];
+  updateCart();
 }
 
 /* ================= BLOCO 8 — ADMIN ================= */
@@ -665,7 +705,7 @@ function addNewProduct(){
   renderAdmin();
 }
 
-/* ================= MÓDULO OFERTAS ================= */
+/* ================= OFERTAS ================= */
 function openOffer(){
   document.getElementById("offerModal").style.display = "flex";
   renderOffers();
@@ -739,6 +779,33 @@ function removeOffer(name){
   localStorage.setItem("offers", JSON.stringify(offers));
   renderAll();
   renderOffers();
+}
+
+/* ================= RELATÓRIO ================= */
+function openReport(){
+  document.getElementById("reportModal").style.display = "flex";
+  renderReport();
+}
+function closeReport(){
+  document.getElementById("reportModal").style.display = "none";
+}
+
+function renderReport(){
+  let total = 0, cash = 0, pix = 0, debit = 0, credit = 0;
+
+  sales.forEach(s=>{
+    total += s.total;
+    if(s.payment === "dinheiro") cash += s.total;
+    if(s.payment === "pix") pix += s.total;
+    if(s.payment === "debito") debit += s.total;
+    if(s.payment === "credito") credit += s.total;
+  });
+
+  document.getElementById("repTotal").innerText = "R$ " + total.toFixed(2).replace(".",",");
+  document.getElementById("repCash").innerText = "R$ " + cash.toFixed(2).replace(".",",");
+  document.getElementById("repPix").innerText = "R$ " + pix.toFixed(2).replace(".",",");
+  document.getElementById("repDebit").innerText = "R$ " + debit.toFixed(2).replace(".",",");
+  document.getElementById("repCredit").innerText = "R$ " + credit.toFixed(2).replace(".",",");
 }
 </script>
 
