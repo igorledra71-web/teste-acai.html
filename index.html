@@ -151,7 +151,7 @@ body{
   width:100%;
 }
 
-/* MODAL ADMIN */
+/* MODAIS (ADMIN / OFERTAS) */
 .modal{
   position:fixed;
   inset:0;
@@ -222,15 +222,11 @@ body{
 <div id="adminModal" class="modal">
   <div class="modal-box">
     <div class="modal-close" onclick="closeAdmin()">✕</div>
-
     <h2 style="text-align:center;color:#5a0070">Painel Administrativo</h2>
-
     <h3>Produtos Ativos</h3>
     <div id="adminActive"></div>
-
     <h3 style="color:#b00020">Produtos Ocultos</h3>
     <div id="adminHidden"></div>
-
     <h3>➕ Novo Produto</h3>
     <input id="newName" class="search" placeholder="Nome do produto">
     <input id="newPrice" class="search" type="number" placeholder="Preço">
@@ -247,6 +243,18 @@ body{
     <button class="btn-green" onclick="addNewProduct()">Adicionar Produto</button>
   </div>
 </div>
+
+<!-- OFERTAS MODAL -->
+<div id="offerModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeOffer()">✕</div>
+    <h2 style="text-align:center;color:#5a0070">Painel de Ofertas</h2>
+    <p style="text-align:center;font-size:13px;margin-bottom:14px">
+      Configure valores promocionais por período
+    </p>
+    <div id="offerList"></div>
+  </div>
+</div>
 <script>
 /* ================= CONFIGURAÇÕES ================= */
 const ADMIN_PASSWORD = "1234";
@@ -255,10 +263,11 @@ const FREIGHT = 8;
 let cart = [];
 let currentTab = null;
 
-/* ================= STORAGE ADMIN ================= */
+/* ================= STORAGE (ADMIN / OFERTAS) ================= */
 let customPrices = JSON.parse(localStorage.getItem("customPrices")) || {};
 let productStatus = JSON.parse(localStorage.getItem("productStatus")) || {};
 let extraProducts = JSON.parse(localStorage.getItem("extraProducts")) || {};
+let offers = JSON.parse(localStorage.getItem("offers")) || {};
 
 /* ================= HORÁRIO DE FUNCIONAMENTO ================= */
 function isOpen(){
@@ -370,9 +379,18 @@ function getAllProducts(){
   return all;
 }
 
-/* ================= PREÇO FINAL ================= */
+/* ================= PREÇO FINAL (BASE + OFERTA) ================= */
 function getPrice(p){
-  return customPrices[p.n] ?? p.p;
+  const basePrice = customPrices[p.n] ?? p.p;
+  const o = offers[p.n];
+
+  if(o){
+    const today = new Date().toISOString().split("T")[0];
+    if(today >= o.start && today <= o.end){
+      return o.price;
+    }
+  }
+  return basePrice;
 }
 </script>
 <script>
@@ -410,8 +428,9 @@ function renderCategory(id, list, extras){
   if(extras){
     box.innerHTML += `<div class="section">➕ Adicionais</div>`;
     extras.forEach(p=>{
-      if(productStatus[p.n] !== false)
+      if(productStatus[p.n] !== false){
         box.innerHTML += itemHTML(p);
+      }
     });
   }
 }
@@ -423,18 +442,20 @@ function renderAcai(all){
 
   box.innerHTML += `<div class="section">🥤 Tamanhos</div>`;
   all.acaiTamanhos.forEach(p=>{
-    if(productStatus[p.n] !== false)
+    if(productStatus[p.n] !== false){
       box.innerHTML += itemHTML(p);
+    }
   });
 
   box.innerHTML += `<div class="section">🍫 Adicionais</div>`;
   all.acaiAdicionais.forEach(p=>{
-    if(productStatus[p.n] !== false)
+    if(productStatus[p.n] !== false){
       box.innerHTML += itemHTML(p);
+    }
   });
 }
 
-/* ================= ITEM ================= */
+/* ================= ITEM HTML ================= */
 function itemHTML(p){
   const price = getPrice(p);
   return `
@@ -446,26 +467,42 @@ function itemHTML(p){
   `;
 }
 
-/* ================= TABS ================= */
+/* ================= NAVEGAÇÃO POR ABAS ================= */
 function openTab(id, el){
   currentTab = id;
 
-  document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".box").forEach(b=>{
+    b.classList.remove("active");
+  });
   document.getElementById(id).classList.add("active");
 
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t=>{
+    t.classList.remove("active");
+  });
   el.classList.add("active");
 }
 
-/* ================= BUSCA GLOBAL + ADMIN ================= */
+/* ================= BUSCA GLOBAL + GATILHOS ================= */
 document.getElementById("search").addEventListener("input", function(){
   const v = this.value.toLowerCase().trim();
 
-  /* atalhos ADMIN */
+  /* GATILHO ADMIN */
   if(v === "admin" || v === "preço" || v === "precos"){
     const s = prompt("Senha do administrador:");
     if(s === ADMIN_PASSWORD){
       openAdmin();
+    }else{
+      alert("Senha incorreta");
+    }
+    this.value = "";
+    return;
+  }
+
+  /* GATILHO OFERTAS */
+  if(v === "oferta" || v === "ofertas"){
+    const s = prompt("Senha do administrador:");
+    if(s === ADMIN_PASSWORD){
+      openOffer();
     }else{
       alert("Senha incorreta");
     }
@@ -626,6 +663,82 @@ function addNewProduct(){
 
   renderAll();
   renderAdmin();
+}
+
+/* ================= MÓDULO OFERTAS ================= */
+function openOffer(){
+  document.getElementById("offerModal").style.display = "flex";
+  renderOffers();
+}
+function closeOffer(){
+  document.getElementById("offerModal").style.display = "none";
+}
+
+function renderOffers(){
+  const box = document.getElementById("offerList");
+  box.innerHTML = "";
+
+  const all = getAllProducts();
+
+  Object.keys(all).forEach(cat=>{
+    all[cat].forEach(p=>{
+      const o = offers[p.n] || {};
+
+      box.innerHTML += `
+        <div style="margin-bottom:16px">
+          <strong>${p.n}</strong>
+
+          <input class="search" type="number"
+            placeholder="Valor de oferta"
+            value="${o.price ?? ""}"
+            id="offerPrice-${p.n}">
+
+          <input class="search" type="date"
+            value="${o.start ?? ""}"
+            id="offerStart-${p.n}">
+
+          <input class="search" type="date"
+            value="${o.end ?? ""}"
+            id="offerEnd-${p.n}">
+
+          <button class="btn-green"
+            onclick="saveOffer('${p.n}')">
+            Salvar Oferta
+          </button>
+
+          ${
+            offers[p.n]
+              ? `<button class="btn-green" style="background:#999;margin-top:6px"
+                   onclick="removeOffer('${p.n}')">Remover Oferta</button>`
+              : ""
+          }
+        </div>
+      `;
+    });
+  });
+}
+
+function saveOffer(name){
+  const price = Number(document.getElementById("offerPrice-"+name).value);
+  const start = document.getElementById("offerStart-"+name).value;
+  const end = document.getElementById("offerEnd-"+name).value;
+
+  if(!price || !start || !end){
+    alert("Preencha valor e datas");
+    return;
+  }
+
+  offers[name] = { price, start, end };
+  localStorage.setItem("offers", JSON.stringify(offers));
+  renderAll();
+  renderOffers();
+}
+
+function removeOffer(name){
+  delete offers[name];
+  localStorage.setItem("offers", JSON.stringify(offers));
+  renderAll();
+  renderOffers();
 }
 </script>
 
