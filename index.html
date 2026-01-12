@@ -146,7 +146,7 @@ body{
 .item:last-child{border:none}
 
 .item-name{
-  font-weight:600;
+  font-weight:700;
 }
 
 .item-price{
@@ -161,6 +161,15 @@ body{
   font-size:12px;
 }
 
+.offer-badge{
+  background:#b00020;
+  color:#fff;
+  font-size:10px;
+  padding:2px 6px;
+  border-radius:6px;
+  margin-left:6px;
+}
+
 .btn-add{
   background:#5a0070;
   color:#fff;
@@ -168,7 +177,7 @@ body{
   border-radius:16px;
   padding:8px 18px;
   font-weight:900;
-  min-width:42px;
+  min-width:44px;
 }
 
 /* CART */
@@ -188,20 +197,13 @@ body{
 }
 
 .cart-item{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:8px;
-  font-size:13px;
-  margin-bottom:6px;
+  font-size:14px;
+  font-weight:800;
+  padding:6px 0;
+  border-bottom:1px dashed #ddd;
 }
 
-.qty button{
-  background:#FFD34D;
-  border:none;
-  border-radius:10px;
-  padding:2px 10px;
-  font-weight:900;
-}
+.cart-item:last-child{border:none}
 
 .delivery{
   display:flex;
@@ -357,10 +359,12 @@ body{
     </div>
 
     <p style="text-align:center;font-size:13px;margin-bottom:10px">
-      Defina o preço promocional e a data final da oferta
+      Defina o período da oferta (início e fim) e o preço promocional
     </p>
 
-    <div id="adminList"></div>
+    <div id="adminList">
+      <!-- gerado via JS -->
+    </div>
 
   </div>
 </div>
@@ -369,8 +373,9 @@ body{
 const FREIGHT = 8;
 let isDelivery = false;
 let cart = [];
-let offers = JSON.parse(localStorage.getItem("offers")) || {};
 let currentTab = "lanches";
+let offers = JSON.parse(localStorage.getItem("offers")) || {};
+let sales = JSON.parse(localStorage.getItem("sales")) || [];
 
 /* ================= HORÁRIO ================= */
 function isOpen(){
@@ -435,21 +440,21 @@ const products = {
 /* ================= START ================= */
 function start(){
   document.getElementById("splash").style.display="none";
-  document.getElementById("app").style.display="block";
+  document.getElementById("app").style.display="flex";
   renderAll();
   updateOpenStatus();
 }
 
 /* ================= STATUS ================= */
 function updateOpenStatus(){
-  const open = isOpen();
-  document.getElementById("closedBanner").style.display = open ? "none" : "block";
+  const open=isOpen();
+  document.getElementById("closedBanner").style.display=open?"none":"block";
   document.querySelectorAll(".btn-add").forEach(b=>b.disabled=!open);
 }
 
 /* ================= TABS ================= */
 function openTab(id,el){
-  currentTab = id;
+  currentTab=id;
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   el.classList.add("active");
   document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
@@ -471,44 +476,48 @@ function renderCategory(id,list,extra){
   box.innerHTML="";
   list.forEach(p=>box.innerHTML+=itemHTML(p));
   if(extra){
-    box.innerHTML+="<div class='section'>➕ Adicionais</div>";
+    box.innerHTML+=`<div class="section">➕ Adicionais</div>`;
     extra.forEach(p=>box.innerHTML+=itemHTML(p));
   }
 }
 
 function renderAcai(){
   const box=document.getElementById("acai");
-  box.innerHTML="<div class='section'>🥤 Tamanhos</div>";
+  box.innerHTML=`<div class="section">🥤 Tamanhos</div>`;
   products.acaiTamanhos.forEach(p=>box.innerHTML+=itemHTML(p));
-  box.innerHTML+="<div class='section'>🍫 Adicionais</div>";
+  box.innerHTML+=`<div class="section">🍫 Adicionais</div>`;
   products.acaiAdicionais.forEach(p=>box.innerHTML+=itemHTML(p));
 }
 
-function getPrice(p){
-  const offer=offers[p.n];
-  if(offer && new Date(offer.end)>=new Date()) return offer.price;
-  return p.p;
+function getOffer(p){
+  const o=offers[p.n];
+  if(!o) return null;
+  const now=new Date();
+  if(now>=new Date(o.start)&&now<=new Date(o.end)) return o;
+  return null;
 }
 
 function itemHTML(p){
-  const offer=offers[p.n];
-  let priceHTML = "R$ "+getPrice(p).toFixed(2).replace(".",",");
-  if(offer && new Date(offer.end)>=new Date()){
-    priceHTML = `<s>R$ ${p.p.toFixed(2).replace(".",",")}</s><br><b>${priceHTML}</b>`;
+  const o=getOffer(p);
+  let priceHTML=`R$ ${p.p.toFixed(2).replace(".",",")}`;
+  if(o){
+    priceHTML=`<span class="old">R$ ${p.p.toFixed(2).replace(".",",")}</span><br>
+    <b>R$ ${o.price.toFixed(2).replace(".",",")}</b>
+    <span class="offer-badge">OFERTA</span>`;
   }
   return `
-    <div class="item">
-      <span class="item-name">${p.n}</span>
-      <span class="item-price">${priceHTML}</span>
-      <button class="btn-add" onclick="addItem('${p.n}',${getPrice(p)})">+</button>
-    </div>`;
+  <div class="item">
+    <span class="item-name">${p.n}</span>
+    <span class="item-price">${priceHTML}</span>
+    <button class="btn-add" onclick="addItem('${p.n}',${o?o.price:p.p})">+</button>
+  </div>`;
 }
 
 /* ================= BUSCA GLOBAL ================= */
 function handleSearch(v){
   v=v.toLowerCase();
   document.querySelectorAll(".item").forEach(i=>{
-    i.style.display = i.innerText.toLowerCase().includes(v) ? "grid" : "none";
+    i.style.display=i.innerText.toLowerCase().includes(v)?"grid":"none";
   });
 }
 
@@ -526,7 +535,7 @@ function updateCart(){
     total+=i.p;
     box.innerHTML+=`
       <div class="cart-item">
-        <span>${i.n}</span>
+        🔸 <strong>${i.n}</strong> — R$ ${i.p.toFixed(2).replace(".",",")}
         <button onclick="removeItem(${idx})">✕</button>
       </div>`;
   });
@@ -547,96 +556,147 @@ function setDelivery(v){
 }
 </script>
 <script>
-/* ================= ADM ================= */
-function openAdmin(){
-  document.getElementById("adminModal").style.display="flex";
-}
-
-function closeAdmin(){
-  document.getElementById("adminModal").style.display="none";
-}
-
-/* Abre ADM digitando "oferta" */
-document.getElementById("search").addEventListener("keyup",e=>{
-  if(e.target.value.toLowerCase()==="oferta"){
-    const senha=prompt("Senha do administrador:");
-    if(senha==="1234"){ // ALTERE AQUI SUA SENHA
-      openAdmin();
-      e.target.value="";
-    }else{
-      alert("Senha incorreta");
-    }
-  }
-});
-
-/* ================= RENDER ADM ================= */
-function renderAdmin(){
-  const box=document.getElementById("adminList");
-  box.innerHTML="";
-  Object.values(products).flat().forEach(p=>{
-    if(!p.n) return;
-    box.innerHTML+=`
-      <div style="margin-bottom:12px">
-        <strong>${p.n}</strong>
-        <input class="input" placeholder="Preço oferta"
-          id="price-${p.n}">
-        <input class="input" type="date"
-          id="date-${p.n}">
-        <button class="finish" style="margin-top:6px"
-          onclick="saveOffer('${p.n}',${p.p})">
-          OK
-        </button>
-      </div>
-    `;
-  });
-}
-
-/* ================= SALVAR OFERTA ================= */
-function saveOffer(name,original){
-  const price=document.getElementById("price-"+name).value;
-  const date=document.getElementById("date-"+name).value;
-  if(!price || !date){
-    alert("Informe preço e data");
-    return;
-  }
-  offers[name]={
-    price:parseFloat(price),
-    end:date
-  };
-  localStorage.setItem("offers",JSON.stringify(offers));
-  alert("Oferta salva");
-  renderAll();
-}
-
-/* ================= FINALIZAR PEDIDO ================= */
+/* ================== MODAL BEBIDA ================== */
 function tryFinishOrder(){
-  const hasLanche = cart.some(i=>products.lanches.some(l=>l.n===i.n));
-  const hasDrink = cart.some(i=>products.bebidas.some(b=>b.n===i.n));
+  const temLanche = cart.some(i => products.lanches.some(l => l.n === i.n));
+  const temBebida = cart.some(i => products.bebidas.some(b => b.n === i.n));
 
-  if(hasLanche && !hasDrink){
-    document.getElementById("drinkModal").style.display="flex";
+  if(temLanche && !temBebida){
+    document.getElementById("drinkModal").style.display = "flex";
   }else{
     finishOrder();
   }
 }
 
 function openDrinks(){
-  document.getElementById("drinkModal").style.display="none";
-  openTab("bebidas",document.querySelector(".tab:last-child"));
+  document.getElementById("drinkModal").style.display = "none";
+  const tab = [...document.querySelectorAll(".tab")]
+    .find(t => t.innerText.includes("Bebidas"));
+  openTab("bebidas", tab);
 }
 
 function skipDrinks(){
-  document.getElementById("drinkModal").style.display="none";
-  finishOrder();
+  document.getElementById("drinkModal").style.display = "none";
+  finishOrder(); // ✅ agora funciona
 }
 
-/* ================= WHATSAPP ================= */
+/* ================== PAINEL ADM ================== */
+function openAdmin(){
+  document.getElementById("adminModal").style.display="flex";
+}
+function closeAdmin(){
+  document.getElementById("adminModal").style.display="none";
+}
+
+/* Atalho secreto: digitar OFERTA */
+document.getElementById("search").addEventListener("keyup",e=>{
+  const v=e.target.value.toLowerCase();
+  if(v==="oferta"){
+    const senha=prompt("Senha do administrador:");
+    if(senha==="1234"){ // 🔐 ALTERE AQUI
+      openAdmin();
+      e.target.value="";
+    }else{
+      alert("Senha incorreta");
+    }
+  }
+
+  /* RELATÓRIO */
+  if(v==="relatorio"){
+    gerarRelatorio();
+    e.target.value="";
+  }
+});
+
+/* ================== RENDER ADM ================== */
+function renderAdmin(){
+  const box=document.getElementById("adminList");
+  box.innerHTML="";
+  Object.values(products).flat().forEach(p=>{
+    if(!p.n) return;
+    box.innerHTML+=`
+      <div style="margin-bottom:14px">
+        <strong>${p.n}</strong>
+
+        <input class="input" type="number"
+          placeholder="Preço promocional"
+          id="price-${p.n}">
+
+        <input class="input" type="date"
+          id="start-${p.n}">
+
+        <input class="input" type="date"
+          id="end-${p.n}">
+
+        <button class="finish"
+          style="margin-top:6px"
+          onclick="saveOffer('${p.n}',${p.p})">
+          Salvar Oferta
+        </button>
+      </div>`;
+  });
+}
+
+/* ================== SALVAR OFERTA ================== */
+function saveOffer(name,original){
+  const price=document.getElementById("price-"+name).value;
+  const start=document.getElementById("start-"+name).value;
+  const end=document.getElementById("end-"+name).value;
+
+  if(!price||!start||!end){
+    alert("Preencha preço, início e fim");
+    return;
+  }
+
+  offers[name]={
+    price:parseFloat(price),
+    start,
+    end
+  };
+
+  localStorage.setItem("offers",JSON.stringify(offers));
+  alert("Oferta salva com sucesso");
+  renderAll();
+}
+
+/* ================== RELATÓRIO ================== */
+function gerarRelatorio(){
+  if(!sales.length){
+    alert("Nenhuma venda registrada");
+    return;
+  }
+
+  let total=0;
+  let dinheiro=0,pix=0,cartao=0;
+
+  sales.forEach(s=>{
+    total+=s.total;
+    if(s.pay==="Dinheiro") dinheiro+=s.total;
+    if(s.pay==="Pix") pix+=s.total;
+    if(s.pay==="Cartão") cartao+=s.total;
+  });
+
+  alert(
+    "📊 RELATÓRIO\n\n"+
+    "Total: R$ "+total.toFixed(2)+"\n"+
+    "Dinheiro: R$ "+dinheiro.toFixed(2)+"\n"+
+    "Pix: R$ "+pix.toFixed(2)+"\n"+
+    "Cartão: R$ "+cartao.toFixed(2)
+  );
+}
+
+/* ================== FINALIZAR PEDIDO ================== */
 function finishOrder(){
+  if(!isOpen()){
+    alert("Estamos fechados no momento");
+    return;
+  }
+
   const name=document.getElementById("name").value;
   const pay=document.getElementById("payment").value;
   const addr=document.getElementById("address").value;
 
-  if(!name || !pay || (isDelivery && !addr)){
+  if(!name||!pay||(isDelivery&&!addr)){
     alert("Preencha todos os dados");
     return;
   }
@@ -652,15 +712,27 @@ function finishOrder(){
     total+=i.p;
   });
 
-  if(isDelivery){ total+=FREIGHT; msg+="Entrega: R$ 8,00\n"; }
+  if(isDelivery){
+    total+=FREIGHT;
+    msg+="Entrega: R$ 8,00\n";
+  }
 
   msg+="\nTotal: R$ "+total.toFixed(2).replace(".",",");
+
+  sales.push({
+    date:new Date().toISOString(),
+    total,
+    pay
+  });
+  localStorage.setItem("sales",JSON.stringify(sales));
 
   window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg));
 }
 
-/* ================= OFFLINE ================= */
-window.addEventListener("offline",()=>alert("Sem internet"));
+/* ================== OFFLINE ================== */
+window.addEventListener("offline",()=>{
+  alert("Sem conexão com a internet");
+});
 </script>
 
 </body>
