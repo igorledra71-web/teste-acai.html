@@ -25,7 +25,7 @@ body{
   z-index:9999;
 }
 .splash-box{text-align:center}
-.splash-logo{width:85vw;max-width:360px;margin-bottom:28px}
+.splash-logo{width:88vw;max-width:380px;margin-bottom:28px}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
   border:none;
@@ -156,7 +156,7 @@ body{
   cursor:pointer;
 }
 
-/* MODAL BASE */
+/* MODAL */
 .modal{
   position:fixed; inset:0;
   background:rgba(0,0,0,.6);
@@ -206,6 +206,7 @@ body{
 <!-- APP -->
 <div id="app">
   <div class="title">Rabika's Burguer</div>
+
   <div id="closedBanner">
     🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30
   </div>
@@ -235,10 +236,9 @@ body{
   <div class="total" id="total">Total: R$ 0,00</div>
   <div class="finish" onclick="finishOrder()">Finalizar Pedido</div>
 </div>
-
 <script>
 /* =========================
-   ESTADO GLOBAL ÚNICO
+   ESTADO GLOBAL
 ========================= */
 const ADM_PASSWORD = "1234";
 const TAXA_ENTREGA = 8;
@@ -248,7 +248,7 @@ let currentTab = "lanches";
 let searchText = "";
 
 /* =========================
-   HORÁRIO ÚNICO (CORRIGIDO)
+   HORÁRIO DE FUNCIONAMENTO
 ========================= */
 function isOpen(){
   const d = new Date();
@@ -260,28 +260,20 @@ function isOpen(){
 }
 
 /* =========================
-   START (UNIFICADO)
+   START
 ========================= */
 function start(){
   document.getElementById("splash").style.display = "none";
   document.getElementById("app").style.display = "block";
-  updateOpenStatus();
+  document.getElementById("closedBanner").style.display = isOpen() ? "none" : "block";
   renderAll();
 }
 
 /* =========================
-   STATUS ABERTO / FECHADO
-========================= */
-function updateOpenStatus(){
-  document.getElementById("closedBanner").style.display =
-    isOpen() ? "none" : "block";
-}
-<script>
-/* =========================
-   PRODUTOS (COMPLETOS)
-   — nenhum removido
+   PRODUTOS — CARDÁPIO COMPLETO
 ========================= */
 let produtos = [
+
   /* LANCHES */
   {id:'L01',nome:'X-Salada',preco:17,categoria:'lanches',ativo:true},
   {id:'L02',nome:'X-Burguer',preco:14,categoria:'lanches',ativo:true},
@@ -346,26 +338,29 @@ let produtos = [
 function openTab(cat,el){
   currentTab = cat;
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  if(el) el.classList.add('active');
+  el.classList.add('active');
 
   document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));
   document.getElementById(cat).classList.add('active');
-  renderAll();
 }
 
 /* =========================
-   BUSCA GLOBAL (CORRIGIDA)
+   BUSCA GLOBAL
 ========================= */
 function handleSearch(value){
   searchText = value.toLowerCase().trim();
 
-  if(searchText === 'preço' || searchText === 'preco'){
-    if(prompt('Senha ADM') === ADM_PASSWORD) openPricePanel();
+  if(searchText === "preço" || searchText === "preco"){
+    if(prompt("Senha ADM") === ADM_PASSWORD){
+      openPricePanel();
+    }
     return;
   }
 
-  if(searchText === 'ofertas'){
-    if(prompt('Senha ADM') === ADM_PASSWORD) openOfferPanel();
+  if(searchText === "ofertas"){
+    if(prompt("Senha ADM") === ADM_PASSWORD){
+      openOfferPanel();
+    }
     return;
   }
 
@@ -381,8 +376,8 @@ function renderAll(){
     box.innerHTML = '';
 
     produtos
-      .filter(p=>p.categoria===cat && p.ativo)
-      .filter(p=>p.nome.toLowerCase().includes(searchText))
+      .filter(p => p.categoria === cat && p.ativo)
+      .filter(p => p.nome.toLowerCase().includes(searchText))
       .forEach(p=>{
         box.innerHTML += `
           <div class="item">
@@ -396,11 +391,11 @@ function renderAll(){
 }
 
 /* =========================
-   CARRINHO (ESTÁVEL)
+   CARRINHO
 ========================= */
 function addToCart(id){
   if(!isOpen()){
-    alert('Estamos fechados.\nTerça a Domingo das 18:30 às 22:30');
+    alert("Estamos fechados.\nTerça a Domingo das 18:30 às 22:30");
     return;
   }
   const p = produtos.find(x=>x.id===id);
@@ -409,12 +404,11 @@ function addToCart(id){
 }
 
 function updateCart(){
-  const box = document.getElementById('cart');
   const list = document.getElementById('cartItems');
   list.innerHTML = '';
   let total = 0;
 
-  cart.forEach((p,i)=>{
+  cart.forEach(p=>{
     total += p.preco;
     list.innerHTML += `
       <div class="cart-item">
@@ -425,9 +419,10 @@ function updateCart(){
   });
 
   document.getElementById('total').innerText =
-    'Total: R$ ' + total.toFixed(2).replace('.',',');
+    "Total: R$ " + total.toFixed(2).replace('.',',');
 
-  box.style.display = cart.length ? 'block' : 'none';
+  document.getElementById('cart').style.display =
+    cart.length ? 'block' : 'none';
 }
 </script>
 <script>
@@ -438,6 +433,7 @@ function openPricePanel(){
   document.getElementById('pricePanel').style.display = 'flex';
   renderPricePanel();
 }
+
 function closePricePanel(){
   document.getElementById('pricePanel').style.display = 'none';
 }
@@ -449,13 +445,14 @@ function toggleHiddenList(){
   document.getElementById('hiddenList').style.display = 'block';
   document.getElementById('newProductBox').style.display = 'none';
 }
+
 function toggleNewProduct(){
   document.getElementById('newProductBox').style.display = 'block';
   document.getElementById('hiddenList').style.display = 'none';
 }
 
 /* =========================
-   RENDER PAINEL
+   RENDER PAINEL DE PREÇOS
 ========================= */
 function renderPricePanel(){
   const list = document.getElementById('priceList');
@@ -474,13 +471,15 @@ function renderPricePanel(){
             onchange="updateTempPrice('${p.id}',this.value)">
           <button onclick="savePrice('${p.id}')">Salvar</button>
           <button onclick="hideProduct('${p.id}')">Ocultar</button>
-        </div>`;
+        </div>
+      `;
     } else {
       hidden.innerHTML += `
         <div class="item">
           <span>${p.nome}</span>
           <button onclick="showProduct('${p.id}')">Reativar</button>
-        </div>`;
+        </div>
+      `;
     }
   });
 
@@ -500,7 +499,7 @@ function renderPricePanel(){
 }
 
 /* =========================
-   AÇÕES ADM
+   AÇÕES DO PAINEL
 ========================= */
 function updateTempPrice(id,val){
   const p = produtos.find(x=>x.id===id);
@@ -514,6 +513,7 @@ function savePrice(id){
     delete p.precoTemp;
   }
   alert('Preço atualizado com sucesso');
+  renderPricePanel();
   renderAll();
 }
 
@@ -544,8 +544,11 @@ function addNewProduct(){
   }
 
   produtos.push({
-    id:'N'+Date.now(),
-    nome,preco,categoria:cat,ativo:true
+    id: 'N' + Date.now(),
+    nome: nome,
+    preco: preco,
+    categoria: cat,
+    ativo: true
   });
 
   alert('Produto adicionado com sucesso');
@@ -553,6 +556,23 @@ function addNewProduct(){
   renderAll();
 }
 </script>
+
+<!-- PAINEL DE PREÇOS -->
+<div id="pricePanel" class="modal">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closePricePanel()">✕</div>
+    <div class="modal-title">Painel de Preços</div>
+
+    <div style="display:flex;gap:10px;margin-bottom:12px">
+      <button onclick="toggleHiddenList()">Produtos Ocultos</button>
+      <button onclick="toggleNewProduct()">+ Novo Produto</button>
+    </div>
+
+    <div id="priceList"></div>
+    <div id="hiddenList" style="display:none"></div>
+    <div id="newProductBox" style="display:none"></div>
+  </div>
+</div>
 <script>
 /* =========================
    PAINEL ADM — OFERTAS
@@ -561,6 +581,7 @@ function openOfferPanel(){
   document.getElementById('offerPanel').style.display = 'flex';
   renderOfferPanel();
 }
+
 function closeOfferPanel(){
   document.getElementById('offerPanel').style.display = 'none';
 }
@@ -578,15 +599,15 @@ function renderOfferPanel(){
 
         <input type="number"
           placeholder="Preço da oferta"
-          value="${p.oferta?.preco ?? ''}"
+          value="${p.oferta ? p.oferta.preco : ''}"
           onchange="setOfferPrice('${p.id}',this.value)">
 
         <input type="date"
-          value="${p.oferta?.inicio ?? ''}"
+          value="${p.oferta ? p.oferta.inicio : ''}"
           onchange="setOfferStart('${p.id}',this.value)">
 
         <input type="date"
-          value="${p.oferta?.fim ?? ''}"
+          value="${p.oferta ? p.oferta.fim : ''}"
           onchange="setOfferEnd('${p.id}',this.value)">
 
         <button onclick="saveOffer('${p.id}')">Salvar Oferta</button>
@@ -615,8 +636,8 @@ function setOfferEnd(id,val){
 
 function saveOffer(id){
   const p = produtos.find(x=>x.id===id);
-  if(!p.oferta?.preco || !p.oferta?.inicio || !p.oferta?.fim){
-    alert('Preencha preço, início e fim da oferta');
+  if(!p.oferta || !p.oferta.preco || !p.oferta.inicio || !p.oferta.fim){
+    alert('Preencha preço, data de início e data final');
     return;
   }
   alert('Oferta salva com sucesso');
@@ -652,18 +673,17 @@ function getDisplayPrice(p){
 }
 
 /* =========================
-   AJUSTE RENDER PARA OFERTA
+   AJUSTE FINAL DO RENDER
 ========================= */
-/* sobrescreve apenas a parte visual do preço */
-const originalRenderAll = renderAll;
+const _renderAll = renderAll;
 renderAll = function(){
   ['lanches','porcoes','pasteis','acai','bebidas'].forEach(cat=>{
     const box = document.getElementById(cat);
     box.innerHTML = '';
 
     produtos
-      .filter(p=>p.categoria===cat && p.ativo)
-      .filter(p=>p.nome.toLowerCase().includes(searchText))
+      .filter(p => p.categoria === cat && p.ativo)
+      .filter(p => p.nome.toLowerCase().includes(searchText))
       .forEach(p=>{
         box.innerHTML += `
           <div class="item">
@@ -678,14 +698,14 @@ renderAll = function(){
 
 /* =========================
    FINALIZAR PEDIDO
-   (BEBIDA SIM / NÃO)
+   (PERGUNTA BEBIDA)
 ========================= */
 function finishOrder(){
   const temBebida = cart.some(i => i.categoria === 'bebidas');
 
   if(!temBebida){
     if(confirm('Vai querer bebida?')){
-      openTab('bebidas');
+      openTab('bebidas', document.querySelector('.tab:nth-child(5)'));
       return;
     }
   }
@@ -696,7 +716,7 @@ function finishOrder(){
    WHATSAPP
 ========================= */
 function sendOrder(){
-  let msg = '🍔 Pedido Rabika\'s Burguer\n\n';
+  let msg = "🍔 Pedido Rabika's Burguer\n\n";
   let total = 0;
 
   cart.forEach(p=>{
@@ -708,32 +728,10 @@ function sendOrder(){
   msg += `\nTotal: R$ ${total.toFixed(2).replace('.',',')}`;
 
   window.open(
-    'https://wa.me/554991789706?text=' +
-    encodeURIComponent(msg)
+    "https://wa.me/554991789706?text=" + encodeURIComponent(msg)
   );
 }
-
-/* =========================
-   PAINÉIS HTML
-========================= */
 </script>
-
-<!-- PAINEL DE PREÇOS -->
-<div id="pricePanel" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closePricePanel()">✕</div>
-    <div class="modal-title">Painel de Preços</div>
-
-    <div style="display:flex;gap:10px;margin-bottom:12px">
-      <button onclick="toggleHiddenList()">Produtos Ocultos</button>
-      <button onclick="toggleNewProduct()">+ Novo Produto</button>
-    </div>
-
-    <div id="priceList"></div>
-    <div id="hiddenList" style="display:none"></div>
-    <div id="newProductBox" style="display:none"></div>
-  </div>
-</div>
 
 <!-- PAINEL DE OFERTAS -->
 <div id="offerPanel" class="modal">
