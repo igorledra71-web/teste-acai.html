@@ -19,50 +19,83 @@ body{
 
 /* SPLASH */
 #splash{
-  position:fixed;inset:0;
+  position:fixed; inset:0;
   background:linear-gradient(180deg,#05002e,#020018);
-  display:flex;align-items:center;justify-content:center;
+  display:flex; align-items:center; justify-content:center;
   z-index:9999;
 }
 .splash-box{text-align:center}
-.splash-logo{width:85vw;max-width:360px;margin-bottom:30px}
+.splash-logo{width:85vw;max-width:360px;margin-bottom:28px}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
-  border:none;padding:18px 50px;border-radius:50px;
-  font-size:22px;font-weight:900;color:#2b0033;
+  border:none;
+  padding:18px 52px;
+  border-radius:50px;
+  font-size:22px;
+  font-weight:900;
+  color:#2b0033;
+  cursor:pointer;
 }
 
 /* APP */
-#app{width:100%;max-width:420px;padding:16px 16px 340px;display:none}
-.title{text-align:center;font-size:32px;font-weight:900;color:#FFD34D;margin-bottom:10px}
-
-#closedBanner{
-  background:#b00020;color:#fff;text-align:center;
-  padding:12px;border-radius:20px;font-weight:600;margin-bottom:12px
+#app{
+  width:100%;
+  max-width:420px;
+  padding:16px 16px 340px;
+  display:none;
 }
-
+.title{
+  text-align:center;
+  font-size:32px;
+  font-weight:900;
+  color:#FFD34D;
+  margin-bottom:10px;
+}
+#closedBanner{
+  background:#b00020;
+  color:#fff;
+  text-align:center;
+  padding:12px;
+  border-radius:20px;
+  font-weight:600;
+  margin-bottom:12px;
+  display:none;
+}
 .search{
-  width:100%;padding:14px 18px;border-radius:24px;
-  border:none;font-size:15px;margin-bottom:14px
+  width:100%;
+  padding:14px 18px;
+  border-radius:24px;
+  border:none;
+  font-size:15px;
+  margin-bottom:14px;
 }
 
 /* TABS */
 .tabs{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:10px;margin-bottom:16px
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:16px;
 }
 .tab{
-  background:#fff;color:#2b0033;
-  padding:14px;border-radius:22px;
-  font-weight:800;text-align:center
+  background:#fff;
+  color:#2b0033;
+  padding:14px;
+  border-radius:22px;
+  font-weight:800;
+  text-align:center;
+  cursor:pointer;
 }
 .tab.active{background:#FFD34D}
 
 /* CONTENT */
 .box{
-  background:#fff;color:#2b0033;
-  border-radius:28px;padding:18px;
-  margin-bottom:20px;display:none
+  background:#fff;
+  color:#2b0033;
+  border-radius:28px;
+  padding:18px;
+  margin-bottom:20px;
+  display:none;
 }
 .box.active{display:block}
 
@@ -70,60 +103,92 @@ body{
 .item{
   display:grid;
   grid-template-columns:1fr auto auto;
-  gap:10px;padding:14px 0;
+  gap:10px;
+  padding:14px 0;
   border-bottom:1px dashed #ddd;
-  align-items:center
+  align-items:center;
 }
 .item:last-child{border:none}
 .item-name{font-weight:600}
 .item-price{font-weight:900;color:#5a0070}
 .btn-add{
-  background:#5a0070;color:#fff;
-  border:none;border-radius:14px;
-  padding:6px 14px;font-weight:900
+  background:#5a0070;
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  padding:6px 14px;
+  font-weight:900;
+  cursor:pointer;
 }
 
 /* CART */
 #cart{
-  position:fixed;bottom:0;left:50%;
+  position:fixed;
+  bottom:0; left:50%;
   transform:translateX(-50%);
-  width:100%;max-width:420px;
-  background:#fff;color:#2b0033;
-  padding:18px;border-radius:28px 28px 0 0;
-  display:none
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  color:#2b0033;
+  padding:18px;
+  border-radius:28px 28px 0 0;
+  display:none;
 }
 .cart-item{
-  display:flex;justify-content:space-between;
-  font-weight:700;margin-bottom:6px
+  display:flex;
+  justify-content:space-between;
+  font-weight:700;
+  margin-bottom:6px;
 }
-.total{font-size:18px;font-weight:900;text-align:right}
+.total{
+  font-size:18px;
+  font-weight:900;
+  text-align:right;
+}
 .finish{
-  background:#25D366;color:#fff;
-  padding:16px;border-radius:26px;
-  font-weight:900;text-align:center;margin-top:12px
+  background:#25D366;
+  color:#fff;
+  padding:16px;
+  border-radius:26px;
+  font-weight:900;
+  text-align:center;
+  margin-top:12px;
+  cursor:pointer;
 }
 
-/* MODAL PADRÃO */
+/* MODAL BASE */
 .modal{
-  position:fixed;inset:0;
+  position:fixed; inset:0;
   background:rgba(0,0,0,.6);
-  display:none;align-items:center;justify-content:center;
-  z-index:99999
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
 }
 .modal-box{
-  background:#fff;color:#2b0033;
-  width:94%;max-width:420px;
-  border-radius:30px;padding:22px;
-  max-height:90vh;overflow:auto;
-  position:relative
+  background:#fff;
+  color:#2b0033;
+  width:94%;
+  max-width:420px;
+  border-radius:30px;
+  padding:22px;
+  max-height:90vh;
+  overflow:auto;
+  position:relative;
 }
 .modal-close{
-  position:absolute;top:14px;right:16px;
-  font-size:26px;font-weight:900;color:#5a0070
+  position:absolute;
+  top:14px;
+  right:16px;
+  font-size:26px;
+  font-weight:900;
+  cursor:pointer;
 }
 .modal-title{
-  font-size:22px;font-weight:900;
-  text-align:center;margin-bottom:14px
+  font-size:22px;
+  font-weight:900;
+  text-align:center;
+  margin-bottom:14px;
 }
 </style>
 </head>
@@ -141,9 +206,13 @@ body{
 <!-- APP -->
 <div id="app">
   <div class="title">Rabika's Burguer</div>
-  <div id="closedBanner">🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30</div>
+  <div id="closedBanner">
+    🔴 Estamos fechados — Terça a Domingo das 18:30 às 22:30
+  </div>
 
-  <input class="search" placeholder="Pesquisar no cardápio..." oninput="handleSearch(this.value)">
+  <input class="search"
+    placeholder="Pesquisar no cardápio..."
+    oninput="handleSearch(this.value)">
 
   <div class="tabs">
     <div class="tab active" onclick="openTab('lanches',this)">🍔 Lanches</div>
@@ -167,44 +236,53 @@ body{
   <div class="finish" onclick="finishOrder()">Finalizar Pedido</div>
 </div>
 
-<!-- PAINEL PREÇOS -->
-<div id="pricePanel" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closePricePanel()">✕</div>
-    <div class="modal-title">Painel de Preços & Cardápio</div>
-
-    <div style="display:flex;gap:10px;margin-bottom:14px">
-      <button onclick="toggleHiddenList()">Produtos Ocultos</button>
-      <button onclick="toggleNewProduct()">+ Novo Produto</button>
-    </div>
-
-    <div id="priceList"></div>
-    <div id="hiddenList" style="display:none"></div>
-    <div id="newProductBox" style="display:none"></div>
-  </div>
-</div>
-
-<!-- PAINEL OFERTAS -->
-<div id="offerPanel" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeOfferPanel()">✕</div>
-    <div class="modal-title">Painel de Ofertas</div>
-    <div id="offerList"></div>
-  </div>
-</div>
 <script>
 /* =========================
-   ESTADO GLOBAL
+   ESTADO GLOBAL ÚNICO
 ========================= */
+const ADM_PASSWORD = "1234";
+const TAXA_ENTREGA = 8;
+
 let cart = [];
-let searchText = '';
-const ADM_PASSWORD = '1234';
+let currentTab = "lanches";
+let searchText = "";
 
 /* =========================
-   PRODUTOS (TODOS)
+   HORÁRIO ÚNICO (CORRIGIDO)
+========================= */
+function isOpen(){
+  const d = new Date();
+  const day = d.getDay(); // 1 = segunda
+  const h = d.getHours() + d.getMinutes()/60;
+  if(day === 1) return false;
+  if(h < 18.5 || h > 22.5) return false;
+  return true;
+}
+
+/* =========================
+   START (UNIFICADO)
+========================= */
+function start(){
+  document.getElementById("splash").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  updateOpenStatus();
+  renderAll();
+}
+
+/* =========================
+   STATUS ABERTO / FECHADO
+========================= */
+function updateOpenStatus(){
+  document.getElementById("closedBanner").style.display =
+    isOpen() ? "none" : "block";
+}
+<script>
+/* =========================
+   PRODUTOS (COMPLETOS)
+   — nenhum removido
 ========================= */
 let produtos = [
-  // LANCHES
+  /* LANCHES */
   {id:'L01',nome:'X-Salada',preco:17,categoria:'lanches',ativo:true},
   {id:'L02',nome:'X-Burguer',preco:14,categoria:'lanches',ativo:true},
   {id:'L03',nome:'X-Frango',preco:22,categoria:'lanches',ativo:true},
@@ -219,70 +297,75 @@ let produtos = [
   {id:'L12',nome:'X-Da Casa',preco:45,categoria:'lanches',ativo:true},
   {id:'L13',nome:'X-Dog',preco:20,categoria:'lanches',ativo:true},
 
-  // PORÇÕES
-  {id:'P01',nome:'Fritas',preco:15,categoria:'porcoes',ativo:true},
-  {id:'P02',nome:'Fritas c/ Bacon',preco:22,categoria:'porcoes',ativo:true},
-  {id:'P03',nome:'Fritas c/ Bacon Cheddar',preco:25,categoria:'porcoes',ativo:true},
-  {id:'P04',nome:'Fritas c/ Calabresa',preco:23,categoria:'porcoes',ativo:true},
-  {id:'P05',nome:'Fritas c/ Polenta',preco:20,categoria:'porcoes',ativo:true},
+  /* PORÇÕES */
+  {id:'P01',nome:'Fritas',preco:24.99,categoria:'porcoes',ativo:true},
+  {id:'P02',nome:'Fritas c/ Frango',preco:39.99,categoria:'porcoes',ativo:true},
+  {id:'P03',nome:'Fritas c/ Calabresa',preco:34.99,categoria:'porcoes',ativo:true},
+  {id:'P04',nome:'Fritas c/ Bacon',preco:34.99,categoria:'porcoes',ativo:true},
+  {id:'P05',nome:'Anéis de Cebola',preco:24.99,categoria:'porcoes',ativo:true},
+  {id:'P06',nome:'Fritas c/ Bacon, Calabresa e Queijo',preco:39.99,categoria:'porcoes',ativo:true},
+  {id:'P07',nome:'Fritas c/ Bacon Cheddar',preco:39.99,categoria:'porcoes',ativo:true},
+  {id:'P08',nome:'Fritas c/ Polenta e Frango',preco:39.99,categoria:'porcoes',ativo:true},
+  {id:'P09',nome:'Fritas c/ Polenta',preco:24.99,categoria:'porcoes',ativo:true},
+  {id:'P10',nome:'Fritas c/ Calabresa e Catupiry',preco:35.99,categoria:'porcoes',ativo:true},
+  {id:'P11',nome:'Fritas, Polenta, Chuleta e Anel de Cebola',preco:49.99,categoria:'porcoes',ativo:true},
 
-  // PASTÉIS
-  {id:'PA01',nome:'Pastel de Carne',preco:8,categoria:'pasteis',ativo:true},
-  {id:'PA02',nome:'Pastel de Frango',preco:8,categoria:'pasteis',ativo:true},
-  {id:'PA03',nome:'Pastel Bacon Cheddar',preco:10,categoria:'pasteis',ativo:true},
-  {id:'PA04',nome:'Pastel Calabresa c/ Cebola',preco:9,categoria:'pasteis',ativo:true},
-  {id:'PA05',nome:'Pastel Carne e Queijo',preco:10,categoria:'pasteis',ativo:true},
+  /* PASTÉIS */
+  {id:'PA01',nome:'Pastel de Carne',preco:14,categoria:'pasteis',ativo:true},
+  {id:'PA02',nome:'Pastel de Frango',preco:12,categoria:'pasteis',ativo:true},
+  {id:'PA03',nome:'Frango Bacon Cheddar',preco:16,categoria:'pasteis',ativo:true},
+  {id:'PA04',nome:'Bacon Cheddar',preco:15,categoria:'pasteis',ativo:true},
+  {id:'PA05',nome:'Calabresa c/ Cebola',preco:14,categoria:'pasteis',ativo:true},
+  {id:'PA06',nome:'Carne e Queijo',preco:15,categoria:'pasteis',ativo:true},
+  {id:'PA07',nome:'Queijo',preco:14,categoria:'pasteis',ativo:true},
+  {id:'PA08',nome:'Chocolate ao Leite',preco:15,categoria:'pasteis',ativo:true},
+  {id:'PA09',nome:'Banana Queijo Canela',preco:15,categoria:'pasteis',ativo:true},
+  {id:'PA10',nome:'Romeu e Julieta',preco:15,categoria:'pasteis',ativo:true},
+  {id:'PA11',nome:'Chocolate Branco',preco:15,categoria:'pasteis',ativo:true},
+  {id:'PA12',nome:'Creme e Ouro Branco',preco:15,categoria:'pasteis',ativo:true},
+  {id:'PA13',nome:'Creme e Sonho de Valsa',preco:15,categoria:'pasteis',ativo:true},
 
-  // AÇAÍ
+  /* AÇAÍ */
   {id:'A01',nome:'Açaí 300ml',preco:12,categoria:'acai',ativo:true},
-  {id:'A02',nome:'Açaí 500ml',preco:16,categoria:'acai',ativo:true},
-  {id:'A03',nome:'Açaí 700ml',preco:20,categoria:'acai',ativo:true},
+  {id:'A02',nome:'Açaí 400ml',preco:15,categoria:'acai',ativo:true},
+  {id:'A03',nome:'Açaí 500ml',preco:18,categoria:'acai',ativo:true},
 
-  // BEBIDAS
+  /* BEBIDAS */
   {id:'B01',nome:'Cassulinha 200ml',preco:3,categoria:'bebidas',ativo:true},
   {id:'B02',nome:'Coca-Cola 600ml',preco:8,categoria:'bebidas',ativo:true},
   {id:'B03',nome:'Coca-Cola 2L',preco:16,categoria:'bebidas',ativo:true},
-  {id:'B04',nome:'Refrigerante Lata',preco:6,categoria:'bebidas',ativo:true},
+  {id:'B04',nome:'Refri Lata',preco:6,categoria:'bebidas',ativo:true},
   {id:'B05',nome:'Refrigerante 2L',preco:12,categoria:'bebidas',ativo:true},
   {id:'B06',nome:'Cerveja Lata 350ml',preco:6,categoria:'bebidas',ativo:true},
-  {id:'B07',nome:'Achocolatado 200ml',preco:3,categoria:'bebidas',ativo:true},
+  {id:'B07',nome:'Achocolatado 200ml',preco:3,categoria:'bebidas',ativo:true}
 ];
-
-/* =========================
-   INICIALIZAÇÃO
-========================= */
-function start(){
-  document.getElementById('splash').style.display='none';
-  document.getElementById('app').style.display='block';
-  renderAll();
-}
 
 /* =========================
    TABS
 ========================= */
 function openTab(cat,el){
+  currentTab = cat;
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
+  if(el) el.classList.add('active');
+
   document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));
   document.getElementById(cat).classList.add('active');
   renderAll();
 }
 
 /* =========================
-   BUSCA GLOBAL
+   BUSCA GLOBAL (CORRIGIDA)
 ========================= */
-function handleSearch(v){
-  searchText = v.toLowerCase().trim();
+function handleSearch(value){
+  searchText = value.toLowerCase().trim();
 
   if(searchText === 'preço' || searchText === 'preco'){
-    const s = prompt('Senha ADM');
-    if(s === ADM_PASSWORD) openPricePanel();
+    if(prompt('Senha ADM') === ADM_PASSWORD) openPricePanel();
     return;
   }
 
   if(searchText === 'ofertas'){
-    const s = prompt('Senha ADM');
-    if(s === ADM_PASSWORD) openOfferPanel();
+    if(prompt('Senha ADM') === ADM_PASSWORD) openOfferPanel();
     return;
   }
 
@@ -290,30 +373,36 @@ function handleSearch(v){
 }
 
 /* =========================
-   RENDERIZAÇÃO
+   RENDERIZAÇÃO ÚNICA
 ========================= */
 function renderAll(){
   ['lanches','porcoes','pasteis','acai','bebidas'].forEach(cat=>{
     const box = document.getElementById(cat);
-    box.innerHTML='';
+    box.innerHTML = '';
+
     produtos
       .filter(p=>p.categoria===cat && p.ativo)
       .filter(p=>p.nome.toLowerCase().includes(searchText))
       .forEach(p=>{
-        box.innerHTML+=`
-        <div class="item">
-          <div class="item-name">${p.nome}</div>
-          <div class="item-price">R$ ${p.preco},00</div>
-          <button class="btn-add" onclick="addToCart('${p.id}')">+</button>
-        </div>`;
+        box.innerHTML += `
+          <div class="item">
+            <span class="item-name">${p.nome}</span>
+            <span class="item-price">R$ ${p.preco.toFixed(2).replace('.',',')}</span>
+            <button class="btn-add" onclick="addToCart('${p.id}')">+</button>
+          </div>
+        `;
       });
   });
 }
 
 /* =========================
-   CARRINHO
+   CARRINHO (ESTÁVEL)
 ========================= */
 function addToCart(id){
+  if(!isOpen()){
+    alert('Estamos fechados.\nTerça a Domingo das 18:30 às 22:30');
+    return;
+  }
   const p = produtos.find(x=>x.id===id);
   cart.push(p);
   updateCart();
@@ -322,43 +411,51 @@ function addToCart(id){
 function updateCart(){
   const box = document.getElementById('cart');
   const list = document.getElementById('cartItems');
-  list.innerHTML='';
-  let total=0;
+  list.innerHTML = '';
+  let total = 0;
 
-  cart.forEach(p=>{
-    total+=p.preco;
-    list.innerHTML+=`
+  cart.forEach((p,i)=>{
+    total += p.preco;
+    list.innerHTML += `
       <div class="cart-item">
-        <span>${p.nome}</span>
-        <span>R$ ${p.preco},00</span>
-      </div>`;
+        <strong>${p.nome}</strong>
+        <span>R$ ${p.preco.toFixed(2).replace('.',',')}</span>
+      </div>
+    `;
   });
 
-  document.getElementById('total').innerText=`Total: R$ ${total},00`;
-  box.style.display = cart.length ? 'block':'none';
+  document.getElementById('total').innerText =
+    'Total: R$ ' + total.toFixed(2).replace('.',',');
+
+  box.style.display = cart.length ? 'block' : 'none';
 }
- /* =========================
-   PAINEL DE PREÇOS
+</script>
+<script>
+/* =========================
+   PAINEL ADM — PREÇOS
 ========================= */
 function openPricePanel(){
-  document.getElementById('pricePanel').style.display='flex';
+  document.getElementById('pricePanel').style.display = 'flex';
   renderPricePanel();
 }
 function closePricePanel(){
-  document.getElementById('pricePanel').style.display='none';
-}
-
-function toggleHiddenList(){
-  document.getElementById('hiddenList').style.display='block';
-  document.getElementById('newProductBox').style.display='none';
-}
-function toggleNewProduct(){
-  document.getElementById('newProductBox').style.display='block';
-  document.getElementById('hiddenList').style.display='none';
+  document.getElementById('pricePanel').style.display = 'none';
 }
 
 /* =========================
-   RENDER PAINEL PREÇOS
+   TOGGLES DO TOPO
+========================= */
+function toggleHiddenList(){
+  document.getElementById('hiddenList').style.display = 'block';
+  document.getElementById('newProductBox').style.display = 'none';
+}
+function toggleNewProduct(){
+  document.getElementById('newProductBox').style.display = 'block';
+  document.getElementById('hiddenList').style.display = 'none';
+}
+
+/* =========================
+   RENDER PAINEL
 ========================= */
 function renderPricePanel(){
   const list = document.getElementById('priceList');
@@ -372,16 +469,16 @@ function renderPricePanel(){
     if(p.ativo){
       list.innerHTML += `
         <div class="item">
-          <div>${p.nome}</div>
-          <input type="number" value="${p.preco}" 
-            onchange="p.preco=this.value">
+          <span>${p.nome}</span>
+          <input type="number" value="${p.preco}"
+            onchange="updateTempPrice('${p.id}',this.value)">
           <button onclick="savePrice('${p.id}')">Salvar</button>
           <button onclick="hideProduct('${p.id}')">Ocultar</button>
         </div>`;
     } else {
       hidden.innerHTML += `
         <div class="item">
-          <div>${p.nome}</div>
+          <span>${p.nome}</span>
           <button onclick="showProduct('${p.id}')">Reativar</button>
         </div>`;
     }
@@ -390,7 +487,7 @@ function renderPricePanel(){
   novo.innerHTML = `
     <h3>Novo Produto</h3>
     <input id="newName" placeholder="Nome do produto">
-    <input id="newPrice" placeholder="Preço" type="number">
+    <input id="newPrice" type="number" placeholder="Preço">
     <select id="newCat">
       <option value="lanches">Lanches</option>
       <option value="porcoes">Porções</option>
@@ -398,14 +495,24 @@ function renderPricePanel(){
       <option value="acai">Açaí</option>
       <option value="bebidas">Bebidas</option>
     </select>
-    <button onclick="addNewProduct()">Adicionar Produto</button>
+    <button onclick="addNewProduct()">Adicionar</button>
   `;
 }
 
 /* =========================
-   AÇÕES PREÇOS
+   AÇÕES ADM
 ========================= */
+function updateTempPrice(id,val){
+  const p = produtos.find(x=>x.id===id);
+  p.precoTemp = Number(val);
+}
+
 function savePrice(id){
+  const p = produtos.find(x=>x.id===id);
+  if(p.precoTemp !== undefined){
+    p.preco = p.precoTemp;
+    delete p.precoTemp;
+  }
   alert('Preço atualizado com sucesso');
   renderAll();
 }
@@ -430,36 +537,32 @@ function addNewProduct(){
   const nome = document.getElementById('newName').value;
   const preco = Number(document.getElementById('newPrice').value);
   const cat = document.getElementById('newCat').value;
-  if(!nome || !preco) return alert('Preencha todos os campos');
+
+  if(!nome || !preco){
+    alert('Preencha todos os campos');
+    return;
+  }
 
   produtos.push({
     id:'N'+Date.now(),
     nome,preco,categoria:cat,ativo:true
   });
 
-  alert('Produto adicionado');
+  alert('Produto adicionado com sucesso');
   renderPricePanel();
   renderAll();
 }
-
+</script>
+<script>
 /* =========================
-   FINALIZAR PEDIDO
-========================= */
-function finishOrder(){
-  if(cart.length===0) return;
-  let msg = 'Pedido:%0A';
-  cart.forEach(p=>msg+=`- ${p.nome} R$ ${p.preco},00%0A`);
-  window.open(`https://wa.me/55SEUNUMERO?text=${msg}`);
-}
-  /* =========================
-   PAINEL DE OFERTAS
+   PAINEL ADM — OFERTAS
 ========================= */
 function openOfferPanel(){
-  document.getElementById('offerPanel').style.display='flex';
+  document.getElementById('offerPanel').style.display = 'flex';
   renderOfferPanel();
 }
 function closeOfferPanel(){
-  document.getElementById('offerPanel').style.display='none';
+  document.getElementById('offerPanel').style.display = 'none';
 }
 
 function renderOfferPanel(){
@@ -472,39 +575,50 @@ function renderOfferPanel(){
     box.innerHTML += `
       <div class="item">
         <strong>${p.nome}</strong>
-        <input type="number" placeholder="Preço oferta"
-          value="${p.oferta?.preco||''}"
+
+        <input type="number"
+          placeholder="Preço da oferta"
+          value="${p.oferta?.preco ?? ''}"
           onchange="setOfferPrice('${p.id}',this.value)">
+
         <input type="date"
-          value="${p.oferta?.inicio||''}"
+          value="${p.oferta?.inicio ?? ''}"
           onchange="setOfferStart('${p.id}',this.value)">
+
         <input type="date"
-          value="${p.oferta?.fim||''}"
+          value="${p.oferta?.fim ?? ''}"
           onchange="setOfferEnd('${p.id}',this.value)">
+
         <button onclick="saveOffer('${p.id}')">Salvar Oferta</button>
-        ${p.oferta?`<button onclick="removeOffer('${p.id}')">Desativar</button>`:''}
+
+        ${p.oferta ? `<button onclick="removeOffer('${p.id}')">Desativar</button>` : ``}
       </div>
     `;
   });
 }
 
-function setOfferPrice(id,v){
+function setOfferPrice(id,val){
   const p = produtos.find(x=>x.id===id);
-  if(!p.oferta) p.oferta={};
-  p.oferta.preco = Number(v);
+  if(!p.oferta) p.oferta = {};
+  p.oferta.preco = Number(val);
 }
-function setOfferStart(id,v){
+function setOfferStart(id,val){
   const p = produtos.find(x=>x.id===id);
-  if(!p.oferta) p.oferta={};
-  p.oferta.inicio = v;
+  if(!p.oferta) p.oferta = {};
+  p.oferta.inicio = val;
 }
-function setOfferEnd(id,v){
+function setOfferEnd(id,val){
   const p = produtos.find(x=>x.id===id);
-  if(!p.oferta) p.oferta={};
-  p.oferta.fim = v;
+  if(!p.oferta) p.oferta = {};
+  p.oferta.fim = val;
 }
 
 function saveOffer(id){
+  const p = produtos.find(x=>x.id===id);
+  if(!p.oferta?.preco || !p.oferta?.inicio || !p.oferta?.fim){
+    alert('Preencha preço, início e fim da oferta');
+    return;
+  }
   alert('Oferta salva com sucesso');
   renderAll();
 }
@@ -518,80 +632,114 @@ function removeOffer(id){
 }
 
 /* =========================
-   APLICA OFERTA NO CARDÁPIO
+   PREÇO COM OFERTA (CLIENTE)
 ========================= */
-function getPrice(p){
+function getDisplayPrice(p){
   if(p.oferta){
     const hoje = new Date().toISOString().split('T')[0];
-    if(hoje>=p.oferta.inicio && hoje<=p.oferta.fim){
+    if(hoje >= p.oferta.inicio && hoje <= p.oferta.fim){
       return `
         <span style="text-decoration:line-through;color:#999">
-          R$ ${p.preco},00
+          R$ ${p.preco.toFixed(2).replace('.',',')}
         </span>
         <span style="color:#b00020;font-weight:900">
-          R$ ${p.oferta.preco},00 🔥
-        </span>`;
+          R$ ${p.oferta.preco.toFixed(2).replace('.',',')} 🔥
+        </span>
+      `;
     }
   }
-  return `R$ ${p.preco},00`;
+  return `R$ ${p.preco.toFixed(2).replace('.',',')}`;
 }
 
 /* =========================
-   BLOQUEIO HORÁRIO
+   AJUSTE RENDER PARA OFERTA
 ========================= */
-function checkOpen(){
-  const d=new Date();
-  const dia=d.getDay();
-  const h=d.getHours()+d.getMinutes()/60;
-  const aberto = dia!==1 && h>=18.5 && h<=22.5;
-  document.querySelectorAll('.btn-add')
-    .forEach(b=>b.disabled=!aberto);
-}
+/* sobrescreve apenas a parte visual do preço */
+const originalRenderAll = renderAll;
+renderAll = function(){
+  ['lanches','porcoes','pasteis','acai','bebidas'].forEach(cat=>{
+    const box = document.getElementById(cat);
+    box.innerHTML = '';
+
+    produtos
+      .filter(p=>p.categoria===cat && p.ativo)
+      .filter(p=>p.nome.toLowerCase().includes(searchText))
+      .forEach(p=>{
+        box.innerHTML += `
+          <div class="item">
+            <span class="item-name">${p.nome}</span>
+            <span class="item-price">${getDisplayPrice(p)}</span>
+            <button class="btn-add" onclick="addToCart('${p.id}')">+</button>
+          </div>
+        `;
+      });
+  });
+};
 
 /* =========================
-   BUSCA GLOBAL
+   FINALIZAR PEDIDO
+   (BEBIDA SIM / NÃO)
 ========================= */
-function handleSearch(v){
-  v=v.toLowerCase();
-  document.querySelectorAll('.item')
-    .forEach(i=>{
-      i.style.display =
-        i.innerText.toLowerCase().includes(v)
-        ?'grid':'none';
-    });
+function finishOrder(){
+  const temBebida = cart.some(i => i.categoria === 'bebidas');
 
-  if(v==='preço'){
-    const s = prompt('Senha painel');
-    if(s===ADMIN_PASS) openPricePanel();
+  if(!temBebida){
+    if(confirm('Vai querer bebida?')){
+      openTab('bebidas');
+      return;
+    }
   }
-  if(v==='ofertas'){
-    const s = prompt('Senha painel');
-    if(s===ADMIN_PASS) openOfferPanel();
-  }
+  sendOrder();
 }
 
 /* =========================
-   HTML FINAL
+   WHATSAPP
+========================= */
+function sendOrder(){
+  let msg = '🍔 Pedido Rabika\'s Burguer\n\n';
+  let total = 0;
+
+  cart.forEach(p=>{
+    let precoFinal = p.oferta ? p.oferta.preco : p.preco;
+    msg += `- ${p.nome} R$ ${precoFinal.toFixed(2).replace('.',',')}\n`;
+    total += precoFinal;
+  });
+
+  msg += `\nTotal: R$ ${total.toFixed(2).replace('.',',')}`;
+
+  window.open(
+    'https://wa.me/554991789706?text=' +
+    encodeURIComponent(msg)
+  );
+}
+
+/* =========================
+   PAINÉIS HTML
 ========================= */
 </script>
 
-<!-- PAINEL PREÇOS -->
+<!-- PAINEL DE PREÇOS -->
 <div id="pricePanel" class="modal">
   <div class="modal-box">
-    <button onclick="closePricePanel()">✖</button>
+    <div class="modal-close" onclick="closePricePanel()">✕</div>
+    <div class="modal-title">Painel de Preços</div>
+
+    <div style="display:flex;gap:10px;margin-bottom:12px">
+      <button onclick="toggleHiddenList()">Produtos Ocultos</button>
+      <button onclick="toggleNewProduct()">+ Novo Produto</button>
+    </div>
+
     <div id="priceList"></div>
-    <button onclick="toggleHiddenList()">Ocultos</button>
-    <button onclick="toggleNewProduct()">Novo Produto</button>
-    <div id="hiddenList"></div>
-    <div id="newProductBox"></div>
+    <div id="hiddenList" style="display:none"></div>
+    <div id="newProductBox" style="display:none"></div>
   </div>
 </div>
 
-<!-- PAINEL OFERTAS -->
+<!-- PAINEL DE OFERTAS -->
 <div id="offerPanel" class="modal">
   <div class="modal-box">
-    <button onclick="closeOfferPanel()">✖</button>
-    <h2>Painel de Ofertas</h2>
+    <div class="modal-close" onclick="closeOfferPanel()">✕</div>
+    <div class="modal-title">Painel de Ofertas</div>
     <div id="offerList"></div>
   </div>
 </div>
