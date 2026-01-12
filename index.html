@@ -57,7 +57,7 @@ body{
  max-width:420px;
  display:none;
  flex-direction:column;
- padding:14px 14px 330px;
+ padding:14px 14px 340px;
 }
 
 /* TOPO */
@@ -77,6 +77,7 @@ body{
  font-weight:700;
  text-align:center;
  margin-bottom:10px;
+ display:none;
 }
 
 /* BUSCA */
@@ -280,7 +281,7 @@ body{
   <input id="name" class="search" placeholder="Seu nome">
 
   <input id="address" class="search" placeholder="Endereço"
-   style="display:none">
+         style="display:none">
 
   <select id="payment" class="search">
     <option value="">Forma de pagamento</option>
@@ -299,57 +300,65 @@ body{
 
 <!-- ================= MODAL FECHADO ================= -->
 <div id="closedModal" class="modal">
- <div class="modal-box">
-  <div class="modal-title">🔴 Estamos fechados</div>
-  <p style="text-align:center">
-   Atendimento:<br>
-   <strong>Terça a Domingo</strong><br>
-   <strong>18:30 às 22:30</strong>
-  </p>
-  <div class="finish" onclick="closeClosedModal()">Entendi</div>
- </div>
+  <div class="modal-box">
+    <div class="modal-title">🔴 Estamos fechados</div>
+    <p style="text-align:center;font-size:14px">
+      Atendimento:<br>
+      <strong>Terça a Domingo</strong><br>
+      <strong>18:30 às 22:30</strong>
+    </p>
+    <div class="finish" onclick="closeClosedModal()">Entendi</div>
+  </div>
 </div>
 
 <!-- ================= MODAL BEBIDAS ================= -->
 <div id="drinkModal" class="modal">
- <div class="modal-box">
-  <div class="modal-title">🥤 Vai querer bebida?</div>
-  <p style="text-align:center;margin-bottom:10px">
-   Você escolheu um lanche.<br>
-   Deseja adicionar bebidas?
-  </p>
-  <div class="finish" onclick="openDrinks()">SIM</div>
-  <div class="finish" style="background:#ccc;color:#333"
-   onclick="skipDrinks()">NÃO</div>
- </div>
+  <div class="modal-box">
+    <div class="modal-title">🥤 Vai querer bebida?</div>
+    <p style="text-align:center;font-size:14px;margin-bottom:10px">
+      Você adicionou um lanche.<br>
+      Deseja adicionar bebidas ao pedido?
+    </p>
+
+    <div class="finish" onclick="openDrinks()">SIM</div>
+    <div class="finish"
+         style="background:#ccc;color:#333"
+         onclick="skipDrinks()">NÃO</div>
+  </div>
 </div>
 
 <!-- ================= MODAL ADMIN ================= -->
 <div id="adminModal" class="modal">
- <div class="modal-box">
-  <div class="modal-title">Painel de Ofertas</div>
-  <p style="text-align:center;font-size:14px;margin-bottom:10px">
-   Defina o período da oferta (início e fim) e o preço promocional
-  </p>
+  <div class="modal-box">
+    <div class="modal-title">Painel de Ofertas</div>
 
-  <div id="adminList"></div>
+    <p style="text-align:center;font-size:13px;margin-bottom:12px">
+      Defina o período da oferta e o preço promocional
+    </p>
 
-  <div class="finish" style="background:#999"
-   onclick="closeAdmin()">Fechar</div>
- </div>
+    <div id="adminList">
+      <!-- preenchido via JavaScript -->
+    </div>
+
+    <div class="finish"
+         style="background:#999"
+         onclick="closeAdmin()">Fechar</div>
+  </div>
 </div>
 
-<!-- ================= MODAL CONFIRMA DESATIVAR ================= -->
+<!-- ================= CONFIRMA DESATIVAR OFERTA ================= -->
 <div id="confirmDisableModal" class="modal">
- <div class="modal-box">
-  <div class="modal-title">Desativar oferta?</div>
-  <p style="text-align:center">
-   Tem certeza que deseja desativar esta oferta agora?
-  </p>
-  <div class="finish" onclick="confirmDisableOffer()">SIM</div>
-  <div class="finish" style="background:#ccc;color:#333"
-   onclick="closeDisableConfirm()">Cancelar</div>
- </div>
+  <div class="modal-box">
+    <div class="modal-title">Desativar oferta?</div>
+    <p style="text-align:center;font-size:14px">
+      Tem certeza que deseja desativar esta oferta agora?
+    </p>
+
+    <div class="finish" onclick="confirmDisableOffer()">SIM</div>
+    <div class="finish"
+         style="background:#ccc;color:#333"
+         onclick="closeDisableConfirm()">Cancelar</div>
+  </div>
 </div>
 <script>
 /* ================= CONFIG ================= */
@@ -478,6 +487,8 @@ function getOffer(p){
   if(!o) return null;
   const now=new Date();
   if(now>=new Date(o.start)&&now<=new Date(o.end)) return o;
+  delete offers[p.n];
+  localStorage.setItem("offers",JSON.stringify(offers));
   return null;
 }
 
@@ -497,11 +508,29 @@ function itemHTML(p,tab){
   </div>`;
 }
 
-/* ================= BUSCA GLOBAL ================= */
+/* ================= BUSCA UNIFICADA ================= */
 document.getElementById("search").addEventListener("input",e=>{
-  const v=e.target.value.toLowerCase();
-  let foundTab=null;
+  const v=e.target.value.toLowerCase().trim();
 
+  if(v===""){
+    document.querySelectorAll(".item").forEach(i=>i.style.display="grid");
+    return;
+  }
+
+  if(v==="oferta"){
+    const senha=prompt("Senha do administrador:");
+    if(senha==="1234") openAdmin();
+    e.target.value="";
+    return;
+  }
+
+  if(v==="relatorio"){
+    gerarRelatorio();
+    e.target.value="";
+    return;
+  }
+
+  let foundTab=null;
   document.querySelectorAll(".item").forEach(i=>{
     const match=i.dataset.name.includes(v);
     i.style.display=match?"grid":"none";
@@ -558,26 +587,35 @@ function setDelivery(v){
 }
 
 /* ================= ADMIN ================= */
+function openAdmin(){
+  document.getElementById("adminModal").style.display="flex";
+}
+
+function closeAdmin(){
+  document.getElementById("adminModal").style.display="none";
+}
+
 function renderAdmin(){
   const box=document.getElementById("adminList");
   box.innerHTML="";
 
   Object.values(products).flat().forEach(p=>{
     if(!p.n) return;
-    const hasOffer=!!offers[p.n];
+    const o=offers[p.n];
 
     box.innerHTML+=`
-      <div style="margin-bottom:18px">
+      <div style="margin-bottom:20px">
         <strong>${p.n}</strong>
 
         <input class="search" type="number"
-         placeholder="Preço promocional"
-         id="price-${p.n}">
+         id="price-${p.n}" placeholder="Preço promocional"
+         value="${o?o.price:""}">
 
         <input class="search" type="date"
-         id="start-${p.n}">
+         id="start-${p.n}" value="${o?o.start:""}">
+
         <input class="search" type="date"
-         id="end-${p.n}">
+         id="end-${p.n}" value="${o?o.end:""}">
 
         <div style="display:flex;gap:8px">
           <div class="finish"
@@ -585,7 +623,7 @@ function renderAdmin(){
            Salvar Oferta
           </div>
 
-          ${hasOffer?`
+          ${o?`
           <div class="finish"
            style="background:#b00020"
            onclick="askDisable('${p.n}')">
@@ -616,24 +654,31 @@ function askDisable(name){
   disableTarget=name;
   document.getElementById("confirmDisableModal").style.display="flex";
 }
+
 function confirmDisableOffer(){
   delete offers[disableTarget];
   localStorage.setItem("offers",JSON.stringify(offers));
   document.getElementById("confirmDisableModal").style.display="none";
   renderAll();
 }
+
 function closeDisableConfirm(){
   document.getElementById("confirmDisableModal").style.display="none";
 }
+
 function closeClosedModal(){
   document.getElementById("closedModal").style.display="none";
 }
 </script>
 <script>
-/* ================= BEBIDAS ================= */
+/* ================= BEBIDA SIM / NÃO ================= */
 function tryFinishOrder(){
-  const temLanche = cart.some(i => products.lanches.some(l => l.n === i.n));
-  const temBebida = cart.some(i => products.bebidas.some(b => b.n === i.n));
+  const temLanche = cart.some(i =>
+    products.lanches.some(l => l.n === i.n)
+  );
+  const temBebida = cart.some(i =>
+    products.bebidas.some(b => b.n === i.n)
+  );
 
   if(temLanche && !temBebida){
     document.getElementById("drinkModal").style.display="flex";
@@ -645,34 +690,14 @@ function tryFinishOrder(){
 function openDrinks(){
   document.getElementById("drinkModal").style.display="none";
   const btn=[...document.querySelectorAll(".tab")]
-   .find(t=>t.innerText.includes("Bebidas"));
-  openTab("bebidas",btn);
+    .find(t=>t.innerText.includes("Bebidas"));
+  if(btn) openTab("bebidas",btn);
 }
 
 function skipDrinks(){
   document.getElementById("drinkModal").style.display="none";
   finishOrder();
 }
-
-/* ================= ADMIN (ATALHOS) ================= */
-document.getElementById("search").addEventListener("keyup",e=>{
-  const v=e.target.value.toLowerCase();
-
-  if(v==="oferta"){
-    const senha=prompt("Senha do administrador:");
-    if(senha==="1234"){
-      openAdmin();
-      e.target.value="";
-    }else{
-      alert("Senha incorreta");
-    }
-  }
-
-  if(v==="relatorio"){
-    gerarRelatorio();
-    e.target.value="";
-  }
-});
 
 /* ================= RELATÓRIO ================= */
 function gerarRelatorio(){
@@ -720,7 +745,9 @@ function finishOrder(){
   let msg="🍔 Pedido Rabika's Burguer\n\n";
   msg+="Cliente: "+name+"\n";
   msg+="Pagamento: "+pay+"\n";
-  msg+=isDelivery?"Entrega\nEndereço: "+addr+"\n\n":"Retirada\n\n";
+  msg+=isDelivery
+    ?"Entrega\nEndereço: "+addr+"\n\n"
+    :"Retirada no local\n\n";
 
   let total=0;
   cart.forEach(i=>{
@@ -735,6 +762,7 @@ function finishOrder(){
 
   msg+="\nTotal: R$ "+total.toFixed(2).replace(".",",");
 
+  /* SALVA VENDA */
   sales.push({
     date:new Date().toISOString(),
     total,
@@ -742,11 +770,26 @@ function finishOrder(){
   });
   localStorage.setItem("sales",JSON.stringify(sales));
 
+  /* ENVIA WHATSAPP */
   window.open(
     "https://wa.me/554991789706?text="+encodeURIComponent(msg),
     "_blank"
   );
+
+  /* LIMPA PEDIDO */
+  cart=[];
+  updateCart();
+  document.getElementById("name").value="";
+  document.getElementById("address").value="";
+  document.getElementById("payment").value="";
 }
+
+/* ================= FECHAR MODAIS AO CLICAR FORA ================= */
+document.querySelectorAll(".modal").forEach(m=>{
+  m.addEventListener("click",e=>{
+    if(e.target===m) m.style.display="none";
+  });
+});
 </script>
 
 </body>
