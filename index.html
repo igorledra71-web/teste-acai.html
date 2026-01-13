@@ -213,11 +213,20 @@ let extraProducts = JSON.parse(localStorage.getItem("extraProducts")) || {};
 let offers = JSON.parse(localStorage.getItem("offers")) || {};
 let sales = JSON.parse(localStorage.getItem("sales")) || [];
 
+/* ================= CORREÇÃO 1 — SAFE ID ================= */
+/* evita falhas com espaços, acentos e caracteres especiais */
+function safeId(name){
+  return name
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9]/g,"_");
+}
+
 /* ================= HORÁRIO ================= */
 function isOpen(){
   const d = new Date();
   const day = d.getDay();
-  const h = d.getHours() + d.getMinutes() / 60;
+  const h = d.getHours() + d.getMinutes()/60;
 
   if(day === 1) return false;
   if(h < 18.5 || h > 22.5) return false;
@@ -413,8 +422,8 @@ function openTab(id, el){
 /* ================= BUSCA & ATALHOS (CORRIGIDO) ================= */
 const searchInput = document.getElementById("search");
 
-/* 👉 ATALHOS ADMIN TÊM PRIORIDADE TOTAL */
 if(searchInput){
+  /* 🔐 COMANDOS ADMIN TÊM PRIORIDADE TOTAL */
   searchInput.addEventListener("keydown", function(e){
     if(e.key !== "Enter") return;
 
@@ -554,6 +563,10 @@ function cartHasDrink(){
 
 /* ================= FINALIZAR ================= */
 function finishOrder(){
+  if(document.getElementById("drinkModal") || document.getElementById("deliveryModal")){
+    return; // bloqueia múltiplos modais
+  }
+
   if(!cartHasDrink()){
     showDrinkConfirm();
     return;
@@ -563,6 +576,8 @@ function finishOrder(){
 
 /* ================= MODAL BEBIDA ================= */
 function showDrinkConfirm(){
+  if(document.getElementById("drinkModal")) return;
+
   document.body.insertAdjacentHTML("beforeend", `
     <div class="modal" id="drinkModal" style="display:flex">
       <div class="modal-box">
@@ -577,18 +592,24 @@ function showDrinkConfirm(){
 }
 
 function goToDrinks(){
-  document.getElementById("drinkModal").remove();
+  const modal = document.getElementById("drinkModal");
+  if(modal) modal.remove();
+
   const tabs = document.querySelectorAll(".tab");
   openTab("bebidas", tabs[tabs.length - 1]);
 }
 
 function closeDrinkModal(){
-  document.getElementById("drinkModal").remove();
+  const modal = document.getElementById("drinkModal");
+  if(modal) modal.remove();
+
   askDelivery();
 }
 
 /* ================= ENTREGA / RETIRADA ================= */
 function askDelivery(){
+  if(document.getElementById("deliveryModal")) return;
+
   document.body.insertAdjacentHTML("beforeend", `
     <div class="modal" id="deliveryModal" style="display:flex">
       <div class="modal-box">
@@ -604,17 +625,19 @@ function askDelivery(){
 
 function setDelivery(isDelivery){
   checkout.delivery = isDelivery;
-  document.getElementById("deliveryModal").remove();
+
+  const modal = document.getElementById("deliveryModal");
+  if(modal) modal.remove();
+
   askName();
 }
 
 /* ================= NOME ================= */
 function askName(){
-  checkout.name = prompt("Informe seu nome:");
-  if(!checkout.name){
-    askName();
-    return;
-  }
+  const name = prompt("Informe seu nome:");
+  if(!name) return; // proteção contra loop
+  checkout.name = name;
+
   if(checkout.delivery){
     askAddress();
   }else{
@@ -624,23 +647,21 @@ function askName(){
 
 /* ================= ENDEREÇO ================= */
 function askAddress(){
-  checkout.address = prompt("Informe o endereço de entrega:");
-  if(!checkout.address){
-    askAddress();
-    return;
-  }
+  const address = prompt("Informe o endereço de entrega:");
+  if(!address) return; // proteção contra loop
+  checkout.address = address;
+
   askPayment();
 }
 
 /* ================= PAGAMENTO ================= */
 function askPayment(){
-  checkout.payment = prompt(
+  const payment = prompt(
     "Forma de pagamento? (dinheiro / pix / debito / credito)"
   );
-  if(!checkout.payment){
-    askPayment();
-    return;
-  }
+  if(!payment) return; // proteção contra loop
+  checkout.payment = payment;
+
   sendOrder();
 }
 
@@ -749,6 +770,7 @@ function renderAdmin(){
     all[cat].forEach(p=>{
       const price = getPrice(p);
       const hidden = productStatus[p.n] === false;
+      const sid = safeId(p.n);
 
       const row = `
         <div style="margin-bottom:16px">
@@ -757,7 +779,7 @@ function renderAdmin(){
           <input
             type="number"
             class="search"
-            id="price-${p.n}"
+            id="price-${sid}"
             value="${price}"
           >
 
@@ -786,7 +808,8 @@ function renderAdmin(){
 
 /* ================= SALVAR PREÇO ================= */
 function savePrice(name){
-  const input = document.getElementById("price-" + name);
+  const sid = safeId(name);
+  const input = document.getElementById("price-" + sid);
   if(!input) return;
 
   customPrices[name] = Number(input.value);
@@ -891,6 +914,7 @@ function renderOffers(){
     all[cat].forEach(p=>{
       const offer = offers[p.n];
       const status = getOfferStatus(offer);
+      const sid = safeId(p.n);
 
       let statusColor = "#999";
       if(status === "ATIVA") statusColor = "#25D366";
@@ -909,21 +933,21 @@ function renderOffers(){
             class="search"
             type="number"
             placeholder="Valor promocional"
-            id="offerPrice-${p.n}"
+            id="offerPrice-${sid}"
             value="${offer?.price ?? ""}"
           >
 
           <input
             class="search"
             type="date"
-            id="offerStart-${p.n}"
+            id="offerStart-${sid}"
             value="${offer?.start ?? ""}"
           >
 
           <input
             class="search"
             type="date"
-            id="offerEnd-${p.n}"
+            id="offerEnd-${sid}"
             value="${offer?.end ?? ""}"
           >
 
@@ -950,9 +974,11 @@ function renderOffers(){
 
 /* ================= SALVAR OFERTA ================= */
 function saveOffer(name){
-  const priceInput = document.getElementById("offerPrice-" + name);
-  const startInput = document.getElementById("offerStart-" + name);
-  const endInput   = document.getElementById("offerEnd-" + name);
+  const sid = safeId(name);
+
+  const priceInput = document.getElementById("offerPrice-" + sid);
+  const startInput = document.getElementById("offerStart-" + sid);
+  const endInput   = document.getElementById("offerEnd-" + sid);
 
   if(!priceInput || !startInput || !endInput){
     alert("Erro ao localizar campos da oferta");
