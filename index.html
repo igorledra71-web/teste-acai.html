@@ -19,6 +19,8 @@ body{
   display:flex;
   justify-content:center;
 }
+
+/* SPLASH */
 #splash{
   position:fixed;
   inset:0;
@@ -40,6 +42,8 @@ body{
   color:#2b0033;
   cursor:pointer;
 }
+
+/* APP */
 #app{
   width:100%;
   max-width:420px;
@@ -49,6 +53,8 @@ body{
 .title{text-align:center;font-size:30px;font-weight:900;color:#FFD34D}
 #status{text-align:center;font-size:13px;margin-top:4px}
 #hours{text-align:center;font-size:12px;color:#FFD34D;margin-bottom:14px}
+
+/* BUSCA */
 .search{
   width:100%;
   padding:15px 18px;
@@ -57,6 +63,8 @@ body{
   font-size:15px;
   margin-bottom:16px;
 }
+
+/* TABS */
 .tabs{
   display:grid;
   grid-template-columns:repeat(5,1fr);
@@ -75,6 +83,8 @@ body{
 }
 .tab span{display:block;font-size:22px}
 .tab.active{background:#FFD34D}
+
+/* BOX */
 .box{
   background:#fff;
   color:#2b0033;
@@ -84,6 +94,8 @@ body{
   display:none;
 }
 .box.active{display:block}
+
+/* ITEM */
 .item{
   display:grid;
   grid-template-columns:1fr auto auto;
@@ -102,6 +114,34 @@ body{
   font-weight:900;
 }
 .section{font-weight:900;margin:14px 0 6px;color:#5a0070}
+
+/* OFERTA CLIENTE */
+.item.offer{
+  background:linear-gradient(90deg,#fff7d6,#fff);
+  border-left:6px solid #FF9800;
+  padding-left:10px;
+}
+.offer-badge{
+  background:#FF9800;
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+  padding:2px 8px;
+  border-radius:12px;
+  margin-left:6px;
+}
+.old-price{
+  text-decoration:line-through;
+  font-size:12px;
+  color:#999;
+  display:block;
+}
+.offer-price{
+  color:#d32f2f;
+  font-weight:900;
+}
+
+/* CARRINHO */
 #cart{
   position:fixed;
   bottom:0;
@@ -117,6 +157,8 @@ body{
   z-index:999;
 }
 .cart-item{display:flex;justify-content:space-between;margin-bottom:6px}
+
+/* BOTÕES */
 .btn-green{
   background:#25D366;
   color:#fff;
@@ -126,6 +168,8 @@ body{
   font-weight:900;
   width:100%;
 }
+
+/* MODAL */
 .modal{
   position:fixed;
   inset:0;
@@ -154,21 +198,16 @@ body{
   font-weight:900;
   cursor:pointer;
 }
-.choice{display:flex;gap:12px;margin-top:16px}
-.choice button{
-  flex:1;
-  padding:14px;
-  font-weight:900;
-  border-radius:22px;
-  border:none;
-}
-.choice .yes{background:#25D366;color:#fff}
-.choice .no{background:#ccc;color:#333}
+
+/* ADMIN OFERTAS */
+.offer-input{background:#fff7cc;border:2px solid #FF9800}
+.offer-date{border:2px dashed #FF9800}
+.offer-save{background:#FF9800;color:#fff;font-weight:900}
 </style>
 </head>
-
 <body>
 
+<!-- SPLASH -->
 <div id="splash">
   <div class="splash-box">
     <img src="logo.png" class="splash-logo">
@@ -176,21 +215,38 @@ body{
   </div>
 </div>
 
+<!-- APP -->
 <div id="app">
   <div class="title">Rabika's Burguer</div>
   <div id="status"></div>
   <div id="hours">🕒 Terça a Domingo — 18:30 às 22:30</div>
 
-  <input id="search" class="search" placeholder="Pesquisar no cardápio...">
+  <input
+    id="search"
+    class="search"
+    placeholder="Pesquisar no cardápio ou digitar comandos (admin, oferta, relatorio)"
+  >
 
+  <!-- ABAS -->
   <div class="tabs">
-    <div class="tab" onclick="openTab('lanches',this)"><span>🍔</span>Lanches</div>
-    <div class="tab" onclick="openTab('porcoes',this)"><span>🍟</span>Porções</div>
-    <div class="tab" onclick="openTab('pasteis',this)"><span>🥟</span>Pastéis</div>
-    <div class="tab" onclick="openTab('acai',this)"><span>🍨</span>Açaí</div>
-    <div class="tab" onclick="openTab('bebidas',this)"><span>🥤</span>Bebidas</div>
+    <div class="tab" onclick="openTab('lanches',this)">
+      <span>🍔</span>Lanches
+    </div>
+    <div class="tab" onclick="openTab('porcoes',this)">
+      <span>🍟</span>Porções
+    </div>
+    <div class="tab" onclick="openTab('pasteis',this)">
+      <span>🥟</span>Pastéis
+    </div>
+    <div class="tab" onclick="openTab('acai',this)">
+      <span>🍨</span>Açaí
+    </div>
+    <div class="tab" onclick="openTab('bebidas',this)">
+      <span>🥤</span>Bebidas
+    </div>
   </div>
 
+  <!-- CONTEÚDO -->
   <div id="lanches" class="box"></div>
   <div id="porcoes" class="box"></div>
   <div id="pasteis" class="box"></div>
@@ -213,8 +269,7 @@ let extraProducts = JSON.parse(localStorage.getItem("extraProducts")) || {};
 let offers = JSON.parse(localStorage.getItem("offers")) || {};
 let sales = JSON.parse(localStorage.getItem("sales")) || [];
 
-/* ================= CORREÇÃO 1 — SAFE ID ================= */
-/* evita falhas com espaços, acentos e caracteres especiais */
+/* ================= SAFE ID (IDS SEGUROS) ================= */
 function safeId(name){
   return name
     .toLowerCase()
@@ -228,7 +283,7 @@ function isOpen(){
   const day = d.getDay();
   const h = d.getHours() + d.getMinutes()/60;
 
-  if(day === 1) return false;
+  if(day === 1) return false;          // segunda
   if(h < 18.5 || h > 22.5) return false;
   return true;
 }
@@ -307,31 +362,19 @@ function getPrice(p){
 <script>
 /* ================= BOOT ================= */
 function start(){
-  const splash = document.getElementById("splash");
-  const app = document.getElementById("app");
-
-  if(splash) splash.style.display = "none";
-  if(app) app.style.display = "block";
+  document.getElementById("splash").style.display = "none";
+  document.getElementById("app").style.display = "block";
 
   const status = document.getElementById("status");
-  if(status){
-    status.innerText = isOpen()
-      ? "🟢 Aberto agora"
-      : "🔴 Fechado — pedidos indisponíveis";
-  }
+  status.innerText = isOpen()
+    ? "🟢 Aberto agora"
+    : "🔴 Fechado — pedidos indisponíveis";
 
   renderAll();
 }
 
-/* ================= BIND BOTÃO FAZER PEDIDO ================= */
-document.addEventListener("DOMContentLoaded", function(){
-  const btn = document.getElementById("startBtn");
-  if(btn){
-    btn.addEventListener("click", function(){
-      start();
-    });
-  }
-});
+/* BOTÃO FAZER PEDIDO */
+document.getElementById("startBtn").addEventListener("click", start);
 
 /* ================= RENDER GERAL ================= */
 function renderAll(){
@@ -346,8 +389,6 @@ function renderAll(){
 /* ================= RENDER CATEGORIA ================= */
 function renderCategory(id, list, extras){
   const box = document.getElementById(id);
-  if(!box) return;
-
   box.innerHTML = "";
 
   list.forEach(p=>{
@@ -368,10 +409,7 @@ function renderCategory(id, list, extras){
 /* ================= RENDER AÇAÍ ================= */
 function renderAcai(all){
   const box = document.getElementById("acai");
-  if(!box) return;
-
-  box.innerHTML = "";
-  box.innerHTML += `<div class="section">🥤 Tamanhos</div>`;
+  box.innerHTML = `<div class="section">🥤 Tamanhos</div>`;
 
   all.acaiTamanhos.forEach(p=>{
     if(productStatus[p.n] !== false){
@@ -380,7 +418,6 @@ function renderAcai(all){
   });
 
   box.innerHTML += `<div class="section">🍫 Adicionais</div>`;
-
   all.acaiAdicionais.forEach(p=>{
     if(productStatus[p.n] !== false){
       box.innerHTML += itemHTML(p);
@@ -388,23 +425,46 @@ function renderAcai(all){
   });
 }
 
-/* ================= ITEM ================= */
+/* ================= ITEM (COM OFERTA) ================= */
+function isOfferActive(name){
+  const offer = offers[name];
+  if(!offer) return false;
+  const today = new Date().toISOString().split("T")[0];
+  return today >= offer.start && today <= offer.end;
+}
+
 function itemHTML(p){
-  const price = getPrice(p);
+  const basePrice = customPrices[p.n] ?? p.p;
+  const finalPrice = getPrice(p);
+  const hasOffer = isOfferActive(p.n);
+
+  if(hasOffer){
+    return `
+      <div class="item offer" data-name="${p.n.toLowerCase()}">
+        <div>
+          <strong>${p.n}</strong>
+          <span class="offer-badge">OFERTA</span>
+          <span class="old-price">De: R$ ${basePrice.toFixed(2).replace(".",",")}</span>
+          <span class="offer-price">Por: R$ ${finalPrice.toFixed(2).replace(".",",")}</span>
+        </div>
+        <span></span>
+        <button class="btn-add" onclick="addItem('${p.n}',${finalPrice})">+</button>
+      </div>
+    `;
+  }
+
   return `
     <div class="item" data-name="${p.n.toLowerCase()}">
       <span>${p.n}</span>
-      <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
-      <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
+      <span class="item-price">R$ ${finalPrice.toFixed(2).replace(".",",")}</span>
+      <button class="btn-add" onclick="addItem('${p.n}',${finalPrice})">+</button>
     </div>
   `;
 }
 
-/* ================= ABAS (ABRE / FECHA) ================= */
+/* ================= ABAS ================= */
 function openTab(id, el){
   const box = document.getElementById(id);
-  if(!box) return;
-
   const isActive = box.classList.contains("active");
 
   document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
@@ -412,86 +472,61 @@ function openTab(id, el){
 
   if(!isActive){
     box.classList.add("active");
-    if(el) el.classList.add("active");
+    el.classList.add("active");
     currentTab = id;
   }else{
     currentTab = null;
   }
 }
 
-/* ================= BUSCA & ATALHOS (CORRIGIDO) ================= */
+/* ================= BUSCA ================= */
 const searchInput = document.getElementById("search");
 
-if(searchInput){
-  /* 🔐 COMANDOS ADMIN TÊM PRIORIDADE TOTAL */
-  searchInput.addEventListener("keydown", function(e){
-    if(e.key !== "Enter") return;
+searchInput.addEventListener("keydown", function(e){
+  if(e.key !== "Enter") return;
 
-    const v = this.value.toLowerCase().trim();
+  const v = this.value.toLowerCase().trim();
+  const isCmd = ["admin","preço","precos","oferta","ofertas","relatorio","relatório"].includes(v);
 
-    const isAdminCommand =
-      v === "admin" ||
-      v === "preço" ||
-      v === "precos" ||
-      v === "oferta" ||
-      v === "ofertas" ||
-      v === "relatorio" ||
-      v === "relatório";
+  if(!isCmd) return;
 
-    if(!isAdminCommand) return;
+  e.preventDefault();
 
-    e.preventDefault();
-    e.stopPropagation();
-
-    const s = prompt("Senha do administrador:");
-    if(s !== ADMIN_PASSWORD){
-      this.value = "";
-      return;
-    }
-
-    if(v === "admin" || v === "preço" || v === "precos"){
-      openAdmin();
-    }
-
-    if(v === "oferta" || v === "ofertas"){
-      openOffer();
-    }
-
-    if(v === "relatorio" || v === "relatório"){
-      openReport();
-    }
-
+  const s = prompt("Senha do administrador:");
+  if(s !== ADMIN_PASSWORD){
     this.value = "";
-  });
+    return;
+  }
 
-  /* 🔎 BUSCA DE PRODUTOS (INALTERADA) */
-  searchInput.addEventListener("input", function(){
-    const v = this.value.toLowerCase().trim();
-    let foundTab = null;
+  if(v === "admin" || v === "preço" || v === "precos") openAdmin();
+  if(v === "oferta" || v === "ofertas") openOffer();
+  if(v === "relatorio" || v === "relatório") openReport();
 
-    document.querySelectorAll(".item").forEach(item=>{
-      const match = item.dataset.name.includes(v);
-      item.style.display = match ? "grid" : "none";
+  this.value = "";
+});
 
-      if(match && !foundTab){
-        const box = item.closest(".box");
-        if(box) foundTab = box.id;
-      }
-    });
+searchInput.addEventListener("input", function(){
+  const v = this.value.toLowerCase().trim();
+  let foundTab = null;
 
-    if(foundTab){
-      const tab = [...document.querySelectorAll(".tab")]
-        .find(t => t.getAttribute("onclick")?.includes(foundTab));
-      if(tab) openTab(foundTab, tab);
-    }
-
-    if(!v){
-      document.querySelectorAll(".item").forEach(i=>{
-        i.style.display = "grid";
-      });
+  document.querySelectorAll(".item").forEach(i=>{
+    const match = i.dataset.name.includes(v);
+    i.style.display = match ? "grid" : "none";
+    if(match && !foundTab){
+      foundTab = i.closest(".box").id;
     }
   });
-}
+
+  if(foundTab){
+    const tab = [...document.querySelectorAll(".tab")]
+      .find(t=>t.getAttribute("onclick").includes(foundTab));
+    if(tab) openTab(foundTab, tab);
+  }
+
+  if(!v){
+    document.querySelectorAll(".item").forEach(i=>i.style.display="grid");
+  }
+});
 </script>
 <script>
 /* ================= CARRINHO ================= */
@@ -564,7 +599,7 @@ function cartHasDrink(){
 /* ================= FINALIZAR ================= */
 function finishOrder(){
   if(document.getElementById("drinkModal") || document.getElementById("deliveryModal")){
-    return; // bloqueia múltiplos modais
+    return;
   }
 
   if(!cartHasDrink()){
@@ -635,7 +670,7 @@ function setDelivery(isDelivery){
 /* ================= NOME ================= */
 function askName(){
   const name = prompt("Informe seu nome:");
-  if(!name) return; // proteção contra loop
+  if(!name) return;
   checkout.name = name;
 
   if(checkout.delivery){
@@ -648,7 +683,7 @@ function askName(){
 /* ================= ENDEREÇO ================= */
 function askAddress(){
   const address = prompt("Informe o endereço de entrega:");
-  if(!address) return; // proteção contra loop
+  if(!address) return;
   checkout.address = address;
 
   askPayment();
@@ -659,7 +694,7 @@ function askPayment(){
   const payment = prompt(
     "Forma de pagamento? (dinheiro / pix / debito / credito)"
   );
-  if(!payment) return; // proteção contra loop
+  if(!payment) return;
   checkout.payment = payment;
 
   sendOrder();
@@ -708,12 +743,9 @@ function sendOrder(){
   <div class="modal-box">
     <div class="modal-close" onclick="closeAdmin()">✕</div>
 
-    <h2 style="text-align:center;color:#5a0070">
-      Painel Administrativo
-    </h2>
-
+    <h2 style="text-align:center;color:#5a0070">Painel Administrativo</h2>
     <p style="text-align:center;font-size:13px;margin-bottom:16px">
-      Gerencie preços, visibilidade e produtos do cardápio
+      Gerencie preços, visibilidade e produtos
     </p>
 
     <h3 style="color:#5a0070">Produtos Ativos</h3>
@@ -722,12 +754,11 @@ function sendOrder(){
     <h3 style="color:#b00020;margin-top:20px">Produtos Ocultos</h3>
     <div id="adminHidden"></div>
 
-    <h3 style="color:#5a0070;margin-top:24px">
-      + Adicionar Novo Produto
-    </h3>
+    <h3 style="color:#5a0070;margin-top:24px">+ Novo Produto</h3>
 
     <input id="newName" class="search" placeholder="Nome do produto">
     <input id="newPrice" class="search" type="number" placeholder="Preço">
+
     <select id="newCategory" class="search">
       <option value="">Categoria</option>
       <option value="lanches">Lanches</option>
@@ -760,7 +791,6 @@ function closeAdmin(){
 function renderAdmin(){
   const activeBox = document.getElementById("adminActive");
   const hiddenBox = document.getElementById("adminHidden");
-
   activeBox.innerHTML = "";
   hiddenBox.innerHTML = "";
 
@@ -813,11 +843,7 @@ function savePrice(name){
   if(!input) return;
 
   customPrices[name] = Number(input.value);
-  localStorage.setItem(
-    "customPrices",
-    JSON.stringify(customPrices)
-  );
-
+  localStorage.setItem("customPrices", JSON.stringify(customPrices));
   renderAll();
 }
 
@@ -922,47 +948,66 @@ function renderOffers(){
       if(status === "AGENDADA") statusColor = "#FF9800";
 
       box.innerHTML += `
-        <div style="margin-bottom:22px;padding-bottom:14px;border-bottom:1px dashed #ddd">
-          <strong>${p.n}</strong>
+        <div style="
+          margin-bottom:26px;
+          padding:16px;
+          border-radius:18px;
+          border:2px solid ${statusColor};
+          background:#fafafa
+        ">
 
-          <div style="margin:6px 0;font-size:12px;color:${statusColor}">
+          <strong style="font-size:15px">${p.n}</strong>
+
+          <div style="margin:6px 0;font-size:12px;color:${statusColor};font-weight:900">
             Status: ${status}
           </div>
 
+          <label style="font-size:12px;font-weight:700">
+            💸 Preço promocional
+          </label>
           <input
-            class="search"
+            class="search offer-input"
             type="number"
-            placeholder="Valor promocional"
+            placeholder="Valor de oferta"
             id="offerPrice-${sid}"
             value="${offer?.price ?? ""}"
           >
 
+          <label style="font-size:12px;font-weight:700">
+            📅 Data de início
+          </label>
           <input
-            class="search"
+            class="search offer-date"
             type="date"
             id="offerStart-${sid}"
             value="${offer?.start ?? ""}"
           >
 
+          <label style="font-size:12px;font-weight:700">
+            📅 Data de fim
+          </label>
           <input
-            class="search"
+            class="search offer-date"
             type="date"
             id="offerEnd-${sid}"
             value="${offer?.end ?? ""}"
           >
 
-          <button class="btn-green" onclick="saveOffer('${p.n}')">
-            Salvar Oferta
+          <button
+            class="btn-green offer-save"
+            onclick="saveOffer('${p.n}')"
+          >
+            💾 Salvar Oferta
           </button>
 
           ${
             offer
               ? `<button
                    class="btn-green"
-                   style="background:#999;margin-top:6px"
+                   style="background:#999;margin-top:8px"
                    onclick="removeOffer('${p.n}')"
                  >
-                   Remover Oferta
+                   ❌ Remover Oferta
                  </button>`
               : ""
           }
