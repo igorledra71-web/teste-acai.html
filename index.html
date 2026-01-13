@@ -131,17 +131,27 @@ body{
 }
 .box.active{display:block}
 
-/* ITEM */
+/* ITEM — TIPOGRAFIA MELHORADA */
 .item{
   display:grid;
   grid-template-columns:1fr auto auto;
   gap:10px;
-  padding:12px 0;
+  padding:14px 0;
   border-bottom:1px dashed #ddd;
   align-items:center;
 }
-.item span:first-child{font-weight:700;font-size:16px}
-.item span:nth-child(2){font-weight:800;color:#5a0070}
+
+.item-name{
+  font-size:17px;
+  font-weight:800;
+  letter-spacing:.3px;
+}
+
+.item-price{
+  font-size:15px;
+  font-weight:800;
+  color:#5a0070;
+}
 
 /* OFERTA */
 .item.offer{
@@ -150,18 +160,10 @@ body{
   border-radius:18px;
   padding:14px;
 }
-.offer-badge{
-  background:#ff3d00;
-  color:#fff;
-  font-size:12px;
-  font-weight:900;
-  padding:4px 8px;
-  border-radius:12px;
-  margin-left:6px;
-}
 .old-price{
   text-decoration:line-through;
   font-size:13px;
+  opacity:.7;
 }
 .offer-price{
   font-size:22px;
@@ -218,7 +220,9 @@ body{
 <div id="splash">
   <div class="splash-box">
     <img src="logo.png" class="splash-logo">
-    <button class="splash-btn" onclick="startApp()">FAZER PEDIDO</button>
+    <button class="splash-btn" onclick="startApp()">
+      FAZER PEDIDO
+    </button>
   </div>
 </div>
 
@@ -231,7 +235,7 @@ body{
     🕒 Terça a Domingo — 18:30 às 22:30
   </div>
 
-  <!-- BUSCA (SEM TEXTO) -->
+  <!-- BUSCA (SEM TEXTO INTERNO) -->
   <input id="search" class="search" placeholder="">
 
   <!-- ================= ABAS ================= -->
@@ -271,7 +275,7 @@ body{
 
 </div>
 <script>
-/* ================= CONFIG ================= */
+/* ================= CONFIGURAÇÕES ================= */
 const ADMIN_PASSWORD = "1234";
 const FREIGHT = 8;
 
@@ -322,7 +326,7 @@ function isOpen(){
   return true;
 }
 
-/* ================= PRODUTOS (CATÁLOGO COMPLETO) ================= */
+/* ================= PRODUTOS (COMPLETO) ================= */
 const products = {
 
   lanches:[
@@ -455,10 +459,14 @@ function renderItem(item){
       </div>
 
       <div class="item-price">
-        ${p.offer && p.original ? `<span class="old-price">R$ ${p.original.toFixed(2).replace('.',',')}</span>` : ''}
-        <span class="price ${p.offer ? 'offer-price' : ''}">
+        ${
+          p.offer && p.original
+            ? `<div class="old-price">R$ ${p.original.toFixed(2).replace('.',',')}</div>`
+            : ''
+        }
+        <div class="${p.offer ? 'offer-price' : ''}">
           R$ ${p.price.toFixed(2).replace('.',',')}
-        </span>
+        </div>
       </div>
 
       <button class="btn-add" onclick="addToCart('${item.n}',${p.price})">+</button>
@@ -640,18 +648,26 @@ function setDelivery(v){
   renderCart();
 }
 
-/* ================= BEBIDA ================= */
+/* ================= 🔥 REGRA DA BEBIDA (AJUSTADA) ================= */
 function finishOrder(){
+
+  const hasMainItem = cart.some(i =>
+    products.lanches.some(l => l.n === i.name) ||
+    products.porcoes.some(p => p.n === i.name) ||
+    products.pasteis.some(pa => pa.n === i.name)
+  );
+
   const hasDrink = cart.some(i =>
     products.bebidas.some(b => b.n === i.name)
   );
 
-  if(!hasDrink){
+  if(hasMainItem && !hasDrink){
     if(confirm("Você vai querer bebida?")){
       openTab("bebidas");
       return;
     }
   }
+
   sendOrder();
 }
 
@@ -706,7 +722,7 @@ function sendOrder(){
 }
 </script>
 <script>
-/* ================= CONTROLE DE SCROLL (MODAIS) ================= */
+/* ================= CONTROLE DE SCROLL ================= */
 function lockScroll(){
   document.body.style.overflow = "hidden";
 }
