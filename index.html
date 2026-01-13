@@ -3,12 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <title>Rabika's Burguer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+<!-- FONTE -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+<!-- ================= FIREBASE (Realtime Database) ================= -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCYi1rHHuUPV1QB64N9ciBXNvER3caUc0k",
+    authDomain: "rabikas-burguer.firebaseapp.com",
+    databaseURL: "https://rabikas-burguer-default-rtdb.firebaseio.com",
+    projectId: "rabikas-burguer",
+    storageBucket: "rabikas-burguer.firebasestorage.app",
+    messagingSenderId: "922454808804",
+    appId: "1:922454808804:web:d0aa9ae5fc78b8d10674f1"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script>
+
+<!-- ================= ESTILO ================= -->
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -18,6 +39,14 @@ body{
   color:#fff;
   display:flex;
   justify-content:center;
+}
+
+/* APP */
+#app{
+  width:100%;
+  max-width:420px;
+  padding:14px 14px 320px;
+  display:none;
 }
 
 /* SPLASH */
@@ -31,60 +60,75 @@ body{
   z-index:9999;
 }
 .splash-box{text-align:center}
-.splash-logo{width:360px;max-width:90%;margin-bottom:36px}
+.splash-logo{
+  width:90%;
+  max-width:340px;
+  margin-bottom:32px;
+}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
   border:none;
-  padding:20px 60px;
-  border-radius:50px;
+  padding:18px 54px;
+  border-radius:44px;
   font-size:22px;
   font-weight:900;
   color:#2b0033;
   cursor:pointer;
 }
 
-/* APP */
-#app{
-  width:100%;
-  max-width:420px;
-  padding:16px 14px 360px;
-  display:none;
+/* TOPO */
+.title{
+  text-align:center;
+  font-size:30px;
+  font-weight:900;
+  color:#FFD34D;
+  margin-bottom:6px;
 }
-.title{text-align:center;font-size:30px;font-weight:900;color:#FFD34D}
-#status{text-align:center;font-size:13px;margin-top:4px}
-#hours{text-align:center;font-size:12px;color:#FFD34D;margin-bottom:14px}
+#hours{
+  text-align:center;
+  font-size:12px;
+  opacity:.85;
+  margin-bottom:8px;
+}
+#status{
+  text-align:center;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:10px;
+}
 
 /* BUSCA */
 .search{
   width:100%;
-  padding:15px 18px;
-  border-radius:30px;
+  padding:14px 16px;
+  border-radius:22px;
   border:none;
   font-size:15px;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
 
 /* TABS */
 .tabs{
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:10px;
+  gap:8px;
   margin-bottom:14px;
 }
 .tab{
   background:#fff;
   color:#2b0033;
-  padding:12px 6px;
-  border-radius:22px;
+  padding:10px 6px;
+  border-radius:18px;
   font-weight:800;
-  font-size:12px;
   text-align:center;
   cursor:pointer;
+  font-size:12px;
 }
-.tab span{display:block;font-size:22px}
-.tab.active{background:#FFD34D}
+.tab.active{
+  background:#FFD34D;
+}
 
-/* BOX */
+/* CONTEÚDO */
 .box{
   background:#fff;
   color:#2b0033;
@@ -95,16 +139,28 @@ body{
 }
 .box.active{display:block}
 
+.section{
+  font-weight:900;
+  margin:10px 0;
+  color:#5a0070;
+}
+
 /* ITEM */
 .item{
   display:grid;
   grid-template-columns:1fr auto auto;
   gap:10px;
   padding:12px 0;
-  border-bottom:1px dashed #ddd;
+  border-bottom:1px dashed #e3e3e3;
   align-items:center;
 }
-.item-price{font-weight:900;color:#5a0070}
+.item:last-child{border:none}
+
+.item-price{
+  font-weight:900;
+  color:#5a0070;
+}
+
 .btn-add{
   background:#5a0070;
   color:#fff;
@@ -113,39 +169,34 @@ body{
   padding:6px 14px;
   font-weight:900;
 }
-.section{font-weight:900;margin:14px 0 6px;color:#5a0070}
 
-/* ===== OFERTA (CLIENTE) ===== */
+/* OFERTA */
 .item.offer{
-  background:linear-gradient(90deg,#fff3c4,#fff);
-  border-left:6px solid #FF9800;
-  padding-left:10px;
-  animation:pulseOffer 1.6s infinite;
+  background:#fff8dc;
+  border-radius:16px;
+  padding:12px;
 }
 .offer-badge{
-  background:#FF9800;
+  display:inline-block;
+  background:#b00020;
   color:#fff;
-  font-size:10px;
+  font-size:11px;
   font-weight:900;
   padding:2px 8px;
   border-radius:12px;
   margin-left:6px;
 }
 .old-price{
-  text-decoration:line-through;
+  display:block;
   font-size:12px;
   color:#999;
-  display:block;
+  text-decoration:line-through;
 }
 .offer-price{
-  color:#d32f2f;
+  display:block;
+  font-size:16px;
   font-weight:900;
-}
-
-@keyframes pulseOffer{
-  0%{box-shadow:0 0 0 rgba(255,152,0,0)}
-  50%{box-shadow:0 0 12px rgba(255,152,0,.4)}
-  100%{box-shadow:0 0 0 rgba(255,152,0,0)}
+  color:#b00020;
 }
 
 /* CARRINHO */
@@ -158,22 +209,15 @@ body{
   max-width:420px;
   background:#fff;
   color:#2b0033;
-  padding:16px;
-  border-radius:26px 26px 0 0;
+  padding:18px;
+  border-radius:28px 28px 0 0;
   display:none;
   z-index:999;
 }
-.cart-item{display:flex;justify-content:space-between;margin-bottom:6px}
-
-/* BOTÕES */
-.btn-green{
-  background:#25D366;
-  color:#fff;
-  border:none;
-  padding:14px;
-  border-radius:22px;
-  font-weight:900;
-  width:100%;
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:6px;
 }
 
 /* MODAL */
@@ -192,73 +236,72 @@ body{
   width:92%;
   max-width:420px;
   border-radius:26px;
-  padding:22px;
+  padding:20px;
   max-height:85vh;
   overflow-y:auto;
   position:relative;
 }
 .modal-close{
   position:absolute;
-  top:10px;
+  top:12px;
   right:14px;
   font-size:22px;
   font-weight:900;
   cursor:pointer;
 }
 
-/* ADMIN OFERTAS */
-.offer-input{background:#fff7cc;border:2px solid #FF9800}
-.offer-date{border:2px dashed #FF9800}
-.offer-save{background:#FF9800;color:#fff;font-weight:900}
+/* BOTÕES */
+.btn-green{
+  background:#25D366;
+  color:#fff;
+  border:none;
+  padding:14px;
+  border-radius:22px;
+  font-weight:900;
+  width:100%;
+}
 </style>
 </head>
 <body>
 
-<!-- SPLASH -->
+<!-- ================= SPLASH ================= -->
 <div id="splash">
   <div class="splash-box">
-    <img src="logo.png" class="splash-logo">
+    <img src="logo.png" class="splash-logo" alt="Rabika's Burguer">
     <button class="splash-btn" id="startBtn">FAZER PEDIDO</button>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ================= APP ================= -->
 <div id="app">
-  <div class="title">Rabika's Burguer</div>
-  <div id="status"></div>
-  <div id="hours">🕒 Terça a Domingo — 18:30 às 22:30</div>
 
+  <div class="title">Rabika's Burguer</div>
+  <div id="hours">🕒 Terça a Domingo — 18:30 às 22:30</div>
+  <div id="status"></div>
+
+  <!-- BUSCA -->
   <input
     id="search"
     class="search"
     placeholder="Pesquisar produtos ou digitar: admin | oferta | relatorio"
   >
 
-  <!-- ABAS -->
+  <!-- ================= ABAS ================= -->
   <div class="tabs">
-    <div class="tab" onclick="openTab('lanches',this)">
-      <span>🍔</span>Lanches
-    </div>
-    <div class="tab" onclick="openTab('porcoes',this)">
-      <span>🍟</span>Porções
-    </div>
-    <div class="tab" onclick="openTab('pasteis',this)">
-      <span>🥟</span>Pastéis
-    </div>
-    <div class="tab" onclick="openTab('acai',this)">
-      <span>🍨</span>Açaí
-    </div>
-    <div class="tab" onclick="openTab('bebidas',this)">
-      <span>🥤</span>Bebidas
-    </div>
+    <div class="tab" onclick="openTab('lanches',this)">🍔 Lanches</div>
+    <div class="tab" onclick="openTab('porcoes',this)">🍟 Porções</div>
+    <div class="tab" onclick="openTab('pasteis',this)">🥟 Pastéis</div>
+    <div class="tab" onclick="openTab('acai',this)">🍨 Açaí</div>
+    <div class="tab" onclick="openTab('bebidas',this)">🥤 Bebidas</div>
   </div>
 
-  <!-- CONTEÚDO -->
+  <!-- ================= CONTEÚDO ================= -->
   <div id="lanches" class="box"></div>
   <div id="porcoes" class="box"></div>
   <div id="pasteis" class="box"></div>
   <div id="acai" class="box"></div>
   <div id="bebidas" class="box"></div>
+
 </div>
 <script>
 /* ================= CONFIGURAÇÕES ================= */
@@ -269,14 +312,14 @@ const FREIGHT = 8;
 let cart = [];
 let currentTab = null;
 
-/* ================= STORAGE ================= */
-let customPrices  = JSON.parse(localStorage.getItem("customPrices"))  || {};
-let productStatus = JSON.parse(localStorage.getItem("productStatus")) || {};
-let extraProducts = JSON.parse(localStorage.getItem("extraProducts")) || {};
-let offers        = JSON.parse(localStorage.getItem("offers"))        || {};
-let sales         = JSON.parse(localStorage.getItem("sales"))         || [];
+/* ================= CAMADA DINÂMICA (FIREBASE) ================= */
+/* Opção A: somente alterações vêm do Firebase */
+let customPrices  = {};   // preços alterados
+let productStatus = {};   // ocultar/reativar
+let offers        = {};   // ofertas
+let sales         = {};   // vendas
 
-/* ================= SAFE ID ================= */
+/* ================= SAFE ID (CHAVE ÚNICA) ================= */
 function safeId(name){
   return name
     .toLowerCase()
@@ -284,17 +327,17 @@ function safeId(name){
     .replace(/[^a-z0-9]/g,"_");
 }
 
-/* ================= HORÁRIO ================= */
+/* ================= HORÁRIO DE FUNCIONAMENTO ================= */
 function isOpen(){
   const d = new Date();
-  const day = d.getDay();
+  const day = d.getDay(); // 0 dom ... 6 sáb
   const h = d.getHours() + d.getMinutes()/60;
-  if(day === 1) return false;
+  if(day === 1) return false;          // segunda fechado
   if(h < 18.5 || h > 22.5) return false;
   return true;
 }
 
-/* ================= PRODUTOS ================= */
+/* ================= PRODUTOS (BASE FIXA NO CÓDIGO) ================= */
 const products = {
   lanches:[
     {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
@@ -346,21 +389,22 @@ const products = {
 
 /* ================= UTILITÁRIOS ================= */
 function getAllProducts(){
-  let all = JSON.parse(JSON.stringify(products));
-  Object.keys(extraProducts).forEach(c=>{
-    all[c] = (all[c] || []).concat(extraProducts[c]);
-  });
-  return all;
+  return JSON.parse(JSON.stringify(products));
 }
 
-function getPrice(p){
-  const base = customPrices[p.n] ?? p.p;
-  const offer = offers[p.n];
-  if(offer){
+/* Preço final: oferta > preço alterado > base */
+function getFinalPrice(p){
+  const sid = safeId(p.n);
+  const base = p.p;
+  if(offers[sid]){
+    const o = offers[sid];
     const today = new Date().toISOString().split("T")[0];
-    if(today >= offer.start && today <= offer.end){
-      return offer.price;
+    if(today >= o.start && today <= o.end){
+      return o.price;
     }
+  }
+  if(customPrices[sid] != null){
+    return customPrices[sid];
   }
   return base;
 }
@@ -378,8 +422,23 @@ function start(){
   renderAll();
 }
 
-/* BOTÃO FAZER PEDIDO */
 document.getElementById("startBtn").addEventListener("click", start);
+
+/* ================= FIREBASE SYNC (OPÇÃO A) ================= */
+db.ref("prices").on("value", snap=>{
+  customPrices = snap.val() || {};
+  renderAll();
+});
+
+db.ref("productStatus").on("value", snap=>{
+  productStatus = snap.val() || {};
+  renderAll();
+});
+
+db.ref("offers").on("value", snap=>{
+  offers = snap.val() || {};
+  renderAll();
+});
 
 /* ================= RENDER GERAL ================= */
 function renderAll(){
@@ -397,14 +456,16 @@ function renderCategory(id, list, extras){
   box.innerHTML = "";
 
   list.forEach(p=>{
-    if(productStatus[p.n] === false) return;
+    const sid = safeId(p.n);
+    if(productStatus[sid] === false) return;
     box.innerHTML += itemHTML(p);
   });
 
   if(extras){
     box.innerHTML += `<div class="section">➕ Adicionais</div>`;
     extras.forEach(p=>{
-      if(productStatus[p.n] !== false){
+      const sid = safeId(p.n);
+      if(productStatus[sid] !== false){
         box.innerHTML += itemHTML(p);
       }
     });
@@ -417,32 +478,30 @@ function renderAcai(all){
   box.innerHTML = `<div class="section">🥤 Tamanhos</div>`;
 
   all.acaiTamanhos.forEach(p=>{
-    if(productStatus[p.n] !== false){
+    const sid = safeId(p.n);
+    if(productStatus[sid] !== false){
       box.innerHTML += itemHTML(p);
     }
   });
 
   box.innerHTML += `<div class="section">🍫 Adicionais</div>`;
   all.acaiAdicionais.forEach(p=>{
-    if(productStatus[p.n] !== false){
+    const sid = safeId(p.n);
+    if(productStatus[sid] !== false){
       box.innerHTML += itemHTML(p);
     }
   });
 }
 
-/* ================= OFERTA ATIVA ================= */
-function isOfferActive(name){
-  const offer = offers[name];
-  if(!offer) return false;
-  const today = new Date().toISOString().split("T")[0];
-  return today >= offer.start && today <= offer.end;
-}
-
-/* ================= ITEM ================= */
+/* ================= ITEM (COM OFERTA) ================= */
 function itemHTML(p){
-  const basePrice = customPrices[p.n] ?? p.p;
-  const finalPrice = getPrice(p);
-  const hasOffer = isOfferActive(p.n);
+  const sid = safeId(p.n);
+  const base = p.p;
+  const price = getFinalPrice(p);
+
+  const hasOffer = offers[sid] &&
+    new Date().toISOString().split("T")[0] >= offers[sid].start &&
+    new Date().toISOString().split("T")[0] <= offers[sid].end;
 
   if(hasOffer){
     return `
@@ -450,11 +509,11 @@ function itemHTML(p){
         <div>
           <strong>${p.n}</strong>
           <span class="offer-badge">OFERTA</span>
-          <span class="old-price">De: R$ ${basePrice.toFixed(2).replace(".",",")}</span>
-          <span class="offer-price">Por: R$ ${finalPrice.toFixed(2).replace(".",",")}</span>
+          <span class="old-price">De: R$ ${base.toFixed(2).replace(".",",")}</span>
+          <span class="offer-price">Por: R$ ${price.toFixed(2).replace(".",",")}</span>
         </div>
         <span></span>
-        <button class="btn-add" onclick="addItem('${p.n}',${finalPrice})">+</button>
+        <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
       </div>
     `;
   }
@@ -462,8 +521,8 @@ function itemHTML(p){
   return `
     <div class="item" data-name="${p.n.toLowerCase()}">
       <span>${p.n}</span>
-      <span class="item-price">R$ ${finalPrice.toFixed(2).replace(".",",")}</span>
-      <button class="btn-add" onclick="addItem('${p.n}',${finalPrice})">+</button>
+      <span class="item-price">R$ ${price.toFixed(2).replace(".",",")}</span>
+      <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
     </div>
   `;
 }
@@ -532,15 +591,6 @@ searchInput.addEventListener("input", function(){
     document.querySelectorAll(".item").forEach(i=>i.style.display="grid");
   }
 });
-
-/* ================= FIX DEFINITIVO — RELOAD ================= */
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    if(typeof renderAll === "function"){
-      renderAll();
-    }
-  }, 50);
-});
 </script>
 <script>
 /* ================= CARRINHO ================= */
@@ -561,9 +611,7 @@ function updateCart(){
       <div id="cart">
         <div id="cartItems"></div>
         <div id="total"></div>
-        <button class="btn-green" onclick="finishOrder()">
-          Finalizar Pedido
-        </button>
+        <button class="btn-green" onclick="finishOrder()">Finalizar Pedido</button>
       </div>
     `);
     cartBox = document.getElementById("cart");
@@ -596,7 +644,7 @@ function removeItem(index){
   updateCart();
 }
 
-/* ================= CHECKOUT — ESTADO ================= */
+/* ================= CHECKOUT ================= */
 let checkout = {
   delivery: false,
   name: "",
@@ -612,10 +660,6 @@ function cartHasDrink(){
 
 /* ================= FINALIZAR ================= */
 function finishOrder(){
-  if(document.getElementById("drinkModal") || document.getElementById("deliveryModal")){
-    return;
-  }
-
   if(!cartHasDrink()){
     showDrinkConfirm();
     return;
@@ -631,19 +675,15 @@ function showDrinkConfirm(){
     <div class="modal" id="drinkModal" style="display:flex">
       <div class="modal-box">
         <h2 style="text-align:center">Você vai querer bebida?</h2>
-        <div class="choice">
-          <button class="btn-green" onclick="goToDrinks()">SIM</button>
-          <button class="btn-green" style="background:#999;margin-top:10px" onclick="closeDrinkModal()">NÃO</button>
-        </div>
+        <button class="btn-green" onclick="goToDrinks()">SIM</button>
+        <button class="btn-green" style="background:#999;margin-top:10px" onclick="closeDrinkModal()">NÃO</button>
       </div>
     </div>
   `);
 }
 
 function goToDrinks(){
-  const modal = document.getElementById("drinkModal");
-  if(modal) modal.remove();
-
+  closeDrinkModal();
   const tabs = document.querySelectorAll(".tab");
   openTab("bebidas", tabs[tabs.length - 1]);
 }
@@ -651,7 +691,6 @@ function goToDrinks(){
 function closeDrinkModal(){
   const modal = document.getElementById("drinkModal");
   if(modal) modal.remove();
-
   askDelivery();
 }
 
@@ -663,10 +702,8 @@ function askDelivery(){
     <div class="modal" id="deliveryModal" style="display:flex">
       <div class="modal-box">
         <h2 style="text-align:center">Entrega ou Retirada?</h2>
-        <div class="choice">
-          <button class="btn-green" onclick="setDelivery(true)">ENTREGA</button>
-          <button class="btn-green" style="background:#999;margin-top:10px" onclick="setDelivery(false)">RETIRADA</button>
-        </div>
+        <button class="btn-green" onclick="setDelivery(true)">ENTREGA</button>
+        <button class="btn-green" style="background:#999;margin-top:10px" onclick="setDelivery(false)">RETIRADA</button>
       </div>
     </div>
   `);
@@ -674,10 +711,8 @@ function askDelivery(){
 
 function setDelivery(isDelivery){
   checkout.delivery = isDelivery;
-
   const modal = document.getElementById("deliveryModal");
   if(modal) modal.remove();
-
   askName();
 }
 
@@ -699,18 +734,14 @@ function askAddress(){
   const address = prompt("Informe o endereço de entrega:");
   if(!address) return;
   checkout.address = address;
-
   askPayment();
 }
 
 /* ================= PAGAMENTO ================= */
 function askPayment(){
-  const payment = prompt(
-    "Forma de pagamento? (dinheiro / pix / debito / credito)"
-  );
+  const payment = prompt("Forma de pagamento? (dinheiro / pix / debito / credito)");
   if(!payment) return;
   checkout.payment = payment;
-
   sendOrder();
 }
 
@@ -736,12 +767,12 @@ function sendOrder(){
   msg += `Pagamento: ${checkout.payment}\n`;
   msg += `\nTotal: R$ ${total.toFixed(2).replace(".",",")}`;
 
-  sales.push({
+  const saleId = Date.now();
+  db.ref("sales/" + saleId).set({
     date: new Date().toISOString(),
     total,
     payment: checkout.payment
   });
-  localStorage.setItem("sales", JSON.stringify(sales));
 
   window.open(
     "https://wa.me/554991789706?text=" + encodeURIComponent(msg),
@@ -752,280 +783,173 @@ function sendOrder(){
   updateCart();
 }
 </script>
-<!-- ================= MODAL ADMIN ================= -->
-<div id="adminModal" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeAdmin()">✕</div>
-
-    <h2 style="text-align:center;color:#5a0070">
-      Painel Administrativo
-    </h2>
-
-    <p style="text-align:center;font-size:13px;margin-bottom:16px">
-      Gerencie preços, visibilidade e produtos
-    </p>
-
-    <h3 style="color:#5a0070">Produtos Ativos</h3>
-    <div id="adminActive"></div>
-
-    <h3 style="color:#b00020;margin-top:20px">Produtos Ocultos</h3>
-    <div id="adminHidden"></div>
-
-    <h3 style="color:#5a0070;margin-top:24px">+ Novo Produto</h3>
-
-    <input id="newName" class="search" placeholder="Nome do produto">
-    <input id="newPrice" class="search" type="number" placeholder="Preço">
-
-    <select id="newCategory" class="search">
-      <option value="">Categoria</option>
-      <option value="lanches">Lanches</option>
-      <option value="adicionaisLanches">Adicionais</option>
-      <option value="porcoes">Porções</option>
-      <option value="pasteis">Pastéis</option>
-      <option value="acaiTamanhos">Açaí (Tamanho)</option>
-      <option value="acaiAdicionais">Açaí (Adicional)</option>
-      <option value="bebidas">Bebidas</option>
-    </select>
-
-    <button class="btn-green" onclick="addNewProduct()">
-      Adicionar Produto
-    </button>
-  </div>
-</div>
-
 <script>
-/* ================= ADMIN ================= */
+/* ================= ADMIN — PAINEL PREÇOS ================= */
+
 function openAdmin(){
-  document.getElementById("adminModal").style.display = "flex";
-  renderAdmin();
+  if(document.getElementById("adminModal")) return;
+
+  document.body.insertAdjacentHTML("beforeend", `
+    <div class="modal" id="adminModal" style="display:flex">
+      <div class="modal-box">
+        <div class="modal-close" onclick="closeAdmin()">✕</div>
+        <h2 style="text-align:center;color:#5a0070">Painel Administrativo</h2>
+        <p style="text-align:center;font-size:13px;margin-bottom:10px">
+          Alterar preços • Ocultar produtos
+        </p>
+        <div id="adminProducts"></div>
+      </div>
+    </div>
+  `);
+
+  renderAdminProducts();
 }
 
 function closeAdmin(){
-  document.getElementById("adminModal").style.display = "none";
+  const m = document.getElementById("adminModal");
+  if(m) m.remove();
 }
 
 /* ================= RENDER ADMIN ================= */
-function renderAdmin(){
-  const activeBox = document.getElementById("adminActive");
-  const hiddenBox = document.getElementById("adminHidden");
-  activeBox.innerHTML = "";
-  hiddenBox.innerHTML = "";
+function renderAdminProducts(){
+  const box = document.getElementById("adminProducts");
+  if(!box) return;
 
-  const all = getAllProducts();
-
-  Object.keys(all).forEach(cat=>{
-    all[cat].forEach(p=>{
-      const price = getPrice(p);
-      const hidden = productStatus[p.n] === false;
-      const sid = safeId(p.n);
-
-      const row = `
-        <div style="margin-bottom:16px">
-          <strong>${p.n}</strong>
-
-          <input
-            type="number"
-            class="search"
-            id="price-${sid}"
-            value="${price}"
-          >
-
-          <button class="btn-green" onclick="savePrice('${p.n}')">
-            Salvar
-          </button>
-
-          <button
-            class="btn-green"
-            style="background:#999;margin-top:6px"
-            onclick="toggleProduct('${p.n}')"
-          >
-            ${hidden ? "Reativar" : "Ocultar"}
-          </button>
-        </div>
-      `;
-
-      if(hidden){
-        hiddenBox.innerHTML += row;
-      }else{
-        activeBox.innerHTML += row;
-      }
-    });
-  });
-}
-
-/* ================= SALVAR PREÇO ================= */
-function savePrice(name){
-  const sid = safeId(name);
-  const input = document.getElementById("price-" + sid);
-  if(!input) return;
-
-  customPrices[name] = Number(input.value);
-  localStorage.setItem("customPrices", JSON.stringify(customPrices));
-
-  renderAll();
-}
-
-/* ================= OCULTAR / REATIVAR ================= */
-function toggleProduct(name){
-  productStatus[name] =
-    productStatus[name] === false ? true : false;
-
-  localStorage.setItem(
-    "productStatus",
-    JSON.stringify(productStatus)
-  );
-
-  renderAll();
-  renderAdmin();
-}
-
-/* ================= ADICIONAR PRODUTO ================= */
-function addNewProduct(){
-  const name = document.getElementById("newName").value.trim();
-  const price = Number(document.getElementById("newPrice").value);
-  const category = document.getElementById("newCategory").value;
-
-  if(!name || !price || !category){
-    alert("Preencha todos os campos");
-    return;
-  }
-
-  if(!extraProducts[category]){
-    extraProducts[category] = [];
-  }
-
-  extraProducts[category].push({ n: name, p: price });
-
-  localStorage.setItem(
-    "extraProducts",
-    JSON.stringify(extraProducts)
-  );
-
-  document.getElementById("newName").value = "";
-  document.getElementById("newPrice").value = "";
-  document.getElementById("newCategory").value = "";
-
-  renderAll();
-  renderAdmin();
-}
-</script>
-<!-- ================= MODAL OFERTAS ================= -->
-<div id="offerModal" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeOffer()">✕</div>
-
-    <h2 style="text-align:center;color:#5a0070">
-      Módulo de Ofertas
-    </h2>
-
-    <p style="text-align:center;font-size:13px;margin-bottom:16px">
-      Defina preços promocionais com data de início e fim
-    </p>
-
-    <div id="offerList"></div>
-  </div>
-</div>
-
-<script>
-/* ================= OFERTAS ================= */
-function openOffer(){
-  document.getElementById("offerModal").style.display = "flex";
-  renderOffers();
-}
-
-function closeOffer(){
-  document.getElementById("offerModal").style.display = "none";
-}
-
-/* ================= STATUS DA OFERTA ================= */
-function getOfferStatus(offer){
-  if(!offer) return "SEM OFERTA";
-
-  const today = new Date().toISOString().split("T")[0];
-  if(today < offer.start) return "AGENDADA";
-  if(today > offer.end) return "EXPIRADA";
-  return "ATIVA";
-}
-
-/* ================= RENDER OFERTAS ================= */
-function renderOffers(){
-  const box = document.getElementById("offerList");
   box.innerHTML = "";
 
   const all = getAllProducts();
 
   Object.keys(all).forEach(cat=>{
-    all[cat].forEach(p=>{
-      const offer = offers[p.n];
-      const status = getOfferStatus(offer);
-      const sid = safeId(p.n);
+    box.innerHTML += `<h3 style="margin:14px 0 6px;color:#5a0070">${cat.toUpperCase()}</h3>`;
 
-      let statusColor = "#999";
-      if(status === "ATIVA") statusColor = "#25D366";
-      if(status === "EXPIRADA") statusColor = "#b00020";
-      if(status === "AGENDADA") statusColor = "#FF9800";
+    all[cat].forEach(p=>{
+      const sid = safeId(p.n);
+      const currentPrice = customPrices[sid] ?? p.p;
+      const hidden = productStatus[sid] === false;
 
       box.innerHTML += `
-        <div style="
-          margin-bottom:26px;
-          padding:16px;
-          border-radius:18px;
-          border:2px solid ${statusColor};
-          background:#fafafa
-        ">
+        <div style="border-bottom:1px dashed #ddd;padding:10px 0">
+          <strong>${p.n}</strong>
 
-          <strong style="font-size:15px">${p.n}</strong>
-
-          <div style="margin:6px 0;font-size:12px;color:${statusColor};font-weight:900">
-            Status: ${status}
-          </div>
-
-          <label style="font-size:12px;font-weight:700">
-            💸 Preço promocional
-          </label>
           <input
-            class="search offer-input"
             type="number"
-            id="offerPrice-${sid}"
-            value="${offer ? offer.price : ""}"
-          >
-
-          <label style="font-size:12px;font-weight:700">
-            📅 Data de início
-          </label>
-          <input
-            class="search offer-date"
-            type="date"
-            id="offerStart-${sid}"
-            value="${offer ? offer.start : ""}"
-          >
-
-          <label style="font-size:12px;font-weight:700">
-            📅 Data de fim
-          </label>
-          <input
-            class="search offer-date"
-            type="date"
-            id="offerEnd-${sid}"
-            value="${offer ? offer.end : ""}"
+            value="${currentPrice}"
+            style="width:100%;padding:8px;margin-top:6px;border-radius:12px;border:1px solid #ccc"
+            onchange="saveAdminPrice('${sid}', this.value)"
           >
 
           <button
-            class="btn-green offer-save"
-            onclick="saveOffer('${p.n}')"
+            class="btn-green"
+            style="margin-top:6px"
+            onclick="toggleProduct('${sid}')"
           >
-            💾 Salvar Oferta
+            ${hidden ? "REATIVAR" : "OCULTAR"}
+          </button>
+        </div>
+      `;
+    });
+  });
+}
+
+/* ================= SALVAR PREÇO ================= */
+function saveAdminPrice(sid, value){
+  const price = Number(value);
+  if(isNaN(price)) return;
+
+  customPrices[sid] = price;
+  db.ref("prices").set(customPrices);
+}
+
+/* ================= OCULTAR / REATIVAR ================= */
+function toggleProduct(sid){
+  productStatus[sid] = productStatus[sid] === false ? true : false;
+  db.ref("productStatus").set(productStatus);
+}
+</script>
+<script>
+/* ================= ADMIN — PAINEL OFERTAS ================= */
+
+function openOffer(){
+  if(document.getElementById("offerModal")) return;
+
+  document.body.insertAdjacentHTML("beforeend", `
+    <div class="modal" id="offerModal" style="display:flex">
+      <div class="modal-box">
+        <div class="modal-close" onclick="closeOffer()">✕</div>
+        <h2 style="text-align:center;color:#b00020">Painel de Ofertas</h2>
+        <p style="text-align:center;font-size:13px;margin-bottom:10px">
+          Defina preço promocional e período da oferta
+        </p>
+        <div id="offerProducts"></div>
+      </div>
+    </div>
+  `);
+
+  renderOfferProducts();
+}
+
+function closeOffer(){
+  const m = document.getElementById("offerModal");
+  if(m) m.remove();
+}
+
+/* ================= RENDER OFERTAS ================= */
+function renderOfferProducts(){
+  const box = document.getElementById("offerProducts");
+  if(!box) return;
+
+  box.innerHTML = "";
+  const all = getAllProducts();
+  const today = new Date().toISOString().split("T")[0];
+
+  Object.keys(all).forEach(cat=>{
+    box.innerHTML += `<h3 style="margin:14px 0 6px;color:#b00020">${cat.toUpperCase()}</h3>`;
+
+    all[cat].forEach(p=>{
+      const sid = safeId(p.n);
+      const offer = offers[sid] || {};
+
+      box.innerHTML += `
+        <div style="border:1px solid #f0c0c0;border-radius:14px;padding:10px;margin-bottom:10px;background:#fff8f8">
+          <strong>${p.n}</strong>
+
+          <label style="font-size:12px">Preço de oferta</label>
+          <input
+            type="number"
+            placeholder="Preço promocional"
+            value="${offer.price ?? ""}"
+            style="width:100%;padding:8px;border-radius:12px;border:1px solid #ccc"
+            onchange="updateOffer('${sid}','price',this.value)"
+          >
+
+          <label style="font-size:12px;margin-top:6px;display:block">Data início</label>
+          <input
+            type="date"
+            value="${offer.start ?? ""}"
+            style="width:100%;padding:8px;border-radius:12px;border:1px solid #ccc"
+            onchange="updateOffer('${sid}','start',this.value)"
+          >
+
+          <label style="font-size:12px;margin-top:6px;display:block">Data fim</label>
+          <input
+            type="date"
+            value="${offer.end ?? ""}"
+            style="width:100%;padding:8px;border-radius:12px;border:1px solid #ccc"
+            onchange="updateOffer('${sid}','end',this.value)"
+          >
+
+          <button
+            class="btn-green"
+            style="margin-top:8px"
+            onclick="saveOffer('${sid}')"
+          >
+            Salvar Oferta
           </button>
 
           ${
-            offer
-              ? `<button
-                   class="btn-green"
-                   style="background:#999;margin-top:8px"
-                   onclick="removeOffer('${p.n}')"
-                 >
-                   ❌ Remover Oferta
-                 </button>`
+            offer.start && offer.end &&
+            today >= offer.start && today <= offer.end
+              ? `<div style="margin-top:6px;color:#b00020;font-weight:800">🔥 Oferta ativa</div>`
               : ""
           }
         </div>
@@ -1034,120 +958,79 @@ function renderOffers(){
   });
 }
 
+/* ================= ATUALIZAR CAMPO ================= */
+function updateOffer(sid, field, value){
+  if(!offers[sid]) offers[sid] = {};
+  offers[sid][field] = value;
+}
+
 /* ================= SALVAR OFERTA ================= */
-function saveOffer(name){
-  const sid = safeId(name);
-
-  const price = Number(
-    document.getElementById("offerPrice-" + sid).value
-  );
-  const start = document.getElementById("offerStart-" + sid).value;
-  const end   = document.getElementById("offerEnd-" + sid).value;
-
-  if(!price || !start || !end){
-    alert("Preencha preço e datas da oferta");
+function saveOffer(sid){
+  if(!offers[sid].price || !offers[sid].start || !offers[sid].end){
+    alert("Preencha preço, data início e data fim");
     return;
   }
-
-  offers[name] = { price, start, end };
-  localStorage.setItem("offers", JSON.stringify(offers));
-
-  renderAll();
-  renderOffers();
-}
-
-/* ================= REMOVER OFERTA ================= */
-function removeOffer(name){
-  delete offers[name];
-  localStorage.setItem("offers", JSON.stringify(offers));
-
-  renderAll();
-  renderOffers();
+  db.ref("offers").set(offers);
 }
 </script>
-<!-- ================= MODAL RELATÓRIO ================= -->
-<div id="reportModal" class="modal">
-  <div class="modal-box">
-    <div class="modal-close" onclick="closeReport()">✕</div>
-
-    <h2 style="text-align:center;color:#5a0070">
-      Relatório de Vendas
-    </h2>
-
-    <p style="text-align:center;font-size:13px;margin-bottom:16px">
-      Totais acumulados por forma de pagamento
-    </p>
-
-    <div style="margin-bottom:10px">
-      <strong>Total Geral:</strong>
-      <span id="repTotal"></span>
-    </div>
-
-    <div style="margin-bottom:6px">
-      <strong>Dinheiro:</strong>
-      <span id="repCash"></span>
-    </div>
-
-    <div style="margin-bottom:6px">
-      <strong>Pix:</strong>
-      <span id="repPix"></span>
-    </div>
-
-    <div style="margin-bottom:6px">
-      <strong>Débito:</strong>
-      <span id="repDebit"></span>
-    </div>
-
-    <div style="margin-bottom:6px">
-      <strong>Crédito:</strong>
-      <span id="repCredit"></span>
-    </div>
-  </div>
-</div>
-
 <script>
-/* ================= RELATÓRIO ================= */
+/* ================= ADMIN — RELATÓRIO ================= */
+
 function openReport(){
-  document.getElementById("reportModal").style.display = "flex";
+  if(document.getElementById("reportModal")) return;
+
+  document.body.insertAdjacentHTML("beforeend", `
+    <div class="modal" id="reportModal" style="display:flex">
+      <div class="modal-box">
+        <div class="modal-close" onclick="closeReport()">✕</div>
+        <h2 style="text-align:center;color:#5a0070">Relatório de Vendas</h2>
+        <div id="reportContent" style="margin-top:12px"></div>
+      </div>
+    </div>
+  `);
+
   renderReport();
 }
 
 function closeReport(){
-  document.getElementById("reportModal").style.display = "none";
+  const m = document.getElementById("reportModal");
+  if(m) m.remove();
 }
 
 /* ================= RENDER RELATÓRIO ================= */
 function renderReport(){
+  const box = document.getElementById("reportContent");
+  if(!box) return;
+
   let total = 0;
   let dinheiro = 0;
   let pix = 0;
   let debito = 0;
   let credito = 0;
 
-  sales.forEach(s=>{
+  Object.values(sales || {}).forEach(s=>{
     total += s.total;
 
-    if(s.payment === "dinheiro") dinheiro += s.total;
-    if(s.payment === "pix") pix += s.total;
-    if(s.payment === "debito") debito += s.total;
-    if(s.payment === "credito") credito += s.total;
+    const p = (s.payment || "").toLowerCase();
+    if(p.includes("dinheiro")) dinheiro += s.total;
+    else if(p.includes("pix")) pix += s.total;
+    else if(p.includes("debito")) debito += s.total;
+    else if(p.includes("credito")) credito += s.total;
   });
 
-  document.getElementById("repTotal").innerText =
-    "R$ " + total.toFixed(2).replace(".",",");
-
-  document.getElementById("repCash").innerText =
-    "R$ " + dinheiro.toFixed(2).replace(".",",");
-
-  document.getElementById("repPix").innerText =
-    "R$ " + pix.toFixed(2).replace(".",",");
-
-  document.getElementById("repDebit").innerText =
-    "R$ " + debito.toFixed(2).replace(".",",");
-
-  document.getElementById("repCredit").innerText =
-    "R$ " + credito.toFixed(2).replace(".",",");
+  box.innerHTML = `
+    <div style="font-weight:800;margin-bottom:6px">Total vendido: R$ ${total.toFixed(2).replace(".",",")}</div>
+    <div>💵 Dinheiro: R$ ${dinheiro.toFixed(2).replace(".",",")}</div>
+    <div>⚡ Pix: R$ ${pix.toFixed(2).replace(".",",")}</div>
+    <div>💳 Débito: R$ ${debito.toFixed(2).replace(".",",")}</div>
+    <div>💳 Crédito: R$ ${credito.toFixed(2).replace(".",",")}</div>
+  `;
 }
+
+/* ================= FIREBASE — ESCUTA VENDAS ================= */
+db.ref("sales").on("value", snap=>{
+  sales = snap.val() || {};
+});
 </script>
 
 </body>
