@@ -47,7 +47,7 @@ body{
 #app{
   width:100%;
   max-width:420px;
-  padding:14px 14px 320px;
+  padding:14px 14px 340px;
   display:none;
 }
 
@@ -135,6 +135,8 @@ body{
   z-index:999;
 }
 .cart-item{display:flex;justify-content:space-between;margin-bottom:6px}
+
+/* BOTÕES */
 .btn-green{
   background:#25D366;
   color:#fff;
@@ -174,6 +176,20 @@ body{
   font-weight:900;
   cursor:pointer;
 }
+.choice{
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+}
+.choice button{
+  flex:1;
+  padding:14px;
+  font-weight:900;
+  border-radius:22px;
+  border:none;
+}
+.choice .yes{background:#25D366;color:#fff}
+.choice .no{background:#ccc;color:#333}
 </style>
 </head>
 
@@ -235,18 +251,18 @@ function isOpen(){
 
 /* ================= PRODUTOS BASE ================= */
 const products = {
-  lanches: [
+  lanches:[
     {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
     {n:"X-Frango Cremoso",p:20},{n:"X-Bacon",p:25},{n:"X-Calabresa",p:25},
     {n:"X-Coração",p:27},{n:"X-Tudo",p:32},{n:"X-Burguer Duplo",p:22},
     {n:"X-Egg",p:20},{n:"X-Tribom",p:32},{n:"X-Da Casa",p:45},{n:"X-Dog",p:20}
   ],
-  adicionaisLanches: [
+  adicionaisLanches:[
     {n:"Calabresa",p:7},{n:"Bacon",p:7},{n:"Coração",p:8},
     {n:"Ovo",p:3},{n:"Salsicha",p:4},{n:"Frango",p:7},
     {n:"Cheddar",p:4},{n:"Hambúrguer artesanal",p:10},{n:"Maionese caseira",p:2}
   ],
-  porcoes: [
+  porcoes:[
     {n:"Fritas c/ Frango",p:39.99},{n:"Fritas",p:24.99},
     {n:"Fritas c/ Calabresa",p:34.99},{n:"Fritas c/ Bacon",p:34.99},
     {n:"Anéis de Cebola",p:24.99},
@@ -257,7 +273,7 @@ const products = {
     {n:"Fritas c/ Calabresa e Catupiry",p:35.99},
     {n:"Fritas, Polenta, Chuleta e Anel de Cebola",p:49.99}
   ],
-  pasteis: [
+  pasteis:[
     {n:"Pastel de Carne",p:14},{n:"Pastel de Frango",p:12},
     {n:"Frango Bacon Cheddar",p:16},{n:"Bacon Cheddar",p:15},
     {n:"Calabresa c/ Cebola",p:14},{n:"Carne e Queijo",p:15},
@@ -266,16 +282,16 @@ const products = {
     {n:"Chocolate Branco",p:15},{n:"Creme e Ouro Branco",p:15},
     {n:"Creme e Sonho de Valsa",p:15}
   ],
-  acaiTamanhos: [
+  acaiTamanhos:[
     {n:"Açaí 300ml",p:12},{n:"Açaí 400ml",p:15},{n:"Açaí 500ml",p:18}
   ],
-  acaiAdicionais: [
+  acaiAdicionais:[
     {n:"Paçoca",p:2},{n:"Leite em pó",p:4},{n:"Granola",p:4},
     {n:"Morango",p:4},{n:"M&M",p:3},{n:"Ouro Branco",p:3},
     {n:"Banana",p:2},{n:"Sonho de Valsa",p:3},
     {n:"Leite Condensado",p:3},{n:"Nutella",p:4}
   ],
-  bebidas: [
+  bebidas:[
     {n:"Cassulinha 200ml",p:3},{n:"Coca-Cola 600ml",p:8},
     {n:"Coca-Cola 2L",p:16},{n:"Refri Lata",p:6},
     {n:"Refrigerante 2L",p:12},{n:"Cerveja Lata 350ml",p:6},
@@ -399,7 +415,7 @@ function openTab(id, el){
 document.getElementById("search").addEventListener("input", function(){
   const v = this.value.toLowerCase().trim();
 
-  /* ===== ATALHOS ADMINISTRATIVOS ===== */
+  /* ----- ATALHOS ADMINISTRATIVOS ----- */
   if(v === "admin" || v === "preço" || v === "precos"){
     const s = prompt("Senha do administrador:");
     if(s === ADMIN_PASSWORD){
@@ -427,7 +443,7 @@ document.getElementById("search").addEventListener("input", function(){
     return;
   }
 
-  /* ===== BUSCA DE PRODUTOS ===== */
+  /* ----- BUSCA DE PRODUTOS ----- */
   let foundTab = null;
 
   document.querySelectorAll(".item").forEach(item=>{
@@ -447,7 +463,7 @@ document.getElementById("search").addEventListener("input", function(){
     }
   }
 
-  /* ===== RESET ===== */
+  /* ----- RESET ----- */
   if(!v){
     document.querySelectorAll(".item").forEach(i=>{
       i.style.display = "grid";
@@ -467,15 +483,28 @@ function addItem(name, price){
 }
 
 function updateCart(){
-  const box = document.getElementById("cartItems");
-  if(!box) return;
+  let cartBox = document.getElementById("cart");
+  if(!cartBox){
+    document.body.insertAdjacentHTML("beforeend", `
+      <div id="cart">
+        <div id="cartItems"></div>
+        <div id="total"></div>
+        <button class="btn-green" onclick="finishOrder()">
+          Finalizar Pedido
+        </button>
+      </div>
+    `);
+    cartBox = document.getElementById("cart");
+  }
 
-  box.innerHTML = "";
+  const itemsBox = document.getElementById("cartItems");
+  itemsBox.innerHTML = "";
+
   let total = 0;
 
   cart.forEach((item, index)=>{
     total += item.price;
-    box.innerHTML += `
+    itemsBox.innerHTML += `
       <div class="cart-item">
         <span>${item.name}</span>
         <span>R$ ${item.price.toFixed(2).replace(".",",")}</span>
@@ -487,8 +516,7 @@ function updateCart(){
   document.getElementById("total").innerText =
     "Total: R$ " + total.toFixed(2).replace(".",",");
 
-  document.getElementById("cart").style.display =
-    cart.length ? "block" : "none";
+  cartBox.style.display = cart.length ? "block" : "none";
 }
 
 function removeItem(index){
@@ -496,17 +524,111 @@ function removeItem(index){
   updateCart();
 }
 
-/* ================= FINALIZAR PEDIDO / WHATSAPP ================= */
-function sendOrder(){
-  if(!cart.length){
-    alert("Seu carrinho está vazio");
+/* ================= BLOCO 4 — CHECKOUT ================= */
+let checkout = {
+  delivery: false,
+  name: "",
+  address: "",
+  payment: ""
+};
+
+function cartHasDrink(){
+  const drinks = products.bebidas.map(b => b.n);
+  return cart.some(i => drinks.includes(i.name));
+}
+
+function finishOrder(){
+  if(!cartHasDrink()){
+    showDrinkConfirm();
     return;
   }
+  askDelivery();
+}
 
-  const payment =
-    (prompt("Forma de pagamento? (dinheiro / pix / debito / credito)") || "dinheiro")
-      .toLowerCase();
+/* ================= CONFIRMA BEBIDA ================= */
+function showDrinkConfirm(){
+  document.body.insertAdjacentHTML("beforeend", `
+    <div class="modal" id="drinkModal" style="display:flex">
+      <div class="modal-box">
+        <h2 style="text-align:center">Você vai querer bebida?</h2>
+        <div class="choice">
+          <button class="yes" onclick="goToDrinks()">SIM</button>
+          <button class="no" onclick="closeDrinkModal()">NÃO</button>
+        </div>
+      </div>
+    </div>
+  `);
+}
 
+function goToDrinks(){
+  document.getElementById("drinkModal").remove();
+  openTab("bebidas", document.querySelector(".tab:last-child"));
+}
+
+function closeDrinkModal(){
+  document.getElementById("drinkModal").remove();
+  askDelivery();
+}
+
+/* ================= ENTREGA / RETIRADA ================= */
+function askDelivery(){
+  document.body.insertAdjacentHTML("beforeend", `
+    <div class="modal" id="deliveryModal" style="display:flex">
+      <div class="modal-box">
+        <h2 style="text-align:center">Entrega ou Retirada?</h2>
+        <div class="choice">
+          <button class="yes" onclick="setDelivery(true)">ENTREGA</button>
+          <button class="no" onclick="setDelivery(false)">RETIRADA</button>
+        </div>
+      </div>
+    </div>
+  `);
+}
+
+function setDelivery(isDelivery){
+  checkout.delivery = isDelivery;
+  document.getElementById("deliveryModal").remove();
+  askName();
+}
+
+/* ================= NOME ================= */
+function askName(){
+  checkout.name = prompt("Informe seu nome:");
+  if(!checkout.name){
+    askName();
+    return;
+  }
+  if(checkout.delivery){
+    askAddress();
+  }else{
+    askPayment();
+  }
+}
+
+/* ================= ENDEREÇO ================= */
+function askAddress(){
+  checkout.address = prompt("Informe o endereço de entrega:");
+  if(!checkout.address){
+    askAddress();
+    return;
+  }
+  askPayment();
+}
+
+/* ================= PAGAMENTO ================= */
+function askPayment(){
+  checkout.payment = prompt(
+    "Forma de pagamento? (dinheiro / pix / debito / credito)"
+  );
+  if(!checkout.payment){
+    askPayment();
+    return;
+  }
+  sendOrder();
+}
+
+/* ================= ENVIO WHATSAPP ================= */
+function sendOrder(){
   let msg = "🍔 Pedido Rabika's Burguer\n\n";
   let total = 0;
 
@@ -515,13 +637,22 @@ function sendOrder(){
     total += i.price;
   });
 
-  msg += `\nPagamento: ${payment}`;
+  if(checkout.delivery){
+    msg += "\nEntrega: R$ 8,00\n";
+    total += FREIGHT;
+    msg += `Endereço: ${checkout.address}\n`;
+  }else{
+    msg += "\nRetirada no local\n";
+  }
+
+  msg += `Nome: ${checkout.name}\n`;
+  msg += `Pagamento: ${checkout.payment}\n`;
   msg += `\nTotal: R$ ${total.toFixed(2).replace(".",",")}`;
 
   sales.push({
     date: new Date().toISOString(),
     total,
-    payment
+    payment: checkout.payment
   });
   localStorage.setItem("sales", JSON.stringify(sales));
 
@@ -641,7 +772,10 @@ function savePrice(name){
   if(!input) return;
 
   customPrices[name] = Number(input.value);
-  localStorage.setItem("customPrices", JSON.stringify(customPrices));
+  localStorage.setItem(
+    "customPrices",
+    JSON.stringify(customPrices)
+  );
 
   renderAll();
 }
@@ -660,7 +794,7 @@ function toggleProduct(name){
   renderAdmin();
 }
 
-/* ================= NOVO PRODUTO ================= */
+/* ================= ADICIONAR NOVO PRODUTO ================= */
 function addNewProduct(){
   const name = document.getElementById("newName").value.trim();
   const price = Number(document.getElementById("newPrice").value);
@@ -700,120 +834,12 @@ function addNewProduct(){
     </h2>
 
     <p style="text-align:center;font-size:13px;margin-bottom:14px">
-      Defina valores promocionais com data de início e fim
+      Defina preços promocionais com período ativo
     </p>
 
     <div id="offerList"></div>
   </div>
 </div>
-<script>
-/* ================= OFERTAS ================= */
-function openOffer(){
-  document.getElementById("offerModal").style.display = "flex";
-  renderOffers();
-}
-
-function closeOffer(){
-  document.getElementById("offerModal").style.display = "none";
-}
-
-/* ================= RENDER OFERTAS ================= */
-function renderOffers(){
-  const box = document.getElementById("offerList");
-  box.innerHTML = "";
-
-  const all = getAllProducts();
-
-  Object.keys(all).forEach(cat=>{
-    all[cat].forEach(p=>{
-      const offer = offers[p.n] || {};
-
-      box.innerHTML += `
-        <div style="margin-bottom:18px">
-          <strong>${p.n}</strong>
-
-          <input
-            class="search"
-            type="number"
-            placeholder="Valor de oferta"
-            id="offerPrice-${p.n}"
-            value="${offer.price ?? ""}"
-          >
-
-          <input
-            class="search"
-            type="date"
-            id="offerStart-${p.n}"
-            value="${offer.start ?? ""}"
-          >
-
-          <input
-            class="search"
-            type="date"
-            id="offerEnd-${p.n}"
-            value="${offer.end ?? ""}"
-          >
-
-          <button
-            class="btn-green"
-            onclick="saveOffer('${p.n}')"
-          >
-            Salvar Oferta
-          </button>
-
-          ${
-            offers[p.n]
-              ? `<button
-                   class="btn-green"
-                   style="background:#999;margin-top:6px"
-                   onclick="removeOffer('${p.n}')"
-                 >
-                   Remover Oferta
-                 </button>`
-              : ""
-          }
-        </div>
-      `;
-    });
-  });
-}
-
-/* ================= SALVAR OFERTA ================= */
-function saveOffer(name){
-  const priceInput = document.getElementById("offerPrice-" + name);
-  const startInput = document.getElementById("offerStart-" + name);
-  const endInput   = document.getElementById("offerEnd-" + name);
-
-  if(!priceInput || !startInput || !endInput){
-    alert("Erro ao localizar campos da oferta");
-    return;
-  }
-
-  const price = Number(priceInput.value);
-  const start = startInput.value;
-  const end   = endInput.value;
-
-  if(!price || !start || !end){
-    alert("Preencha valor e datas da oferta");
-    return;
-  }
-
-  offers[name] = { price, start, end };
-  localStorage.setItem("offers", JSON.stringify(offers));
-
-  renderAll();
-  renderOffers();
-}
-
-/* ================= REMOVER OFERTA ================= */
-function removeOffer(name){
-  delete offers[name];
-  localStorage.setItem("offers", JSON.stringify(offers));
-
-  renderAll();
-  renderOffers();
-}
-</script>
 <!-- ================= MODAL RELATÓRIO ================= -->
 <div id="reportModal" class="modal">
   <div class="modal-box">
@@ -897,6 +923,5 @@ function renderReport(){
     "R$ " + credito.toFixed(2).replace(".",",");
 }
 </script>
-
 </body>
 </html>
