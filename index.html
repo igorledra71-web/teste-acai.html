@@ -253,7 +253,7 @@ function getPrice(p){
   return base;
 }
 </script>
-
+<script>
 /* ================= START ================= */
 function start(){
   document.getElementById("splash").style.display = "none";
@@ -342,40 +342,33 @@ function openTab(id, el){
   }
 }
 
-<script>
-/* ================= BUSCA GLOBAL + ATALHOS (CORRIGIDO) ================= */
+/* ================= BUSCA GLOBAL + ATALHOS ================= */
 document.getElementById("search").addEventListener("input", function(){
   const v = this.value.toLowerCase().trim();
 
-  /* ===== ATALHOS ADMINISTRATIVOS (PRIORIDADE TOTAL) ===== */
+  /* ---- ATALHOS ADMINISTRATIVOS ---- */
   if(v === "admin" || v === "preço" || v === "precos"){
     const s = prompt("Senha do administrador:");
-    if(s === ADMIN_PASSWORD){
-      openAdmin();
-    }
+    if(s === ADMIN_PASSWORD) openAdmin();
     this.value = "";
     return;
   }
 
   if(v === "oferta" || v === "ofertas"){
     const s = prompt("Senha do administrador:");
-    if(s === ADMIN_PASSWORD){
-      openOffer();
-    }
+    if(s === ADMIN_PASSWORD) openOffer();
     this.value = "";
     return;
   }
 
   if(v === "relatorio" || v === "relatório"){
     const s = prompt("Senha do administrador:");
-    if(s === ADMIN_PASSWORD){
-      openReport();
-    }
+    if(s === ADMIN_PASSWORD) openReport();
     this.value = "";
     return;
   }
 
-  /* ===== BUSCA DE PRODUTOS ===== */
+  /* ---- BUSCA DE PRODUTOS ---- */
   let foundTab = null;
 
   document.querySelectorAll(".item").forEach(item=>{
@@ -390,12 +383,9 @@ document.getElementById("search").addEventListener("input", function(){
   if(foundTab){
     const tab = [...document.querySelectorAll(".tab")]
       .find(t => t.getAttribute("onclick").includes(foundTab));
-    if(tab){
-      openTab(foundTab, tab);
-    }
+    if(tab) openTab(foundTab, tab);
   }
 
-  /* ===== RESET ===== */
   if(!v){
     document.querySelectorAll(".item").forEach(i=>{
       i.style.display = "grid";
@@ -403,7 +393,7 @@ document.getElementById("search").addEventListener("input", function(){
   }
 });
 </script>
-
+<script>
 /* ================= CARRINHO ================= */
 function addItem(name, price){
   if(!isOpen()){
@@ -482,7 +472,7 @@ function sendOrder(){
   updateCart();
 }
 </script>
-
+<script>
 /* ================= ADMIN ================= */
 function openAdmin(){
   document.getElementById("adminModal").style.display = "flex";
@@ -690,7 +680,7 @@ function removeOffer(name){
   renderAll();
   renderOffers();
 }
-
+</script>
 <script>
 /* ================= RELATÓRIO ================= */
 function openReport(){
@@ -744,5 +734,3 @@ window.addEventListener("error", function(e){
 
 </body>
 </html>
-
-
