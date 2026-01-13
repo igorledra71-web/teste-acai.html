@@ -1140,5 +1140,19 @@ function renderReport(){
 }
 </script>
 
+  <script>
+/* ================= FIX — REAPLICAR OFERTAS APÓS RELOAD ================= */
+window.addEventListener("load", () => {
+  // garante que ofertas do localStorage sejam reaplicadas
+  setTimeout(() => {
+    if(typeof renderAll === "function"){
+      renderAll();
+    }
+  }, 50);
+});
+</script>
+
+  
 </body>
 </html>
+
