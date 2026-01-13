@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<!-- ================= FIREBASE (CORRETO E ISOLADO) ================= -->
+<!-- ================= FIREBASE ================= -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
@@ -23,7 +23,6 @@ const firebaseConfig = {
   messagingSenderId: "922454808804",
   appId: "1:922454808804:web:d0aa9ae5fc78b8d10674f1"
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 </script>
@@ -35,18 +34,12 @@ html,body{height:100%}
 body{
   font-family:'Poppins',sans-serif;
   background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
-  color:#fff;
+  color:#ffffff;
   display:flex;
   justify-content:center;
-  overflow-y:auto; /* 🔧 CORREÇÃO DA TELA TRAVADA */
-}
-
-/* ================= APP ================= */
-#app{
-  width:100%;
-  max-width:420px;
-  padding:14px 14px 300px;
-  display:none;
+  overflow-y:auto;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 }
 
 /* ================= SPLASH ================= */
@@ -57,7 +50,8 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  z-index:9999;
+  z-index:99999;
+  pointer-events:auto;
 }
 .splash-box{text-align:center}
 .splash-logo{
@@ -74,25 +68,39 @@ body{
   font-weight:900;
   color:#2b0033;
   cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+  outline:none;
+}
+
+/* ================= APP ================= */
+#app{
+  width:100%;
+  max-width:420px;
+  padding:14px 14px 300px;
+  display:none;
 }
 
 /* ================= TOPO ================= */
 .title{
   text-align:center;
-  font-size:30px;
+  font-size:32px;
   font-weight:900;
+  letter-spacing:.5px;
   color:#FFD34D;
-  margin-bottom:6px;
+  margin-bottom:4px;
+  text-shadow:0 2px 6px rgba(0,0,0,.4);
 }
 
 /* ================= BUSCA ================= */
 .search{
   width:100%;
-  padding:14px 16px;
-  border-radius:22px;
+  padding:16px 18px;
+  border-radius:26px;
   border:none;
   font-size:15px;
   margin-bottom:14px;
+  box-shadow:0 4px 10px rgba(0,0,0,.15);
 }
 
 /* ================= TABS ================= */
@@ -103,16 +111,19 @@ body{
   margin-bottom:14px;
 }
 .tab{
-  background:#fff;
+  background:#ffffff;
   color:#2b0033;
-  padding:14px 8px;
-  border-radius:22px;
+  padding:12px 6px;
+  border-radius:20px;
   font-weight:800;
+  font-size:13px;
   text-align:center;
   cursor:pointer;
+  box-shadow:0 3px 8px rgba(0,0,0,.15);
 }
 .tab.active{
-  background:#FFD34D;
+  background:linear-gradient(135deg,#FFD34D,#FFB000);
+  color:#2b0033;
 }
 
 /* ================= CONTEÚDO ================= */
@@ -136,37 +147,60 @@ body{
   align-items:center;
 }
 .item:last-child{border:none}
-.item-price{font-weight:900;color:#5a0070}
+.item span:first-child,
+.item strong{
+  font-size:15px;
+  font-weight:600;
+  color:#2b0033;
+}
+.item-price{
+  font-weight:900;
+  font-size:15px;
+  color:#5a0070;
+}
+
+/* ================= BOTÃO ADD ================= */
 .btn-add{
-  background:#5a0070;
+  background:linear-gradient(135deg,#5a0070,#7a1fa2);
   color:#fff;
   border:none;
-  border-radius:14px;
-  padding:6px 14px;
+  border-radius:16px;
+  padding:8px 16px;
   font-weight:900;
+  font-size:14px;
+  cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+  transition:transform .1s ease, box-shadow .1s ease;
+}
+.btn-add:active{
+  transform:scale(.95);
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
 }
 
 /* ================= OFERTA ================= */
 .item.offer{
-  background:#fff4d6;
+  background:linear-gradient(135deg,#fff2cc,#ffe7a3);
   border-radius:18px;
-  padding:12px;
+  padding:14px;
+  box-shadow:0 6px 14px rgba(0,0,0,.12);
 }
 .old-price{
   font-size:12px;
-  color:#999;
+  color:#888;
   text-decoration:line-through;
 }
 .offer-price{
   font-weight:900;
+  font-size:16px;
   color:#b00020;
 }
 .offer-badge{
   background:#b00020;
   color:#fff;
   font-size:11px;
-  padding:2px 8px;
-  border-radius:12px;
+  font-weight:800;
+  padding:4px 10px;
+  border-radius:14px;
   margin-left:6px;
 }
 
@@ -195,7 +229,7 @@ body{
   align-items:center;
   justify-content:center;
   z-index:10000;
-  overflow-y:auto; /* 🔧 SCROLL MODAL */
+  overflow-y:auto;
 }
 .modal-box{
   background:#fff;
@@ -208,23 +242,27 @@ body{
   overflow-y:auto;
 }
 
-/* ================= BOTÕES ================= */
+/* ================= BOTÃO VERDE ================= */
 .btn-green{
-  background:#25D366;
+  background:linear-gradient(135deg,#25D366,#1fb956);
   color:#fff;
   border:none;
-  padding:14px;
-  border-radius:22px;
+  padding:16px;
+  border-radius:24px;
   font-weight:900;
+  font-size:16px;
   width:100%;
+  box-shadow:0 6px 14px rgba(0,0,0,.25);
+  cursor:pointer;
 }
 </style>
 </head>
 <body>
 
-<!-- GARANTIA DE SCROLL LIBERADO AO CARREGAR -->
+<!-- GARANTIA DE SCROLL E CLIQUES -->
 <script>
-document.body.style.overflow = "";
+document.body.style.overflow = "auto";
+document.body.style.pointerEvents = "auto";
 </script>
 
 <!-- ================= SPLASH ================= -->
@@ -284,22 +322,22 @@ let offers = {};
 let sales = {};
 
 /* ================= FIREBASE LISTENERS ================= */
-db.ref("prices").on("value", snap => {
+db.ref("prices").on("value", snap=>{
   customPrices = snap.val() || {};
   renderAll();
 });
 
-db.ref("productStatus").on("value", snap => {
+db.ref("productStatus").on("value", snap=>{
   productStatus = snap.val() || {};
   renderAll();
 });
 
-db.ref("offers").on("value", snap => {
+db.ref("offers").on("value", snap=>{
   offers = snap.val() || {};
   renderAll();
 });
 
-db.ref("sales").on("value", snap => {
+db.ref("sales").on("value", snap=>{
   sales = snap.val() || {};
 });
 
@@ -310,7 +348,7 @@ function safeId(name){
     .replace(/[^a-z0-9]+/g,"_");
 }
 
-/* ================= HORÁRIO ================= */
+/* ================= HORÁRIO DE FUNCIONAMENTO ================= */
 function isOpen(){
   const d = new Date();
   const day = d.getDay();
@@ -547,7 +585,7 @@ document.getElementById("search").addEventListener("input", function(){
 
 /* ================= START ================= */
 document.getElementById("startBtn").onclick = ()=>{
-  document.body.style.overflow = ""; /* garante scroll */
+  document.body.style.overflow = "auto";
   document.getElementById("splash").style.display = "none";
   document.getElementById("app").style.display = "block";
   renderAll();
@@ -716,7 +754,7 @@ function lockScroll(){
   document.body.style.overflow = "hidden";
 }
 function unlockScroll(){
-  document.body.style.overflow = "";
+  document.body.style.overflow = "auto";
 }
 
 /* ================= ADMIN — ABRIR / FECHAR ================= */
@@ -762,10 +800,23 @@ function renderAdmin(){
       box.innerHTML += `
         <div style="border-bottom:1px dashed #ccc;padding:10px 0">
           <strong>${p.n}</strong>
-          <input type="number" class="search" value="${price}" id="price_${sid}">
-          <button class="btn-green" onclick="savePrice('${sid}')">Salvar</button>
-          <button class="btn-green" style="background:${hidden?'#25D366':'#b00020'}"
-            onclick="toggleProduct('${sid}')">
+
+          <input
+            type="number"
+            class="search"
+            value="${price}"
+            id="price_${sid}"
+          >
+
+          <button class="btn-green" onclick="savePrice('${sid}')">
+            Salvar
+          </button>
+
+          <button
+            class="btn-green"
+            style="background:${hidden ? '#25D366' : '#b00020'}"
+            onclick="toggleProduct('${sid}')"
+          >
             ${hidden ? 'Reativar' : 'Ocultar'}
           </button>
         </div>
@@ -856,8 +907,11 @@ function renderOfferAdmin(){
             Salvar Oferta
           </button>
 
-          <button class="btn-green" style="background:#b00020"
-            onclick="removeOffer('${sid}')">
+          <button
+            class="btn-green"
+            style="background:#b00020"
+            onclick="removeOffer('${sid}')"
+          >
             Remover Oferta
           </button>
         </div>
@@ -902,7 +956,9 @@ document.getElementById("search").addEventListener("keydown", function(e){
     !adminKeys.includes(v) &&
     !offerKeys.includes(v) &&
     !reportKeys.includes(v)
-  ) return;
+  ){
+    return;
+  }
 
   e.preventDefault();
 
