@@ -8,12 +8,23 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
-<!-- FIREBASE v8 (browser puro) -->
+<!-- FIREBASE (OBRIGATÓRIO) -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <script>
+firebase.initializeApp({
+  apiKey: "AIzaSyCYi1rHHuUPV1QB64N9ciBXNvER3caUc0k",
+  authDomain: "rabikas-burguer.firebaseapp.com",
+  databaseURL: "https://rabikas-burguer-default-rtdb.firebaseio.com",
+  projectId: "rabikas-burguer",
+  storageBucket: "rabikas-burguer.appspot.com",
+  messagingSenderId: "922454808804",
+  appId: "1:922454808804:web:d0aa9ae5fc78b8d10674f1"
+});
+const db = firebase.database();
+</script>
+
 const firebaseConfig = {
   apiKey: "AIzaSyCYi1rHHuUPV1QB64N9ciBXNvER3caUc0k",
   authDomain: "rabikas-burguer.firebaseapp.com",
@@ -828,3 +839,4 @@ function renderReport(){
 
 </body>
 </html>
+
