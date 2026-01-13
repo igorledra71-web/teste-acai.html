@@ -15,9 +15,9 @@ html,body{height:100%}
 body{
   font-family:'Poppins',sans-serif;
   background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
+  color:#fff;
   display:flex;
   justify-content:center;
-  color:#fff;
 }
 
 /* SPLASH */
@@ -52,12 +52,7 @@ body{
 }
 
 /* TOPO */
-.title{
-  text-align:center;
-  font-size:30px;
-  font-weight:900;
-  color:#FFD34D;
-}
+.title{text-align:center;font-size:30px;font-weight:900;color:#FFD34D}
 #status{text-align:center;font-size:13px;margin-bottom:4px}
 #hours{text-align:center;font-size:12px;color:#FFD34D;margin-bottom:12px}
 
@@ -88,7 +83,7 @@ body{
   text-align:center;
   cursor:pointer;
 }
-.tab span{font-size:22px;display:block}
+.tab span{display:block;font-size:22px}
 .tab.active{background:#FFD34D}
 
 /* BOX */
@@ -123,6 +118,62 @@ body{
 
 /* SEÇÃO */
 .section{font-weight:900;margin:14px 0 6px;color:#5a0070}
+
+/* CARRINHO */
+#cart{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  color:#2b0033;
+  padding:16px;
+  border-radius:26px 26px 0 0;
+  display:none;
+  z-index:999;
+}
+.cart-item{display:flex;justify-content:space-between;margin-bottom:6px}
+.btn-green{
+  background:#25D366;
+  color:#fff;
+  border:none;
+  padding:14px;
+  border-radius:22px;
+  font-weight:900;
+  width:100%;
+}
+
+/* MODAIS */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
+}
+.modal-box{
+  background:#fff;
+  color:#2b0033;
+  width:92%;
+  max-width:420px;
+  border-radius:26px;
+  padding:20px;
+  max-height:85vh;
+  overflow-y:auto;
+  position:relative;
+}
+.modal-close{
+  position:absolute;
+  top:10px;
+  right:14px;
+  font-size:22px;
+  font-weight:900;
+  cursor:pointer;
+}
 </style>
 </head>
 
@@ -157,7 +208,7 @@ body{
   <div id="bebidas" class="box"></div>
 </div>
 <script>
-/* ================= CONFIGURAÇÕES GERAIS ================= */
+/* ================= CONFIGURAÇÕES ================= */
 const ADMIN_PASSWORD = "1234";
 const FREIGHT = 8;
 
@@ -172,10 +223,10 @@ let extraProducts = JSON.parse(localStorage.getItem("extraProducts")) || {};
 let offers = JSON.parse(localStorage.getItem("offers")) || {};
 let sales = JSON.parse(localStorage.getItem("sales")) || [];
 
-/* ================= HORÁRIO DE FUNCIONAMENTO ================= */
+/* ================= HORÁRIO ================= */
 function isOpen(){
   const d = new Date();
-  const day = d.getDay();
+  const day = d.getDay(); // 0=Dom, 1=Seg
   const h = d.getHours() + d.getMinutes() / 60;
   if(day === 1) return false;
   if(h < 18.5 || h > 22.5) return false;
@@ -232,7 +283,7 @@ const products = {
   ]
 };
 
-/* ================= UTILITÁRIOS DE PRODUTOS ================= */
+/* ================= UTILITÁRIOS ================= */
 function getAllProducts(){
   let all = JSON.parse(JSON.stringify(products));
   Object.keys(extraProducts).forEach(cat=>{
@@ -258,8 +309,10 @@ function getPrice(p){
 function start(){
   document.getElementById("splash").style.display = "none";
   document.getElementById("app").style.display = "block";
+
   document.getElementById("status").innerText =
     isOpen() ? "🟢 Aberto agora" : "🔴 Fechado — pedidos indisponíveis";
+
   renderAll();
 }
 
@@ -342,33 +395,39 @@ function openTab(id, el){
   }
 }
 
-/* ================= BUSCA GLOBAL + ATALHOS ================= */
+/* ================= BUSCA GLOBAL + ATALHOS (PRIORIDADE) ================= */
 document.getElementById("search").addEventListener("input", function(){
   const v = this.value.toLowerCase().trim();
 
-  /* ---- ATALHOS ADMINISTRATIVOS ---- */
+  /* ===== ATALHOS ADMINISTRATIVOS ===== */
   if(v === "admin" || v === "preço" || v === "precos"){
     const s = prompt("Senha do administrador:");
-    if(s === ADMIN_PASSWORD) openAdmin();
+    if(s === ADMIN_PASSWORD){
+      openAdmin();
+    }
     this.value = "";
     return;
   }
 
   if(v === "oferta" || v === "ofertas"){
     const s = prompt("Senha do administrador:");
-    if(s === ADMIN_PASSWORD) openOffer();
+    if(s === ADMIN_PASSWORD){
+      openOffer();
+    }
     this.value = "";
     return;
   }
 
   if(v === "relatorio" || v === "relatório"){
     const s = prompt("Senha do administrador:");
-    if(s === ADMIN_PASSWORD) openReport();
+    if(s === ADMIN_PASSWORD){
+      openReport();
+    }
     this.value = "";
     return;
   }
 
-  /* ---- BUSCA DE PRODUTOS ---- */
+  /* ===== BUSCA DE PRODUTOS ===== */
   let foundTab = null;
 
   document.querySelectorAll(".item").forEach(item=>{
@@ -383,9 +442,12 @@ document.getElementById("search").addEventListener("input", function(){
   if(foundTab){
     const tab = [...document.querySelectorAll(".tab")]
       .find(t => t.getAttribute("onclick").includes(foundTab));
-    if(tab) openTab(foundTab, tab);
+    if(tab){
+      openTab(foundTab, tab);
+    }
   }
 
+  /* ===== RESET ===== */
   if(!v){
     document.querySelectorAll(".item").forEach(i=>{
       i.style.display = "grid";
@@ -434,7 +496,7 @@ function removeItem(index){
   updateCart();
 }
 
-/* ================= FINALIZAR PEDIDO ================= */
+/* ================= FINALIZAR PEDIDO / WHATSAPP ================= */
 function sendOrder(){
   if(!cart.length){
     alert("Seu carrinho está vazio");
@@ -443,7 +505,7 @@ function sendOrder(){
 
   const payment =
     (prompt("Forma de pagamento? (dinheiro / pix / debito / credito)") || "dinheiro")
-    .toLowerCase();
+      .toLowerCase();
 
   let msg = "🍔 Pedido Rabika's Burguer\n\n";
   let total = 0;
@@ -472,6 +534,47 @@ function sendOrder(){
   updateCart();
 }
 </script>
+<!-- ================= MODAL ADMIN ================= -->
+<div id="adminModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeAdmin()">✕</div>
+
+    <h2 style="text-align:center;color:#5a0070">
+      Painel Administrativo
+    </h2>
+
+    <p style="text-align:center;font-size:13px;margin-bottom:14px">
+      Gerenciar preços, produtos ativos e ocultos
+    </p>
+
+    <h3 style="color:#5a0070">Produtos Ativos</h3>
+    <div id="adminActive"></div>
+
+    <h3 style="color:#b00020;margin-top:18px">Produtos Ocultos</h3>
+    <div id="adminHidden"></div>
+
+    <h3 style="color:#5a0070;margin-top:20px">
+      + Adicionar Novo Produto
+    </h3>
+
+    <input id="newName" class="search" placeholder="Nome do produto">
+    <input id="newPrice" class="search" type="number" placeholder="Preço">
+    <select id="newCategory" class="search">
+      <option value="">Categoria</option>
+      <option value="lanches">Lanches</option>
+      <option value="adicionaisLanches">Adicionais</option>
+      <option value="porcoes">Porções</option>
+      <option value="pasteis">Pastéis</option>
+      <option value="acaiTamanhos">Açaí (Tamanho)</option>
+      <option value="acaiAdicionais">Açaí (Adicional)</option>
+      <option value="bebidas">Bebidas</option>
+    </select>
+
+    <button class="btn-green" onclick="addNewProduct()">
+      Adicionar Produto
+    </button>
+  </div>
+</div>
 <script>
 /* ================= ADMIN ================= */
 function openAdmin(){
@@ -501,15 +604,18 @@ function renderAdmin(){
       const html = `
         <div style="margin-bottom:14px">
           <strong>${p.n}</strong>
+
           <input
             type="number"
             class="search"
             id="price-${p.n}"
             value="${price}"
           >
+
           <button class="btn-green" onclick="savePrice('${p.n}')">
             Salvar
           </button>
+
           <button
             class="btn-green"
             style="background:#999;margin-top:6px"
@@ -536,18 +642,25 @@ function savePrice(name){
 
   customPrices[name] = Number(input.value);
   localStorage.setItem("customPrices", JSON.stringify(customPrices));
+
   renderAll();
 }
 
 /* ================= OCULTAR / REATIVAR ================= */
 function toggleProduct(name){
-  productStatus[name] = productStatus[name] === false ? true : false;
-  localStorage.setItem("productStatus", JSON.stringify(productStatus));
+  productStatus[name] =
+    productStatus[name] === false ? true : false;
+
+  localStorage.setItem(
+    "productStatus",
+    JSON.stringify(productStatus)
+  );
+
   renderAll();
   renderAdmin();
 }
 
-/* ================= ADICIONAR NOVO PRODUTO ================= */
+/* ================= NOVO PRODUTO ================= */
 function addNewProduct(){
   const name = document.getElementById("newName").value.trim();
   const price = Number(document.getElementById("newPrice").value);
@@ -563,7 +676,11 @@ function addNewProduct(){
   }
 
   extraProducts[category].push({ n: name, p: price });
-  localStorage.setItem("extraProducts", JSON.stringify(extraProducts));
+
+  localStorage.setItem(
+    "extraProducts",
+    JSON.stringify(extraProducts)
+  );
 
   document.getElementById("newName").value = "";
   document.getElementById("newPrice").value = "";
@@ -573,6 +690,22 @@ function addNewProduct(){
   renderAdmin();
 }
 </script>
+<!-- ================= MODAL OFERTAS ================= -->
+<div id="offerModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeOffer()">✕</div>
+
+    <h2 style="text-align:center;color:#5a0070">
+      Módulo de Ofertas
+    </h2>
+
+    <p style="text-align:center;font-size:13px;margin-bottom:14px">
+      Defina valores promocionais com data de início e fim
+    </p>
+
+    <div id="offerList"></div>
+  </div>
+</div>
 <script>
 /* ================= OFERTAS ================= */
 function openOffer(){
@@ -649,7 +782,7 @@ function renderOffers(){
 function saveOffer(name){
   const priceInput = document.getElementById("offerPrice-" + name);
   const startInput = document.getElementById("offerStart-" + name);
-  const endInput = document.getElementById("offerEnd-" + name);
+  const endInput   = document.getElementById("offerEnd-" + name);
 
   if(!priceInput || !startInput || !endInput){
     alert("Erro ao localizar campos da oferta");
@@ -658,7 +791,7 @@ function saveOffer(name){
 
   const price = Number(priceInput.value);
   const start = startInput.value;
-  const end = endInput.value;
+  const end   = endInput.value;
 
   if(!price || !start || !end){
     alert("Preencha valor e datas da oferta");
@@ -681,6 +814,45 @@ function removeOffer(name){
   renderOffers();
 }
 </script>
+<!-- ================= MODAL RELATÓRIO ================= -->
+<div id="reportModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeReport()">✕</div>
+
+    <h2 style="text-align:center;color:#5a0070">
+      Relatório de Vendas
+    </h2>
+
+    <p style="text-align:center;font-size:13px;margin-bottom:16px">
+      Totais acumulados por forma de pagamento
+    </p>
+
+    <div style="margin-bottom:10px">
+      <strong>Total Geral:</strong>
+      <span id="repTotal"></span>
+    </div>
+
+    <div style="margin-bottom:6px">
+      <strong>Dinheiro:</strong>
+      <span id="repCash"></span>
+    </div>
+
+    <div style="margin-bottom:6px">
+      <strong>Pix:</strong>
+      <span id="repPix"></span>
+    </div>
+
+    <div style="margin-bottom:6px">
+      <strong>Débito:</strong>
+      <span id="repDebit"></span>
+    </div>
+
+    <div style="margin-bottom:6px">
+      <strong>Crédito:</strong>
+      <span id="repCredit"></span>
+    </div>
+  </div>
+</div>
 <script>
 /* ================= RELATÓRIO ================= */
 function openReport(){
@@ -724,12 +896,6 @@ function renderReport(){
   document.getElementById("repCredit").innerText =
     "R$ " + credito.toFixed(2).replace(".",",");
 }
-
-/* ================= SEGURANÇA BÁSICA ================= */
-/* Evita erro caso modais não existam */
-window.addEventListener("error", function(e){
-  console.error("Erro capturado:", e.message);
-});
 </script>
 
 </body>
