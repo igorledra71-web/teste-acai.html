@@ -115,11 +115,12 @@ body{
 }
 .section{font-weight:900;margin:14px 0 6px;color:#5a0070}
 
-/* OFERTA CLIENTE */
+/* ===== OFERTA (CLIENTE) ===== */
 .item.offer{
-  background:linear-gradient(90deg,#fff7d6,#fff);
+  background:linear-gradient(90deg,#fff3c4,#fff);
   border-left:6px solid #FF9800;
   padding-left:10px;
+  animation:pulseOffer 1.6s infinite;
 }
 .offer-badge{
   background:#FF9800;
@@ -139,6 +140,12 @@ body{
 .offer-price{
   color:#d32f2f;
   font-weight:900;
+}
+
+@keyframes pulseOffer{
+  0%{box-shadow:0 0 0 rgba(255,152,0,0)}
+  50%{box-shadow:0 0 12px rgba(255,152,0,.4)}
+  100%{box-shadow:0 0 0 rgba(255,152,0,0)}
 }
 
 /* CARRINHO */
@@ -224,7 +231,7 @@ body{
   <input
     id="search"
     class="search"
-    placeholder="Pesquisar no cardápio ou digitar comandos (admin, oferta, relatorio)"
+    placeholder="Pesquisar produtos ou digitar: admin | oferta | relatorio"
   >
 
   <!-- ABAS -->
@@ -263,13 +270,13 @@ let cart = [];
 let currentTab = null;
 
 /* ================= STORAGE ================= */
-let customPrices = JSON.parse(localStorage.getItem("customPrices")) || {};
+let customPrices  = JSON.parse(localStorage.getItem("customPrices"))  || {};
 let productStatus = JSON.parse(localStorage.getItem("productStatus")) || {};
 let extraProducts = JSON.parse(localStorage.getItem("extraProducts")) || {};
-let offers = JSON.parse(localStorage.getItem("offers")) || {};
-let sales = JSON.parse(localStorage.getItem("sales")) || [];
+let offers        = JSON.parse(localStorage.getItem("offers"))        || {};
+let sales         = JSON.parse(localStorage.getItem("sales"))         || [];
 
-/* ================= SAFE ID (IDS SEGUROS) ================= */
+/* ================= SAFE ID ================= */
 function safeId(name){
   return name
     .toLowerCase()
@@ -282,13 +289,12 @@ function isOpen(){
   const d = new Date();
   const day = d.getDay();
   const h = d.getHours() + d.getMinutes()/60;
-
-  if(day === 1) return false;          // segunda
+  if(day === 1) return false;
   if(h < 18.5 || h > 22.5) return false;
   return true;
 }
 
-/* ================= PRODUTOS BASE ================= */
+/* ================= PRODUTOS ================= */
 const products = {
   lanches:[
     {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
@@ -341,8 +347,8 @@ const products = {
 /* ================= UTILITÁRIOS ================= */
 function getAllProducts(){
   let all = JSON.parse(JSON.stringify(products));
-  Object.keys(extraProducts).forEach(cat=>{
-    all[cat] = (all[cat] || []).concat(extraProducts[cat]);
+  Object.keys(extraProducts).forEach(c=>{
+    all[c] = (all[c] || []).concat(extraProducts[c]);
   });
   return all;
 }
@@ -365,8 +371,7 @@ function start(){
   document.getElementById("splash").style.display = "none";
   document.getElementById("app").style.display = "block";
 
-  const status = document.getElementById("status");
-  status.innerText = isOpen()
+  document.getElementById("status").innerText = isOpen()
     ? "🟢 Aberto agora"
     : "🔴 Fechado — pedidos indisponíveis";
 
@@ -425,7 +430,7 @@ function renderAcai(all){
   });
 }
 
-/* ================= ITEM (COM OFERTA) ================= */
+/* ================= OFERTA ATIVA ================= */
 function isOfferActive(name){
   const offer = offers[name];
   if(!offer) return false;
@@ -433,6 +438,7 @@ function isOfferActive(name){
   return today >= offer.start && today <= offer.end;
 }
 
+/* ================= ITEM ================= */
 function itemHTML(p){
   const basePrice = customPrices[p.n] ?? p.p;
   const finalPrice = getPrice(p);
@@ -465,12 +471,12 @@ function itemHTML(p){
 /* ================= ABAS ================= */
 function openTab(id, el){
   const box = document.getElementById(id);
-  const isActive = box.classList.contains("active");
+  const active = box.classList.contains("active");
 
   document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
 
-  if(!isActive){
+  if(!active){
     box.classList.add("active");
     el.classList.add("active");
     currentTab = id;
@@ -486,12 +492,11 @@ searchInput.addEventListener("keydown", function(e){
   if(e.key !== "Enter") return;
 
   const v = this.value.toLowerCase().trim();
-  const isCmd = ["admin","preço","precos","oferta","ofertas","relatorio","relatório"].includes(v);
+  const cmds = ["admin","preço","precos","oferta","ofertas","relatorio","relatório"];
 
-  if(!isCmd) return;
+  if(!cmds.includes(v)) return;
 
   e.preventDefault();
-
   const s = prompt("Senha do administrador:");
   if(s !== ADMIN_PASSWORD){
     this.value = "";
@@ -526,6 +531,15 @@ searchInput.addEventListener("input", function(){
   if(!v){
     document.querySelectorAll(".item").forEach(i=>i.style.display="grid");
   }
+});
+
+/* ================= FIX DEFINITIVO — RELOAD ================= */
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    if(typeof renderAll === "function"){
+      renderAll();
+    }
+  }, 50);
 });
 </script>
 <script>
@@ -618,8 +632,8 @@ function showDrinkConfirm(){
       <div class="modal-box">
         <h2 style="text-align:center">Você vai querer bebida?</h2>
         <div class="choice">
-          <button class="yes" onclick="goToDrinks()">SIM</button>
-          <button class="no" onclick="closeDrinkModal()">NÃO</button>
+          <button class="btn-green" onclick="goToDrinks()">SIM</button>
+          <button class="btn-green" style="background:#999;margin-top:10px" onclick="closeDrinkModal()">NÃO</button>
         </div>
       </div>
     </div>
@@ -650,8 +664,8 @@ function askDelivery(){
       <div class="modal-box">
         <h2 style="text-align:center">Entrega ou Retirada?</h2>
         <div class="choice">
-          <button class="yes" onclick="setDelivery(true)">ENTREGA</button>
-          <button class="no" onclick="setDelivery(false)">RETIRADA</button>
+          <button class="btn-green" onclick="setDelivery(true)">ENTREGA</button>
+          <button class="btn-green" style="background:#999;margin-top:10px" onclick="setDelivery(false)">RETIRADA</button>
         </div>
       </div>
     </div>
@@ -743,7 +757,10 @@ function sendOrder(){
   <div class="modal-box">
     <div class="modal-close" onclick="closeAdmin()">✕</div>
 
-    <h2 style="text-align:center;color:#5a0070">Painel Administrativo</h2>
+    <h2 style="text-align:center;color:#5a0070">
+      Painel Administrativo
+    </h2>
+
     <p style="text-align:center;font-size:13px;margin-bottom:16px">
       Gerencie preços, visibilidade e produtos
     </p>
@@ -844,6 +861,7 @@ function savePrice(name){
 
   customPrices[name] = Number(input.value);
   localStorage.setItem("customPrices", JSON.stringify(customPrices));
+
   renderAll();
 }
 
@@ -861,7 +879,7 @@ function toggleProduct(name){
   renderAdmin();
 }
 
-/* ================= ADICIONAR NOVO PRODUTO ================= */
+/* ================= ADICIONAR PRODUTO ================= */
 function addNewProduct(){
   const name = document.getElementById("newName").value.trim();
   const price = Number(document.getElementById("newPrice").value);
@@ -901,7 +919,7 @@ function addNewProduct(){
     </h2>
 
     <p style="text-align:center;font-size:13px;margin-bottom:16px">
-      Configure preços promocionais com período de validade
+      Defina preços promocionais com data de início e fim
     </p>
 
     <div id="offerList"></div>
@@ -968,9 +986,8 @@ function renderOffers(){
           <input
             class="search offer-input"
             type="number"
-            placeholder="Valor de oferta"
             id="offerPrice-${sid}"
-            value="${offer?.price ?? ""}"
+            value="${offer ? offer.price : ""}"
           >
 
           <label style="font-size:12px;font-weight:700">
@@ -980,7 +997,7 @@ function renderOffers(){
             class="search offer-date"
             type="date"
             id="offerStart-${sid}"
-            value="${offer?.start ?? ""}"
+            value="${offer ? offer.start : ""}"
           >
 
           <label style="font-size:12px;font-weight:700">
@@ -990,7 +1007,7 @@ function renderOffers(){
             class="search offer-date"
             type="date"
             id="offerEnd-${sid}"
-            value="${offer?.end ?? ""}"
+            value="${offer ? offer.end : ""}"
           >
 
           <button
@@ -1021,21 +1038,14 @@ function renderOffers(){
 function saveOffer(name){
   const sid = safeId(name);
 
-  const priceInput = document.getElementById("offerPrice-" + sid);
-  const startInput = document.getElementById("offerStart-" + sid);
-  const endInput   = document.getElementById("offerEnd-" + sid);
-
-  if(!priceInput || !startInput || !endInput){
-    alert("Erro ao localizar campos da oferta");
-    return;
-  }
-
-  const price = Number(priceInput.value);
-  const start = startInput.value;
-  const end   = endInput.value;
+  const price = Number(
+    document.getElementById("offerPrice-" + sid).value
+  );
+  const start = document.getElementById("offerStart-" + sid).value;
+  const end   = document.getElementById("offerEnd-" + sid).value;
 
   if(!price || !start || !end){
-    alert("Preencha valor e datas da oferta");
+    alert("Preencha preço e datas da oferta");
     return;
   }
 
@@ -1140,19 +1150,5 @@ function renderReport(){
 }
 </script>
 
-  <script>
-/* ================= FIX — REAPLICAR OFERTAS APÓS RELOAD ================= */
-window.addEventListener("load", () => {
-  // garante que ofertas do localStorage sejam reaplicadas
-  setTimeout(() => {
-    if(typeof renderAll === "function"){
-      renderAll();
-    }
-  }, 50);
-});
-</script>
-
-  
 </body>
 </html>
-
