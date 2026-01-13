@@ -412,10 +412,11 @@ function openTab(id, el){
 }
 
 /* ================= BUSCA GLOBAL + ATALHOS (PRIORIDADE) ================= */
-document.getElementById("search").addEventListener("input", function(){
+document.getElementById("search").addEventListener("keydown", function(e){
+  if(e.key !== "Enter") return;
+
   const v = this.value.toLowerCase().trim();
 
-  /* ----- ATALHOS ADMINISTRATIVOS ----- */
   if(v === "admin" || v === "preço" || v === "precos"){
     const s = prompt("Senha do administrador:");
     if(s === ADMIN_PASSWORD){
@@ -442,6 +443,7 @@ document.getElementById("search").addEventListener("input", function(){
     this.value = "";
     return;
   }
+});
 
   /* ----- BUSCA DE PRODUTOS ----- */
   let foundTab = null;
@@ -925,3 +927,4 @@ function renderReport(){
 </script>
 </body>
 </html>
+
