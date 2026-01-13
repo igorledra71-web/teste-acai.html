@@ -19,8 +19,6 @@ body{
   display:flex;
   justify-content:center;
 }
-
-/* SPLASH */
 #splash{
   position:fixed;
   inset:0;
@@ -31,11 +29,7 @@ body{
   z-index:9999;
 }
 .splash-box{text-align:center}
-.splash-logo{
-  width:360px;
-  max-width:90%;
-  margin-bottom:36px;
-}
+.splash-logo{width:360px;max-width:90%;margin-bottom:36px}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
   border:none;
@@ -46,35 +40,15 @@ body{
   color:#2b0033;
   cursor:pointer;
 }
-
-/* APP */
 #app{
   width:100%;
   max-width:420px;
   padding:16px 14px 360px;
   display:none;
 }
-
-/* TOPO */
-.title{
-  text-align:center;
-  font-size:30px;
-  font-weight:900;
-  color:#FFD34D;
-}
-#status{
-  text-align:center;
-  font-size:13px;
-  margin-top:4px;
-}
-#hours{
-  text-align:center;
-  font-size:12px;
-  color:#FFD34D;
-  margin-bottom:14px;
-}
-
-/* BUSCA */
+.title{text-align:center;font-size:30px;font-weight:900;color:#FFD34D}
+#status{text-align:center;font-size:13px;margin-top:4px}
+#hours{text-align:center;font-size:12px;color:#FFD34D;margin-bottom:14px}
 .search{
   width:100%;
   padding:15px 18px;
@@ -83,8 +57,6 @@ body{
   font-size:15px;
   margin-bottom:16px;
 }
-
-/* ABAS */
 .tabs{
   display:grid;
   grid-template-columns:repeat(5,1fr);
@@ -101,15 +73,8 @@ body{
   text-align:center;
   cursor:pointer;
 }
-.tab span{
-  display:block;
-  font-size:22px;
-}
-.tab.active{
-  background:#FFD34D;
-}
-
-/* BOX */
+.tab span{display:block;font-size:22px}
+.tab.active{background:#FFD34D}
 .box{
   background:#fff;
   color:#2b0033;
@@ -119,8 +84,6 @@ body{
   display:none;
 }
 .box.active{display:block}
-
-/* ITEM */
 .item{
   display:grid;
   grid-template-columns:1fr auto auto;
@@ -129,11 +92,7 @@ body{
   border-bottom:1px dashed #ddd;
   align-items:center;
 }
-.item:last-child{border:none}
-.item-price{
-  font-weight:900;
-  color:#5a0070;
-}
+.item-price{font-weight:900;color:#5a0070}
 .btn-add{
   background:#5a0070;
   color:#fff;
@@ -142,15 +101,7 @@ body{
   padding:6px 14px;
   font-weight:900;
 }
-
-/* SEÇÃO */
-.section{
-  font-weight:900;
-  margin:14px 0 6px;
-  color:#5a0070;
-}
-
-/* CARRINHO */
+.section{font-weight:900;margin:14px 0 6px;color:#5a0070}
 #cart{
   position:fixed;
   bottom:0;
@@ -165,13 +116,7 @@ body{
   display:none;
   z-index:999;
 }
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:6px;
-}
-
-/* BOTÕES */
+.cart-item{display:flex;justify-content:space-between;margin-bottom:6px}
 .btn-green{
   background:#25D366;
   color:#fff;
@@ -181,8 +126,6 @@ body{
   font-weight:900;
   width:100%;
 }
-
-/* MODAIS */
 .modal{
   position:fixed;
   inset:0;
@@ -211,13 +154,7 @@ body{
   font-weight:900;
   cursor:pointer;
 }
-
-/* SIM / NÃO */
-.choice{
-  display:flex;
-  gap:12px;
-  margin-top:16px;
-}
+.choice{display:flex;gap:12px;margin-top:16px}
 .choice button{
   flex:1;
   padding:14px;
@@ -225,20 +162,13 @@ body{
   border-radius:22px;
   border:none;
 }
-.choice .yes{
-  background:#25D366;
-  color:#fff;
-}
-.choice .no{
-  background:#ccc;
-  color:#333;
-}
+.choice .yes{background:#25D366;color:#fff}
+.choice .no{background:#ccc;color:#333}
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
 <div id="splash">
   <div class="splash-box">
     <img src="logo.png" class="splash-logo">
@@ -246,7 +176,6 @@ body{
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <div class="title">Rabika's Burguer</div>
   <div id="status"></div>
@@ -287,10 +216,10 @@ let sales = JSON.parse(localStorage.getItem("sales")) || [];
 /* ================= HORÁRIO ================= */
 function isOpen(){
   const d = new Date();
-  const day = d.getDay(); // 0=Dom, 1=Seg
-  const h = d.getHours() + d.getMinutes()/60;
+  const day = d.getDay();
+  const h = d.getHours() + d.getMinutes() / 60;
 
-  if(day === 1) return false;      // Segunda fechado
+  if(day === 1) return false;
   if(h < 18.5 || h > 22.5) return false;
   return true;
 }
@@ -390,11 +319,7 @@ document.addEventListener("DOMContentLoaded", function(){
   const btn = document.getElementById("startBtn");
   if(btn){
     btn.addEventListener("click", function(){
-      if(typeof start === "function"){
-        start();
-      }else{
-        alert("Erro ao iniciar o sistema.");
-      }
+      start();
     });
   }
 });
@@ -437,8 +362,8 @@ function renderAcai(all){
   if(!box) return;
 
   box.innerHTML = "";
-
   box.innerHTML += `<div class="section">🥤 Tamanhos</div>`;
+
   all.acaiTamanhos.forEach(p=>{
     if(productStatus[p.n] !== false){
       box.innerHTML += itemHTML(p);
@@ -446,6 +371,7 @@ function renderAcai(all){
   });
 
   box.innerHTML += `<div class="section">🍫 Adicionais</div>`;
+
   all.acaiAdicionais.forEach(p=>{
     if(productStatus[p.n] !== false){
       box.innerHTML += itemHTML(p);
@@ -484,39 +410,52 @@ function openTab(id, el){
   }
 }
 
-/* ================= BUSCA & ATALHOS ================= */
+/* ================= BUSCA & ATALHOS (CORRIGIDO) ================= */
 const searchInput = document.getElementById("search");
 
+/* 👉 ATALHOS ADMIN TÊM PRIORIDADE TOTAL */
 if(searchInput){
-  /* ATALHOS (ENTER) */
   searchInput.addEventListener("keydown", function(e){
     if(e.key !== "Enter") return;
 
     const v = this.value.toLowerCase().trim();
 
-    if(v === "admin" || v === "preço" || v === "precos"){
-      const s = prompt("Senha do administrador:");
-      if(s === ADMIN_PASSWORD) openAdmin();
+    const isAdminCommand =
+      v === "admin" ||
+      v === "preço" ||
+      v === "precos" ||
+      v === "oferta" ||
+      v === "ofertas" ||
+      v === "relatorio" ||
+      v === "relatório";
+
+    if(!isAdminCommand) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const s = prompt("Senha do administrador:");
+    if(s !== ADMIN_PASSWORD){
       this.value = "";
       return;
+    }
+
+    if(v === "admin" || v === "preço" || v === "precos"){
+      openAdmin();
     }
 
     if(v === "oferta" || v === "ofertas"){
-      const s = prompt("Senha do administrador:");
-      if(s === ADMIN_PASSWORD) openOffer();
-      this.value = "";
-      return;
+      openOffer();
     }
 
     if(v === "relatorio" || v === "relatório"){
-      const s = prompt("Senha do administrador:");
-      if(s === ADMIN_PASSWORD) openReport();
-      this.value = "";
-      return;
+      openReport();
     }
+
+    this.value = "";
   });
 
-  /* BUSCA DE PRODUTOS */
+  /* 🔎 BUSCA DE PRODUTOS (INALTERADA) */
   searchInput.addEventListener("input", function(){
     const v = this.value.toLowerCase().trim();
     let foundTab = null;
@@ -784,6 +723,7 @@ function sendOrder(){
     </button>
   </div>
 </div>
+
 <script>
 /* ================= ADMIN ================= */
 function openAdmin(){
@@ -918,6 +858,132 @@ function addNewProduct(){
     <div id="offerList"></div>
   </div>
 </div>
+
+<script>
+/* ================= OFERTAS ================= */
+function openOffer(){
+  document.getElementById("offerModal").style.display = "flex";
+  renderOffers();
+}
+
+function closeOffer(){
+  document.getElementById("offerModal").style.display = "none";
+}
+
+/* ================= STATUS DA OFERTA ================= */
+function getOfferStatus(offer){
+  if(!offer) return "SEM OFERTA";
+
+  const today = new Date().toISOString().split("T")[0];
+  if(today < offer.start) return "AGENDADA";
+  if(today > offer.end) return "EXPIRADA";
+  return "ATIVA";
+}
+
+/* ================= RENDER OFERTAS ================= */
+function renderOffers(){
+  const box = document.getElementById("offerList");
+  box.innerHTML = "";
+
+  const all = getAllProducts();
+
+  Object.keys(all).forEach(cat=>{
+    all[cat].forEach(p=>{
+      const offer = offers[p.n];
+      const status = getOfferStatus(offer);
+
+      let statusColor = "#999";
+      if(status === "ATIVA") statusColor = "#25D366";
+      if(status === "EXPIRADA") statusColor = "#b00020";
+      if(status === "AGENDADA") statusColor = "#FF9800";
+
+      box.innerHTML += `
+        <div style="margin-bottom:22px;padding-bottom:14px;border-bottom:1px dashed #ddd">
+          <strong>${p.n}</strong>
+
+          <div style="margin:6px 0;font-size:12px;color:${statusColor}">
+            Status: ${status}
+          </div>
+
+          <input
+            class="search"
+            type="number"
+            placeholder="Valor promocional"
+            id="offerPrice-${p.n}"
+            value="${offer?.price ?? ""}"
+          >
+
+          <input
+            class="search"
+            type="date"
+            id="offerStart-${p.n}"
+            value="${offer?.start ?? ""}"
+          >
+
+          <input
+            class="search"
+            type="date"
+            id="offerEnd-${p.n}"
+            value="${offer?.end ?? ""}"
+          >
+
+          <button class="btn-green" onclick="saveOffer('${p.n}')">
+            Salvar Oferta
+          </button>
+
+          ${
+            offer
+              ? `<button
+                   class="btn-green"
+                   style="background:#999;margin-top:6px"
+                   onclick="removeOffer('${p.n}')"
+                 >
+                   Remover Oferta
+                 </button>`
+              : ""
+          }
+        </div>
+      `;
+    });
+  });
+}
+
+/* ================= SALVAR OFERTA ================= */
+function saveOffer(name){
+  const priceInput = document.getElementById("offerPrice-" + name);
+  const startInput = document.getElementById("offerStart-" + name);
+  const endInput   = document.getElementById("offerEnd-" + name);
+
+  if(!priceInput || !startInput || !endInput){
+    alert("Erro ao localizar campos da oferta");
+    return;
+  }
+
+  const price = Number(priceInput.value);
+  const start = startInput.value;
+  const end   = endInput.value;
+
+  if(!price || !start || !end){
+    alert("Preencha valor e datas da oferta");
+    return;
+  }
+
+  offers[name] = { price, start, end };
+  localStorage.setItem("offers", JSON.stringify(offers));
+
+  renderAll();
+  renderOffers();
+}
+
+/* ================= REMOVER OFERTA ================= */
+function removeOffer(name){
+  delete offers[name];
+  localStorage.setItem("offers", JSON.stringify(offers));
+
+  renderAll();
+  renderOffers();
+}
+</script>
 <!-- ================= MODAL RELATÓRIO ================= -->
 <div id="reportModal" class="modal">
   <div class="modal-box">
