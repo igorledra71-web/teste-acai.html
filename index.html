@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Rabika's Burguer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -195,13 +195,15 @@ body{
 
 <body>
 
+<!-- SPLASH -->
 <div id="splash">
   <div class="splash-box">
     <img src="logo.png" class="splash-logo">
-    <button class="splash-btn" onclick="start()">FAZER PEDIDO</button>
+    <button class="splash-btn" id="startBtn">FAZER PEDIDO</button>
   </div>
 </div>
 
+<!-- APP -->
 <div id="app">
   <div class="title">Rabika's Burguer</div>
   <div id="status"></div>
@@ -321,16 +323,37 @@ function getPrice(p){
 }
 </script>
 <script>
-/* ================= START ================= */
+/* ================= BOOT ================= */
 function start(){
-  document.getElementById("splash").style.display = "none";
-  document.getElementById("app").style.display = "block";
+  const splash = document.getElementById("splash");
+  const app = document.getElementById("app");
 
-  document.getElementById("status").innerText =
-    isOpen() ? "🟢 Aberto agora" : "🔴 Fechado — pedidos indisponíveis";
+  if(splash) splash.style.display = "none";
+  if(app) app.style.display = "block";
+
+  const status = document.getElementById("status");
+  if(status){
+    status.innerText = isOpen()
+      ? "🟢 Aberto agora"
+      : "🔴 Fechado — pedidos indisponíveis";
+  }
 
   renderAll();
 }
+
+/* ================= BIND DO BOTÃO (SEM onclick) ================= */
+document.addEventListener("DOMContentLoaded", function(){
+  const btn = document.getElementById("startBtn");
+  if(btn){
+    btn.addEventListener("click", function(){
+      if(typeof start === "function"){
+        start();
+      }else{
+        alert("Erro ao iniciar o app.");
+      }
+    });
+  }
+});
 
 /* ================= RENDER GERAL ================= */
 function renderAll(){
@@ -345,6 +368,8 @@ function renderAll(){
 /* ================= RENDER CATEGORIA ================= */
 function renderCategory(id, list, extras){
   const box = document.getElementById(id);
+  if(!box) return;
+
   box.innerHTML = "";
 
   list.forEach(p=>{
@@ -365,6 +390,8 @@ function renderCategory(id, list, extras){
 /* ================= RENDER AÇAÍ ================= */
 function renderAcai(all){
   const box = document.getElementById("acai");
+  if(!box) return;
+
   box.innerHTML = "";
 
   box.innerHTML += `<div class="section">🥤 Tamanhos</div>`;
@@ -397,6 +424,8 @@ function itemHTML(p){
 /* ================= ABAS (ABRE / FECHA) ================= */
 function openTab(id, el){
   const box = document.getElementById(id);
+  if(!box) return;
+
   const isActive = box.classList.contains("active");
 
   document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
@@ -404,74 +433,80 @@ function openTab(id, el){
 
   if(!isActive){
     box.classList.add("active");
-    el.classList.add("active");
+    if(el) el.classList.add("active");
     currentTab = id;
   }else{
     currentTab = null;
   }
 }
 
-/* ================= BUSCA GLOBAL + ATALHOS (PRIORIDADE) ================= */
-document.getElementById("search").addEventListener("keydown", function(e){
-  if(e.key !== "Enter") return;
+/* ================= BUSCA — ATALHOS (ENTER) ================= */
+const searchInput = document.getElementById("search");
 
-  const v = this.value.toLowerCase().trim();
+if(searchInput){
+  searchInput.addEventListener("keydown", function(e){
+    if(e.key !== "Enter") return;
 
-  if(v === "admin" || v === "preço" || v === "precos"){
-    const s = prompt("Senha do administrador:");
-    if(s === ADMIN_PASSWORD){
-      openAdmin();
+    const v = this.value.toLowerCase().trim();
+
+    if(v === "admin" || v === "preço" || v === "precos"){
+      const s = prompt("Senha do administrador:");
+      if(s === ADMIN_PASSWORD){
+        openAdmin();
+      }
+      this.value = "";
+      return;
     }
-    this.value = "";
-    return;
-  }
 
-  if(v === "oferta" || v === "ofertas"){
-    const s = prompt("Senha do administrador:");
-    if(s === ADMIN_PASSWORD){
-      openOffer();
+    if(v === "oferta" || v === "ofertas"){
+      const s = prompt("Senha do administrador:");
+      if(s === ADMIN_PASSWORD){
+        openOffer();
+      }
+      this.value = "";
+      return;
     }
-    this.value = "";
-    return;
-  }
 
-  if(v === "relatorio" || v === "relatório"){
-    const s = prompt("Senha do administrador:");
-    if(s === ADMIN_PASSWORD){
-      openReport();
-    }
-    this.value = "";
-    return;
-  }
-});
-
-  /* ----- BUSCA DE PRODUTOS ----- */
-  let foundTab = null;
-
-  document.querySelectorAll(".item").forEach(item=>{
-    const match = item.dataset.name.includes(v);
-    item.style.display = match ? "grid" : "none";
-
-    if(match && !foundTab){
-      foundTab = item.closest(".box").id;
+    if(v === "relatorio" || v === "relatório"){
+      const s = prompt("Senha do administrador:");
+      if(s === ADMIN_PASSWORD){
+        openReport();
+      }
+      this.value = "";
+      return;
     }
   });
 
-  if(foundTab){
-    const tab = [...document.querySelectorAll(".tab")]
-      .find(t => t.getAttribute("onclick").includes(foundTab));
-    if(tab){
-      openTab(foundTab, tab);
-    }
-  }
+  /* ================= BUSCA DE PRODUTOS (DIGITAÇÃO) ================= */
+  searchInput.addEventListener("input", function(){
+    const v = this.value.toLowerCase().trim();
+    let foundTab = null;
 
-  /* ----- RESET ----- */
-  if(!v){
-    document.querySelectorAll(".item").forEach(i=>{
-      i.style.display = "grid";
+    document.querySelectorAll(".item").forEach(item=>{
+      const match = item.dataset.name.includes(v);
+      item.style.display = match ? "grid" : "none";
+
+      if(match && !foundTab){
+        const box = item.closest(".box");
+        if(box) foundTab = box.id;
+      }
     });
-  }
-});
+
+    if(foundTab){
+      const tab = [...document.querySelectorAll(".tab")]
+        .find(t => t.getAttribute("onclick")?.includes(foundTab));
+      if(tab){
+        openTab(foundTab, tab);
+      }
+    }
+
+    if(!v){
+      document.querySelectorAll(".item").forEach(i=>{
+        i.style.display = "grid";
+      });
+    }
+  });
+}
 </script>
 <script>
 /* ================= CARRINHO ================= */
@@ -486,6 +521,7 @@ function addItem(name, price){
 
 function updateCart(){
   let cartBox = document.getElementById("cart");
+
   if(!cartBox){
     document.body.insertAdjacentHTML("beforeend", `
       <div id="cart">
@@ -526,7 +562,7 @@ function removeItem(index){
   updateCart();
 }
 
-/* ================= BLOCO 4 — CHECKOUT ================= */
+/* ================= CHECKOUT — ESTADO ================= */
 let checkout = {
   delivery: false,
   name: "",
@@ -534,11 +570,13 @@ let checkout = {
   payment: ""
 };
 
+/* ================= VERIFICA BEBIDA ================= */
 function cartHasDrink(){
   const drinks = products.bebidas.map(b => b.n);
   return cart.some(i => drinks.includes(i.name));
 }
 
+/* ================= INICIAR FINALIZAÇÃO ================= */
 function finishOrder(){
   if(!cartHasDrink()){
     showDrinkConfirm();
@@ -547,7 +585,7 @@ function finishOrder(){
   askDelivery();
 }
 
-/* ================= CONFIRMA BEBIDA ================= */
+/* ================= MODAL BEBIDA ================= */
 function showDrinkConfirm(){
   document.body.insertAdjacentHTML("beforeend", `
     <div class="modal" id="drinkModal" style="display:flex">
@@ -564,7 +602,8 @@ function showDrinkConfirm(){
 
 function goToDrinks(){
   document.getElementById("drinkModal").remove();
-  openTab("bebidas", document.querySelector(".tab:last-child"));
+  const tabs = document.querySelectorAll(".tab");
+  openTab("bebidas", tabs[tabs.length - 1]);
 }
 
 function closeDrinkModal(){
@@ -677,7 +716,7 @@ function sendOrder(){
     </h2>
 
     <p style="text-align:center;font-size:13px;margin-bottom:14px">
-      Gerenciar preços, produtos ativos e ocultos
+      Gerencie preços e visibilidade dos produtos
     </p>
 
     <h3 style="color:#5a0070">Produtos Ativos</h3>
@@ -687,7 +726,7 @@ function sendOrder(){
     <div id="adminHidden"></div>
 
     <h3 style="color:#5a0070;margin-top:20px">
-      + Adicionar Novo Produto
+      + Novo Produto
     </h3>
 
     <input id="newName" class="search" placeholder="Nome do produto">
@@ -708,6 +747,7 @@ function sendOrder(){
     </button>
   </div>
 </div>
+
 <script>
 /* ================= ADMIN ================= */
 function openAdmin(){
@@ -732,7 +772,7 @@ function renderAdmin(){
   Object.keys(all).forEach(cat=>{
     all[cat].forEach(p=>{
       const price = getPrice(p);
-      const isHidden = productStatus[p.n] === false;
+      const hidden = productStatus[p.n] === false;
 
       const html = `
         <div style="margin-bottom:14px">
@@ -754,12 +794,12 @@ function renderAdmin(){
             style="background:#999;margin-top:6px"
             onclick="toggleProduct('${p.n}')"
           >
-            ${isHidden ? "Reativar" : "Ocultar"}
+            ${hidden ? "Reativar" : "Ocultar"}
           </button>
         </div>
       `;
 
-      if(isHidden){
+      if(hidden){
         hiddenBox.innerHTML += html;
       }else{
         activeBox.innerHTML += html;
@@ -842,6 +882,115 @@ function addNewProduct(){
     <div id="offerList"></div>
   </div>
 </div>
+
+<script>
+/* ================= OFERTAS ================= */
+function openOffer(){
+  document.getElementById("offerModal").style.display = "flex";
+  renderOffers();
+}
+
+function closeOffer(){
+  document.getElementById("offerModal").style.display = "none";
+}
+
+/* ================= RENDER OFERTAS ================= */
+function renderOffers(){
+  const box = document.getElementById("offerList");
+  box.innerHTML = "";
+
+  const all = getAllProducts();
+
+  Object.keys(all).forEach(cat=>{
+    all[cat].forEach(p=>{
+      const offer = offers[p.n] || {};
+
+      box.innerHTML += `
+        <div style="margin-bottom:18px">
+          <strong>${p.n}</strong>
+
+          <input
+            class="search"
+            type="number"
+            placeholder="Valor de oferta"
+            id="offerPrice-${p.n}"
+            value="${offer.price ?? ""}"
+          >
+
+          <input
+            class="search"
+            type="date"
+            id="offerStart-${p.n}"
+            value="${offer.start ?? ""}"
+          >
+
+          <input
+            class="search"
+            type="date"
+            id="offerEnd-${p.n}"
+            value="${offer.end ?? ""}"
+          >
+
+          <button
+            class="btn-green"
+            onclick="saveOffer('${p.n}')"
+          >
+            Salvar Oferta
+          </button>
+
+          ${
+            offers[p.n]
+              ? `<button
+                   class="btn-green"
+                   style="background:#999;margin-top:6px"
+                   onclick="removeOffer('${p.n}')"
+                 >
+                   Remover Oferta
+                 </button>`
+              : ""
+          }
+        </div>
+      `;
+    });
+  });
+}
+
+/* ================= SALVAR OFERTA ================= */
+function saveOffer(name){
+  const priceInput = document.getElementById("offerPrice-" + name);
+  const startInput = document.getElementById("offerStart-" + name);
+  const endInput   = document.getElementById("offerEnd-" + name);
+
+  if(!priceInput || !startInput || !endInput){
+    alert("Erro ao localizar campos da oferta");
+    return;
+  }
+
+  const price = Number(priceInput.value);
+  const start = startInput.value;
+  const end   = endInput.value;
+
+  if(!price || !start || !end){
+    alert("Preencha valor e datas da oferta");
+    return;
+  }
+
+  offers[name] = { price, start, end };
+  localStorage.setItem("offers", JSON.stringify(offers));
+
+  renderAll();
+  renderOffers();
+}
+
+/* ================= REMOVER OFERTA ================= */
+function removeOffer(name){
+  delete offers[name];
+  localStorage.setItem("offers", JSON.stringify(offers));
+
+  renderAll();
+  renderOffers();
+}
+</script>
 <!-- ================= MODAL RELATÓRIO ================= -->
 <div id="reportModal" class="modal">
   <div class="modal-box">
@@ -881,6 +1030,7 @@ function addNewProduct(){
     </div>
   </div>
 </div>
+
 <script>
 /* ================= RELATÓRIO ================= */
 function openReport(){
@@ -925,6 +1075,6 @@ function renderReport(){
     "R$ " + credito.toFixed(2).replace(".",",");
 }
 </script>
+
 </body>
 </html>
-
