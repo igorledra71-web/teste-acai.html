@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Rabika's Burguer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<!-- FIREBASE -->
+<!-- ================= FIREBASE (CORRETO E ISOLADO) ================= -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <script>
-firebase.initializeApp({
+const firebaseConfig = {
   apiKey: "AIzaSyCYi1rHHuUPV1QB64N9ciBXNvER3caUc0k",
   authDomain: "rabikas-burguer.firebaseapp.com",
   databaseURL: "https://rabikas-burguer-default-rtdb.firebaseio.com",
@@ -22,67 +22,171 @@ firebase.initializeApp({
   storageBucket: "rabikas-burguer.appspot.com",
   messagingSenderId: "922454808804",
   appId: "1:922454808804:web:d0aa9ae5fc78b8d10674f1"
-});
+};
+
+firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 </script>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+
 body{
   font-family:'Poppins',sans-serif;
   background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
   color:#fff;
   display:flex;
   justify-content:center;
+  overflow-y:auto; /* 🔧 CORREÇÃO DA TELA TRAVADA */
 }
 
-/* APP */
-#app{max-width:420px;width:100%;padding:14px 14px 280px;display:none}
+/* ================= APP ================= */
+#app{
+  width:100%;
+  max-width:420px;
+  padding:14px 14px 300px;
+  display:none;
+}
 
-/* SPLASH */
+/* ================= SPLASH ================= */
 #splash{
-  position:fixed;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  background:#05002e;z-index:9999
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg,#05002e,#020018);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
 }
-.splash-logo{max-width:320px;width:90%;margin-bottom:30px}
-.splash-btn{padding:18px 50px;border:none;border-radius:40px;background:#FFD34D;font-weight:900;font-size:22px}
+.splash-box{text-align:center}
+.splash-logo{
+  width:90%;
+  max-width:340px;
+  margin-bottom:32px;
+}
+.splash-btn{
+  background:linear-gradient(135deg,#FFD34D,#FFB000);
+  border:none;
+  padding:18px 54px;
+  border-radius:44px;
+  font-size:22px;
+  font-weight:900;
+  color:#2b0033;
+  cursor:pointer;
+}
 
-/* TOPO */
-.title{text-align:center;font-size:30px;font-weight:900;color:#FFD34D}
+/* ================= TOPO ================= */
+.title{
+  text-align:center;
+  font-size:30px;
+  font-weight:900;
+  color:#FFD34D;
+  margin-bottom:6px;
+}
 
-/* BUSCA */
-.search{width:100%;padding:14px;border-radius:22px;border:none;margin:14px 0}
+/* ================= BUSCA ================= */
+.search{
+  width:100%;
+  padding:14px 16px;
+  border-radius:22px;
+  border:none;
+  font-size:15px;
+  margin-bottom:14px;
+}
 
-/* TABS */
-.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.tab{background:#fff;color:#2b0033;border-radius:18px;padding:10px;font-weight:800;text-align:center}
-.tab.active{background:#FFD34D}
+/* ================= TABS ================= */
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+.tab{
+  background:#fff;
+  color:#2b0033;
+  padding:14px 8px;
+  border-radius:22px;
+  font-weight:800;
+  text-align:center;
+  cursor:pointer;
+}
+.tab.active{
+  background:#FFD34D;
+}
 
-/* BOX */
-.box{background:#fff;color:#2b0033;border-radius:28px;padding:18px;margin-top:14px;display:none}
+/* ================= CONTEÚDO ================= */
+.box{
+  background:#fff;
+  color:#2b0033;
+  border-radius:28px;
+  padding:18px;
+  margin-bottom:20px;
+  display:none;
+}
 .box.active{display:block}
 
-/* ITEM */
-.item{display:grid;grid-template-columns:1fr auto auto;gap:10px;padding:12px 0;border-bottom:1px dashed #ccc}
-.btn-add{background:#5a0070;color:#fff;border:none;border-radius:14px;padding:6px 14px;font-weight:900}
-
-/* OFERTA */
-.item.offer{background:#fff6d8;border-radius:14px;padding:12px}
-.old-price{text-decoration:line-through;font-size:12px;color:#999}
-.offer-price{font-weight:900;color:#b00020}
-.offer-badge{background:#b00020;color:#fff;font-size:11px;padding:2px 8px;border-radius:12px;margin-left:6px}
-
-/* CARRINHO */
-#cart{
-  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
-  max-width:420px;width:100%;
-  background:#fff;color:#2b0033;
-  padding:18px;border-radius:28px 28px 0 0;
-  display:none
+/* ================= ITEM ================= */
+.item{
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px dashed #e3e3e3;
+  align-items:center;
+}
+.item:last-child{border:none}
+.item-price{font-weight:900;color:#5a0070}
+.btn-add{
+  background:#5a0070;
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  padding:6px 14px;
+  font-weight:900;
 }
 
-/* MODAL — CORREÇÃO AQUI */
+/* ================= OFERTA ================= */
+.item.offer{
+  background:#fff4d6;
+  border-radius:18px;
+  padding:12px;
+}
+.old-price{
+  font-size:12px;
+  color:#999;
+  text-decoration:line-through;
+}
+.offer-price{
+  font-weight:900;
+  color:#b00020;
+}
+.offer-badge{
+  background:#b00020;
+  color:#fff;
+  font-size:11px;
+  padding:2px 8px;
+  border-radius:12px;
+  margin-left:6px;
+}
+
+/* ================= CARRINHO ================= */
+#cart{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  color:#2b0033;
+  padding:18px;
+  border-radius:28px 28px 0 0;
+  display:none;
+  z-index:999;
+}
+
+/* ================= MODAIS ================= */
 .modal{
   position:fixed;
   inset:0;
@@ -91,26 +195,41 @@ body{
   align-items:center;
   justify-content:center;
   z-index:10000;
-  overflow-y:auto; /* ✅ */
+  overflow-y:auto; /* 🔧 SCROLL MODAL */
 }
 .modal-box{
-  background:#fff;color:#2b0033;
+  background:#fff;
+  color:#2b0033;
+  width:92%;
+  max-width:420px;
   border-radius:26px;
   padding:20px;
-  width:90%;max-width:420px;
-  max-height:85vh;      /* ✅ */
-  overflow-y:auto;      /* ✅ */
+  max-height:85vh;
+  overflow-y:auto;
 }
 
-/* BOTÃO */
-.btn-green{background:#25D366;color:#fff;border:none;padding:14px;border-radius:22px;font-weight:900;width:100%}
+/* ================= BOTÕES ================= */
+.btn-green{
+  background:#25D366;
+  color:#fff;
+  border:none;
+  padding:14px;
+  border-radius:22px;
+  font-weight:900;
+  width:100%;
+}
 </style>
 </head>
 <body>
 
+<!-- GARANTIA DE SCROLL LIBERADO AO CARREGAR -->
+<script>
+document.body.style.overflow = "";
+</script>
+
 <!-- ================= SPLASH ================= -->
 <div id="splash">
-  <div style="text-align:center">
+  <div class="splash-box">
     <img src="logo.png" class="splash-logo" alt="Rabika's Burguer">
     <button class="splash-btn" id="startBtn">FAZER PEDIDO</button>
   </div>
@@ -120,7 +239,7 @@ body{
 <div id="app">
 
   <div class="title">Rabika's Burguer</div>
-  <div style="text-align:center;font-size:13px;margin-top:6px">
+  <div style="text-align:center;font-size:13px;margin-bottom:10px">
     🕒 Terça a Domingo — 18:30 às 22:30
   </div>
 
@@ -156,8 +275,9 @@ const ADMIN_PASSWORD = "1234";
 /* ================= ESTADO GLOBAL ================= */
 let cart = [];
 let currentTab = null;
+let isDelivery = false;
 
-/* ================= ESTADOS VINDOS DO FIREBASE ================= */
+/* ================= ESTADOS FIREBASE ================= */
 let customPrices = {};
 let productStatus = {};
 let offers = {};
@@ -194,13 +314,13 @@ function safeId(name){
 function isOpen(){
   const d = new Date();
   const day = d.getDay();
-  const h = d.getHours() + d.getMinutes()/60;
+  const h = d.getHours() + d.getMinutes() / 60;
   if(day === 1) return false;
   if(h < 18.5 || h > 22.5) return false;
   return true;
 }
 
-/* ================= PRODUTOS BASE ================= */
+/* ================= PRODUTOS ================= */
 const products = {
   lanches:[
     {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
@@ -256,12 +376,18 @@ function getFinalPrice(p){
   const sid = safeId(p.n);
   const today = new Date().toISOString().split("T")[0];
 
-  if(offers[sid] && today >= offers[sid].start && today <= offers[sid].end){
+  if(
+    offers[sid] &&
+    today >= offers[sid].start &&
+    today <= offers[sid].end
+  ){
     return Number(offers[sid].price);
   }
+
   if(customPrices[sid] != null){
     return Number(customPrices[sid]);
   }
+
   return Number(p.p);
 }
 
@@ -278,6 +404,7 @@ function renderAll(){
 function renderCategory(id, list, extras){
   const box = document.getElementById(id);
   if(!box) return;
+
   box.innerHTML = "";
 
   list.forEach(p=>{
@@ -287,7 +414,11 @@ function renderCategory(id, list, extras){
   });
 
   if(extras){
-    box.innerHTML += `<div style="font-weight:900;margin:12px 0">➕ Adicionais</div>`;
+    box.innerHTML += `
+      <div style="font-weight:900;margin:12px 0">
+        ➕ Adicionais
+      </div>
+    `;
     extras.forEach(p=>{
       const sid = safeId(p.n);
       if(productStatus[sid] !== false){
@@ -302,14 +433,24 @@ function renderAcai(){
   const box = document.getElementById("acai");
   if(!box) return;
 
-  box.innerHTML = `<div style="font-weight:900;margin-bottom:8px">🥤 Tamanhos</div>`;
+  box.innerHTML = `
+    <div style="font-weight:900;margin-bottom:8px">
+      🥤 Tamanhos
+    </div>
+  `;
+
   products.acaiTamanhos.forEach(p=>{
     if(productStatus[safeId(p.n)] !== false){
       box.innerHTML += itemHTML(p);
     }
   });
 
-  box.innerHTML += `<div style="font-weight:900;margin:12px 0 8px">🍫 Adicionais</div>`;
+  box.innerHTML += `
+    <div style="font-weight:900;margin:12px 0 8px">
+      🍫 Adicionais
+    </div>
+  `;
+
   products.acaiAdicionais.forEach(p=>{
     if(productStatus[safeId(p.n)] !== false){
       box.innerHTML += itemHTML(p);
@@ -317,13 +458,16 @@ function renderAcai(){
   });
 }
 
-/* ================= ITEM ================= */
+/* ================= ITEM HTML ================= */
 function itemHTML(p){
   const sid = safeId(p.n);
   const base = Number(p.p);
   const price = getFinalPrice(p);
   const today = new Date().toISOString().split("T")[0];
-  const hasOffer = offers[sid] && today >= offers[sid].start && today <= offers[sid].end;
+  const hasOffer =
+    offers[sid] &&
+    today >= offers[sid].start &&
+    today <= offers[sid].end;
 
   if(hasOffer){
     return `
@@ -331,8 +475,12 @@ function itemHTML(p){
         <div>
           <strong>${p.n}</strong>
           <span class="offer-badge">OFERTA</span>
-          <div class="old-price">De R$ ${base.toFixed(2).replace(".",",")}</div>
-          <div class="offer-price">Por R$ ${price.toFixed(2).replace(".",",")}</div>
+          <div class="old-price">
+            De R$ ${base.toFixed(2).replace(".",",")}
+          </div>
+          <div class="offer-price">
+            Por R$ ${price.toFixed(2).replace(".",",")}
+          </div>
         </div>
         <span></span>
         <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
@@ -343,7 +491,9 @@ function itemHTML(p){
   return `
     <div class="item" data-name="${p.n.toLowerCase()}">
       <span>${p.n}</span>
-      <span>R$ ${price.toFixed(2).replace(".",",")}</span>
+      <span class="item-price">
+        R$ ${price.toFixed(2).replace(".",",")}
+      </span>
       <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
     </div>
   `;
@@ -374,9 +524,9 @@ document.getElementById("search").addEventListener("input", function(){
   let foundTab = null;
 
   document.querySelectorAll(".item").forEach(i=>{
-    const ok = i.dataset.name.includes(v);
-    i.style.display = ok ? "grid" : "none";
-    if(ok && !foundTab){
+    const match = i.dataset.name.includes(v);
+    i.style.display = match ? "grid" : "none";
+    if(match && !foundTab){
       const parent = i.closest(".box");
       if(parent) foundTab = parent.id;
     }
@@ -389,12 +539,15 @@ document.getElementById("search").addEventListener("input", function(){
   }
 
   if(!v){
-    document.querySelectorAll(".item").forEach(i=>i.style.display="grid");
+    document.querySelectorAll(".item").forEach(i=>{
+      i.style.display = "grid";
+    });
   }
-}
+});
 
 /* ================= START ================= */
 document.getElementById("startBtn").onclick = ()=>{
+  document.body.style.overflow = ""; /* garante scroll */
   document.getElementById("splash").style.display = "none";
   document.getElementById("app").style.display = "block";
   renderAll();
@@ -418,6 +571,7 @@ function removeItem(index){
 
 function updateCart(){
   let cartBox = document.getElementById("cart");
+
   if(!cartBox){
     document.body.insertAdjacentHTML("beforeend", `
       <div id="cart">
@@ -471,7 +625,9 @@ function updateCart(){
     `;
   });
 
-  if(isDelivery) total += FREIGHT;
+  if(isDelivery){
+    total += FREIGHT;
+  }
 
   document.getElementById("total").innerText =
     "Total: R$ " + total.toFixed(2).replace(".",",");
@@ -480,8 +636,6 @@ function updateCart(){
 }
 
 /* ================= ENTREGA ================= */
-let isDelivery = false;
-
 function setDelivery(v){
   isDelivery = v;
   document.getElementById("address").style.display = v ? "block" : "none";
@@ -511,11 +665,14 @@ function sendOrder(){
     return;
   }
 
-  let msg = `🍔 Pedido Rabika's Burguer\n\nCliente: ${name}\n\n`;
+  let msg = "🍔 Pedido Rabika's Burguer\n\n";
+  msg += "Cliente: " + name + "\n\n";
+
   let total = 0;
 
   cart.forEach(i=>{
-    msg += `- ${i.name} R$ ${i.price.toFixed(2).replace(".",",")}\n`;
+    msg += "- " + i.name + " R$ " +
+      i.price.toFixed(2).replace(".",",") + "\n";
     total += i.price;
   });
 
@@ -525,21 +682,23 @@ function sendOrder(){
       alert("Informe o endereço");
       return;
     }
-    msg += `\nEntrega: R$ ${FREIGHT.toFixed(2).replace(".",",")}\n`;
-    msg += `Endereço: ${addr}\n`;
+    msg += "\nEntrega: R$ " +
+      FREIGHT.toFixed(2).replace(".",",") + "\n";
+    msg += "Endereço: " + addr + "\n";
     total += FREIGHT;
   }else{
     msg += "\nRetirada no local\n";
   }
 
   const payment = document.getElementById("payment").value || "Não informado";
-  msg += `Pagamento: ${payment}\n`;
-  msg += `\nTotal: R$ ${total.toFixed(2).replace(".",",")}`;
+  msg += "Pagamento: " + payment + "\n";
+  msg += "\nTotal: R$ " +
+    total.toFixed(2).replace(".",",");
 
   db.ref("sales/" + Date.now()).set({
     date: new Date().toISOString(),
-    total,
-    payment
+    total: total,
+    payment: payment
   });
 
   window.open(
@@ -552,7 +711,7 @@ function sendOrder(){
 }
 </script>
 <script>
-/* ================= SCROLL LOCK ================= */
+/* ================= CONTROLE DE SCROLL ================= */
 function lockScroll(){
   document.body.style.overflow = "hidden";
 }
@@ -560,7 +719,7 @@ function unlockScroll(){
   document.body.style.overflow = "";
 }
 
-/* ================= ADMIN — ABERTURA ================= */
+/* ================= ADMIN — ABRIR / FECHAR ================= */
 function openAdmin(){
   if(document.getElementById("adminModal")) return;
   lockScroll();
@@ -570,7 +729,7 @@ function openAdmin(){
       <div class="modal-box">
         <div style="text-align:right;font-weight:900;cursor:pointer" onclick="closeAdmin()">✕</div>
         <h2 style="text-align:center;color:#5a0070">Painel Administrativo</h2>
-        <p style="text-align:center;font-size:13px;margin-bottom:12px">
+        <p style="text-align:center;font-size:13px;margin-bottom:14px">
           Alterar preços e ocultar produtos
         </p>
         <div id="adminProducts"></div>
@@ -578,7 +737,7 @@ function openAdmin(){
     </div>
   `);
 
-  renderAdminProducts();
+  renderAdmin();
 }
 
 function closeAdmin(){
@@ -588,41 +747,26 @@ function closeAdmin(){
 }
 
 /* ================= RENDER ADMIN ================= */
-function renderAdminProducts(){
+function renderAdmin(){
   const box = document.getElementById("adminProducts");
   if(!box) return;
 
   box.innerHTML = "";
 
   Object.keys(products).forEach(cat=>{
-    box.innerHTML += `
-      <h3 style="margin:14px 0 6px;color:#5a0070">
-        ${cat.toUpperCase()}
-      </h3>
-    `;
-
     products[cat].forEach(p=>{
       const sid = safeId(p.n);
-      const price = customPrices[sid] ?? p.p;
       const hidden = productStatus[sid] === false;
+      const price = customPrices[sid] != null ? customPrices[sid] : p.p;
 
       box.innerHTML += `
-        <div style="border-bottom:1px dashed #ddd;padding:10px 0">
+        <div style="border-bottom:1px dashed #ccc;padding:10px 0">
           <strong>${p.n}</strong>
-
-          <input
-            type="number"
-            value="${price}"
-            style="width:100%;padding:8px;margin-top:6px;border-radius:12px;border:1px solid #ccc"
-            onchange="saveAdminPrice('${sid}', this.value)"
-          >
-
-          <button
-            class="btn-green"
-            style="margin-top:6px;background:${hidden ? '#999' : '#25D366'}"
-            onclick="toggleProduct('${sid}')"
-          >
-            ${hidden ? "REATIVAR" : "OCULTAR"}
+          <input type="number" class="search" value="${price}" id="price_${sid}">
+          <button class="btn-green" onclick="savePrice('${sid}')">Salvar</button>
+          <button class="btn-green" style="background:${hidden?'#25D366':'#b00020'}"
+            onclick="toggleProduct('${sid}')">
+            ${hidden ? 'Reativar' : 'Ocultar'}
           </button>
         </div>
       `;
@@ -630,18 +774,16 @@ function renderAdminProducts(){
   });
 }
 
-/* ================= SALVAR PREÇO ================= */
-function saveAdminPrice(sid, value){
-  const price = Number(value);
-  if(isNaN(price)) return;
-  customPrices[sid] = price;
-  db.ref("prices").set(customPrices);
+/* ================= AÇÕES ADMIN ================= */
+function savePrice(sid){
+  const v = document.getElementById("price_" + sid).value;
+  if(v === "") return;
+  db.ref("prices/" + sid).set(Number(v));
 }
 
-/* ================= OCULTAR / REATIVAR ================= */
 function toggleProduct(sid){
-  productStatus[sid] = productStatus[sid] === false ? true : false;
-  db.ref("productStatus").set(productStatus);
+  const newVal = productStatus[sid] === false ? true : false;
+  db.ref("productStatus/" + sid).set(newVal);
 }
 </script>
 <script>
@@ -655,7 +797,7 @@ function openOffer(){
       <div class="modal-box">
         <div style="text-align:right;font-weight:900;cursor:pointer" onclick="closeOffer()">✕</div>
         <h2 style="text-align:center;color:#b00020">Painel de Ofertas</h2>
-        <p style="text-align:center;font-size:13px;margin-bottom:12px">
+        <p style="text-align:center;font-size:13px;margin-bottom:14px">
           Defina preço promocional e período da oferta
         </p>
         <div id="offerProducts"></div>
@@ -663,7 +805,7 @@ function openOffer(){
     </div>
   `);
 
-  renderOfferProducts();
+  renderOfferAdmin();
 }
 
 function closeOffer(){
@@ -673,99 +815,77 @@ function closeOffer(){
 }
 
 /* ================= RENDER OFERTAS ================= */
-function renderOfferProducts(){
+function renderOfferAdmin(){
   const box = document.getElementById("offerProducts");
   if(!box) return;
 
   box.innerHTML = "";
-  const today = new Date().toISOString().split("T")[0];
 
   Object.keys(products).forEach(cat=>{
-    box.innerHTML += `
-      <h3 style="margin:14px 0 6px;color:#b00020">
-        ${cat.toUpperCase()}
-      </h3>
-    `;
-
     products[cat].forEach(p=>{
       const sid = safeId(p.n);
       const offer = offers[sid] || {};
 
       box.innerHTML += `
-        <div style="
-          border:2px solid #b00020;
-          border-radius:18px;
-          padding:14px;
-          margin-bottom:12px;
-          background:#fff3f3
-        ">
+        <div style="border-bottom:1px dashed #ccc;padding:10px 0">
           <strong>${p.n}</strong>
 
-          <label style="font-size:12px;display:block;margin-top:8px">
-            Preço de oferta
-          </label>
           <input
             type="number"
-            value="${offer.price ?? ""}"
-            style="width:100%;padding:10px;border-radius:14px;border:2px solid #b00020"
-            onchange="updateOffer('${sid}','price',this.value)"
+            class="search"
+            placeholder="Preço da oferta"
+            id="offerPrice_${sid}"
+            value="${offer.price || ""}"
           >
 
-          <label style="font-size:12px;display:block;margin-top:8px">
-            Data início
-          </label>
           <input
             type="date"
-            value="${offer.start ?? ""}"
-            style="width:100%;padding:10px;border-radius:14px;border:1px solid #ccc"
-            onchange="updateOffer('${sid}','start',this.value)"
+            class="search"
+            id="offerStart_${sid}"
+            value="${offer.start || ""}"
           >
 
-          <label style="font-size:12px;display:block;margin-top:8px">
-            Data fim
-          </label>
           <input
             type="date"
-            value="${offer.end ?? ""}"
-            style="width:100%;padding:10px;border-radius:14px;border:1px solid #ccc"
-            onchange="updateOffer('${sid}','end',this.value)"
+            class="search"
+            id="offerEnd_${sid}"
+            value="${offer.end || ""}"
           >
 
-          <button
-            class="btn-green"
-            style="margin-top:12px;background:#b00020"
-            onclick="saveOffer('${sid}')"
-          >
-            💾 Salvar Oferta
+          <button class="btn-green" onclick="saveOffer('${sid}')">
+            Salvar Oferta
           </button>
 
-          ${
-            offer.start && offer.end &&
-            today >= offer.start && today <= offer.end
-              ? `<div style="margin-top:8px;color:#b00020;font-weight:900">
-                  🔥 Oferta ativa
-                </div>`
-              : ""
-          }
+          <button class="btn-green" style="background:#b00020"
+            onclick="removeOffer('${sid}')">
+            Remover Oferta
+          </button>
         </div>
       `;
     });
   });
 }
 
-/* ================= ATUALIZAR CAMPO ================= */
-function updateOffer(sid, field, value){
-  if(!offers[sid]) offers[sid] = {};
-  offers[sid][field] = value;
-}
-
-/* ================= SALVAR OFERTA ================= */
+/* ================= AÇÕES OFERTA ================= */
 function saveOffer(sid){
-  if(!offers[sid] || !offers[sid].price || !offers[sid].start || !offers[sid].end){
-    alert("Preencha preço, data início e data fim");
+  const price = document.getElementById("offerPrice_" + sid).value;
+  const start = document.getElementById("offerStart_" + sid).value;
+  const end = document.getElementById("offerEnd_" + sid).value;
+
+  if(!price || !start || !end){
+    alert("Preencha preço e datas");
     return;
   }
-  db.ref("offers").set(offers);
+
+  db.ref("offers/" + sid).set({
+    price: Number(price),
+    start: start,
+    end: end
+  });
+}
+
+function removeOffer(sid){
+  db.ref("offers/" + sid).remove();
 }
 </script>
 <script>
@@ -788,8 +908,8 @@ document.getElementById("search").addEventListener("keydown", function(e){
 
   const senha = prompt("Senha do administrador:");
   if(senha !== ADMIN_PASSWORD){
-    this.value = "";
     alert("Senha incorreta");
+    this.value = "";
     return;
   }
 
