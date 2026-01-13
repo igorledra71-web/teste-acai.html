@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
@@ -27,39 +28,208 @@ const db = firebase.database();
 </script>
 
 <style>
-/* === CSS COMPLETO JÁ VALIDADO — NÃO ALTERADO === */
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
+html,body{
+  height:100%;
+  max-width:100%;
+  overflow-x:hidden;
+}
+
 body{
   font-family:'Poppins',sans-serif;
   background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
   color:#fff;
   display:flex;
   justify-content:center;
+}
+
+/* ================= SPLASH ================= */
+#splash{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg,#05002e,#020018);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+}
+
+.splash-box{
+  text-align:center;
+  width:100%;
+}
+
+.splash-logo{
+  width:100%;
+  max-width:420px;
+  margin:0 auto 40px;
+  display:block;
+}
+
+.splash-btn{
+  background:linear-gradient(135deg,#FFD34D,#FFB000);
+  border:none;
+  padding:20px 60px;
+  border-radius:50px;
+  font-size:24px;
+  font-weight:900;
+  color:#2b0033;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(255,179,0,.6);
+}
+
+/* ================= APP ================= */
+#app{
+  width:100%;
+  max-width:420px;
+  margin:0 auto;
+  padding:14px 14px 300px;
+  display:none;
+}
+
+/* ================= TOPO ================= */
+.title{
+  text-align:center;
+  font-size:32px;
+  font-weight:900;
+  color:#FFD34D;
+  margin-bottom:4px;
+}
+
+/* ================= BUSCA ================= */
+.search{
+  width:100%;
+  padding:16px;
+  border-radius:26px;
+  border:none;
+  margin-bottom:14px;
+}
+
+/* ================= TABS ================= */
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+@media(min-width:420px){
+  .tabs{grid-template-columns:repeat(5,1fr);}
+}
+
+.tab{
+  background:#fff;
+  color:#2b0033;
+  padding:12px;
+  border-radius:20px;
+  font-weight:800;
+  text-align:center;
+}
+.tab.active{background:#FFD34D}
+
+/* ================= CONTEÚDO ================= */
+.box{
+  background:#fff;
+  color:#2b0033;
+  border-radius:28px;
+  padding:18px;
+  display:none;
+}
+.box.active{display:block}
+
+/* ================= ITEM ================= */
+.item{
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px dashed #ddd;
+}
+
+/* ================= OFERTA ================= */
+.item.offer{
+  background:linear-gradient(135deg,#fff1e0,#ffd6a5);
+  border:2px solid #ff6b00;
+  border-radius:20px;
+  padding:16px;
+  box-shadow:0 8px 22px rgba(255,107,0,.35);
+}
+
+.old-price{
+  font-size:13px;
+  font-weight:700;
+  color:#555;
+  text-decoration:line-through;
+  text-decoration-thickness:2px;
+  text-decoration-color:#b00020;
+}
+
+.offer-price{
+  font-size:20px;
+  font-weight:900;
+  color:#b00020;
+  text-shadow:0 2px 6px rgba(176,0,32,.4);
+}
+
+.offer-badge{
+  background:#ff3d00;
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  padding:4px 10px;
+  border-radius:14px;
+  margin-left:6px;
+}
+
+/* ================= BOTÕES ================= */
+.btn-add{
+  background:#5a0070;
+  color:#fff;
+  border:none;
+  border-radius:16px;
+  padding:8px 16px;
+  font-weight:900;
+}
+
+.btn-green{
+  background:#25D366;
+  color:#fff;
+  border:none;
+  padding:16px;
+  border-radius:24px;
+  font-weight:900;
+  width:100%;
+}
+
+/* ================= MODAL ================= */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
+}
+
+.modal-box{
+  background:#fff;
+  color:#2b0033;
+  width:92%;
+  max-width:420px;
+  border-radius:26px;
+  padding:20px;
+  max-height:85vh;
   overflow-y:auto;
 }
-#app{width:100%;max-width:420px;padding:14px 14px 300px;display:none}
-.title{text-align:center;font-size:32px;font-weight:900;color:#FFD34D}
-.search{width:100%;padding:16px;border-radius:26px;border:none;margin-bottom:14px}
-.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.tab{background:#fff;color:#2b0033;padding:12px;border-radius:20px;font-weight:800;text-align:center}
-.tab.active{background:#FFD34D}
-.box{background:#fff;color:#2b0033;border-radius:28px;padding:18px;display:none}
-.box.active{display:block}
-.item{display:grid;grid-template-columns:1fr auto auto;gap:10px;padding:12px 0}
-.btn-add{background:#5a0070;color:#fff;border:none;border-radius:16px;padding:8px 16px;font-weight:900}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:9999}
-.modal-box{background:#fff;color:#2b0033;width:92%;max-width:420px;border-radius:26px;padding:20px;max-height:85vh;overflow-y:auto}
-.btn-green{background:#25D366;color:#fff;border:none;padding:16px;border-radius:24px;font-weight:900;width:100%}
 </style>
 </head>
 <body>
 
 <!-- ================= SPLASH ================= -->
 <div id="splash">
-  <div style="text-align:center">
-    <img src="logo.png" style="width:90%;max-width:340px;margin-bottom:32px">
-    <button class="btn-add" style="padding:18px 54px;font-size:22px" onclick="startApp()">
+  <div class="splash-box">
+    <img src="logo.png" class="splash-logo">
+    <button class="splash-btn" onclick="startApp()">
       FAZER PEDIDO
     </button>
   </div>
@@ -73,7 +243,7 @@ body{
     🕒 Terça a Domingo — 18:30 às 22:30
   </div>
 
-  <!-- BUSCA (SEM PLACEHOLDER) -->
+  <!-- BUSCA (SEM TEXTO) -->
   <input id="search" class="search" placeholder="">
 
   <!-- ================= ABAS ================= -->
@@ -94,7 +264,7 @@ body{
 
 </div>
 <script>
-/* ================= CONFIGURAÇÕES ================= */
+/* ================= CONFIG ================= */
 const FREIGHT = 8;
 const ADMIN_PASSWORD = "1234";
 
@@ -103,7 +273,7 @@ let cart = [];
 let currentTab = null;
 let isDelivery = false;
 
-/* ================= ESTADOS FIREBASE ================= */
+/* ================= FIREBASE STATES ================= */
 let customPrices = {};
 let productStatus = {};
 let offers = {};
@@ -246,8 +416,7 @@ function renderCategory(id, list, extras){
       </div>
     `;
     extras.forEach(p=>{
-      const sid = safeId(p.n);
-      if(productStatus[sid] !== false){
+      if(productStatus[safeId(p.n)] !== false){
         box.innerHTML += itemHTML(p);
       }
     });
@@ -260,9 +429,7 @@ function renderAcai(){
   if(!box) return;
 
   box.innerHTML = `
-    <div style="font-weight:900;margin-bottom:8px">
-      🥤 Tamanhos
-    </div>
+    <div style="font-weight:900;margin-bottom:8px">🥤 Tamanhos</div>
   `;
 
   products.acaiTamanhos.forEach(p=>{
@@ -272,9 +439,7 @@ function renderAcai(){
   });
 
   box.innerHTML += `
-    <div style="font-weight:900;margin:12px 0 8px">
-      🍫 Adicionais
-    </div>
+    <div style="font-weight:900;margin:12px 0 8px">🍫 Adicionais</div>
   `;
 
   products.acaiAdicionais.forEach(p=>{
@@ -290,6 +455,7 @@ function itemHTML(p){
   const base = Number(p.p);
   const price = getFinalPrice(p);
   const today = new Date().toISOString().split("T")[0];
+
   const hasOffer =
     offers[sid] &&
     today >= offers[sid].start &&
@@ -300,7 +466,7 @@ function itemHTML(p){
       <div class="item offer" data-name="${p.n.toLowerCase()}">
         <div>
           <strong>${p.n}</strong>
-          <span class="offer-badge">OFERTA</span>
+          <span class="offer-badge">🔥 OFERTA</span>
           <div class="old-price">
             De R$ ${base.toFixed(2).replace(".",",")}
           </div>
@@ -317,9 +483,7 @@ function itemHTML(p){
   return `
     <div class="item" data-name="${p.n.toLowerCase()}">
       <span>${p.n}</span>
-      <span class="item-price">
-        R$ ${price.toFixed(2).replace(".",",")}
-      </span>
+      <span>R$ ${price.toFixed(2).replace(".",",")}</span>
       <button class="btn-add" onclick="addItem('${p.n}',${price})">+</button>
     </div>
   `;
@@ -330,12 +494,12 @@ function openTab(id, el){
   const box = document.getElementById(id);
   if(!box) return;
 
-  const active = box.classList.contains("active");
+  const isActive = box.classList.contains("active");
 
   document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
 
-  if(!active){
+  if(!isActive){
     box.classList.add("active");
     if(el) el.classList.add("active");
     currentTab = id;
@@ -344,7 +508,7 @@ function openTab(id, el){
   }
 }
 
-/* ================= BUSCA GLOBAL ================= */
+/* ================= BUSCA ================= */
 document.getElementById("search").addEventListener("input", function(){
   const v = this.value.toLowerCase().trim();
   let foundTab = null;
@@ -399,7 +563,19 @@ function updateCart(){
 
   if(!cartBox){
     document.body.insertAdjacentHTML("beforeend", `
-      <div id="cart">
+      <div id="cart" style="
+        position:fixed;
+        bottom:0;
+        left:50%;
+        transform:translateX(-50%);
+        width:100%;
+        max-width:420px;
+        background:#fff;
+        color:#2b0033;
+        padding:18px;
+        border-radius:28px 28px 0 0;
+        z-index:999;
+      ">
         <div id="cartItems"></div>
 
         <div style="margin-top:10px;font-size:14px">
@@ -536,7 +712,7 @@ function sendOrder(){
 }
 </script>
 <script>
-/* ================= CONTROLE DE SCROLL ================= */
+/* ================= CONTROLE SCROLL MODAL ================= */
 function lockScroll(){
   document.body.style.overflow = "hidden";
 }
@@ -544,7 +720,7 @@ function unlockScroll(){
   document.body.style.overflow = "auto";
 }
 
-/* ================= ADMIN — ABRIR / FECHAR ================= */
+/* ================= ADMIN PREÇOS ================= */
 function openAdmin(){
   if(document.getElementById("adminModal")) return;
   lockScroll();
@@ -553,10 +729,15 @@ function openAdmin(){
     <div class="modal" id="adminModal">
       <div class="modal-box">
         <div style="text-align:right;font-weight:900;cursor:pointer" onclick="closeAdmin()">✕</div>
-        <h2 style="text-align:center;color:#5a0070">Painel Administrativo</h2>
+
+        <h2 style="text-align:center;color:#5a0070">
+          Painel Administrativo — Preços
+        </h2>
+
         <p style="text-align:center;font-size:13px;margin-bottom:14px">
-          Alterar preços e ocultar produtos
+          Altere preços e ative/desative produtos
         </p>
+
         <div id="adminProducts"></div>
       </div>
     </div>
@@ -585,7 +766,7 @@ function renderAdmin(){
       const price = customPrices[sid] != null ? customPrices[sid] : p.p;
 
       box.innerHTML += `
-        <div style="border-bottom:1px dashed #ccc;padding:10px 0">
+        <div style="border-bottom:1px dashed #ccc;padding:12px 0">
           <strong>${p.n}</strong>
 
           <input
@@ -601,7 +782,7 @@ function renderAdmin(){
 
           <button
             class="btn-green"
-            style="background:${hidden ? '#25D366' : '#b00020'}"
+            style="margin-top:6px;background:${hidden ? '#25D366' : '#b00020'}"
             onclick="toggleProduct('${sid}')"
           >
             ${hidden ? 'Reativar Produto' : 'Ocultar Produto'}
@@ -635,7 +816,7 @@ function toggleProduct(sid){
 }
 </script>
 <script>
-/* ================= ADMIN — OFERTAS ================= */
+/* ================= ADMIN OFERTAS ================= */
 function openOffer(){
   if(document.getElementById("offerModal")) return;
   lockScroll();
@@ -644,10 +825,15 @@ function openOffer(){
     <div class="modal" id="offerModal">
       <div class="modal-box">
         <div style="text-align:right;font-weight:900;cursor:pointer" onclick="closeOffer()">✕</div>
-        <h2 style="text-align:center;color:#b00020">Painel de Ofertas</h2>
+
+        <h2 style="text-align:center;color:#b00020">
+          Painel Administrativo — Ofertas
+        </h2>
+
         <p style="text-align:center;font-size:13px;margin-bottom:14px">
           Defina preço promocional e período da oferta
         </p>
+
         <div id="offerProducts"></div>
       </div>
     </div>
@@ -675,7 +861,7 @@ function renderOfferAdmin(){
       const offer = offers[sid] || {};
 
       box.innerHTML += `
-        <div style="border-bottom:1px dashed #ccc;padding:10px 0">
+        <div style="border-bottom:1px dashed #ccc;padding:12px 0">
           <strong>${p.n}</strong>
 
           <input
@@ -706,7 +892,7 @@ function renderOfferAdmin(){
 
           <button
             class="btn-green"
-            style="background:#b00020"
+            style="margin-top:6px;background:#b00020"
             onclick="removeOffer('${sid}')"
           >
             Remover Oferta
@@ -717,14 +903,14 @@ function renderOfferAdmin(){
   });
 }
 
-/* ================= AÇÕES OFERTA ================= */
+/* ================= AÇÕES OFERTAS ================= */
 function saveOffer(sid){
   const price = document.getElementById("offerPrice_" + sid).value;
   const start = document.getElementById("offerStart_" + sid).value;
   const end = document.getElementById("offerEnd_" + sid).value;
 
   if(!price || !start || !end){
-    alert("Preencha preço e datas");
+    alert("Preencha preço e datas da oferta");
     return;
   }
 
@@ -781,7 +967,7 @@ document.getElementById("search").addEventListener("keydown", function(e){
   this.value = "";
 });
 
-/* ================= ADMIN — RELATÓRIO ================= */
+/* ================= RELATÓRIO ================= */
 function openReport(){
   if(document.getElementById("reportModal")) return;
   lockScroll();
