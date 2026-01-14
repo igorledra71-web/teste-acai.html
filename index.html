@@ -117,7 +117,7 @@ body{
     🕒 Terça a Domingo — 18:30 às 22:30
   </div>
 
-  <!-- BUSCA (SEM TEXTO INTERNO) -->
+  <!-- BUSCA -->
   <input id="search" class="search" placeholder="">
 
   <!-- ================= ABAS ================= -->
@@ -398,7 +398,7 @@ function renderAll(){
 }
 </script>
 <script>
-/* ================= START ================= */
+/* ================= START APP ================= */
 function startApp(){
   document.getElementById("splash").style.display = "none";
   document.getElementById("app").style.display = "block";
@@ -441,6 +441,7 @@ function renderCart(){
         position:fixed;bottom:0;left:50%;transform:translateX(-50%);
         width:100%;max-width:420px;background:#fff;color:#2b0033;
         border-radius:28px 28px 0 0;z-index:9999;">
+        
         <div id="cartHeader" style="
           padding:12px;font-weight:900;cursor:pointer;text-align:center;
           background:#FFD34D;border-radius:28px 28px 0 0;"
@@ -450,9 +451,15 @@ function renderCart(){
           <div id="cartItems"></div>
 
           <div style="margin:10px 0">
-            <label><input type="radio" name="delivery" checked onclick="setDelivery(false)"> Retirada</label>
+            <label>
+              <input type="radio" name="delivery" checked onclick="setDelivery(false)">
+              Retirada
+            </label>
             &nbsp;&nbsp;
-            <label><input type="radio" name="delivery" onclick="setDelivery(true)"> Entrega</label>
+            <label>
+              <input type="radio" name="delivery" onclick="setDelivery(true)">
+              Entrega
+            </label>
           </div>
 
           <input id="customerName" class="search" placeholder="Seu nome">
@@ -468,7 +475,9 @@ function renderCart(){
 
           <div id="cartTotal" style="font-weight:900;margin:10px 0"></div>
 
-          <button class="btn-green" onclick="finishOrder()">Finalizar Pedido</button>
+          <button class="btn-green" onclick="finishOrder()">
+            Finalizar Pedido
+          </button>
         </div>
       </div>
     `);
@@ -497,7 +506,10 @@ function renderCart(){
 
   if(isDelivery) total += FREIGHT;
 
-  header.innerHTML = `🛒 ${cart.length} item(s) — R$ ${total.toFixed(2).replace('.',',')} ${cartOpen ? '▼' : '▲'}`;
+  header.innerHTML =
+    `🛒 ${cart.length} item(s) — R$ ${total.toFixed(2).replace('.',',')}
+     ${cartOpen ? '▼' : '▲'}`;
+
   document.getElementById("cartTotal").innerText =
     "Total: R$ " + total.toFixed(2).replace('.',',');
 
@@ -518,7 +530,7 @@ function setDelivery(v){
   renderCart();
 }
 
-/* ================= REGRA DA BEBIDA (MODAL SIM / NÃO) ================= */
+/* ================= REGRA DA BEBIDA ================= */
 function finishOrder(){
   const hasMainItem = cart.some(i =>
     products.lanches.some(l => l.n === i.name) ||
@@ -534,6 +546,7 @@ function finishOrder(){
     showDrinkModal();
     return;
   }
+
   sendOrder();
 }
 
@@ -549,6 +562,49 @@ function confirmDrink(wantDrink){
   }else{
     sendOrder();
   }
+}
+
+/* ================= ENVIAR PEDIDO ================= */
+function sendOrder(){
+  const name = document.getElementById("customerName").value || "Cliente";
+  const pay = document.getElementById("payment").value || "Não informado";
+  const addr = isDelivery ? document.getElementById("address").value : "";
+
+  let msg = `🍔 Pedido Rabika's Burguer\n\n👤 ${name}\n\n`;
+  let total = 0;
+
+  cart.forEach(i=>{
+    msg += `• ${i.name} — R$ ${i.price.toFixed(2).replace('.',',')}\n`;
+    total += i.price;
+  });
+
+  if(isDelivery){
+    msg += `\n🚚 Entrega: R$ ${FREIGHT.toFixed(2).replace('.',',')}\n`;
+    total += FREIGHT;
+    msg += `📍 Endereço: ${addr}\n`;
+  }else{
+    msg += `\n🏠 Retirada no local\n`;
+  }
+
+  msg += `\n💳 Pagamento: ${pay}`;
+  msg += `\n\n💰 Total: R$ ${total.toFixed(2).replace('.',',')}`;
+
+  /* === ABRE WHATSAPP === */
+  window.open(
+    "https://wa.me/554991789706?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
+
+  /* === REGISTRA VENDA SOMENTE AGORA === */
+  db.ref("sales").push({
+    total: total,
+    payment: pay,
+    date: new Date().toISOString()
+  });
+
+  cart = [];
+  cartOpen = false;
+  renderCart();
 }
 </script>
 
@@ -770,7 +826,7 @@ function unlockScroll(){
   document.body.style.overflow = "auto";
 }
 
-/* ================= BUSCA (ATALHOS ADMIN) ================= */
+/* ================= BUSCA — ATALHOS ADMIN ================= */
 document.getElementById("search").addEventListener("keydown",function(e){
   if(e.key !== "Enter") return;
 
@@ -814,7 +870,7 @@ function openReport(){
         <div style="text-align:right;font-weight:900;cursor:pointer" onclick="closeReport()">✕</div>
 
         <h2 style="text-align:center;color:#5a0070">
-          Relatório de Vendas
+          Relatório de Vendas — Hoje
         </h2>
 
         <div id="reportContent" style="margin-top:14px"></div>
@@ -831,10 +887,12 @@ function closeReport(){
   unlockScroll();
 }
 
-/* ================= RENDER RELATÓRIO ================= */
+/* ================= RENDER RELATÓRIO (DIÁRIO) ================= */
 function renderReport(){
   const box = document.getElementById("reportContent");
   if(!box) return;
+
+  const today = new Date().toISOString().split("T")[0];
 
   let total = 0;
   let dinheiro = 0;
@@ -843,6 +901,8 @@ function renderReport(){
   let credito = 0;
 
   Object.values(sales || {}).forEach(s=>{
+    if(!s.date || !s.date.startsWith(today)) return;
+
     total += s.total || 0;
     const p = (s.payment || "").toLowerCase();
 
@@ -854,7 +914,7 @@ function renderReport(){
 
   box.innerHTML = `
     <div style="font-weight:900;margin-bottom:10px">
-      Total vendido: R$ ${total.toFixed(2).replace(".",",")}
+      Total vendido hoje: R$ ${total.toFixed(2).replace(".",",")}
     </div>
     <div>💵 Dinheiro: R$ ${dinheiro.toFixed(2).replace(".",",")}</div>
     <div>⚡ Pix: R$ ${pix.toFixed(2).replace(".",",")}</div>
