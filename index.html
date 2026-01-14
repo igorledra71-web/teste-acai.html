@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
@@ -29,12 +28,7 @@ const db = firebase.database();
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-
-html,body{
-  height:100%;
-  overflow-x:hidden;
-}
-
+html,body{height:100%;overflow-x:hidden}
 body{
   font-family:'Poppins',sans-serif;
   background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
@@ -42,175 +36,65 @@ body{
   display:flex;
   justify-content:center;
 }
-
-/* SPLASH */
 #splash{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background:linear-gradient(180deg,#05002e,#020018);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:flex;align-items:center;justify-content:center;
   z-index:9999;
 }
 .splash-box{text-align:center}
-.splash-logo{
-  max-width:420px;
-  width:100%;
-  margin-bottom:40px;
-}
+.splash-logo{max-width:420px;width:100%;margin-bottom:40px}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
-  border:none;
-  padding:20px 60px;
-  border-radius:50px;
-  font-size:24px;
-  font-weight:900;
-  color:#2b0033;
-  cursor:pointer;
+  border:none;padding:20px 60px;border-radius:50px;
+  font-size:24px;font-weight:900;color:#2b0033;cursor:pointer;
 }
-
-/* APP */
-#app{
-  width:100%;
-  max-width:420px;
-  padding:14px 14px 320px;
-  display:none;
-}
-
-/* TOPO */
-.title{
-  text-align:center;
-  font-size:32px;
-  font-weight:900;
-  color:#FFD34D;
-}
-
-/* BUSCA */
+#app{width:100%;max-width:420px;padding:14px 14px 320px;display:none}
+.title{text-align:center;font-size:32px;font-weight:900;color:#FFD34D}
 .search{
-  width:100%;
-  padding:16px;
-  border-radius:26px;
-  border:none;
-  margin:14px 0;
-  font-size:15px;
-  font-weight:600;
+  width:100%;padding:16px;border-radius:26px;border:none;
+  margin:14px 0;font-size:15px;font-weight:600;
 }
-
-/* TABS */
-.tabs{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-@media(min-width:420px){
-  .tabs{grid-template-columns:repeat(5,1fr);}
-}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(min-width:420px){.tabs{grid-template-columns:repeat(5,1fr)}}
 .tab{
-  background:#fff;
-  color:#2b0033;
-  border-radius:22px;
-  font-weight:800;
-  text-align:center;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  padding:16px 10px;
+  background:#fff;color:#2b0033;border-radius:22px;
+  font-weight:800;text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;padding:16px 10px;
 }
 .tab.active{background:#FFD34D}
-
-/* CONTEÚDO */
-.box{
-  background:#fff;
-  color:#2b0033;
-  border-radius:28px;
-  padding:18px;
-  display:none;
-}
+.box{background:#fff;color:#2b0033;border-radius:28px;padding:18px;display:none}
 .box.active{display:block}
-
-/* ITEM — TIPOGRAFIA MELHORADA */
 .item{
-  display:grid;
-  grid-template-columns:1fr auto auto;
-  gap:10px;
-  padding:14px 0;
-  border-bottom:1px dashed #ddd;
-  align-items:center;
+  display:grid;grid-template-columns:1fr auto auto;gap:10px;
+  padding:14px 0;border-bottom:1px dashed #ddd;align-items:center;
 }
-
-.item-name{
-  font-size:17px;
-  font-weight:800;
-  letter-spacing:.3px;
-}
-
-.item-price{
-  font-size:15px;
-  font-weight:800;
-  color:#5a0070;
-}
-
-/* OFERTA */
-.item.offer{
-  background:#fff1e0;
-  border:2px solid #ff6b00;
-  border-radius:18px;
-  padding:14px;
-}
-.old-price{
-  text-decoration:line-through;
-  font-size:13px;
-  opacity:.7;
-}
-.offer-price{
-  font-size:22px;
-  font-weight:900;
-  color:#b00020;
-}
-
-/* BOTÕES */
+.item-name{font-size:17px;font-weight:800}
+.item-price{font-size:15px;font-weight:800;color:#5a0070}
+.item.offer{background:#fff1e0;border:2px solid #ff6b00;border-radius:18px;padding:14px}
+.old-price{text-decoration:line-through;font-size:13px;opacity:.7}
+.offer-price{font-size:22px;font-weight:900;color:#b00020}
 .btn-add{
-  background:#5a0070;
-  color:#fff;
-  border:none;
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  font-size:18px;
-  font-weight:900;
+  background:#5a0070;color:#fff;border:none;
+  width:42px;height:42px;border-radius:50%;
+  font-size:18px;font-weight:900;
 }
 .btn-green{
-  background:#25D366;
-  color:#fff;
-  border:none;
-  padding:16px;
-  border-radius:24px;
-  font-weight:900;
-  width:100%;
+  background:#25D366;color:#fff;border:none;
+  padding:16px;border-radius:24px;font-weight:900;width:100%;
 }
-
-/* MODAL */
+.btn-gray{
+  background:#ccc;color:#333;border:none;
+  padding:14px;border-radius:24px;font-weight:900;width:100%;
+}
 .modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:10000;
+  position:fixed;inset:0;background:rgba(0,0,0,.6);
+  display:flex;align-items:center;justify-content:center;z-index:10000;
 }
 .modal-box{
-  background:#fff;
-  color:#2b0033;
-  width:92%;
-  max-width:420px;
-  border-radius:26px;
-  padding:20px;
-  max-height:85vh;
-  overflow-y:auto;
+  background:#fff;color:#2b0033;width:92%;max-width:420px;
+  border-radius:26px;padding:20px;max-height:85vh;overflow-y:auto;
 }
 </style>
 </head>
@@ -220,9 +104,7 @@ body{
 <div id="splash">
   <div class="splash-box">
     <img src="logo.png" class="splash-logo">
-    <button class="splash-btn" onclick="startApp()">
-      FAZER PEDIDO
-    </button>
+    <button class="splash-btn" onclick="startApp()">FAZER PEDIDO</button>
   </div>
 </div>
 
@@ -326,7 +208,7 @@ function isOpen(){
   return true;
 }
 
-/* ================= PRODUTOS (COMPLETO) ================= */
+/* ================= PRODUTOS (CATÁLOGO COMPLETO) ================= */
 const products = {
 
   lanches:[
@@ -556,25 +438,13 @@ function renderCart(){
   if(!cartBox){
     document.body.insertAdjacentHTML("beforeend",`
       <div id="cart" style="
-        position:fixed;
-        bottom:0;
-        left:50%;
-        transform:translateX(-50%);
-        width:100%;
-        max-width:420px;
-        background:#fff;
-        color:#2b0033;
-        border-radius:28px 28px 0 0;
-        z-index:9999;
-      ">
+        position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+        width:100%;max-width:420px;background:#fff;color:#2b0033;
+        border-radius:28px 28px 0 0;z-index:9999;">
         <div id="cartHeader" style="
-          padding:12px;
-          font-weight:900;
-          cursor:pointer;
-          text-align:center;
-          background:#FFD34D;
-          border-radius:28px 28px 0 0;
-        " onclick="toggleCart()"></div>
+          padding:12px;font-weight:900;cursor:pointer;text-align:center;
+          background:#FFD34D;border-radius:28px 28px 0 0;"
+          onclick="toggleCart()"></div>
 
         <div id="cartContent" style="padding:18px;display:none">
           <div id="cartItems"></div>
@@ -648,9 +518,8 @@ function setDelivery(v){
   renderCart();
 }
 
-/* ================= 🔥 REGRA DA BEBIDA (AJUSTADA) ================= */
+/* ================= REGRA DA BEBIDA (MODAL SIM / NÃO) ================= */
 function finishOrder(){
-
   const hasMainItem = cart.some(i =>
     products.lanches.some(l => l.n === i.name) ||
     products.porcoes.some(p => p.n === i.name) ||
@@ -662,74 +531,38 @@ function finishOrder(){
   );
 
   if(hasMainItem && !hasDrink){
-    if(confirm("Você vai querer bebida?")){
-      openTab("bebidas");
-      return;
-    }
+    showDrinkModal();
+    return;
   }
-
   sendOrder();
 }
 
-/* ================= WHATSAPP ================= */
-function sendOrder(){
-  const name = document.getElementById("customerName").value.trim();
-  if(!name){
-    alert("Informe seu nome");
-    return;
-  }
+/* ================= MODAL BEBIDA ================= */
+function showDrinkModal(){
+  document.getElementById("drinkModal").style.display = "flex";
+}
 
-  let msg = "🍔 Pedido Rabika's Burguer\n\n";
-  msg += "Cliente: " + name + "\n\n";
-
-  let total = 0;
-  cart.forEach(i=>{
-    msg += "- " + i.name + " R$ " + i.price.toFixed(2).replace('.',',') + "\n";
-    total += i.price;
-  });
-
-  if(isDelivery){
-    const addr = document.getElementById("address").value.trim();
-    if(!addr){
-      alert("Informe o endereço para entrega");
-      return;
-    }
-    msg += "\nEntrega: R$ " + FREIGHT.toFixed(2).replace('.',',') + "\n";
-    msg += "Endereço: " + addr + "\n";
-    total += FREIGHT;
+function confirmDrink(wantDrink){
+  document.getElementById("drinkModal").style.display = "none";
+  if(wantDrink){
+    openTab("bebidas");
   }else{
-    msg += "\nRetirada no local\n";
+    sendOrder();
   }
-
-  const payment = document.getElementById("payment").value || "Não informado";
-  msg += "Pagamento: " + payment + "\n";
-  msg += "\nTotal: R$ " + total.toFixed(2).replace('.',',');
-
-  db.ref("sales/" + Date.now()).set({
-    date:new Date().toISOString(),
-    total:total,
-    payment:payment
-  });
-
-  window.open(
-    "https://wa.me/554991789706?text="+encodeURIComponent(msg),
-    "_blank"
-  );
-
-  cart = [];
-  cartOpen = false;
-  renderCart();
 }
 </script>
-<script>
-/* ================= CONTROLE DE SCROLL ================= */
-function lockScroll(){
-  document.body.style.overflow = "hidden";
-}
-function unlockScroll(){
-  document.body.style.overflow = "auto";
-}
 
+<!-- MODAL BEBIDA -->
+<div class="modal" id="drinkModal" style="display:none">
+  <div class="modal-box">
+    <h3 style="text-align:center;margin-bottom:16px">
+      Você vai querer bebida?
+    </h3>
+    <button class="btn-green" onclick="confirmDrink(true)">SIM</button>
+    <button class="btn-gray" onclick="confirmDrink(false)" style="margin-top:10px">NÃO</button>
+  </div>
+</div>
+<script>
 /* ================= ADMIN PREÇOS ================= */
 function openAdmin(){
   if(document.getElementById("adminModal")) return;
@@ -745,7 +578,7 @@ function openAdmin(){
         </h2>
 
         <p style="text-align:center;font-size:13px;margin-bottom:14px">
-          Altere preços e ative/desative produtos
+          Alterar preços ou ocultar produtos
         </p>
 
         <div id="adminProducts"></div>
@@ -765,37 +598,26 @@ function closeAdmin(){
 /* ================= RENDER ADMIN ================= */
 function renderAdmin(){
   const box = document.getElementById("adminProducts");
-  if(!box) return;
-
   box.innerHTML = "";
 
   Object.keys(products).forEach(cat=>{
     products[cat].forEach(p=>{
-      const sid = safeId(p.n);
-      const hidden = productStatus[sid] === false;
-      const price = customPrices[sid] != null ? customPrices[sid] : p.p;
+      const id = safeId(p.n);
+      const price = customPrices[id] ?? p.p;
+      const hidden = productStatus[id] === false;
 
       box.innerHTML += `
         <div style="border-bottom:1px dashed #ccc;padding:12px 0">
           <strong>${p.n}</strong>
 
-          <input
-            type="number"
-            class="search"
-            value="${price}"
-            id="price_${sid}"
-          >
+          <input type="number" class="search" value="${price}" id="price_${id}">
 
-          <button class="btn-green" onclick="savePrice('${sid}')">
+          <button class="btn-green" onclick="savePrice('${id}')">
             Salvar Preço
           </button>
 
-          <button
-            class="btn-green"
-            style="margin-top:6px;background:${hidden ? '#25D366' : '#b00020'}"
-            onclick="toggleProduct('${sid}')"
-          >
-            ${hidden ? 'Reativar Produto' : 'Ocultar Produto'}
+          <button class="btn-gray" onclick="toggleProduct('${id}')">
+            ${hidden ? "Reativar Produto" : "Ocultar Produto"}
           </button>
         </div>
       `;
@@ -803,25 +625,23 @@ function renderAdmin(){
   });
 }
 
-/* ================= AÇÕES ADMIN ================= */
-function savePrice(sid){
-  const v = document.getElementById("price_" + sid).value;
-  if(v === "") return;
-
+/* ================= AÇÕES ================= */
+function savePrice(id){
+  const v = document.getElementById("price_"+id).value;
+  if(!v) return;
   if(!confirm("Confirmar alteração de preço?")) return;
 
-  db.ref("prices/" + sid).set(Number(v), ()=>{
-    alert("✅ Preço atualizado com sucesso");
+  db.ref("prices/"+id).set(Number(v),()=>{
+    alert("Preço atualizado com sucesso");
   });
 }
 
-function toggleProduct(sid){
-  const acao = productStatus[sid] === false ? "reativar" : "ocultar";
-  if(!confirm("Confirmar " + acao + " este produto?")) return;
+function toggleProduct(id){
+  const hide = productStatus[id] !== false;
+  if(!confirm(hide ? "Ocultar este produto?" : "Reativar este produto?")) return;
 
-  const newVal = productStatus[sid] === false ? true : false;
-  db.ref("productStatus/" + sid).set(newVal, ()=>{
-    alert("✅ Produto atualizado com sucesso");
+  db.ref("productStatus/"+id).set(!hide,()=>{
+    alert(hide ? "Produto ocultado" : "Produto reativado");
   });
 }
 </script>
@@ -861,14 +681,12 @@ function closeOffer(){
 /* ================= RENDER OFERTAS ================= */
 function renderOfferAdmin(){
   const box = document.getElementById("offerProducts");
-  if(!box) return;
-
   box.innerHTML = "";
 
   Object.keys(products).forEach(cat=>{
     products[cat].forEach(p=>{
-      const sid = safeId(p.n);
-      const offer = offers[sid] || {};
+      const id = safeId(p.n);
+      const offer = offers[id] || {};
 
       box.innerHTML += `
         <div style="border-bottom:1px dashed #ccc;padding:12px 0">
@@ -878,32 +696,32 @@ function renderOfferAdmin(){
             type="number"
             class="search"
             placeholder="Preço da oferta"
-            id="offerPrice_${sid}"
+            id="offerPrice_${id}"
             value="${offer.price || ""}"
           >
 
           <input
             type="date"
             class="search"
-            id="offerStart_${sid}"
+            id="offerStart_${id}"
             value="${offer.start || ""}"
           >
 
           <input
             type="date"
             class="search"
-            id="offerEnd_${sid}"
+            id="offerEnd_${id}"
             value="${offer.end || ""}"
           >
 
-          <button class="btn-green" onclick="saveOffer('${sid}')">
+          <button class="btn-green" onclick="saveOffer('${id}')">
             Salvar Oferta
           </button>
 
           <button
-            class="btn-green"
-            style="margin-top:6px;background:#b00020"
-            onclick="removeOffer('${sid}')"
+            class="btn-gray"
+            style="margin-top:6px;background:#b00020;color:#fff"
+            onclick="removeOffer('${id}')"
           >
             Remover Oferta
           </button>
@@ -913,11 +731,11 @@ function renderOfferAdmin(){
   });
 }
 
-/* ================= AÇÕES OFERTAS ================= */
-function saveOffer(sid){
-  const price = document.getElementById("offerPrice_" + sid).value;
-  const start = document.getElementById("offerStart_" + sid).value;
-  const end = document.getElementById("offerEnd_" + sid).value;
+/* ================= AÇÕES ================= */
+function saveOffer(id){
+  const price = document.getElementById("offerPrice_"+id).value;
+  const start = document.getElementById("offerStart_"+id).value;
+  const end = document.getElementById("offerEnd_"+id).value;
 
   if(!price || !start || !end){
     alert("Preencha preço e datas da oferta");
@@ -926,26 +744,34 @@ function saveOffer(sid){
 
   if(!confirm("Confirmar salvar esta oferta?")) return;
 
-  db.ref("offers/" + sid).set({
-    price: Number(price),
-    start: start,
-    end: end
-  }, ()=>{
-    alert("🔥 Oferta salva com sucesso");
+  db.ref("offers/"+id).set({
+    price:Number(price),
+    start:start,
+    end:end
+  },()=>{
+    alert("Oferta salva com sucesso");
   });
 }
 
-function removeOffer(sid){
-  if(!confirm("Tem certeza que deseja remover esta oferta?")) return;
+function removeOffer(id){
+  if(!confirm("Remover esta oferta?")) return;
 
-  db.ref("offers/" + sid).remove(()=>{
-    alert("❌ Oferta removida com sucesso");
+  db.ref("offers/"+id).remove(()=>{
+    alert("Oferta removida");
   });
 }
 </script>
 <script>
-/* ================= BUSCA — ATALHOS ADMIN ================= */
-document.getElementById("search").addEventListener("keydown", function(e){
+/* ================= SCROLL LOCK ================= */
+function lockScroll(){
+  document.body.style.overflow = "hidden";
+}
+function unlockScroll(){
+  document.body.style.overflow = "auto";
+}
+
+/* ================= BUSCA (ATALHOS ADMIN) ================= */
+document.getElementById("search").addEventListener("keydown",function(e){
   if(e.key !== "Enter") return;
 
   const v = this.value.toLowerCase().trim();
@@ -982,7 +808,7 @@ function openReport(){
   if(document.getElementById("reportModal")) return;
   lockScroll();
 
-  document.body.insertAdjacentHTML("beforeend", `
+  document.body.insertAdjacentHTML("beforeend",`
     <div class="modal" id="reportModal">
       <div class="modal-box">
         <div style="text-align:right;font-weight:900;cursor:pointer" onclick="closeReport()">✕</div>
@@ -1019,6 +845,7 @@ function renderReport(){
   Object.values(sales || {}).forEach(s=>{
     total += s.total || 0;
     const p = (s.payment || "").toLowerCase();
+
     if(p.includes("dinheiro")) dinheiro += s.total || 0;
     else if(p.includes("pix")) pix += s.total || 0;
     else if(p.includes("debito")) debito += s.total || 0;
