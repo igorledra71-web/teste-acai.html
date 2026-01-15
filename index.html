@@ -286,7 +286,7 @@ db.ref("sales").on("value", snap=>{
   sales = snap.val() || {};
 });
 
-/* 🔒 LISTENER DO BLOQUEIO */
+/* 🔒 LISTENER DO BLOQUEIO (ÚNICO E DEFINITIVO) */
 db.ref("settings/orderBlocked").on("value", snap=>{
   orderBlocked = snap.val() === true;
 });
@@ -967,7 +967,6 @@ function removeOffer(id){
   });
 }
 </script>
-
 <script>
 /* ================= ADMIN BLOQUEIO DE PEDIDOS ================= */
 function openBlockAdmin(){
@@ -984,7 +983,7 @@ function openBlockAdmin(){
         </h2>
 
         <p style="text-align:center;font-size:13px;margin-bottom:14px">
-          Controle manual de pedidos
+          Ativar ou bloquear pedidos manualmente
         </p>
 
         <button class="btn-green" onclick="setOrderBlock(false)">
@@ -1011,41 +1010,22 @@ function setOrderBlock(state){
   if(!confirm(state ? "Bloquear pedidos agora?" : "Ativar pedidos agora?")) return;
 
   db.ref("settings/orderBlocked").set(state,()=>{
-    alert(state ? "Pedidos bloqueados" : "Pedidos ativados");
+    alert(state ? "Pedidos bloqueados com sucesso" : "Pedidos ativados com sucesso");
   });
 }
 </script>
+
 <script>
-/* ================= SCROLL ================= */
-function lockScroll(){
-  document.body.style.overflow = "hidden";
-}
-function unlockScroll(){
-  document.body.style.overflow = "auto";
-}
-
-/* ================= CONTROLE DE BLOQUEIO ================= */
-let orderBlocked = false;
-
-db.ref("settings/orderBlocked").on("value", snap=>{
-  orderBlocked = snap.val() === true;
-});
-
-/* ================= REGRA FINAL DE PEDIDO ================= */
-function isOrderAllowed(){
-  if(orderBlocked) return false;
-  return isOpen();
-}
-
-/* ================= BUSCA / ATALHOS ================= */
+/* ================= BUSCA / ATALHOS ADMIN ================= */
 document.getElementById("search").addEventListener("keydown",function(e){
   if(e.key !== "Enter") return;
 
   const v = this.value.toLowerCase().trim();
-  const adminKeys   = ["admin","preço","precos"];
-  const offerKeys   = ["oferta","ofertas"];
-  const reportKeys  = ["relatorio","relatório"];
-  const blockKeys   = ["bloqueio","bloquear"];
+
+  const adminKeys  = ["admin","preço","precos"];
+  const offerKeys  = ["oferta","ofertas"];
+  const reportKeys = ["relatorio","relatório"];
+  const blockKeys  = ["bloqueio","bloquear"];
 
   if(
     !adminKeys.includes(v) &&
@@ -1072,8 +1052,10 @@ document.getElementById("search").addEventListener("keydown",function(e){
 
   this.value = "";
 });
+</script>
 
-/* ================= RELATÓRIO ================= */
+<script>
+/* ================= RELATÓRIO DE VENDAS ================= */
 function openReport(){
   if(document.getElementById("reportModal")) return;
   lockScroll();
@@ -1101,7 +1083,6 @@ function closeReport(){
   unlockScroll();
 }
 
-/* ================= RENDER RELATÓRIO (DIÁRIO) ================= */
 function renderReport(){
   const box = document.getElementById("reportContent");
   if(!box) return;
@@ -1137,16 +1118,29 @@ function renderReport(){
   `;
 }
 </script>
-<!-- ================= ENCERRAMENTO FINAL ================= -->
+<script>
+/* ================= CONTROLE DE SCROLL ================= */
+function lockScroll(){
+  document.body.style.overflow = "hidden";
+}
+
+function unlockScroll(){
+  document.body.style.overflow = "auto";
+}
+</script>
 
 <script>
 /* ================= GARANTIA DE ESTADO INICIAL ================= */
 window.addEventListener("load", ()=>{
-  // App inicia sempre com splash
-  document.getElementById("app").style.display = "none";
-  document.getElementById("splash").style.display = "flex";
 
-  // Nenhuma aba aberta por padrão
+  /* App sempre inicia na splash */
+  const splash = document.getElementById("splash");
+  const app = document.getElementById("app");
+
+  if(splash) splash.style.display = "flex";
+  if(app) app.style.display = "none";
+
+  /* Nenhuma aba aberta automaticamente */
   document.querySelectorAll(".box").forEach(b=>{
     b.classList.remove("active");
   });
@@ -1154,6 +1148,10 @@ window.addEventListener("load", ()=>{
   document.querySelectorAll(".tab").forEach(t=>{
     t.classList.remove("active");
   });
+
+  /* Carrinho fechado por padrão */
+  cartOpen = false;
+
 });
 </script>
 
