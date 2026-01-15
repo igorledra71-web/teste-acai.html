@@ -7,7 +7,12 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Fonte base mantida -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Fonte nova SOMENTE para nomes de produtos -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -29,6 +34,7 @@ const db = firebase.database();
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow-x:hidden}
+
 body{
   font-family:'Poppins',sans-serif;
   background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
@@ -36,65 +42,206 @@ body{
   display:flex;
   justify-content:center;
 }
+
+/* ================= SPLASH ================= */
 #splash{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background:linear-gradient(180deg,#05002e,#020018);
-  display:flex;align-items:center;justify-content:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   z-index:9999;
 }
 .splash-box{text-align:center}
-.splash-logo{max-width:420px;width:100%;margin-bottom:40px}
+.splash-logo{
+  max-width:440px;
+  width:90%;
+  margin-bottom:42px;
+}
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
-  border:none;padding:20px 60px;border-radius:50px;
-  font-size:24px;font-weight:900;color:#2b0033;cursor:pointer;
+  border:none;
+  padding:22px 64px;
+  border-radius:50px;
+  font-size:26px;
+  font-weight:900;
+  color:#2b0033;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(255,211,77,.45);
+  transition:.25s;
 }
-#app{width:100%;max-width:420px;padding:14px 14px 320px;display:none}
-.title{text-align:center;font-size:32px;font-weight:900;color:#FFD34D}
+.splash-btn:active{transform:scale(.96)}
+
+/* ================= APP ================= */
+#app{
+  width:100%;
+  max-width:420px;
+  padding:14px 14px 320px;
+  display:none;
+}
+
+.title{
+  text-align:center;
+  font-size:34px;
+  font-weight:900;
+  color:#FFD34D;
+  margin-bottom:4px;
+}
+
+/* ================= BUSCA ================= */
 .search{
-  width:100%;padding:16px;border-radius:26px;border:none;
-  margin:14px 0;font-size:15px;font-weight:600;
+  width:100%;
+  padding:16px;
+  border-radius:26px;
+  border:none;
+  margin:14px 0;
+  font-size:15px;
+  font-weight:600;
 }
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media(min-width:420px){.tabs{grid-template-columns:repeat(5,1fr)}}
+
+/* ================= ABAS ================= */
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+@media(min-width:420px){
+  .tabs{grid-template-columns:repeat(5,1fr)}
+}
 .tab{
-  background:#fff;color:#2b0033;border-radius:22px;
-  font-weight:800;text-align:center;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:6px;padding:16px 10px;
+  background:#fff;
+  color:#2b0033;
+  border-radius:22px;
+  font-weight:800;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:16px 10px;
+  cursor:pointer;
+  transition:.2s;
 }
-.tab.active{background:#FFD34D}
-.box{background:#fff;color:#2b0033;border-radius:28px;padding:18px;display:none}
+.tab span{
+  font-size:13px;
+  font-weight:800;
+}
+.tab.active{
+  background:#FFD34D;
+  transform:scale(1.03);
+}
+
+/* ================= CONTEÚDO ================= */
+.box{
+  background:#fff;
+  color:#2b0033;
+  border-radius:28px;
+  padding:18px;
+  display:none;
+  margin-top:14px;
+}
 .box.active{display:block}
+
+/* ================= ITEM ================= */
 .item{
-  display:grid;grid-template-columns:1fr auto auto;gap:10px;
-  padding:14px 0;border-bottom:1px dashed #ddd;align-items:center;
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:10px;
+  padding:16px 12px;
+  border-bottom:1px dashed #ddd;
+  align-items:center;
+  border-radius:16px;
+  transition:.2s;
 }
-.item-name{font-size:17px;font-weight:800}
-.item-price{font-size:15px;font-weight:800;color:#5a0070}
-.item.offer{background:#fff1e0;border:2px solid #ff6b00;border-radius:18px;padding:14px}
-.old-price{text-decoration:line-through;font-size:13px;opacity:.7}
-.offer-price{font-size:22px;font-weight:900;color:#b00020}
+.item:hover{background:#f8f8f8}
+
+.item-name{
+  font-family:'Montserrat',sans-serif;
+  font-size:17px;
+  font-weight:800;
+  letter-spacing:.2px;
+}
+
+.item-price{
+  font-size:15px;
+  font-weight:800;
+  color:#5a0070;
+  text-align:right;
+}
+
+/* ================= OFERTA ================= */
+.item.offer{
+  background:#fff1e0;
+  border:2px solid #ff6b00;
+  box-shadow:0 6px 20px rgba(255,107,0,.25);
+}
+.old-price{
+  text-decoration:line-through;
+  font-size:13px;
+  opacity:.6;
+}
+.offer-price{
+  font-size:22px;
+  font-weight:900;
+  color:#b00020;
+}
+
+/* ================= BOTÕES ================= */
 .btn-add{
-  background:#5a0070;color:#fff;border:none;
-  width:42px;height:42px;border-radius:50%;
-  font-size:18px;font-weight:900;
+  background:#5a0070;
+  color:#fff;
+  border:none;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  font-size:20px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s;
 }
+.btn-add:active{transform:scale(.9)}
+
 .btn-green{
-  background:#25D366;color:#fff;border:none;
-  padding:16px;border-radius:24px;font-weight:900;width:100%;
+  background:#25D366;
+  color:#fff;
+  border:none;
+  padding:16px;
+  border-radius:24px;
+  font-weight:900;
+  width:100%;
 }
+
 .btn-gray{
-  background:#ccc;color:#333;border:none;
-  padding:14px;border-radius:24px;font-weight:900;width:100%;
+  background:#ccc;
+  color:#333;
+  border:none;
+  padding:14px;
+  border-radius:24px;
+  font-weight:900;
+  width:100%;
 }
+
+/* ================= MODAL ================= */
 .modal{
-  position:fixed;inset:0;background:rgba(0,0,0,.6);
-  display:flex;align-items:center;justify-content:center;z-index:10000;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
 }
 .modal-box{
-  background:#fff;color:#2b0033;width:92%;max-width:420px;
-  border-radius:26px;padding:20px;max-height:85vh;overflow-y:auto;
+  background:#fff;
+  color:#2b0033;
+  width:92%;
+  max-width:420px;
+  border-radius:26px;
+  padding:20px;
+  max-height:85vh;
+  overflow-y:auto;
 }
 </style>
 </head>
@@ -285,7 +432,11 @@ function renderItem(item){
     <div class="item ${p.offer ? 'offer' : ''}">
       <div class="item-name">${p.offer ? '🔥 ' : ''}${item.n}</div>
       <div class="item-price">
-        ${p.offer && p.original ? `<div class="old-price">R$ ${p.original.toFixed(2).replace('.',',')}</div>` : ``}
+        ${
+          p.offer && p.original
+            ? `<div class="old-price">R$ ${p.original.toFixed(2).replace('.',',')}</div>`
+            : ``
+        }
         <div class="${p.offer ? 'offer-price' : ''}">
           R$ ${p.price.toFixed(2).replace('.',',')}
         </div>
@@ -300,11 +451,15 @@ function renderCategory(id,list,extras){
   const box = document.getElementById(id);
   box.innerHTML = "";
 
-  list.forEach(i => box.innerHTML += renderItem(i));
+  list.forEach(i => {
+    box.innerHTML += renderItem(i);
+  });
 
   if(extras){
     box.innerHTML += `<div class="section">➕ Adicionais</div>`;
-    extras.forEach(i => box.innerHTML += renderItem(i));
+    extras.forEach(i => {
+      box.innerHTML += renderItem(i);
+    });
   }
 }
 
@@ -312,9 +467,16 @@ function renderCategory(id,list,extras){
 function renderAcai(){
   const box = document.getElementById("acai");
   box.innerHTML = `<div class="section">🥤 Tamanhos</div>`;
-  products.acaiTamanhos.forEach(i => box.innerHTML += renderItem(i));
+
+  products.acaiTamanhos.forEach(i => {
+    box.innerHTML += renderItem(i);
+  });
+
   box.innerHTML += `<div class="section">🍫 Adicionais</div>`;
-  products.acaiAdicionais.forEach(i => box.innerHTML += renderItem(i));
+
+  products.acaiAdicionais.forEach(i => {
+    box.innerHTML += renderItem(i);
+  });
 }
 
 /* ================= RENDER ALL ================= */
@@ -337,10 +499,15 @@ function startApp(){
 /* ================= TABS ================= */
 function openTab(id,el){
   currentTab = id;
-  document.querySelectorAll(".box").forEach(b=>b.classList.remove("active"));
+
+  document.querySelectorAll(".box").forEach(b=>{
+    b.classList.remove("active");
+  });
   document.getElementById(id).classList.add("active");
 
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t=>{
+    t.classList.remove("active");
+  });
   if(el) el.classList.add("active");
 }
 
@@ -350,7 +517,12 @@ function addToCart(name,price){
     alert("Estamos fechados no momento.\nTerça a Domingo — 18:30 às 22:30");
     return;
   }
+
   cart.push({name,price});
+
+  /* 🔹 melhoria segura: carrinho abre automaticamente */
+  cartOpen = true;
+
   renderCart();
 }
 
@@ -368,17 +540,25 @@ function renderCart(){
       width:100%;max-width:420px;background:#fff;color:#2b0033;
       border-radius:28px 28px 0 0;z-index:9999">
 
-        <div id="cartHeader" style="padding:12px;font-weight:900;cursor:pointer;
-        text-align:center;background:#FFD34D;border-radius:28px 28px 0 0"
-        onclick="toggleCart()"></div>
+        <div id="cartHeader"
+          style="padding:12px;font-weight:900;cursor:pointer;
+          text-align:center;background:#FFD34D;border-radius:28px 28px 0 0"
+          onclick="toggleCart()">
+        </div>
 
-        <div id="cartContent" style="padding:18px;display:none">
+        <div id="cartContent" style="padding:18px;display:none;max-height:55vh;overflow-y:auto">
           <div id="cartItems"></div>
 
           <div style="margin:10px 0">
-            <label><input type="radio" name="delivery" checked onclick="setDelivery(false)"> Retirada</label>
+            <label>
+              <input type="radio" name="delivery" checked onclick="setDelivery(false)">
+              Retirada
+            </label>
             &nbsp;&nbsp;
-            <label><input type="radio" name="delivery" onclick="setDelivery(true)"> Entrega</label>
+            <label>
+              <input type="radio" name="delivery" onclick="setDelivery(true)">
+              Entrega
+            </label>
           </div>
 
           <input id="customerName" class="search" placeholder="Seu nome">
@@ -395,6 +575,11 @@ function renderCart(){
           <div id="cartTotal" style="font-weight:900;margin:10px 0"></div>
 
           <button class="btn-green" onclick="finishOrder()">Finalizar Pedido</button>
+
+          <!-- botão extra: continuar comprando -->
+          <button class="btn-gray" style="margin-top:8px" onclick="cartOpen=false;renderCart()">
+            Continuar comprando
+          </button>
         </div>
       </div>
     `);
@@ -413,16 +598,23 @@ function renderCart(){
     itemsBox.innerHTML += `
       <div style="display:flex;justify-content:space-between;margin-bottom:6px">
         <span>${i.name}</span>
-        <span>R$ ${i.price.toFixed(2).replace('.',',')}
-        <button onclick="removeFromCart(${idx})">✕</button></span>
+        <span>
+          R$ ${i.price.toFixed(2).replace('.',',')}
+          <button onclick="removeFromCart(${idx})">✕</button>
+        </span>
       </div>
     `;
   });
 
   if(isDelivery) total += FREIGHT;
 
-  header.innerHTML = `🛒 ${cart.length} item(s) — R$ ${total.toFixed(2).replace('.',',')} ${cartOpen?'▼':'▲'}`;
-  document.getElementById("cartTotal").innerText = "Total: R$ "+total.toFixed(2).replace('.',',');
+  header.innerHTML = `
+    🛒 ${cart.length} item(s) — R$ ${total.toFixed(2).replace('.',',')}
+    ${cartOpen ? '▼' : '▲'}
+  `;
+
+  document.getElementById("cartTotal").innerText =
+    "Total: R$ "+total.toFixed(2).replace('.',',');
 
   content.style.display = cartOpen ? "block" : "none";
   cartBox.style.display = cart.length ? "block" : "none";
@@ -438,7 +630,8 @@ function setDelivery(v){
   document.getElementById("address").style.display = v ? "block" : "none";
   renderCart();
 }
-
+</script>
+<script>
 /* ================= REGRA BEBIDA ================= */
 function finishOrder(){
   const hasMain = cart.some(i =>
@@ -452,7 +645,7 @@ function finishOrder(){
   );
 
   if(hasMain && !hasDrink){
-    document.getElementById("drinkModal").style.display="flex";
+    document.getElementById("drinkModal").style.display = "flex";
     return;
   }
 
@@ -465,56 +658,66 @@ let changeInfo = "";
 function checkPayment(){
   const pay = document.getElementById("payment").value;
   if(pay === "Dinheiro"){
-    document.getElementById("changeModal").style.display="flex";
+    document.getElementById("changeModal").style.display = "flex";
   }else{
     sendOrder();
   }
 }
 
 function confirmChange(need){
-  document.getElementById("changeModal").style.display="none";
+  document.getElementById("changeModal").style.display = "none";
+
   if(!need){
     changeInfo = "Não precisa";
     sendOrder();
   }else{
-    document.getElementById("changeValueModal").style.display="flex";
+    document.getElementById("changeValueModal").style.display = "flex";
   }
 }
 
 function saveChangeValue(){
   const v = document.getElementById("changeValue").value;
-  if(!v){ alert("Informe o valor do troco"); return; }
-  changeInfo = "Troco para R$ "+Number(v).toFixed(2).replace('.',',');
-  document.getElementById("changeValueModal").style.display="none";
+  if(!v){
+    alert("Informe o valor do troco");
+    return;
+  }
+  changeInfo = "Troco para R$ " + Number(v).toFixed(2).replace(".",",");
+  document.getElementById("changeValueModal").style.display = "none";
   sendOrder();
 }
 
-/* ================= ENVIO ================= */
+/* ================= ENVIO WHATSAPP ================= */
 function sendOrder(){
   const name = document.getElementById("customerName").value || "Cliente";
   const pay = document.getElementById("payment").value || "Não informado";
   const addr = isDelivery ? document.getElementById("address").value : "";
 
-  let msg = `### PEDIDO AUTOMATICO ###\n🍔 Rabika's Burguer\n\n👤 ${name}\n\n`;
+  let msg = `### PEDIDO AUTOMÁTICO ###\n🍔 Rabika's Burguer\n\n👤 ${name}\n\n`;
   let total = 0;
 
   cart.forEach(i=>{
-    msg += `• ${i.name} — R$ ${i.price.toFixed(2).replace('.',',')}\n`;
+    msg += `• ${i.name} — R$ ${i.price.toFixed(2).replace(".",",")}\n`;
     total += i.price;
   });
 
   if(isDelivery){
-    msg += `\n🚚 Entrega: R$ ${FREIGHT.toFixed(2).replace('.',',')}\n📍 ${addr}\n`;
+    msg += `\n🚚 Entrega: R$ ${FREIGHT.toFixed(2).replace(".",",")}\n📍 ${addr}\n`;
     total += FREIGHT;
   }else{
     msg += `\n🏠 Retirada no local\n`;
   }
 
   msg += `\n💳 Pagamento: ${pay}`;
-  if(pay==="Dinheiro") msg += `\n💰 Troco: ${changeInfo}`;
-  msg += `\n\nTOTAL: R$ ${total.toFixed(2).replace('.',',')}`;
+  if(pay === "Dinheiro"){
+    msg += `\n💰 Troco: ${changeInfo}`;
+  }
 
-  window.open("https://wa.me/554991789706?text="+encodeURIComponent(msg),"_blank");
+  msg += `\n\nTOTAL: R$ ${total.toFixed(2).replace(".",",")}`;
+
+  window.open(
+    "https://wa.me/554991789706?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
 
   db.ref("sales").push({
     total: total,
@@ -522,35 +725,69 @@ function sendOrder(){
     date: new Date().toISOString()
   });
 
-  cart=[];
-  cartOpen=false;
-  changeInfo="";
+  cart = [];
+  cartOpen = false;
+  changeInfo = "";
   renderCart();
 }
 </script>
 
-<!-- MODAIS -->
+<!-- ================= MODAIS ================= -->
 <div class="modal" id="drinkModal" style="display:none">
   <div class="modal-box">
-    <h3 style="text-align:center;margin-bottom:16px">Você vai querer bebida?</h3>
-    <button class="btn-green" onclick="document.getElementById('drinkModal').style.display='none';openTab('bebidas')">SIM</button>
-    <button class="btn-gray" onclick="document.getElementById('drinkModal').style.display='none';checkPayment()" style="margin-top:10px">NÃO</button>
+    <h3 style="text-align:center;margin-bottom:16px">
+      Você vai querer bebida?
+    </h3>
+
+    <button class="btn-green" onclick="
+      document.getElementById('drinkModal').style.display='none';
+      cartOpen=false;
+      renderCart();
+      openTab('bebidas');
+    ">
+      SIM
+    </button>
+
+    <button
+      class="btn-gray"
+      style="margin-top:10px"
+      onclick="
+        document.getElementById('drinkModal').style.display='none';
+        checkPayment();
+      ">
+      NÃO
+    </button>
   </div>
 </div>
 
 <div class="modal" id="changeModal" style="display:none">
   <div class="modal-box">
-    <h3 style="text-align:center;margin-bottom:16px">Vai precisar de troco?</h3>
+    <h3 style="text-align:center;margin-bottom:16px">
+      Vai precisar de troco?
+    </h3>
+
     <button class="btn-green" onclick="confirmChange(true)">SIM</button>
-    <button class="btn-gray" onclick="confirmChange(false)" style="margin-top:10px">NÃO</button>
+
+    <button
+      class="btn-gray"
+      style="margin-top:10px"
+      onclick="confirmChange(false)">
+      NÃO
+    </button>
   </div>
 </div>
 
 <div class="modal" id="changeValueModal" style="display:none">
   <div class="modal-box">
-    <h3 style="text-align:center;margin-bottom:16px">Troco para quanto?</h3>
+    <h3 style="text-align:center;margin-bottom:16px">
+      Troco para quanto?
+    </h3>
+
     <input id="changeValue" class="search" placeholder="Ex: 50">
-    <button class="btn-green" onclick="saveChangeValue()">Confirmar</button>
+
+    <button class="btn-green" onclick="saveChangeValue()">
+      Confirmar
+    </button>
   </div>
 </div>
 <script>
@@ -601,7 +838,12 @@ function renderAdmin(){
         <div style="border-bottom:1px dashed #ccc;padding:12px 0">
           <strong>${p.n}</strong>
 
-          <input type="number" class="search" value="${price}" id="price_${id}">
+          <input
+            type="number"
+            class="search"
+            value="${price}"
+            id="price_${id}"
+          >
 
           <button class="btn-green" onclick="savePrice('${id}')">
             Salvar Preço
@@ -616,26 +858,29 @@ function renderAdmin(){
   });
 }
 
-/* ================= AÇÕES ================= */
+/* ================= AÇÕES PREÇOS ================= */
 function savePrice(id){
   const v = document.getElementById("price_"+id).value;
   if(!v) return;
+
   if(!confirm("Confirmar alteração de preço?")) return;
 
-  db.ref("prices/"+id).set(Number(v),()=>{
+  db.ref("prices/"+id).set(Number(v), ()=>{
     alert("Preço atualizado com sucesso");
   });
 }
 
 function toggleProduct(id){
   const hide = productStatus[id] !== false;
+
   if(!confirm(hide ? "Ocultar este produto?" : "Reativar este produto?")) return;
 
-  db.ref("productStatus/"+id).set(!hide,()=>{
+  db.ref("productStatus/"+id).set(!hide, ()=>{
     alert(hide ? "Produto ocultado" : "Produto reativado");
   });
 }
 </script>
+
 <script>
 /* ================= ADMIN OFERTAS ================= */
 function openOffer(){
@@ -722,7 +967,7 @@ function renderOfferAdmin(){
   });
 }
 
-/* ================= AÇÕES ================= */
+/* ================= AÇÕES OFERTAS ================= */
 function saveOffer(id){
   const price = document.getElementById("offerPrice_"+id).value;
   const start = document.getElementById("offerStart_"+id).value;
@@ -739,7 +984,7 @@ function saveOffer(id){
     price:Number(price),
     start:start,
     end:end
-  },()=>{
+  }, ()=>{
     alert("Oferta salva com sucesso");
   });
 }
