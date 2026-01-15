@@ -7,12 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<!-- Fonte base mantida -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<!-- Fonte nova SOMENTE para nomes de produtos -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -34,7 +29,6 @@ const db = firebase.database();
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow-x:hidden}
-
 body{
   font-family:'Poppins',sans-serif;
   background:linear-gradient(180deg,#06003a,#0a045a,#03001f);
@@ -42,8 +36,6 @@ body{
   display:flex;
   justify-content:center;
 }
-
-/* ================= SPLASH ================= */
 #splash{
   position:fixed;
   inset:0;
@@ -55,41 +47,32 @@ body{
 }
 .splash-box{text-align:center}
 .splash-logo{
-  max-width:440px;
-  width:90%;
-  margin-bottom:42px;
+  max-width:420px;
+  width:100%;
+  margin-bottom:40px;
 }
 .splash-btn{
   background:linear-gradient(135deg,#FFD34D,#FFB000);
   border:none;
-  padding:22px 64px;
+  padding:20px 60px;
   border-radius:50px;
-  font-size:26px;
+  font-size:24px;
   font-weight:900;
   color:#2b0033;
   cursor:pointer;
-  box-shadow:0 10px 30px rgba(255,211,77,.45);
-  transition:.25s;
 }
-.splash-btn:active{transform:scale(.96)}
-
-/* ================= APP ================= */
 #app{
   width:100%;
   max-width:420px;
   padding:14px 14px 320px;
   display:none;
 }
-
 .title{
   text-align:center;
-  font-size:34px;
+  font-size:32px;
   font-weight:900;
   color:#FFD34D;
-  margin-bottom:4px;
 }
-
-/* ================= BUSCA ================= */
 .search{
   width:100%;
   padding:16px;
@@ -99,8 +82,6 @@ body{
   font-size:15px;
   font-weight:600;
 }
-
-/* ================= ABAS ================= */
 .tabs{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -121,88 +102,52 @@ body{
   justify-content:center;
   gap:6px;
   padding:16px 10px;
-  cursor:pointer;
-  transition:.2s;
 }
-.tab span{
-  font-size:13px;
-  font-weight:800;
-}
-.tab.active{
-  background:#FFD34D;
-  transform:scale(1.03);
-}
-
-/* ================= CONTEÚDO ================= */
+.tab.active{background:#FFD34D}
 .box{
   background:#fff;
   color:#2b0033;
   border-radius:28px;
   padding:18px;
   display:none;
-  margin-top:14px;
 }
 .box.active{display:block}
-
-/* ================= ITEM ================= */
 .item{
   display:grid;
   grid-template-columns:1fr auto auto;
   gap:10px;
-  padding:16px 12px;
+  padding:14px 0;
   border-bottom:1px dashed #ddd;
   align-items:center;
-  border-radius:16px;
-  transition:.2s;
 }
-.item:hover{background:#f8f8f8}
-
-.item-name{
-  font-family:'Montserrat',sans-serif;
-  font-size:17px;
-  font-weight:800;
-  letter-spacing:.2px;
-}
-
-.item-price{
-  font-size:15px;
-  font-weight:800;
-  color:#5a0070;
-  text-align:right;
-}
-
-/* ================= OFERTA ================= */
+.item-name{font-size:17px;font-weight:800}
+.item-price{font-size:15px;font-weight:800;color:#5a0070}
 .item.offer{
   background:#fff1e0;
   border:2px solid #ff6b00;
-  box-shadow:0 6px 20px rgba(255,107,0,.25);
+  border-radius:18px;
+  padding:14px;
 }
 .old-price{
   text-decoration:line-through;
   font-size:13px;
-  opacity:.6;
+  opacity:.7;
 }
 .offer-price{
   font-size:22px;
   font-weight:900;
   color:#b00020;
 }
-
-/* ================= BOTÕES ================= */
 .btn-add{
   background:#5a0070;
   color:#fff;
   border:none;
-  width:44px;
-  height:44px;
+  width:42px;
+  height:42px;
   border-radius:50%;
-  font-size:20px;
+  font-size:18px;
   font-weight:900;
-  cursor:pointer;
-  transition:.2s;
 }
-.btn-add:active{transform:scale(.9)}
-
 .btn-green{
   background:#25D366;
   color:#fff;
@@ -212,7 +157,6 @@ body{
   font-weight:900;
   width:100%;
 }
-
 .btn-gray{
   background:#ccc;
   color:#333;
@@ -222,8 +166,6 @@ body{
   font-weight:900;
   width:100%;
 }
-
-/* ================= MODAL ================= */
 .modal{
   position:fixed;
   inset:0;
@@ -269,6 +211,7 @@ body{
 
   <!-- ================= ABAS ================= -->
   <div class="tabs">
+
     <div class="tab" onclick="openTab('lanches',this)">
       🍔
       <span>Lanches</span>
@@ -293,6 +236,7 @@ body{
       🥤
       <span>Bebidas</span>
     </div>
+
   </div>
 
   <!-- ================= CONTEÚDO ================= -->
@@ -313,12 +257,16 @@ let cart = [];
 let cartOpen = false;
 let isDelivery = false;
 let currentTab = "";
+
 let customPrices = {};
 let productStatus = {};
 let offers = {};
 let sales = {};
 
-/* ================= FIREBASE ================= */
+/* 🔒 BLOQUEIO GLOBAL DE PEDIDOS */
+let orderBlocked = false;
+
+/* ================= FIREBASE LISTENERS ================= */
 db.ref("prices").on("value", snap=>{
   customPrices = snap.val() || {};
   renderAll();
@@ -338,10 +286,17 @@ db.ref("sales").on("value", snap=>{
   sales = snap.val() || {};
 });
 
+/* 🔒 LISTENER DO BLOQUEIO */
+db.ref("settings/orderBlocked").on("value", snap=>{
+  orderBlocked = snap.val() === true;
+});
+
 /* ================= UTIL ================= */
 function safeId(name){
-  return name.toLowerCase()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+  return name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
     .replace(/[^a-z0-9]/g,"");
 }
 
@@ -350,23 +305,33 @@ function isOpen(){
   const d = new Date();
   const day = d.getDay();
   const h = d.getHours() + d.getMinutes()/60;
+
   if(day === 1) return false;
   if(h < 18.5 || h > 22.5) return false;
   return true;
 }
 
+/* ================= REGRA FINAL ================= */
+function isOrderAllowed(){
+  if(orderBlocked) return false;
+  return isOpen();
+}
+</script>
+<script>
 /* ================= PRODUTOS ================= */
 const products = {
   lanches:[
     {n:"X-Salada",p:17},{n:"X-Burguer",p:14},{n:"X-Frango",p:22},
     {n:"X-Frango Cremoso",p:20},{n:"X-Bacon",p:25},{n:"X-Calabresa",p:25},
     {n:"X-Coração",p:27},{n:"X-Tudo",p:32},{n:"X-Burguer Duplo",p:22},
-    {n:"X-Egg",p:20},{n:"X-Tribom",p:32},{n:"X-Da Casa",p:45},{n:"X-Dog",p:20}
+    {n:"X-Egg",p:20},{n:"X-Tribom",p:32},{n:"X-Da Casa",p:45},
+    {n:"X-Dog",p:20}
   ],
   adicionais:[
     {n:"Calabresa",p:7},{n:"Bacon",p:7},{n:"Coração",p:8},
     {n:"Ovo",p:3},{n:"Salsicha",p:4},{n:"Frango",p:7},
-    {n:"Cheddar",p:4},{n:"Hambúrguer artesanal",p:10},{n:"Maionese caseira",p:2}
+    {n:"Cheddar",p:4},{n:"Hambúrguer artesanal",p:10},
+    {n:"Maionese caseira",p:2}
   ],
   porcoes:[
     {n:"Fritas",p:24.99},{n:"Fritas c/ Frango",p:39.99},
@@ -404,21 +369,32 @@ const products = {
     {n:"Achocolatado 200ml",p:3}
   ]
 };
-</script>
-<script>
-/* ================= PREÇO ================= */
+
+/* ================= PREÇOS ================= */
 function getPrice(item){
   const id = safeId(item.n);
 
   if(offers[id]){
-    return { price: offers[id].price, original: item.p, offer:true };
+    return {
+      price: offers[id].price,
+      original: item.p,
+      offer: true
+    };
   }
 
   if(customPrices[id] !== undefined){
-    return { price: customPrices[id], original:null, offer:false };
+    return {
+      price: customPrices[id],
+      original: null,
+      offer: false
+    };
   }
 
-  return { price: item.p, original:null, offer:false };
+  return {
+    price: item.p,
+    original: null,
+    offer: false
+  };
 }
 
 /* ================= ITEM ================= */
@@ -432,11 +408,9 @@ function renderItem(item){
     <div class="item ${p.offer ? 'offer' : ''}">
       <div class="item-name">${p.offer ? '🔥 ' : ''}${item.n}</div>
       <div class="item-price">
-        ${
-          p.offer && p.original
-            ? `<div class="old-price">R$ ${p.original.toFixed(2).replace('.',',')}</div>`
-            : ``
-        }
+        ${p.offer && p.original
+          ? `<div class="old-price">R$ ${p.original.toFixed(2).replace('.',',')}</div>`
+          : ``}
         <div class="${p.offer ? 'offer-price' : ''}">
           R$ ${p.price.toFixed(2).replace('.',',')}
         </div>
@@ -446,18 +420,18 @@ function renderItem(item){
   `;
 }
 
-/* ================= CATEGORIA ================= */
+/* ================= CATEGORIAS ================= */
 function renderCategory(id,list,extras){
   const box = document.getElementById(id);
   box.innerHTML = "";
 
-  list.forEach(i => {
+  list.forEach(i=>{
     box.innerHTML += renderItem(i);
   });
 
   if(extras){
     box.innerHTML += `<div class="section">➕ Adicionais</div>`;
-    extras.forEach(i => {
+    extras.forEach(i=>{
       box.innerHTML += renderItem(i);
     });
   }
@@ -467,19 +441,16 @@ function renderCategory(id,list,extras){
 function renderAcai(){
   const box = document.getElementById("acai");
   box.innerHTML = `<div class="section">🥤 Tamanhos</div>`;
-
-  products.acaiTamanhos.forEach(i => {
+  products.acaiTamanhos.forEach(i=>{
     box.innerHTML += renderItem(i);
   });
-
   box.innerHTML += `<div class="section">🍫 Adicionais</div>`;
-
-  products.acaiAdicionais.forEach(i => {
+  products.acaiAdicionais.forEach(i=>{
     box.innerHTML += renderItem(i);
   });
 }
 
-/* ================= RENDER ALL ================= */
+/* ================= RENDER GERAL ================= */
 function renderAll(){
   renderCategory("lanches",products.lanches,products.adicionais);
   renderCategory("porcoes",products.porcoes);
@@ -496,33 +467,32 @@ function startApp(){
   renderAll();
 }
 
-/* ================= TABS ================= */
+/* ================= ABAS ================= */
 function openTab(id,el){
   currentTab = id;
 
   document.querySelectorAll(".box").forEach(b=>{
     b.classList.remove("active");
   });
+
   document.getElementById(id).classList.add("active");
 
   document.querySelectorAll(".tab").forEach(t=>{
     t.classList.remove("active");
   });
+
   if(el) el.classList.add("active");
 }
 
 /* ================= CARRINHO ================= */
 function addToCart(name,price){
-  if(!isOpen()){
-    alert("Estamos fechados no momento.\nTerça a Domingo — 18:30 às 22:30");
+
+  if(!isOrderAllowed()){
+    alert("Estamos fechados no momento.");
     return;
   }
 
   cart.push({name,price});
-
-  /* 🔹 melhoria segura: carrinho abre automaticamente */
-  cartOpen = true;
-
   renderCart();
 }
 
@@ -536,17 +506,33 @@ function renderCart(){
 
   if(!cartBox){
     document.body.insertAdjacentHTML("beforeend",`
-      <div id="cart" style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);
-      width:100%;max-width:420px;background:#fff;color:#2b0033;
-      border-radius:28px 28px 0 0;z-index:9999">
+      <div id="cart"
+        style="
+          position:fixed;
+          bottom:0;
+          left:50%;
+          transform:translateX(-50%);
+          width:100%;
+          max-width:420px;
+          background:#fff;
+          color:#2b0033;
+          border-radius:28px 28px 0 0;
+          z-index:9999
+        ">
 
         <div id="cartHeader"
-          style="padding:12px;font-weight:900;cursor:pointer;
-          text-align:center;background:#FFD34D;border-radius:28px 28px 0 0"
+          style="
+            padding:12px;
+            font-weight:900;
+            cursor:pointer;
+            text-align:center;
+            background:#FFD34D;
+            border-radius:28px 28px 0 0
+          "
           onclick="toggleCart()">
         </div>
 
-        <div id="cartContent" style="padding:18px;display:none;max-height:55vh;overflow-y:auto">
+        <div id="cartContent" style="padding:18px;display:none">
           <div id="cartItems"></div>
 
           <div style="margin:10px 0">
@@ -574,11 +560,8 @@ function renderCart(){
 
           <div id="cartTotal" style="font-weight:900;margin:10px 0"></div>
 
-          <button class="btn-green" onclick="finishOrder()">Finalizar Pedido</button>
-
-          <!-- botão extra: continuar comprando -->
-          <button class="btn-gray" style="margin-top:8px" onclick="cartOpen=false;renderCart()">
-            Continuar comprando
+          <button class="btn-green" onclick="finishOrder()">
+            Finalizar Pedido
           </button>
         </div>
       </div>
@@ -609,12 +592,13 @@ function renderCart(){
   if(isDelivery) total += FREIGHT;
 
   header.innerHTML = `
-    🛒 ${cart.length} item(s) — R$ ${total.toFixed(2).replace('.',',')}
+    🛒 ${cart.length} item(s) —
+    R$ ${total.toFixed(2).replace('.',',')}
     ${cartOpen ? '▼' : '▲'}
   `;
 
   document.getElementById("cartTotal").innerText =
-    "Total: R$ "+total.toFixed(2).replace('.',',');
+    "Total: R$ " + total.toFixed(2).replace('.',',');
 
   content.style.display = cartOpen ? "block" : "none";
   cartBox.style.display = cart.length ? "block" : "none";
@@ -634,6 +618,12 @@ function setDelivery(v){
 <script>
 /* ================= REGRA BEBIDA ================= */
 function finishOrder(){
+
+  if(!isOrderAllowed()){
+    alert("Pedidos estão bloqueados no momento.");
+    return;
+  }
+
   const hasMain = cart.some(i =>
     products.lanches.some(l=>l.n===i.name) ||
     products.porcoes.some(p=>p.n===i.name) ||
@@ -681,6 +671,7 @@ function saveChangeValue(){
     alert("Informe o valor do troco");
     return;
   }
+
   changeInfo = "Troco para R$ " + Number(v).toFixed(2).replace(".",",");
   document.getElementById("changeValueModal").style.display = "none";
   sendOrder();
@@ -688,6 +679,12 @@ function saveChangeValue(){
 
 /* ================= ENVIO WHATSAPP ================= */
 function sendOrder(){
+
+  if(!isOrderAllowed()){
+    alert("Pedidos estão bloqueados no momento.");
+    return;
+  }
+
   const name = document.getElementById("customerName").value || "Cliente";
   const pay = document.getElementById("payment").value || "Não informado";
   const addr = isDelivery ? document.getElementById("address").value : "";
@@ -708,10 +705,7 @@ function sendOrder(){
   }
 
   msg += `\n💳 Pagamento: ${pay}`;
-  if(pay === "Dinheiro"){
-    msg += `\n💰 Troco: ${changeInfo}`;
-  }
-
+  if(pay === "Dinheiro") msg += `\n💰 Troco: ${changeInfo}`;
   msg += `\n\nTOTAL: R$ ${total.toFixed(2).replace(".",",")}`;
 
   window.open(
@@ -733,28 +727,29 @@ function sendOrder(){
 </script>
 
 <!-- ================= MODAIS ================= -->
+
 <div class="modal" id="drinkModal" style="display:none">
   <div class="modal-box">
     <h3 style="text-align:center;margin-bottom:16px">
       Você vai querer bebida?
     </h3>
 
-    <button class="btn-green" onclick="
-      document.getElementById('drinkModal').style.display='none';
-      cartOpen=false;
-      renderCart();
-      openTab('bebidas');
-    ">
+    <button class="btn-green"
+      onclick="
+        document.getElementById('drinkModal').style.display='none';
+        cartOpen=false;
+        renderCart();
+        openTab('bebidas');
+      ">
       SIM
     </button>
 
-    <button
-      class="btn-gray"
-      style="margin-top:10px"
+    <button class="btn-gray"
       onclick="
         document.getElementById('drinkModal').style.display='none';
         checkPayment();
-      ">
+      "
+      style="margin-top:10px">
       NÃO
     </button>
   </div>
@@ -767,11 +762,7 @@ function sendOrder(){
     </h3>
 
     <button class="btn-green" onclick="confirmChange(true)">SIM</button>
-
-    <button
-      class="btn-gray"
-      style="margin-top:10px"
-      onclick="confirmChange(false)">
+    <button class="btn-gray" onclick="confirmChange(false)" style="margin-top:10px">
       NÃO
     </button>
   </div>
@@ -823,7 +814,6 @@ function closeAdmin(){
   unlockScroll();
 }
 
-/* ================= RENDER ADMIN ================= */
 function renderAdmin(){
   const box = document.getElementById("adminProducts");
   box.innerHTML = "";
@@ -838,12 +828,7 @@ function renderAdmin(){
         <div style="border-bottom:1px dashed #ccc;padding:12px 0">
           <strong>${p.n}</strong>
 
-          <input
-            type="number"
-            class="search"
-            value="${price}"
-            id="price_${id}"
-          >
+          <input type="number" class="search" value="${price}" id="price_${id}">
 
           <button class="btn-green" onclick="savePrice('${id}')">
             Salvar Preço
@@ -862,20 +847,18 @@ function renderAdmin(){
 function savePrice(id){
   const v = document.getElementById("price_"+id).value;
   if(!v) return;
-
   if(!confirm("Confirmar alteração de preço?")) return;
 
-  db.ref("prices/"+id).set(Number(v), ()=>{
+  db.ref("prices/"+id).set(Number(v),()=>{
     alert("Preço atualizado com sucesso");
   });
 }
 
 function toggleProduct(id){
   const hide = productStatus[id] !== false;
-
   if(!confirm(hide ? "Ocultar este produto?" : "Reativar este produto?")) return;
 
-  db.ref("productStatus/"+id).set(!hide, ()=>{
+  db.ref("productStatus/"+id).set(!hide,()=>{
     alert(hide ? "Produto ocultado" : "Produto reativado");
   });
 }
@@ -914,7 +897,6 @@ function closeOffer(){
   unlockScroll();
 }
 
-/* ================= RENDER OFERTAS ================= */
 function renderOfferAdmin(){
   const box = document.getElementById("offerProducts");
   box.innerHTML = "";
@@ -928,37 +910,26 @@ function renderOfferAdmin(){
         <div style="border-bottom:1px dashed #ccc;padding:12px 0">
           <strong>${p.n}</strong>
 
-          <input
-            type="number"
-            class="search"
+          <input type="number" class="search"
             placeholder="Preço da oferta"
             id="offerPrice_${id}"
-            value="${offer.price || ""}"
-          >
+            value="${offer.price || ""}">
 
-          <input
-            type="date"
-            class="search"
+          <input type="date" class="search"
             id="offerStart_${id}"
-            value="${offer.start || ""}"
-          >
+            value="${offer.start || ""}">
 
-          <input
-            type="date"
-            class="search"
+          <input type="date" class="search"
             id="offerEnd_${id}"
-            value="${offer.end || ""}"
-          >
+            value="${offer.end || ""}">
 
           <button class="btn-green" onclick="saveOffer('${id}')">
             Salvar Oferta
           </button>
 
-          <button
-            class="btn-gray"
+          <button class="btn-gray"
             style="margin-top:6px;background:#b00020;color:#fff"
-            onclick="removeOffer('${id}')"
-          >
+            onclick="removeOffer('${id}')">
             Remover Oferta
           </button>
         </div>
@@ -967,7 +938,6 @@ function renderOfferAdmin(){
   });
 }
 
-/* ================= AÇÕES OFERTAS ================= */
 function saveOffer(id){
   const price = document.getElementById("offerPrice_"+id).value;
   const start = document.getElementById("offerStart_"+id).value;
@@ -984,7 +954,7 @@ function saveOffer(id){
     price:Number(price),
     start:start,
     end:end
-  }, ()=>{
+  },()=>{
     alert("Oferta salva com sucesso");
   });
 }
@@ -997,6 +967,54 @@ function removeOffer(id){
   });
 }
 </script>
+
+<script>
+/* ================= ADMIN BLOQUEIO DE PEDIDOS ================= */
+function openBlockAdmin(){
+  if(document.getElementById("blockModal")) return;
+  lockScroll();
+
+  document.body.insertAdjacentHTML("beforeend", `
+    <div class="modal" id="blockModal">
+      <div class="modal-box">
+        <div style="text-align:right;font-weight:900;cursor:pointer" onclick="closeBlockAdmin()">✕</div>
+
+        <h2 style="text-align:center;color:#b00020">
+          Bloqueio de Pedidos
+        </h2>
+
+        <p style="text-align:center;font-size:13px;margin-bottom:14px">
+          Controle manual de pedidos
+        </p>
+
+        <button class="btn-green" onclick="setOrderBlock(false)">
+          🟢 Ativar Pedidos
+        </button>
+
+        <button class="btn-gray"
+          style="margin-top:10px;background:#b00020;color:#fff"
+          onclick="setOrderBlock(true)">
+          🔒 Bloquear Pedidos
+        </button>
+      </div>
+    </div>
+  `);
+}
+
+function closeBlockAdmin(){
+  const m = document.getElementById("blockModal");
+  if(m) m.remove();
+  unlockScroll();
+}
+
+function setOrderBlock(state){
+  if(!confirm(state ? "Bloquear pedidos agora?" : "Ativar pedidos agora?")) return;
+
+  db.ref("settings/orderBlocked").set(state,()=>{
+    alert(state ? "Pedidos bloqueados" : "Pedidos ativados");
+  });
+}
+</script>
 <script>
 /* ================= SCROLL ================= */
 function lockScroll(){
@@ -1006,19 +1024,34 @@ function unlockScroll(){
   document.body.style.overflow = "auto";
 }
 
+/* ================= CONTROLE DE BLOQUEIO ================= */
+let orderBlocked = false;
+
+db.ref("settings/orderBlocked").on("value", snap=>{
+  orderBlocked = snap.val() === true;
+});
+
+/* ================= REGRA FINAL DE PEDIDO ================= */
+function isOrderAllowed(){
+  if(orderBlocked) return false;
+  return isOpen();
+}
+
 /* ================= BUSCA / ATALHOS ================= */
 document.getElementById("search").addEventListener("keydown",function(e){
   if(e.key !== "Enter") return;
 
   const v = this.value.toLowerCase().trim();
-  const adminKeys = ["admin","preço","precos"];
-  const offerKeys = ["oferta","ofertas"];
-  const reportKeys = ["relatorio","relatório"];
+  const adminKeys   = ["admin","preço","precos"];
+  const offerKeys   = ["oferta","ofertas"];
+  const reportKeys  = ["relatorio","relatório"];
+  const blockKeys   = ["bloqueio","bloquear"];
 
   if(
     !adminKeys.includes(v) &&
     !offerKeys.includes(v) &&
-    !reportKeys.includes(v)
+    !reportKeys.includes(v) &&
+    !blockKeys.includes(v)
   ){
     return;
   }
@@ -1032,9 +1065,10 @@ document.getElementById("search").addEventListener("keydown",function(e){
     return;
   }
 
-  if(adminKeys.includes(v)) openAdmin();
-  if(offerKeys.includes(v)) openOffer();
+  if(adminKeys.includes(v))  openAdmin();
+  if(offerKeys.includes(v))  openOffer();
   if(reportKeys.includes(v)) openReport();
+  if(blockKeys.includes(v))  openBlockAdmin();
 
   this.value = "";
 });
@@ -1102,6 +1136,25 @@ function renderReport(){
     <div>💳 Crédito: R$ ${credito.toFixed(2).replace(".",",")}</div>
   `;
 }
+</script>
+<!-- ================= ENCERRAMENTO FINAL ================= -->
+
+<script>
+/* ================= GARANTIA DE ESTADO INICIAL ================= */
+window.addEventListener("load", ()=>{
+  // App inicia sempre com splash
+  document.getElementById("app").style.display = "none";
+  document.getElementById("splash").style.display = "flex";
+
+  // Nenhuma aba aberta por padrão
+  document.querySelectorAll(".box").forEach(b=>{
+    b.classList.remove("active");
+  });
+
+  document.querySelectorAll(".tab").forEach(t=>{
+    t.classList.remove("active");
+  });
+});
 </script>
 
 </body>
