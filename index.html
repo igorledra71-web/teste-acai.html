@@ -313,9 +313,13 @@ function isOpen(){
 
 /* ================= REGRA FINAL ================= */
 function isOrderAllowed(){
-  if(orderBlocked) return false;
+  // Se o dono liberou manualmente, libera sempre
+  if(orderBlocked === false) return true;
+
+  // Caso contrário, respeita horário
   return isOpen();
 }
+
 </script>
 <script>
 /* ================= PRODUTOS ================= */
@@ -1157,3 +1161,4 @@ window.addEventListener("load", ()=>{
 
 </body>
 </html>
+
