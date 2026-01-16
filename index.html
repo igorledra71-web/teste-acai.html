@@ -712,6 +712,31 @@ function sendOrder(){
   if(pay === "Dinheiro") msg += `\n💰 Troco: ${changeInfo}`;
   msg += `\n\nTOTAL: R$ ${total.toFixed(2).replace(".",",")}`;
 
+// ================= SALVAR PEDIDO PARA IMPRESSÃO =================
+db.ref("orders").push({
+  status: "novo",
+  printed: false,
+  createdAt: Date.now(),
+
+  cliente: {
+    nome: name,
+    tipo: isDelivery ? "Entrega" : "Retirada",
+    endereco: addr || ""
+  },
+
+  pagamento: {
+    forma: pay,
+    troco: pay === "Dinheiro" ? changeInfo : ""
+  },
+
+  itens: cart.map(i => ({
+    nome: i.name,
+    preco: i.price
+  })),
+
+  total: total
+});
+
   window.open(
     "https://wa.me/554991789706?text=" + encodeURIComponent(msg),
     "_blank"
